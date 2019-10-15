@@ -1,7 +1,6 @@
 # Hello 2019w SE2 Team 0309!
 
-## Master Branch
+## 2019w SE2 SUPD Branch
 
-This is your team submission repository.
-
-You can find your team members in the project view under 'Members' or you can directly click on this [Link](https://lab.swa.univie.ac.at/submission/g2019w_se2_0309/project_members)
+This branch is used for the **2019w SE2 SUPD** submission phase.
+The assignment and details of this milestone phase are provided in the semester project assignment sheet in the Moodle course.
