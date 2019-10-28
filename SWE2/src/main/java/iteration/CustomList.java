@@ -3,10 +3,12 @@ package iteration;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Michael Watholowitsch
+/** * 
+ * Used to store the Accounts and Transactions of a User with safe access.
  *
  * @param <T> Element-Type to be stored
+ * 
+ * @author Michael Watholowitsch
  */
 public class CustomList<T> implements CustomContainer<T> {
 	private List<T> list = new ArrayList<>();
@@ -33,19 +35,24 @@ public class CustomList<T> implements CustomContainer<T> {
 	
 	/**
 	 * Returns a CustomIterator pointing to the first element in the CustomList.
-	 * @return CustomIterator
+	 * @return A CustomIterator for this List.
 	 */
 	@Override
 	public CustomIterator getIterator() {
 		return new CustomListIterator();
 	}
 	
+	/**
+	 * The Iterator working on instances of CustomList.
+	 * By default, this Iterator always points at the first element of the CustomList.
+	 */
 	private class CustomListIterator implements CustomIterator {
-		int position = 0;
+		private int position = 0;
+		
+		private CustomListIterator() { }
 		
 		/**
-		 * @return boolean
-		 * Returns true if there is another element in the list after the current one, else false.
+		 * @return true if there is another element in the list after the current one, else false.
 		 */
 		@Override
 		public boolean hasNext() {
@@ -53,8 +60,7 @@ public class CustomList<T> implements CustomContainer<T> {
 		}
 		
 		/**
-		 * @return T
-		 * Returns the current element and moves the position of the Iterator to the next element in the CustomList.
+		 * @return The current element
 		 */
 		@Override
 		public T next() {
