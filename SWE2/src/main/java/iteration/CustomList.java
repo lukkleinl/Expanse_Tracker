@@ -25,6 +25,7 @@ public class CustomList<T> implements CustomContainer<T> {
 	public CustomList(List<T> list) {
 		this.list = new ArrayList<T>(list);
 	}
+	
 	/**
 	 * Adds a new element to the CustomList.
 	 * @param element The element to be added to the list.
