@@ -1,6 +1,7 @@
 package iteration;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /** * 
@@ -35,19 +36,26 @@ public class CustomList<T> implements CustomContainer<T> {
 	}
 	
 	/**
+	 * Returns the number of elements in this CustomList.
+	 * @return the number of elements in this CustomList.
+	 */
+	public int size() {
+		return list.size();
+	}
+	
+	/**
 	 * Returns a CustomIterator pointing to the first element in the CustomList.
 	 * @return A CustomIterator for this List.
 	 */
-	@Override
-	public CustomIterator getIterator() {
-		return new CustomListIterator();
+	public Iterator<T> getIterator() {
+		return new CustomListIterator<T>();
 	}
 	
 	/**
 	 * The Iterator working on instances of CustomList.
 	 * By default, this Iterator always points at the first element of the CustomList.
 	 */
-	private class CustomListIterator implements CustomIterator {
+	private class CustomListIterator<E> implements Iterator<T> {
 		private int position = 0;
 		
 		private CustomListIterator() { }
@@ -57,7 +65,7 @@ public class CustomList<T> implements CustomContainer<T> {
 		 */
 		@Override
 		public boolean hasNext() {
-			return position < list.size() ? true : false;
+			return position < list.size();
 		}
 		
 		/**
@@ -66,7 +74,9 @@ public class CustomList<T> implements CustomContainer<T> {
 		@Override
 		public T next() {
 			if (hasNext()) {
-				return list.get(position++);
+				T elem = (T) list.get(position);
+				position++;
+				return elem;
 			}
 			return null;
 		}

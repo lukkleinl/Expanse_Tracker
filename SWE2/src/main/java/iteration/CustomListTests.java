@@ -2,6 +2,8 @@ package iteration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Iterator;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,31 +11,69 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CustomListTests {
-	CustomList<Object> list;
+	CustomList<String> slist;
 
 	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
+	static void setUpBeforeClass() throws Exception { }
 
 	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
+	static void tearDownAfterClass() throws Exception { }
 
 	@BeforeEach
 	void setUp() throws Exception {
-		list = new CustomList<>();
+		slist = new CustomList<>();
 	}
 
 	@AfterEach
-	void tearDown() throws Exception {
-		list = new CustomList<>();
+	void tearDown() throws Exception { }
+
+	@Test
+	void nextOnNewList_shouldReturnNull() {
+		assertEquals(slist.getIterator().hasNext(),false);
+	}
+	
+	@Test
+	void hasNextOnNewList_shouldReturnFalse() {
+		assertEquals(slist.getIterator().next(),null);
 	}
 
 	@Test
-	void add_should_contain_added_value() {
+	void lastElement_shouldBeEqual() {
 		int number = 7;
-		list.add(number);
-		assertEquals(list.getIterator().next(),number);
+		String s = "text";
+		String nums = ""+number;
+		
+		slist.add(s);
+		slist.add(s+number);
+		slist.add(nums);
+		
+		String result = "";
+		Iterator<String> iter = slist.getIterator();
+		
+		while (iter.hasNext()) {
+			result = iter.next();
+		}
+		
+		assertEquals(nums,result);
+	}
+
+	@Test
+	void afterLastElement_shouldNextBeNull() {
+		int number = 7;
+		String s = "text";
+		String nums = ""+number;
+		
+		slist.add(s);
+		slist.add(s+number);
+		slist.add(nums);
+		
+		Iterator<String> iter = slist.getIterator();
+		
+		while (iter.hasNext()) {
+			iter.next();
+		}
+		
+		assertEquals(null,iter.next());
 	}
 
 }
