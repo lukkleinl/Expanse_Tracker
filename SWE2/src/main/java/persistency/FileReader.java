@@ -43,7 +43,7 @@ public class FileReader {
 			ObjectInputStream objinputstream = new ObjectInputStream(inputStream);
 
 			//" When read they need to be cast to the expected type. " https://docs.oracle.com/javase/9/docs/api/java/io/ObjectInputStream.html
-            List<? extends Object> returnlist = new ArrayList<>();
+            List<? extends Object> returnlist = (List<? extends Object>)objinputstream.readObject();
 
 			inputStream.close();
 			objinputstream.close();
