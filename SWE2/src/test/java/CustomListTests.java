@@ -1,7 +1,6 @@
-package iteration;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+import iteration.CustomList;
 import java.util.Iterator;
 
 import org.junit.jupiter.api.AfterAll;
