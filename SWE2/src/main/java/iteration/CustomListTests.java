@@ -11,69 +11,68 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CustomListTests {
-	CustomList<String> slist;
+  CustomList<String> slist;
 
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception { }
+  @BeforeAll
+  static void setUpBeforeClass() throws Exception {}
 
-	@AfterAll
-	static void tearDownAfterClass() throws Exception { }
+  @AfterAll
+  static void tearDownAfterClass() throws Exception {}
 
-	@BeforeEach
-	void setUp() throws Exception {
-		slist = new CustomList<>();
-	}
+  @BeforeEach
+  void setUp() throws Exception {
+    slist = new CustomList<>();
+  }
 
-	@AfterEach
-	void tearDown() throws Exception { }
+  @AfterEach
+  void tearDown() throws Exception {}
 
-	@Test
-	void nextOnNewList_shouldReturnNull() {
-		assertEquals(slist.getIterator().hasNext(),false);
-	}
-	
-	@Test
-	void hasNextOnNewList_shouldReturnFalse() {
-		assertEquals(slist.getIterator().next(),null);
-	}
+  @Test
+  void nextOnNewList_shouldReturnNull() {
+    assertEquals(slist.getIterator().hasNext(), false);
+  }
 
-	@Test
-	void lastElement_shouldBeEqual() {
-		int number = 7;
-		String s = "text";
-		String nums = ""+number;
-		
-		slist.add(s);
-		slist.add(s+number);
-		slist.add(nums);
-		
-		String result = "";
-		Iterator<String> iter = slist.getIterator();
-		
-		while (iter.hasNext()) {
-			result = iter.next();
-		}
-		
-		assertEquals(nums,result);
-	}
+  @Test
+  void hasNextOnNewList_shouldReturnFalse() {
+    assertEquals(slist.getIterator().next(), null);
+  }
 
-	@Test
-	void afterLastElement_shouldNextBeNull() {
-		int number = 7;
-		String s = "text";
-		String nums = ""+number;
-		
-		slist.add(s);
-		slist.add(s+number);
-		slist.add(nums);
-		
-		Iterator<String> iter = slist.getIterator();
-		
-		while (iter.hasNext()) {
-			iter.next();
-		}
-		
-		assertEquals(null,iter.next());
-	}
+  @Test
+  void lastElement_shouldBeEqual() {
+    int number = 7;
+    String s = "text";
+    String nums = "" + number;
 
+    slist.add(s);
+    slist.add(s + number);
+    slist.add(nums);
+
+    String result = "";
+    Iterator<String> iter = slist.getIterator();
+
+    while (iter.hasNext()) {
+      result = iter.next();
+    }
+
+    assertEquals(nums, result);
+  }
+
+  @Test
+  void afterLastElement_shouldNextBeNull() {
+    int number = 7;
+    String s = "text";
+    String nums = "" + number;
+
+    slist.add(s);
+    slist.add(s + number);
+    slist.add(nums);
+
+    Iterator<String> iter = slist.getIterator();
+
+    while (iter.hasNext()) {
+      iter.next();
+    }
+
+    assertEquals(null, iter.next());
+  }
 }

@@ -1,9 +1,9 @@
 package accounts;
 
 public class Cash extends Account {
-	private String currency;
+  private String currency;
 
-	public String getCurrency() {
-		return currency;
-	}
+  public String getCurrency() {
+    return currency;
+  }
 }

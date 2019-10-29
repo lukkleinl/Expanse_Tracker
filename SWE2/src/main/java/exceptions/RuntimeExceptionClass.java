@@ -1,7 +1,7 @@
 package exceptions;
 
 public class RuntimeExceptionClass extends RuntimeException {
-	public RuntimeExceptionClass(String message) {
-		super(message);
-	}
+  public RuntimeExceptionClass(String message) {
+    super(message);
+  }
 }

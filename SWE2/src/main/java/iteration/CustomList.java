@@ -8,15 +8,12 @@ import java.util.List;
  * * Used to store the Accounts and Transactions of a User with safe access.
  *
  * @param <T> Element-Type to be stored
- *
  * @author Michael Watholowitsch
  */
 public class CustomList<T> implements CustomContainer<T> {
   private List<T> list = new ArrayList<>();
 
-  /**
-   * Creates an empty CustomList.
-   */
+  /** Creates an empty CustomList. */
   public CustomList() {}
 
   /**
@@ -65,17 +62,13 @@ public class CustomList<T> implements CustomContainer<T> {
 
     private CustomListIterator() {}
 
-    /**
-     * @return true if there is another element in the list after the current one, else false.
-     */
+    /** @return true if there is another element in the list after the current one, else false. */
     @Override
     public boolean hasNext() {
       return this.position < CustomList.this.list.size();
     }
 
-    /**
-     * @return The current element
-     */
+    /** @return The current element */
     @Override
     public T next() {
       if (hasNext()) {

@@ -6,7 +6,6 @@ import java.util.Iterator;
  * Defines the necessary functionality of all CustomContainers.
  *
  * @param <T> Element-Type to be stored
- *
  * @author Michael Watholowitsch
  */
 public interface CustomContainer<T> {
