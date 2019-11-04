@@ -14,5 +14,5 @@ public interface CustomContainer<T> {
    *
    * @return A CustomIterator for this CustomContainer.
    */
-  public Iterator<T> getIterator();
+  public CustomIterator<T> getIterator();
 }
