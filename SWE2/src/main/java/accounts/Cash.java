@@ -12,7 +12,7 @@ public class Cash extends Account {
    * @param accountName The name of the account
    * @param currency The currency of the cash
    */
-  private Cash(String accountName, String currency) {
+  public Cash(String accountName, String currency) {
     super(accountName);
     this.currency = currency;
   }

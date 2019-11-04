@@ -1,13 +1,16 @@
 /** */
 package user;
 
-import java.util.Date;
+import accounts.Account;
+import accounts.Cash;
+import accounts.CreditCard;
+import accounts.DebitCard;
+import accounts.Stocks;
+import iteration.CustomList;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-
-import accounts.Account;
-import iteration.CustomList;
+import java.util.Date;
 import transactions.DepositCategory;
 import transactions.PayoutCategory;
 import transactions.Transaction;
@@ -31,26 +34,31 @@ public class User implements Observer {
     this.userID = userID;
     this.firstname = firstname;
     this.lastname = lastname;
+    accounts=new CustomList<>();
   }
 
   /** Adds a DebitCard Account to the List of this Users Accounts. */
-  public void addDebitCard() {
-    // TODO
+  public void addDebitCard(String Name,String Bank,float limit,String IBAN) {
+    DebitCard debit=new DebitCard(Name,Bank,limit,IBAN);
+    accounts.add(debit);
   }
 
-  /** Adds a CrebitCard Account to the List of this Users Accounts. */
-  public void addCrebitCard() {
-    // TODO
+  /** Adds a CrebitCard Account to the List of this Users Accounts*  */
+  public void addCreditCard(String Name,String Bank,float limit, Date expireDate) {
+    CreditCard credit=new CreditCard(Name,Bank,limit,expireDate);
+    accounts.add(credit);
   }
 
   /** Adds a Stocks Account to the List of this Users Accounts. */
-  public void addStocks() {
-    // TODO
+  public void addStocks(String Name,Date buyDate) {
+    Stocks stock = new Stocks(Name,buyDate);
+    accounts.add(stock);
   }
 
   /** Adds a Cash Account to the List of this Users Accounts. */
-  public void addCash() {
-    // TODO
+  public void addCash(String Name) {
+    Cash cash = new Cash(Name, "Euro");
+    accounts.add(cash);
   }
 
   /**

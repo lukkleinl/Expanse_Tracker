@@ -13,9 +13,10 @@ public class DebitCard extends BankAccount {
    * @param bankName The name of the bank
    * @param limit The limit for overdrawing the bank account
    */
-  public DebitCard(String accountName, String bankName, float limit) {
+  public DebitCard(String accountName, String bankName, float limit,String IBAN) {
     super(accountName, bankName, limit);
-    this.IBAN = NumberGenerator.genenerateIBAN();
+    this.IBAN=IBAN;
+    //this.IBAN = NumberGenerator.genenerateIBAN();
   }
 
   /**
