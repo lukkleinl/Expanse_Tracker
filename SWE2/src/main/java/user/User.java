@@ -7,11 +7,14 @@ import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
 import iteration.CustomList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Date;
+import transactions.Deposit;
 import transactions.DepositCategory;
+import transactions.Payout;
 import transactions.PayoutCategory;
 import transactions.Transaction;
 
@@ -21,7 +24,8 @@ public class User implements Observer {
   private String lastname;
   private int userID;
   private CustomList<Account> accounts;
-  private Map<String, CustomList<Transaction>> transactions;
+  private Map<Integer, CustomList<Transaction>> transactions;
+  private CustomList<Transaction> transaction_list;
 
   /**
    * Creates a new User without any Accounts or Transactions.
@@ -35,29 +39,26 @@ public class User implements Observer {
     this.firstname = firstname;
     this.lastname = lastname;
     accounts=new CustomList<>();
+    transactions=new HashMap<>();
   }
 
   /** Adds a DebitCard Account to the List of this Users Accounts. */
-  public void addDebitCard(String Name,String Bank,float limit,String IBAN) {
-    DebitCard debit=new DebitCard(Name,Bank,limit,IBAN);
+  public void addDebitCard(DebitCard debit) {
     accounts.add(debit);
   }
 
   /** Adds a CrebitCard Account to the List of this Users Accounts*  */
-  public void addCreditCard(String Name,String Bank,float limit, Date expireDate) {
-    CreditCard credit=new CreditCard(Name,Bank,limit,expireDate);
+  public void addCreditCard(CreditCard credit) {
     accounts.add(credit);
   }
 
   /** Adds a Stocks Account to the List of this Users Accounts. */
-  public void addStocks(String Name,Date buyDate) {
-    Stocks stock = new Stocks(Name,buyDate);
+  public void addStocks(Stocks stock) {
     accounts.add(stock);
   }
 
   /** Adds a Cash Account to the List of this Users Accounts. */
-  public void addCash(String Name) {
-    Cash cash = new Cash(Name, "Euro");
+  public void addCash(Cash cash) {
     accounts.add(cash);
   }
 
@@ -66,8 +67,31 @@ public class User implements Observer {
    * @param amount The Amount of Money
    * @param description The Description of the Transaction
    */
-  public void payOut(PayoutCategory category, float amount, String description) {
-    // TODO
+  public void payOut(PayoutCategory category, float amount, String description,Account acc) {
+    Date date=new Date();
+    Payout payout=new Payout(date,amount,category,description);
+
+    float condition = acc.getBalance()-amount;
+    if(condition<acc.getLimit())
+      System.out.println("unterhalb des Limits");
+    else
+      acc.payout(amount);
+
+
+    if(transactions.containsKey(acc.getAccount_number()))
+    {
+      //System.out.println("containing");
+      transaction_list=transactions.get(acc.getAccount_number());
+      transaction_list.add(payout);
+      transactions.put(acc.getAccount_number(),transaction_list);
+    }
+    else
+    {
+      //System.out.println("not containing");
+      transaction_list=new CustomList<>();
+      transaction_list.add(payout);
+      transactions.put(acc.getAccount_number(),transaction_list);
+    }
   }
 
   /**
@@ -75,8 +99,24 @@ public class User implements Observer {
    * @param amount The Amount of Money
    * @param description The Description of the Transaction
    */
-  public void deposit(DepositCategory category, float amount, String description) {
-    // TODO
+  public void deposit(DepositCategory category, float amount, String description,Account acc) {
+    Date date=new Date();
+    Deposit deposit=new Deposit(date,amount,category,description);
+    acc.deposit(amount);
+
+    if(transactions.containsKey(acc.getAccount_number()))
+    {
+      //System.out.println("containing");
+      transaction_list=transactions.get(acc.getAccount_number());
+      transaction_list.add(deposit);
+      transactions.put(acc.getAccount_number(),transaction_list);
+    }
+    else
+    {
+      transaction_list=new CustomList<>();
+      transaction_list.add(deposit);
+      transactions.put(acc.getAccount_number(),transaction_list);
+    }
   }
 
   /** Updates the data of the User according to the input of the UserInterface. */
@@ -127,7 +167,7 @@ public class User implements Observer {
    *
    * @return A Map of all the Transactions by the User
    */
-  public Map<String, CustomList<Transaction>> getTransactions() {
+  public Map<Integer, CustomList<Transaction>> getTransactions() {
     return transactions;
   }
 }

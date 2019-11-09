@@ -14,8 +14,8 @@ public class Stocks extends Account {
    * @param accountName The name of the account
    * @param buyDate The date when the stocks were bought
    */
-  public Stocks(String accountName, Date buyDate) {
-    super(accountName);
+  public Stocks(String accountName, Date buyDate,float limit) {
+    super(accountName,limit);
     this.buyDate = buyDate;
   }
 
@@ -26,5 +26,11 @@ public class Stocks extends Account {
    */
   public Date getBuyDate() {
     return buyDate;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "STOCKS";
   }
 }

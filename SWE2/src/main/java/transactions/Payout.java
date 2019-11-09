@@ -14,4 +14,10 @@ public class Payout extends Transaction {
   public PayoutCategory getPayoutCategory() {
     return payoutCategory;
   }
+
+  @Override
+  public String toString()
+  {
+    return "PAYOUT";
+  }
 }

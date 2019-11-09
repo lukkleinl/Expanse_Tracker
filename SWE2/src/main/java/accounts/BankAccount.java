@@ -2,7 +2,7 @@ package accounts;
 
 public class BankAccount extends Account {
   private String bankName;
-  private float limit;
+  //private float limit;
 
   /**
    * Creates a bank account.
@@ -12,9 +12,9 @@ public class BankAccount extends Account {
    * @param limit The limit for overdrawing the bank account
    */
   public BankAccount(String accountName, String bankName, float limit) {
-    super(accountName);
+    super(accountName,limit);
     this.bankName = bankName;
-    this.limit = limit;
+    //this.limit = limit;
   }
 
   /**
@@ -31,7 +31,11 @@ public class BankAccount extends Account {
    *
    * @return the limit
    */
-  public float getLimit() {
-    return limit;
+  //public float getLimit() { return limit; }
+
+  @Override
+  public String toString()
+  {
+    return "BANKACCOUNT";
   }
 }

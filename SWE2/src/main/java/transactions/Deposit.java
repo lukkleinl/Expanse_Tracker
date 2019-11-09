@@ -14,4 +14,10 @@ public class Deposit extends Transaction {
   public DepositCategory getDepositCategory() {
     return depositCategory;
   }
+
+  @Override
+  public String toString()
+  {
+    return "DEPOSIT";
+  }
 }

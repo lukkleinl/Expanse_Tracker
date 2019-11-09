@@ -1,19 +1,25 @@
 package accounts;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /** @author Patrick Gmasz */
 public abstract class Account {
-  private String account_number;
+  private int account_number;
   private String name;
   private float balance;
+  private float limit;
+  private static AtomicInteger nextId = new AtomicInteger();
 
   /**
    * Creates a new Account with a random generated account number and a balance of 0.
    *
    * @param name The name of the account
    */
-  public Account(String name) {
-    this.account_number = NumberGenerator.generateAccountNumber();
+  public Account(String name,float limit) {
+    //this.account_number = NumberGenerator.generateAccountNumber();
+    account_number=nextId.incrementAndGet();
     this.name = name;
+    this.limit=limit;
     this.balance = 0;
   }
 
@@ -22,7 +28,7 @@ public abstract class Account {
    *
    * @return the account number
    */
-  public String getAccount_number() {
+  public int getAccount_number() {
     return account_number;
   }
 
@@ -43,4 +49,17 @@ public abstract class Account {
   public float getBalance() {
     return balance;
   }
+
+  public float payout(float amount) {
+    balance-=amount;
+    return balance;
+  }
+
+  public float deposit(float amount) {
+    balance+=amount;
+    return balance;
+  }
+
+  public float getLimit() { return limit; }
+
 }

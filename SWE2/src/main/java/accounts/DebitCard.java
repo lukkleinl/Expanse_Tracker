@@ -27,4 +27,10 @@ public class DebitCard extends BankAccount {
   public String getIBAN() {
     return IBAN;
   }
+
+  @Override
+  public String toString()
+  {
+    return "DEBITCARD";
+  }
 }

@@ -8,12 +8,12 @@ public class Cash extends Account {
 
   /**
    * Creates a new Cash account with a random generated account number and 0 balance.
-   *
-   * @param accountName The name of the account
+   *  @param accountName The name of the account
+   * @param limit
    * @param currency The currency of the cash
    */
-  public Cash(String accountName, String currency) {
-    super(accountName);
+  public Cash(String accountName, float limit,String currency) {
+    super(accountName,limit);
     this.currency = currency;
   }
 
@@ -24,5 +24,11 @@ public class Cash extends Account {
    */
   public String getCurrency() {
     return currency;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "CASH";
   }
 }

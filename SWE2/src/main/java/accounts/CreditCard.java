@@ -29,4 +29,10 @@ public class CreditCard extends BankAccount {
   public Date getExpiryDate() {
     return expiryDate;
   }
+
+  @Override
+  public String toString()
+  {
+    return "CREDITCARD";
+  }
 }
