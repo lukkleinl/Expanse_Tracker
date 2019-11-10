@@ -6,6 +6,7 @@ import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
+import exceptions.LimitException;
 import iteration.CustomList;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,17 +64,21 @@ public class User implements Observer {
   }
 
   /**
+   * Throws LimitException if amount of payout is higher than limit
+   *
    * @param category The Category of the Transaction
    * @param amount The Amount of Money
    * @param description The Description of the Transaction
    */
-  public void payOut(PayoutCategory category, float amount, String description,Account acc) {
+  public void payOut(PayoutCategory category, float amount, String description,Account acc) throws LimitException {
     Date date=new Date();
     Payout payout=new Payout(date,amount,category,description);
 
     float condition = acc.getBalance()-amount;
-    if(condition<acc.getLimit())
-      System.out.println("unterhalb des Limits");
+    if(condition<acc.getLimit()) {
+      throw new LimitException("Limit exceeded!");
+      //System.out.println("unterhalb des Limits");
+    }
     else
       acc.payout(amount);
 

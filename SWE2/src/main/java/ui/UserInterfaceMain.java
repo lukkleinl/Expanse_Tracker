@@ -1,3 +1,5 @@
+package ui;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
