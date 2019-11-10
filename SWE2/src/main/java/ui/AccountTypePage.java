@@ -9,8 +9,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class AccountTypePage {
-  public final static int FRAME_WIDTH = 410;
-  public final static int FRAME_HEIGHT = 480;
+  private final int FRAME_WIDTH = 1200;
+  private final int FRAME_HEIGHT = 800;
+
   private ArrayList<JComponent> components;
 
   private JLabel welcomeMessage;
@@ -19,56 +20,20 @@ public class AccountTypePage {
   private JButton cashButton;
   private JButton stockButton;
 
-  private AccountTypes pageWanted = AccountTypes.NONE;
+  private AccountTypes pageWanted;
   private User user;
 
-  public AccountTypePage(/*User user*/){
+  public AccountTypePage(/*User user*/) {
 
-    welcomeMessage = new JLabel("Willkommen - Bitte Kontoart auswählen!");
-    welcomeMessage.setBounds(30,330,30,330);
+    /*this.user = user;
+     */
+    pageWanted = AccountTypes.NONE;
+    components = new ArrayList<>();
+
+    welcomeMessage = new JLabel();
+    welcomeMessage.setText("Welcome *insert username here*!:");
+    welcomeMessage.setBounds(50,100,200,30);
     components.add(welcomeMessage);
-
-
-    creditCardButton = new JButton("Submit");
-    creditCardButton.setBounds(130,330,150,40);
-    components.add(creditCardButton);
-    creditCardButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-
-      }
-    });
-/*
-    creditCardButton = new JButton("Submit");
-    creditCardButton.setBounds(130,330,150,40);
-    creditCardButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-
-      }
-    });
-
-    creditCardButton = new JButton("Submit");
-    creditCardButton.setBounds(130,330,150,40);
-    creditCardButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-
-      }
-    });
-
-    creditCardButton = new JButton("Submit");
-    creditCardButton.setBounds(130,330,150,40);
-    creditCardButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-
-      }
-    });
-*/
-
-
-
 
   }
 
@@ -79,8 +44,9 @@ public class AccountTypePage {
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
-      for(JComponent comp: components)
-        frame.add(comp);
+    for(JComponent comp: components) {
+      frame.add(comp);
+    }
 
     frame.revalidate();
     frame.repaint();

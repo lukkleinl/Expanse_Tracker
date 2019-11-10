@@ -82,8 +82,8 @@ public class UserInterfaceMain {
       }
     }
 
-    frame.setVisible(false);
-    System.exit(1);
+    AccountTypePage accountTypePage = new AccountTypePage(/*user*/);
+    accountTypePage.configureFrame(frame);
 
   }
 
