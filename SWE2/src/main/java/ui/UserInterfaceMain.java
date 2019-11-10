@@ -85,6 +85,37 @@ public class UserInterfaceMain {
     AccountTypePage accountTypePage = new AccountTypePage(/*user*/);
     accountTypePage.configureFrame(frame);
 
+    while(true) {
+
+      while (accountTypePage.getPageWanted() == AccountTypes.NONE) {
+        try {
+          Thread.sleep(1);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+
+      switch (accountTypePage.getPageWanted()) {
+        case CASH:
+          //TODO: new CashViewPage -> cashViewPage.configureFrame()
+          System.out.println("Cash view should open here");
+          break;
+        case DEBIT:
+          //TODO: new DebitViewPage -> debitViewPage.configureFrame()
+          System.out.println("Debit view should open here");
+          break;
+        case CREDIT:
+          //TODO: new CreditViewPage -> creditViewPage.configureFrame()
+          System.out.println("Credit view should open here");
+          break;
+        case STOCKS:
+          //TODO: new StockViewPage -> stockViewPage.configureFrame()
+          System.out.println("Stock view should open here");
+          break;
+      }
+      accountTypePage.resetPageWanted();
+    }
+
   }
 
 }

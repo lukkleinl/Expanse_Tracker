@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Font;
 import javax.swing.*;
 
 import user.User;
@@ -30,10 +31,62 @@ public class AccountTypePage {
     pageWanted = AccountTypes.NONE;
     components = new ArrayList<>();
 
+    //WELCOME MESSAGE
     welcomeMessage = new JLabel();
-    welcomeMessage.setText("Welcome *insert username here*!:");
-    welcomeMessage.setBounds(50,100,200,30);
+    welcomeMessage.setText("Welcome *insert username here*!");
+    welcomeMessage.setFont(new Font("Serif", Font.BOLD, 24));
+    welcomeMessage.setBounds(100,50,1000,50);
+
+    //CREDITCARD BUTTON
+    creditCardButton = new JButton("CREDIT CARD ACCOUNTS");
+    creditCardButton.setBounds(200, 150, 350, 200);
+    creditCardButton.setFont(new Font("Serif",Font.PLAIN,22));
+    creditCardButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        pageWanted = AccountTypes.CREDIT;
+      }
+    });
+
+    //DEBITCARD BUTTON
+    debitCardButton = new JButton("DEBIT CARD ACCOUNTS");
+    debitCardButton.setBounds(650, 150, 350, 200);
+    debitCardButton.setFont(new Font("Serif",Font.PLAIN,22));
+    debitCardButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        pageWanted = AccountTypes.DEBIT;
+      }
+    });
+
+
+    //CASH BUTTON
+    cashButton = new JButton("CASH ACCOUNTS");
+    cashButton.setBounds(200, 450,350,200);
+    cashButton.setFont(new Font("Serif",Font.PLAIN,22));
+    cashButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        pageWanted = AccountTypes.CASH;
+      }
+    });
+
+    //STOCK BUTTON
+    stockButton = new JButton("STOCK ACCOUNTS");
+    stockButton.setBounds(650, 450,350,200);
+    stockButton.setFont(new Font("Serif",Font.PLAIN,22));
+    stockButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        pageWanted = AccountTypes.STOCKS;
+      }
+    });
+
     components.add(welcomeMessage);
+    components.add(creditCardButton);
+    components.add(debitCardButton);
+    components.add(cashButton);
+    components.add(stockButton);
 
   }
 
@@ -53,5 +106,11 @@ public class AccountTypePage {
     frame.setVisible(true);
   }
 
+  public AccountTypes getPageWanted() {
+    return pageWanted;
+  }
 
+  public void resetPageWanted() {
+    this.pageWanted = AccountTypes.NONE;
+  }
 }
