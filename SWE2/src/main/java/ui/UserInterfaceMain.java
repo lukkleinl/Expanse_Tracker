@@ -13,7 +13,7 @@ public class UserInterfaceMain {
     MongoDB db = new MongoDB();
 
 
-        LoginPage loginPage = new LoginPage();
+    LoginPage loginPage = new LoginPage();
     RegistrationPage registrationPage = new RegistrationPage();
 
     JFrame frame = new JFrame();
@@ -29,6 +29,21 @@ public class UserInterfaceMain {
 
     frame.validate();
     frame.setVisible(true);
+
+    // PAUL
+
+    AccountTypePage accp = new AccountTypePage();
+    frame = accp.configure_frame(frame);
+
+    boolean test = true;
+    while(test){
+
+    }
+
+
+    // PAUL END
+
+
 
     boolean foundUser = false;
 
