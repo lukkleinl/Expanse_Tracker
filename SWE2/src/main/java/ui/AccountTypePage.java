@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
 
@@ -34,13 +35,14 @@ public class AccountTypePage {
     //WELCOME MESSAGE
     welcomeMessage = new JLabel();
     welcomeMessage.setText("Welcome *insert username here*!");
-    welcomeMessage.setFont(new Font("Serif", Font.BOLD, 24));
+    welcomeMessage.setFont(new Font("Serif", Font.BOLD, 28));
     welcomeMessage.setBounds(100,50,1000,50);
 
     //CREDITCARD BUTTON
     creditCardButton = new JButton("CREDIT CARD ACCOUNTS");
     creditCardButton.setBounds(200, 150, 350, 200);
     creditCardButton.setFont(new Font("Serif",Font.PLAIN,22));
+    creditCardButton.setBackground(new Color(255,184,77));
     creditCardButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -52,6 +54,7 @@ public class AccountTypePage {
     debitCardButton = new JButton("DEBIT CARD ACCOUNTS");
     debitCardButton.setBounds(650, 150, 350, 200);
     debitCardButton.setFont(new Font("Serif",Font.PLAIN,22));
+    debitCardButton.setBackground(new Color(255,184,77));
     debitCardButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -64,6 +67,7 @@ public class AccountTypePage {
     cashButton = new JButton("CASH ACCOUNTS");
     cashButton.setBounds(200, 450,350,200);
     cashButton.setFont(new Font("Serif",Font.PLAIN,22));
+    cashButton.setBackground(new Color(255,184,77));
     cashButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -75,6 +79,7 @@ public class AccountTypePage {
     stockButton = new JButton("STOCK ACCOUNTS");
     stockButton.setBounds(650, 450,350,200);
     stockButton.setFont(new Font("Serif",Font.PLAIN,22));
+    stockButton.setBackground(new Color(255,184,77));
     stockButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
