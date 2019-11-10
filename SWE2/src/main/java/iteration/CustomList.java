@@ -1,7 +1,6 @@
 package iteration;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -58,7 +57,7 @@ public class CustomList<T> implements CustomContainer<T> {
    * first element of the CustomList. Implemented as a private nested class inside the
    * CustomList since this Iterator directly belongs to the CustomList.
    */
-  private class CustomListIterator<E> implements CustomIterator<T> {
+  private class CustomListIterator<T> implements CustomIterator<T> {
     private int position = 0;
 
     private CustomListIterator() {}
@@ -78,11 +77,6 @@ public class CustomList<T> implements CustomContainer<T> {
         return elem;
       }
       return null;
-    }
-
-    /** Unsupported as of now. */
-    public void remove() {
-      throw new UnsupportedOperationException("remove() is not useable for this Iterator.");
     }
   }
 }

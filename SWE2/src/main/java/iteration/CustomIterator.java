@@ -1,7 +1,5 @@
 package iteration;
 
-import java.util.Iterator;
-
 /**
  * Defines the necessary functionality of all CustomIterators.
  * 
