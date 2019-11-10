@@ -72,7 +72,7 @@ public class AccountTypePage {
 
   }
 
-  public JFrame configure_frame(JFrame frame){
+  public void configureFrame(JFrame frame){
 
     frame.setVisible(false);
     frame.setTitle("Account Types");
@@ -85,9 +85,6 @@ public class AccountTypePage {
     frame.revalidate();
     frame.repaint();
     frame.setVisible(true);
-
-    return frame;
-
   }
 
 

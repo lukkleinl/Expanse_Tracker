@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -17,8 +18,8 @@ public class LoginPage {
   private JButton submitButton;
   private JButton registerButton;
 
-  public final int FRAME_WIDTH = 410;
-  public final int FRAME_HEIGHT = 280;
+  private final int FRAME_WIDTH = 410;
+  private final int FRAME_HEIGHT = 280;
 
   private String user;
   private String password;
@@ -79,10 +80,6 @@ public class LoginPage {
     components.add(registerButton);
   }
 
-  public ArrayList<JComponent> getComponents() {
-    return components;
-  }
-
   public String getUser() {
     return user;
   }
@@ -97,5 +94,19 @@ public class LoginPage {
 
   public void registrationFinished() {
     registrationWanted = false;
+  }
+
+  public void configureFrame(JFrame frame) {
+    frame.setVisible(false);
+    frame.setTitle("Login");
+    frame.getContentPane().removeAll();
+    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+    for(JComponent comp: components) {
+      frame.add(comp);
+    }
+    frame.revalidate();
+    frame.repaint();
+    frame.setVisible(true);
   }
 }

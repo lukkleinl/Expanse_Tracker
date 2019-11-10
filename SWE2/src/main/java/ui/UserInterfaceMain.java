@@ -10,36 +10,29 @@ public class UserInterfaceMain {
   public static void main(String[] args) {
 
     User user = null;
-    MongoDB db = new MongoDB();
+    //MongoDB db = new MongoDB();
 
 
     LoginPage loginPage = new LoginPage();
     RegistrationPage registrationPage = new RegistrationPage();
 
     JFrame frame = new JFrame();
-    frame.setTitle("Login");
-    frame.setSize(loginPage.FRAME_WIDTH, loginPage.FRAME_HEIGHT);
     frame.setLayout(null);
     frame.setResizable(false);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    for(JComponent comp : loginPage.getComponents()) {
-      frame.add(comp);
-    }
-
-    frame.validate();
-    frame.setVisible(true);
+    loginPage.configureFrame(frame);
 
     // PAUL
-
+/*
     AccountTypePage accp = new AccountTypePage();
-    frame = accp.configure_frame(frame);
+    accp.configureFrame(frame);
 
     boolean test = true;
     while(test){
 
     }
-
+*/
 
     // PAUL END
 
@@ -56,17 +49,7 @@ public class UserInterfaceMain {
       else if(loginPage.isRegistrationWanted()) {
 
         //OPEN REGISTRATION PAGE COMPONENTS
-        frame.setVisible(false);
-        frame.setTitle("Registration");
-        frame.getContentPane().removeAll();
-        frame.setSize(registrationPage.FRAME_WIDTH, registrationPage.FRAME_HEIGHT);
-
-        for(JComponent comp : registrationPage.getComponents()) {
-          frame.add(comp);
-        }
-        frame.revalidate();
-        frame.repaint();
-        frame.setVisible(true);
+        registrationPage.configureFrame(frame);
 
         boolean registrationFinished = false;
 
@@ -83,17 +66,7 @@ public class UserInterfaceMain {
             }
 
             //OPEN LOGIN PAGE COMPONENTS AGAIN
-            frame.setVisible(false);
-            frame.setTitle("Login");
-            frame.getContentPane().removeAll();
-            frame.setSize(loginPage.FRAME_WIDTH, loginPage.FRAME_HEIGHT);
-
-            for(JComponent comp: loginPage.getComponents()) {
-              frame.add(comp);
-            }
-            frame.revalidate();
-            frame.repaint();
-            frame.setVisible(true);
+            loginPage.configureFrame(frame);
           }
           try {
             Thread.sleep(1);

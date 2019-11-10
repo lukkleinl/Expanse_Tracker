@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -24,8 +25,8 @@ public class RegistrationPage {
   private JTextField firstnameTextField;
   private JTextField lastnameTextField;
 
-  public final int FRAME_WIDTH = 410;
-  public final int FRAME_HEIGHT = 480;
+  private final int FRAME_WIDTH = 410;
+  private final int FRAME_HEIGHT = 480;
 
   private String user;
   private String password;
@@ -124,10 +125,6 @@ public class RegistrationPage {
     components.add(lastnameTextField);
   }
 
-  public ArrayList<JComponent> getComponents() {
-    return components;
-  }
-
   public String getUser() {
     return user;
   }
@@ -138,5 +135,19 @@ public class RegistrationPage {
 
   public boolean isRegistrationComplete() {
     return registrationComplete;
+  }
+
+  public void configureFrame(JFrame frame) {
+    frame.setVisible(false);
+    frame.setTitle("Registration");
+    frame.getContentPane().removeAll();
+    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+    for(JComponent comp : components) {
+      frame.add(comp);
+    }
+    frame.revalidate();
+    frame.repaint();
+    frame.setVisible(true);
   }
 }
