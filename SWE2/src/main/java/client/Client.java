@@ -7,6 +7,7 @@ import MongoDb.MongoDB;
 import accounts.Account;
 import accounts.Cash;
 import accounts.Stocks;
+import exceptions.LimitException;
 import iteration.CustomIterator;
 import iteration.CustomList;
 import java.util.Date;
@@ -29,7 +30,7 @@ public class Client {
     DepositCategory cat=SALARY;
     PayoutCategory pay=FOOD;
     MongoDB mongo=new MongoDB();
-    User user=new User(12,"lukas","kleinl");
+    User user=new User(12,"lukas","kleinl", "1234");
     Cash cash = new Cash("Cash",0,"Euro");
     Stocks stock = new Stocks("Stock",date,0);
     user.addCash(cash);
@@ -39,7 +40,11 @@ public class Client {
     user.deposit(cat,100,"Auszahlung",stock);
     //user.deposit(cat,100,"Auszahlun",cash);
     user.deposit(cat,1000,"einzahl",cash);
-    user.payOut(pay,100,"Auszahlun",cash);
+    try {
+      user.payOut(pay, 100, "Auszahlun", cash);
+    } catch (LimitException e) {
+      System.out.println(e.getMessage());
+    }
     Map<Integer, CustomList<Transaction>> map=new HashMap<>();
     map=user.getTransactions();
 

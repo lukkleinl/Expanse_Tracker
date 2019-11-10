@@ -81,7 +81,6 @@ public class CustomList<T> implements CustomContainer<T> {
     }
 
     /** Unsupported as of now. */
-    @Override
     public void remove() {
       throw new UnsupportedOperationException("remove() is not useable for this Iterator.");
     }

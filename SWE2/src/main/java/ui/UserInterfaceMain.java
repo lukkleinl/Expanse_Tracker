@@ -1,13 +1,19 @@
 package ui;
 
+import MongoDb.MongoDB;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import user.User;
 
 public class UserInterfaceMain {
 
   public static void main(String[] args) {
 
-    LoginPage loginPage = new LoginPage();
+    User user = null;
+    MongoDB db = new MongoDB();
+
+
+        LoginPage loginPage = new LoginPage();
     RegistrationPage registrationPage = new RegistrationPage();
 
     JFrame frame = new JFrame();
@@ -29,6 +35,7 @@ public class UserInterfaceMain {
     while(!foundUser) {
       //TODO: check if user exists and if password is correct
       if(loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
+        //TODO: user = db.getUser(userid)
         foundUser = true;
       }
       else if(loginPage.isRegistrationWanted()) {

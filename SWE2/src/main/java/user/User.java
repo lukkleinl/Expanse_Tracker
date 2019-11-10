@@ -24,6 +24,7 @@ public class User implements Observer {
   private String firstname;
   private String lastname;
   private int userID;
+  private String password;
   private CustomList<Account> accounts;
   private Map<Integer, CustomList<Transaction>> transactions;
   private CustomList<Transaction> transaction_list;
@@ -31,16 +32,18 @@ public class User implements Observer {
   /**
    * Creates a new User without any Accounts or Transactions.
    *
-   * @param userID The ID within the System.
+   * @param userID The ID within the system and needed to log in
    * @param firstname The users first name.
    * @param lastname The users last name.
+   * @param password The password for the user
    */
-  public User(int userID, String firstname, String lastname) {
+  public User(int userID, String firstname, String lastname, String password) {
     this.userID = userID;
     this.firstname = firstname;
     this.lastname = lastname;
-    accounts=new CustomList<>();
-    transactions=new HashMap<>();
+    this.accounts=new CustomList<>();
+    this.transactions=new HashMap<>();
+    this.password = password;
   }
 
   /** Adds a DebitCard Account to the List of this Users Accounts. */
@@ -174,5 +177,14 @@ public class User implements Observer {
    */
   public Map<Integer, CustomList<Transaction>> getTransactions() {
     return transactions;
+  }
+
+  /**
+   * Returns the password of the user.
+   *
+   * @return The password of the user
+   */
+  public String getPassword() {
+    return password;
   }
 }
