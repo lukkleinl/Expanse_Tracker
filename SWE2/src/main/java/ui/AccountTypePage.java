@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class AccountTypePage {
+public class AccountTypePage implements InterfacePage {
   private final int FRAME_WIDTH = 1200;
   private final int FRAME_HEIGHT = 800;
 

@@ -9,9 +9,7 @@ public class UserInterface {
   private User user;
 
   public void start() {
-    User user = null;
     //MongoDB db = new MongoDB();
-
 
     LoginPage loginPage = new LoginPage();
     RegistrationPage registrationPage = new RegistrationPage();
@@ -22,21 +20,6 @@ public class UserInterface {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     loginPage.configureFrame(frame);
-
-    // PAUL
-/*
-    AccountTypePage accp = new AccountTypePage();
-    accp.configureFrame(frame);
-
-    boolean test = true;
-    while(test){
-
-    }
-*/
-
-    // PAUL END
-
-
 
     boolean foundUser = false;
 
@@ -59,26 +42,10 @@ public class UserInterface {
             registrationFinished = true;
             loginPage.registrationFinished();
 
-            try {
-              Thread.sleep(1000);
-            } catch (Exception e) {
-              e.printStackTrace();
-            }
-
             //OPEN LOGIN PAGE COMPONENTS AGAIN
             loginPage.configureFrame(frame);
           }
-          try {
-            Thread.sleep(1);
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
         }
-      }
-      try {
-        Thread.sleep(1);
-      } catch (Exception e) {
-        e.printStackTrace();
       }
     }
 
@@ -87,13 +54,7 @@ public class UserInterface {
 
     while(true) {
 
-      while (accountTypePage.getPageWanted() == AccountTypes.NONE) {
-        try {
-          Thread.sleep(1);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      }
+      while (accountTypePage.getPageWanted() == AccountTypes.NONE);
 
       switch (accountTypePage.getPageWanted()) {
         case CASH:

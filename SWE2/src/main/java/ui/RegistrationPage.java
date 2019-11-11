@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class RegistrationPage {
+public class RegistrationPage implements InterfacePage {
   private ArrayList<JComponent> components;
   private JLabel userLabel;
   private JLabel passwordLabel;
@@ -37,10 +37,20 @@ public class RegistrationPage {
   }
 
   public String getUser() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return user;
   }
 
   public String getPassword() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return password;
   }
 
