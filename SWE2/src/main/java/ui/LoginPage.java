@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class LoginPage {
+public class LoginPage implements InterfacePage {
   private ArrayList<JComponent> components;
   private JLabel userLabel;
   private JLabel passwordLabel;
@@ -81,10 +81,20 @@ public class LoginPage {
   }
 
   public String getUser() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return user;
   }
 
   public String getPassword() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return password;
   }
 
