@@ -5,7 +5,7 @@ import java.util.List;
 import exceptions.NoElementException;
 
 /**
- * * Used to store the Accounts and Transactions of a User with safe access.
+ * Used to store the Accounts and Transactions of a User with safe access.
  *
  * @param <T> Element-Type to be stored
  * @author Michael Watholowitsch
@@ -48,7 +48,7 @@ public class CustomList<T> implements CustomContainer<T> {
   /**
    * Returns a {@linkplain CustomIterator} pointing to the first element in the {@code CustomList}.
    *
-   * @return A {@linkplain CustomIterator} for this List.
+   * @return A {@code CustomIterator} for this CustomList.
    */
   @Override
   public CustomIterator<T> getIterator() {

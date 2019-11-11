@@ -8,8 +8,8 @@ import accounts.Account;
 import accounts.Cash;
 import accounts.Stocks;
 import exceptions.LimitException;
+import iteration.CustomContainer;
 import iteration.CustomIterator;
-import iteration.CustomList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,8 +33,8 @@ public class Client {
     User user=new User(12,"lukas","kleinl", "1234");
     Cash cash = new Cash("Cash",0,"Euro");
     Stocks stock = new Stocks("Stock",date,0);
-    user.addCash(cash);
-    user.addStocks(stock);
+    user.addAccount(cash);
+    user.addAccount(stock);
 
     user.deposit(cat,100,"Auszahlun",stock);
     user.deposit(cat,100,"Auszahlung",stock);
@@ -45,7 +45,7 @@ public class Client {
     } catch (LimitException e) {
       System.out.println(e.getMessage());
     }
-    Map<Integer, CustomList<Transaction>> map=new HashMap<>();
+    Map<Integer, CustomContainer<Transaction>> map=new HashMap<>();
     map=user.getTransactions();
 
     CustomIterator<Account> abc=user.getAccounts().getIterator();

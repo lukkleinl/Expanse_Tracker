@@ -5,6 +5,7 @@ import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
+import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
 import java.awt.Font;
@@ -83,7 +84,7 @@ public class AccountListPage implements InterfacePage {
         Point point = mouseEvent.getPoint();
         int row = table.rowAtPoint(point);
         if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-          CustomList<Account> accountList = user.getAccounts();
+          CustomContainer<Account> accountList = user.getAccounts();
 
           CustomIterator<Account> iterator = accountList.getIterator();
 
@@ -110,7 +111,7 @@ public class AccountListPage implements InterfacePage {
   }
 
   private Object[][] getAccounts(User user) {
-    CustomList<Account> userAccounts = user.getAccounts();
+    CustomContainer<Account> userAccounts = user.getAccounts();
 
     int listSize = userAccounts == null ? 0 : userAccounts.size();
 

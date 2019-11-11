@@ -8,6 +8,7 @@ import accounts.Stocks;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
 import java.util.ArrayList;
@@ -84,8 +85,8 @@ public class MongoDB implements Persistency
 
     public void insert(User user)
     {
-      Map<Integer, CustomList<Transaction>>  Transactions =user.getTransactions();
-      CustomList<Account>  accounts =user.getAccounts();
+      Map<Integer, CustomContainer<Transaction>>  Transactions =user.getTransactions();
+      CustomContainer<Account>  accounts =user.getAccounts();
       List<Document> accounts_array = new ArrayList<>();
       List<Document> trans_array = new ArrayList<>();
       CustomIterator<Account> iter=accounts.getIterator();
@@ -97,7 +98,7 @@ public class MongoDB implements Persistency
 
       for (Entry e : Transactions.entrySet())
       {
-        CustomList<Object> list = (CustomList<Object>) e.getValue();
+        CustomContainer<Object> list = (CustomList<Object>) e.getValue();
         CustomIterator<Object> iterator = list.getIterator();
         List<Document> transaction_array = new ArrayList<>();
         Integer account_number = (Integer) e.getKey();

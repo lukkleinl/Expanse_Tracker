@@ -2,11 +2,8 @@
 package user;
 
 import accounts.Account;
-import accounts.Cash;
-import accounts.CreditCard;
-import accounts.DebitCard;
-import accounts.Stocks;
 import exceptions.LimitException;
+import iteration.CustomContainer;
 import iteration.CustomList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +22,8 @@ public class User implements Observer {
   private String lastname;
   private int userID;
   private String password;
-  private CustomList<Account> accounts;
-  private Map<Integer, CustomList<Transaction>> transactions;
-  private CustomList<Transaction> transaction_list;
+  private CustomContainer<Account> accounts;
+  private Map<Integer, CustomContainer<Transaction>> transactions;
 
   /**
    * Creates a new User without any Accounts or Transactions.
@@ -46,84 +42,62 @@ public class User implements Observer {
     this.password = password;
   }
 
-  /** Adds a DebitCard Account to the List of this Users Accounts. */
-  public void addDebitCard(DebitCard debit) {
-    accounts.add(debit);
-  }
-
-  /** Adds a CrebitCard Account to the List of this Users Accounts*  */
-  public void addCreditCard(CreditCard credit) {
-    accounts.add(credit);
-  }
-
-  /** Adds a Stocks Account to the List of this Users Accounts. */
-  public void addStocks(Stocks stock) {
-    accounts.add(stock);
-  }
-
-  /** Adds a Cash Account to the List of this Users Accounts. */
-  public void addCash(Cash cash) {
-    accounts.add(cash);
+  /**
+   * Adds a new Account to the CustomContainer of this Users Accounts.
+   * 
+   * @param acc the new account
+   */
+  public void addAccount(Account acc) {
+    accounts.add(acc);
   }
 
   /**
-   * Throws LimitException if amount of payout is higher than limit
+   * Deductes the specified amount of money from the specified account.
    *
-   * @param category The Category of the Transaction
-   * @param amount The Amount of Money
-   * @param description The Description of the Transaction
+   * @param category the category of the {@code Transaction}
+   * @param amount the amount of money
+   * @param description the description of the {@code Transaction}
+   * @param acc the account where money is deducted from
+   * 
+   * @throws LimitException if the resulting account-balance would be smaller than the limit
    */
   public void payOut(PayoutCategory category, float amount, String description,Account acc) throws LimitException {
     Date date=new Date();
+
+    if(acc.getBalance()-amount<acc.getLimit()) throw new LimitException("Limit exceeded!");
+
     Payout payout=new Payout(date,amount,category,description);
+    acc.payout(amount);
 
-    float condition = acc.getBalance()-amount;
-    if(condition<acc.getLimit()) {
-      throw new LimitException("Limit exceeded!");
-      //System.out.println("unterhalb des Limits");
-    }
-    else
-      acc.payout(amount);
-
-
-    if(transactions.containsKey(acc.getAccount_number()))
-    {
-      //System.out.println("containing");
-      transaction_list=transactions.get(acc.getAccount_number());
-      transaction_list.add(payout);
-      transactions.put(acc.getAccount_number(),transaction_list);
-    }
+    if(transactions.containsKey(acc.getAccount_number())) transactions.get(acc.getAccount_number()).add(payout);
     else
     {
-      //System.out.println("not containing");
-      transaction_list=new CustomList<>();
-      transaction_list.add(payout);
-      transactions.put(acc.getAccount_number(),transaction_list);
+      CustomContainer<Transaction> cont =new CustomList<>();
+      cont.add(payout);
+      transactions.put(acc.getAccount_number(),cont);
     }
   }
 
   /**
-   * @param category The Category of the Transaction
-   * @param amount The Amount of Money
-   * @param description The Description of the Transaction
+   * Adds the specified amount of money to the specified account.
+   *
+   * @param category the category of the {@code Transaction}
+   * @param amount the amount of money
+   * @param description the description of the {@code Transaction}
+   * @param acc the account where money is added to
    */
   public void deposit(DepositCategory category, float amount, String description,Account acc) {
     Date date=new Date();
+    
     Deposit deposit=new Deposit(date,amount,category,description);
     acc.deposit(amount);
 
-    if(transactions.containsKey(acc.getAccount_number()))
-    {
-      //System.out.println("containing");
-      transaction_list=transactions.get(acc.getAccount_number());
-      transaction_list.add(deposit);
-      transactions.put(acc.getAccount_number(),transaction_list);
-    }
+    if(transactions.containsKey(acc.getAccount_number())) transactions.get(acc.getAccount_number()).add(deposit);
     else
     {
-      transaction_list=new CustomList<>();
-      transaction_list.add(deposit);
-      transactions.put(acc.getAccount_number(),transaction_list);
+      CustomContainer<Transaction> cont =new CustomList<>();
+      cont.add(deposit);
+      transactions.put(acc.getAccount_number(),cont);
     }
   }
 
@@ -162,20 +136,20 @@ public class User implements Observer {
   }
 
   /**
-   * Returns a CustomList of this Users' Accounts.
+   * Returns a {@linkplain CustomContainer} of this Users' {@linkplain Account}s.
    *
-   * @return A CustomList of this Users' Accounts
+   * @return A CustomContainer of this Users' Accounts
    */
-  public CustomList<Account> getAccounts() {
+  public CustomContainer<Account> getAccounts() {
     return accounts;
   }
 
   /**
-   * Returns a Map of all the Transactions by the User.
+   * Returns a {@linkplain Map} of all the {@code Transactions} by the User.
    *
    * @return A Map of all the Transactions by the User
    */
-  public Map<Integer, CustomList<Transaction>> getTransactions() {
+  public Map<Integer, CustomContainer<Transaction>> getTransactions() {
     return transactions;
   }
 

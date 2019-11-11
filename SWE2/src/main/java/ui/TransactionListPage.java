@@ -1,8 +1,8 @@
 package ui;
 
 import accounts.*;
+import iteration.CustomContainer;
 import iteration.CustomIterator;
-import iteration.CustomList;
 import transactions.*;
 import user.User;
 
@@ -52,7 +52,7 @@ public class TransactionListPage implements InterfacePage {
 
     String[] TransactionDescription = {"Type", "Descriptions", "Amount", "Creation-Date",
         "Category"};
-    CustomList<Transaction> transactionlist = user.getTransactions().get(acc.getAccount_number());
+    CustomContainer<Transaction> transactionlist = user.getTransactions().get(acc.getAccount_number());
     int listSize = transactionlist == null ? 0 : transactionlist.size();
     String[][] TransactionList_VISU = new String[listSize][6];
 
