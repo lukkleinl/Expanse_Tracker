@@ -143,7 +143,7 @@ public class Add_StockAccountPage implements InterfacePage{
         try {
             Thread.sleep(1);
         }catch (Exception e){ }
-        
+
         return Limit_Double;
     }
 }

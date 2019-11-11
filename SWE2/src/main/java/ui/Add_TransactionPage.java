@@ -7,6 +7,8 @@ import transactions.*;
 import user.User;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
@@ -76,6 +78,19 @@ public class Add_TransactionPage implements InterfacePage{
 
 
         transactionTable = new JTable(TransactionList_VISU,TransactionDescription);
+        
+        //https://stackoverflow.com/questions/9919230/disable-user-edit-in-jtable
+        transactionTable.setDefaultEditor(Object.class, null);
+
+
+
+        //https://stackoverflow.com/questions/10128064/jtable-selected-row-click-event
+        transactionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+
+                System.out.println("selected Row Nr:" + transactionTable.getSelectedRow());
+            }
+        });
 
         scrollPane = new JScrollPane(transactionTable);
         scrollPane.setBounds(300,200,500,500);
