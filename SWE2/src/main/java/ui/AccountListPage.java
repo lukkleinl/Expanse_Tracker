@@ -134,6 +134,12 @@ public class AccountListPage implements InterfacePage {
   }
 
   public Account getSelectedAccount() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
     return selectedAccount;
   }
 

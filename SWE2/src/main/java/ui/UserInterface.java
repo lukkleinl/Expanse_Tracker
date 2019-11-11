@@ -1,5 +1,6 @@
 package ui;
 
+import accounts.Account;
 import java.util.Observable;
 
 import javax.swing.JFrame;
@@ -27,6 +28,7 @@ public class UserInterface {
       //TODO: check if user exists and if password is correct
       if(loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
         //TODO: user = db.getUser(userid)
+        user = TestUser.getTestUser();
         foundUser = true;
       }
       else if(loginPage.isRegistrationWanted()) {
@@ -49,7 +51,11 @@ public class UserInterface {
       }
     }
 
-    AccountTypePage accountTypePage = new AccountTypePage(/*user*/);
+    AccountListPage accountListPage = new AccountListPage(user);
+    accountListPage.configureFrame(frame);
+
+    /*
+    AccountTypePage accountTypePage = new AccountTypePage();
     accountTypePage.configureFrame(frame);
 
     while(true) {
@@ -76,6 +82,7 @@ public class UserInterface {
       }
       accountTypePage.resetPageWanted();
     }
+    */
 
   }
 }
