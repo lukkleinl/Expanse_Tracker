@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Add_DebitAccountPage {
+public class Add_DebitAccountPage implements InterfacePage{
 
     public final static int FRAME_WIDTH = 1200;
     public final static int FRAME_HEIGHT = 800;
@@ -136,17 +136,33 @@ public class Add_DebitAccountPage {
     }
 
     public String getAccName() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
         return AccName_String;
     }
 
     public String getIBANy() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
         return IBAN_STRING;
     }
 
     public double getLimit() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
         return Limit_Double;
     }
     public String getBankName_String() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
         return BankName_String;
     }
 }

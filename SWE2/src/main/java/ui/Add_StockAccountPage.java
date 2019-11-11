@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Add_StockAccountPage {
+public class Add_StockAccountPage implements InterfacePage{
 
     public final static int FRAME_WIDTH = 1200;
     public final static int FRAME_HEIGHT = 800;
@@ -124,14 +124,26 @@ public class Add_StockAccountPage {
     }
 
     public String getAccName() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
         return AccName_String;
     }
 
     public Date getBuyDate() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
         return BuyDate_Date;
     }
 
     public double getLimit() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+        
         return Limit_Double;
     }
 }

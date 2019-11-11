@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-public class Add_CashAccountPage {
+public class Add_CashAccountPage implements InterfacePage {
 
 public final static int FRAME_WIDTH = 1200;
 public final static int FRAME_HEIGHT = 800;
@@ -120,14 +120,26 @@ public static void main(String args[]){
     }
 
     public String getAccName() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
         return AccName_String;
     }
 
     public String getCurrency() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
         return Currency_String;
     }
 
     public double getLimit() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
         return Limit_Double;
     }
 }

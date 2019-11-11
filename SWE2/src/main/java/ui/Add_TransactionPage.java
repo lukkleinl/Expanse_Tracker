@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 
-public class Add_TransactionPage {
+public class Add_TransactionPage implements InterfacePage{
 
     public final static int FRAME_WIDTH = 1200;
     public final static int FRAME_HEIGHT = 800;
