@@ -112,6 +112,11 @@ public class AccountTypePage {
   }
 
   public AccountTypes getPageWanted() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return pageWanted;
   }
 

@@ -33,6 +33,37 @@ public class RegistrationPage {
   private boolean registrationComplete;
 
   public RegistrationPage() {
+    createComponents();
+  }
+
+  public String getUser() {
+    return user;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public boolean isRegistrationComplete() {
+    return registrationComplete;
+  }
+
+  public void configureFrame(JFrame frame) {
+    createComponents();
+    frame.setVisible(false);
+    frame.setTitle("Registration");
+    frame.getContentPane().removeAll();
+    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+    for(JComponent comp : components) {
+      frame.add(comp);
+    }
+    frame.revalidate();
+    frame.repaint();
+    frame.setVisible(true);
+  }
+
+  private void createComponents() {
     user = "";
     password = "";
     registrationComplete = false;
@@ -92,7 +123,7 @@ public class RegistrationPage {
     registerButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        if(!userTextField.getText().equals("") && !passwordTextField.getText().equals("") && !password2TextField.getText().equals("")) {
+        if(!userTextField.getText().equals("") && !passwordTextField.getText().equals("") && !password2TextField.getText().equals("") && !firstnameTextField.getText().equals("") && !lastnameTextField.getText().equals("")) {
           if(passwordTextField.getText().equals(password2TextField.getText())) {
             //TODO: ADD USER HERE
             user = userTextField.getText();
@@ -123,31 +154,5 @@ public class RegistrationPage {
     components.add(firstnameTextField);
     components.add(lastnameLabel);
     components.add(lastnameTextField);
-  }
-
-  public String getUser() {
-    return user;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public boolean isRegistrationComplete() {
-    return registrationComplete;
-  }
-
-  public void configureFrame(JFrame frame) {
-    frame.setVisible(false);
-    frame.setTitle("Registration");
-    frame.getContentPane().removeAll();
-    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-    for(JComponent comp : components) {
-      frame.add(comp);
-    }
-    frame.revalidate();
-    frame.repaint();
-    frame.setVisible(true);
   }
 }

@@ -89,6 +89,11 @@ public class LoginPage {
   }
 
   public boolean isRegistrationWanted() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return registrationWanted;
   }
 
