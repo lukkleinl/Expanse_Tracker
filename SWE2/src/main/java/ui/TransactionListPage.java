@@ -11,13 +11,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Locale;
 
-public class Add_TransactionPage implements InterfacePage{
+public class TransactionListPage implements InterfacePage{
 
     public final static int FRAME_WIDTH = 1200;
     public final static int FRAME_HEIGHT = 800;
@@ -42,7 +38,7 @@ public class Add_TransactionPage implements InterfacePage{
 
 
 
-    public Add_TransactionPage(Account acc,User user) {
+    public TransactionListPage(Account acc,User user) {
 
 
         CustomList<Transaction> transactionlist = user.getTransactions().get(acc.getAccount_number());
@@ -192,7 +188,7 @@ public class Add_TransactionPage implements InterfacePage{
         //TEST DATA
 
         JFrame frame = new JFrame();
-        Add_TransactionPage addp = new Add_TransactionPage(testbankacc,testUser);
+        TransactionListPage addp = new TransactionListPage(testbankacc,testUser);
         addp.configureFrame(frame);
 
     }

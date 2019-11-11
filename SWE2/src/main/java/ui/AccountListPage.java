@@ -9,9 +9,12 @@ import iteration.CustomIterator;
 import iteration.CustomList;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,16 +32,18 @@ public class AccountListPage implements InterfacePage {
   private JLabel welcomeMessage;
   private JTable accountTable;
   private JScrollPane accountTablePane;
-  //ACCOUNTTYP _ NAME _ BALANCE
+  private JButton newAccountButton;
 
   private User user;
 
   private Account selectedAccount;
+  private boolean newAccountWanted;
 
   public AccountListPage(User user) {
     this.user = user;
 
     selectedAccount = null;
+    newAccountWanted = false;
 
     //WELCOME MESSAGE
     welcomeMessage = new JLabel();
@@ -46,10 +51,20 @@ public class AccountListPage implements InterfacePage {
     welcomeMessage.setFont(new Font("Serif", Font.BOLD, 28));
     welcomeMessage.setBounds(100, 50, 1000, 50);
 
+    //NEW ACCOUNT BUTTON
+    newAccountButton = new JButton("CREATE NEW ACCOUNT");
+    newAccountButton.setBounds(400,600, 400, 50);
+    newAccountButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        newAccountWanted = true;
+      }
+    });
+
     //TABLE
     Object[] columnNames = { "Nr.", "Account Type", "Account Name", "Balance"};
     accountTable = new JTable(getAccounts(user), columnNames);
-    accountTable.setRowHeight(100);
+    accountTable.setRowHeight(70);
     accountTable.setDefaultEditor(Object.class, null);
 
 
@@ -86,11 +101,12 @@ public class AccountListPage implements InterfacePage {
 
     //SCROLL PANE
     accountTablePane = new JScrollPane(accountTable);
-    accountTablePane.setBounds(100, 150, 975, 500);
+    accountTablePane.setBounds(100, 150, 975, 370);
 
     components = new ArrayList<>();
     components.add(welcomeMessage);
     components.add(accountTablePane);
+    components.add(newAccountButton);
   }
 
   private Object[][] getAccounts(User user) {
@@ -141,6 +157,16 @@ public class AccountListPage implements InterfacePage {
     }
 
     return selectedAccount;
+  }
+
+  public boolean isNewAccountWanted() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return newAccountWanted;
   }
 
   public void configureFrame(JFrame frame) {

@@ -1,6 +1,7 @@
 package ui;
 
 import accounts.Account;
+import accounts.Cash;
 import java.util.Observable;
 
 import javax.swing.JFrame;
@@ -52,7 +53,45 @@ public class UserInterface {
     }
 
     AccountListPage accountListPage = new AccountListPage(user);
+    AccountTypePage accountTypePage = new AccountTypePage();
+    Add_CashAccountPage add_cashAccountPage = new Add_CashAccountPage();
+    Add_DebitAccountPage add_debitAccountPage = new Add_DebitAccountPage();
+    Add_StockAccountPage add_stockAccountPage = new Add_StockAccountPage();
+    Add_CreditAccountPage add_creditAccountPage = new Add_CreditAccountPage();
+
     accountListPage.configureFrame(frame);
+
+    while (true) {
+
+      if(accountListPage.isNewAccountWanted()) {
+        accountTypePage.configureFrame(frame);
+
+        while(accountTypePage.getPageWanted() == AccountTypes.NONE);
+
+        switch (accountTypePage.getPageWanted()) {
+          case CASH:
+            //TODO: new CashViewPage -> cashViewPage.configureFrame()
+            System.out.println("Cash view should open here");
+            break;
+          case DEBIT:
+            //TODO: new DebitViewPage -> debitViewPage.configureFrame()
+            System.out.println("Debit view should open here");
+            break;
+          case CREDIT:
+            //TODO: new CreditViewPage -> creditViewPage.configureFrame()
+            System.out.println("Credit view should open here");
+            break;
+          case STOCKS:
+            //TODO: new StockViewPage -> stockViewPage.configureFrame()
+            System.out.println("Stock view should open here");
+            break;
+        }
+        accountTypePage.resetPageWanted();
+      }
+      else if(accountListPage.getSelectedAccount() instanceof Cash) {
+      }
+    }
+
 
     /*
     AccountTypePage accountTypePage = new AccountTypePage();
