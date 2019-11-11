@@ -36,6 +36,7 @@ public class Add_CreditAccountPage implements InterfacePage {
   private double Limit_Double = 0.00;
 
   private boolean submitted;
+  private boolean backWanted;
 
 
   public Add_CreditAccountPage() {
@@ -112,9 +113,19 @@ public class Add_CreditAccountPage implements InterfacePage {
     return submitted;
   }
 
+  public boolean isBackWanted() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+    }
+
+    return backWanted;
+  }
+
   private void createComponents() {
     components = new ArrayList<>();
     submitted = false;
+    backWanted = false;
 
     IntroText = new JLabel(
         "Please Enter The relevant Data!" + "                    " + "logged in as:"
@@ -187,7 +198,7 @@ public class Add_CreditAccountPage implements InterfacePage {
     BackButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        //TODO GO BACK
+        backWanted = true;
       }
     });
 

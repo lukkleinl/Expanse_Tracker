@@ -77,30 +77,54 @@ public class UserInterface {
           switch (accountTypePage.getPageWanted()) {
             case CASH:
               add_cashAccountPage.configureFrame(frame);
-              while (!add_cashAccountPage.isSubmitted()) {
+              while (!add_cashAccountPage.isSubmitted() && !add_cashAccountPage.isBackWanted()) {
                 ;
+              }
+              if(add_cashAccountPage.isSubmitted()) {
+                //TODO: ADD ACCOUNT
+              }
+              else {
+                accountTypePage.configureFrame(frame);
               }
               break;
             case DEBIT:
               add_debitAccountPage.configureFrame(frame);
-              while (!add_debitAccountPage.isSubmitted()) {
+              while (!add_debitAccountPage.isSubmitted() && !add_debitAccountPage.isBackWanted()) {
                 ;
+              }
+              if(add_debitAccountPage.isSubmitted()) {
+                //TODO: ADD ACCOUNT
+              }
+              else {
+                accountTypePage.configureFrame(frame);
               }
               break;
             case CREDIT:
               add_creditAccountPage.configureFrame(frame);
-              while (!add_creditAccountPage.isSubmitted()) {
+              while (!add_creditAccountPage.isSubmitted() && !add_creditAccountPage.isBackWanted()) {
                 ;
+              }
+              if(add_creditAccountPage.isSubmitted()) {
+                //TODO:: ADD ACCOUNT
+              }
+              else {
+                accountTypePage.configureFrame(frame);
               }
               break;
             case STOCKS:
               add_stockAccountPage.configureFrame(frame);
-              while (!add_stockAccountPage.isSubmitted()) {
+              while (!add_stockAccountPage.isSubmitted() && !add_stockAccountPage.isBackWanted()) {
                 ;
+              }
+              if(add_stockAccountPage.isSubmitted()) {
+                //TODO: ADD ACCOUNT
+              }
+              else {
+                accountTypePage.configureFrame(frame);
               }
               break;
           }
-          accountListPage.configureFrame(frame);
+          //accountListPage.configureFrame(frame);
         } else {
           accountListPage.configureFrame(frame);
         }
