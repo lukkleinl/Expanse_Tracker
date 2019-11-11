@@ -2,6 +2,7 @@ package iteration;
 
 import java.util.ArrayList;
 import java.util.List;
+import exceptions.NoElementException;
 
 /**
  * * Used to store the Accounts and Transactions of a User with safe access.
@@ -25,27 +26,29 @@ public class CustomList<T> implements CustomContainer<T> {
   }
 
   /**
-   * Adds a new element to the CustomList.
-   *
-   * @param element The element to be added to the list.
+   * Adds a new element in this {@code CustomList}.
+   * 
+   * @param element the new element
    */
+  @Override
   public void add(T element) {
     this.list.add(element);
   }
 
   /**
-   * Returns the number of elements in this CustomList.
-   *
-   * @return the number of elements in this CustomList.
+   * Returns the number of elements in this {@code CustomList}.
+   *   
+   * @return the number of elements in this {@code CustomList}
    */
+  @Override
   public int size() {
     return this.list.size();
   }
 
   /**
-   * Returns a CustomIterator pointing to the first element in the CustomList.
+   * Returns a {@linkplain CustomIterator} pointing to the first element in the {@code CustomList}.
    *
-   * @return A CustomIterator for this List.
+   * @return A {@linkplain CustomIterator} for this List.
    */
   @Override
   public CustomIterator<T> getIterator() {
@@ -62,21 +65,19 @@ public class CustomList<T> implements CustomContainer<T> {
 
     private CustomListIterator() {}
 
-    /** @return true if there is another element in the list after the current one, else false. */
+    /** {@inheritDoc} */
     @Override
     public boolean hasNext() {
       return this.position < CustomList.this.list.size();
     }
 
-    /** @return The current element */
+    /** {@inheritDoc} */
     @Override
-    public T next() {
-      if (hasNext()) {
-        T elem = (T) CustomList.this.list.get(this.position);
-        this.position++;
-        return elem;
-      }
-      return null;
+    public T next() throws NoElementException {
+      if (!hasNext()) throw new NoElementException("This iterator has already processed all elements !");
+      T elem = (T) CustomList.this.list.get(this.position);
+      this.position++;
+      return elem;
     }
   }
 }

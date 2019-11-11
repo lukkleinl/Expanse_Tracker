@@ -1,16 +1,19 @@
 package iteration_tests;
 
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.Iterator;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import exceptions.NoElementException;
+import iteration.CustomIterator;
 import iteration.CustomList;
 
 class CustomListTests {
-  CustomList<String> slist;
+  CustomList<Object> list;
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {}
@@ -20,20 +23,41 @@ class CustomListTests {
 
   @BeforeEach
   void setUp() throws Exception {
-    slist = new CustomList<>();
+    list = new CustomList<>();
   }
 
   @AfterEach
   void tearDown() throws Exception {}
-
+  
   @Test
-  void nextOnNewList_shouldReturnNull() {
-    assertEquals(slist.getIterator().next(), null);
+  void nextOnNewList_shouldThrowNoElementException() {
+    assertThrows(NoElementException.class, () -> list.getIterator().next());
   }
 
   @Test
   void hasNextOnNewList_shouldReturnFalse() {
-    assertEquals(slist.getIterator().hasNext(), false);
+    assertEquals(false,list.getIterator().hasNext());
+  }
+  
+  @Test
+  void addedElement_shouldBeEqual() {
+    Object o = new Object();
+    list.add(o);
+    assertEquals(o,list.getIterator().next());
+  }
+  
+  @Test
+  void sizeOfNewList_shouldBeZero() {
+    assertEquals(0,list.size());
+  }
+  
+  @ParameterizedTest
+  @ValueSource(strings = {"abc","abcd","abcde","abcdef"})
+  void sizeAfterAdding_shouldBeLarger(String param) {
+    for (int i = 0; i < param.length(); i++) {
+      list.add(param.charAt(i));
+    }
+    assertEquals(list.size(),param.length());
   }
 
   @Test
@@ -42,12 +66,12 @@ class CustomListTests {
     String s = "text";
     String nums = "" + number;
 
-    slist.add(s);
-    slist.add(s + number);
-    slist.add(nums);
+    list.add(s);
+    list.add(s + number);
+    list.add(nums);
 
-    String result = "";
-    Iterator<String> iter = slist.getIterator();
+    Object result = "";
+    CustomIterator<Object> iter = list.getIterator();
 
     while (iter.hasNext()) {
       result = iter.next();
@@ -57,22 +81,22 @@ class CustomListTests {
   }
 
   @Test
-  void afterLastElement_shouldNextBeNull() {
+  void nextAfterLastElement_shouldThrowNoElementException() {
     int number = 7;
     String s = "text";
     String nums = "" + number;
 
-    slist.add(s);
-    slist.add(s + number);
-    slist.add(nums);
+    list.add(s);
+    list.add(s + number);
+    list.add(nums);
 
-    Iterator<String> iter = slist.getIterator();
+    CustomIterator<Object> iter = list.getIterator();
 
     while (iter.hasNext()) {
       iter.next();
     }
 
-    assertEquals(null, iter.next());
+    assertThrows(NoElementException.class, () -> iter.next());
   }
 
 }

@@ -1,5 +1,7 @@
 package iteration;
 
+import exceptions.NoElementException;
+
 /**
  * Defines the necessary functionality of all CustomIterators.
  * 
@@ -9,13 +11,17 @@ package iteration;
  */
 public interface CustomIterator<T> {
 	/**
-	 * Return true if there is another element after the current one, else false.
-	 * @return true if there is another element after the current one, else false. 
+	 * Return {@code true} if there is another element after the current one, else {@code false}.
+	 * 
+	 * @return {@code true} if there is another element after the current one, else {@code false}. 
 	 */
 	public boolean hasNext();
 	/**
-	 * Return the current Object if there is one and move to the next element, else return null.
-	 * @return The current Object
+	 * Return the current Object if there is one and move to the next element.
+	 * 
+	 * @return the current Object
+	 * 
+	 * @throws NoElementException if this {@code CustomIterator} has already processed all elements in the list
 	 */
-	public T next();
+	public T next() throws NoElementException;
 }
