@@ -54,11 +54,11 @@ public class Add_DebitAccountPage implements InterfacePage {
   public void configureFrame(JFrame frame) {
     createComponents();
 
-    frame.setVisible(false);
+   // frame.setVisible(false);
     frame.setLayout(null);
     frame.setTitle("Add Debit Card Account");
     frame.getContentPane().removeAll();
-    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+    //frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
     for (JComponent comp : components) {
       frame.add(comp);

@@ -52,7 +52,7 @@ public class Add_StockAccountPage implements InterfacePage {
   public void configureFrame(JFrame frame) {
     createComponents();
 
-    frame.setVisible(false);
+    //frame.setVisible(false);
     frame.setLayout(null);
     frame.setTitle("Add Stock Account");
     frame.getContentPane().removeAll();
@@ -63,7 +63,7 @@ public class Add_StockAccountPage implements InterfacePage {
     }
     frame.revalidate();
     frame.repaint();
-    frame.setVisible(true);
+    //frame.setVisible(true);
   }
 
   public String getAccName() {

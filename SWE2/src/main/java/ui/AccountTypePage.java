@@ -109,7 +109,7 @@ public class AccountTypePage implements InterfacePage {
     pageWanted = AccountTypes.NONE;
     backWanted = false;
 
-    frame.setVisible(false);
+    //frame.setVisible(false);
     frame.setTitle("Account Types");
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -120,7 +120,7 @@ public class AccountTypePage implements InterfacePage {
 
     frame.revalidate();
     frame.repaint();
-    frame.setVisible(true);
+    //frame.setVisible(true);
   }
 
   public AccountTypes getPageWanted() {

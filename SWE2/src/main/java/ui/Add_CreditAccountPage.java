@@ -54,7 +54,8 @@ public class Add_CreditAccountPage implements InterfacePage {
 
   public void configureFrame(JFrame frame) {
     createComponents();
-    frame.setVisible(false);
+
+    //frame.setVisible(false);
     frame.setLayout(null);
     frame.setTitle("Add Credid Card Account");
     frame.getContentPane().removeAll();
@@ -65,7 +66,7 @@ public class Add_CreditAccountPage implements InterfacePage {
     }
     frame.revalidate();
     frame.repaint();
-    frame.setVisible(true);
+    //frame.setVisible(true);
   }
 
   public String getAccName() {

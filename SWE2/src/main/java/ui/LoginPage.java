@@ -119,7 +119,7 @@ public class LoginPage implements InterfacePage {
   }
 
   public void configureFrame(JFrame frame) {
-    frame.setVisible(false);
+    //frame.setVisible(false);
     frame.setTitle("Login");
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -129,6 +129,6 @@ public class LoginPage implements InterfacePage {
     }
     frame.revalidate();
     frame.repaint();
-    frame.setVisible(true);
+    //frame.setVisible(true);
   }
 }

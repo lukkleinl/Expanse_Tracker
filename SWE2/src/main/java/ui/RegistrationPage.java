@@ -56,12 +56,17 @@ public class RegistrationPage implements InterfacePage {
   }
 
   public boolean isRegistrationComplete() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return registrationComplete;
   }
 
   public void configureFrame(JFrame frame) {
     createComponents();
-    frame.setVisible(false);
+    //frame.setVisible(false);
     frame.setTitle("Registration");
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -71,7 +76,7 @@ public class RegistrationPage implements InterfacePage {
     }
     frame.revalidate();
     frame.repaint();
-    frame.setVisible(true);
+    //frame.setVisible(true);
   }
 
   private void createComponents() {

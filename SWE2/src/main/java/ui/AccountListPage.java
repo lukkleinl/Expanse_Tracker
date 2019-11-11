@@ -7,7 +7,6 @@ import accounts.DebitCard;
 import accounts.Stocks;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
-import iteration.CustomList;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -174,7 +173,7 @@ public class AccountListPage implements InterfacePage {
     newAccountWanted = false;
     selectedAccount = null;
 
-    frame.setVisible(false);
+    //frame.setVisible(false);
     frame.setTitle("Account Types");
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -185,7 +184,7 @@ public class AccountListPage implements InterfacePage {
 
     frame.revalidate();
     frame.repaint();
-    frame.setVisible(true);
+    //frame.setVisible(true);
   }
 
   public static void main(String[] args) {

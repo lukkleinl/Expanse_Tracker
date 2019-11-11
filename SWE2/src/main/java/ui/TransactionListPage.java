@@ -248,7 +248,7 @@ public class TransactionListPage implements InterfacePage {
     newPayoutWanted = false;
     backWanted = false;
 
-    frame.setVisible(false);
+    //frame.setVisible(false);
     frame.setLayout(null);
     frame.setTitle("Add Cash Account");
     frame.getContentPane().removeAll();
@@ -259,6 +259,6 @@ public class TransactionListPage implements InterfacePage {
     }
     frame.revalidate();
     frame.repaint();
-    frame.setVisible(true);
+    //frame.setVisible(true);
   }
 }
