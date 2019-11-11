@@ -38,6 +38,73 @@ public class Add_DebitAccountPage implements InterfacePage{
     private boolean submitted;
 
     public Add_DebitAccountPage() {
+        createComponents();
+    }
+    /* TESTING PURPOSES ONLY */
+    public static void main(String args[]){
+
+        JFrame frame = new JFrame();
+        Add_DebitAccountPage addp = new Add_DebitAccountPage();
+        addp.configureFrame(frame);
+
+    }
+    public void configureFrame(JFrame frame) {
+        createComponents();
+
+        frame.setVisible(false);
+        frame.setLayout(null);
+        frame.setTitle("Add Debit Card Account");
+        frame.getContentPane().removeAll();
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+        for(JComponent comp: components) {
+            frame.add(comp);
+        }
+        frame.revalidate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
+    public String getAccName() {
+        try {
+            Thread.sleep(1);
+        } catch (Exception e){ }
+
+        return AccName_String;
+    }
+
+    public String getIBANy() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
+        return IBAN_STRING;
+    }
+
+    public double getLimit() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
+        return Limit_Double;
+    }
+    public String getBankName_String() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
+        return BankName_String;
+    }
+
+    public boolean isSubmitted() {
+        try {
+            Thread.sleep(1);
+        } catch (Exception e){ }
+
+        return submitted;
+    }
+
+    private void createComponents() {
         components = new ArrayList<>();
         submitted = false;
 
@@ -92,10 +159,10 @@ public class Add_DebitAccountPage implements InterfacePage{
                 //TODO check limit and IBAN
 
                 System.out.println(
-                        "Name: " + AccName_String +
-                                "\nIBAN: " +IBAN_STRING+
-                                "\nLimit: " + Limit_Double+
-                                "\nBankName: " + BankName_String
+                    "Name: " + AccName_String +
+                        "\nIBAN: " +IBAN_STRING+
+                        "\nLimit: " + Limit_Double+
+                        "\nBankName: " + BankName_String
                 );
 
                 submitted = true;
@@ -115,67 +182,5 @@ public class Add_DebitAccountPage implements InterfacePage{
         });
 
 
-    }
-    /* TESTING PURPOSES ONLY */
-    public static void main(String args[]){
-
-        JFrame frame = new JFrame();
-        Add_DebitAccountPage addp = new Add_DebitAccountPage();
-        addp.configureFrame(frame);
-
-    }
-    public void configureFrame(JFrame frame) {
-        submitted = false;
-        frame.setVisible(false);
-        frame.setLayout(null);
-        frame.setTitle("Add Debit Card Account");
-        frame.getContentPane().removeAll();
-        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-        for(JComponent comp: components) {
-            frame.add(comp);
-        }
-        frame.revalidate();
-        frame.repaint();
-        frame.setVisible(true);
-    }
-
-    public String getAccName() {
-        try {
-            Thread.sleep(1);
-        } catch (Exception e){ }
-
-        return AccName_String;
-    }
-
-    public String getIBANy() {
-        try {
-            Thread.sleep(1);
-        }catch (Exception e){ }
-
-        return IBAN_STRING;
-    }
-
-    public double getLimit() {
-        try {
-            Thread.sleep(1);
-        }catch (Exception e){ }
-
-        return Limit_Double;
-    }
-    public String getBankName_String() {
-        try {
-            Thread.sleep(1);
-        }catch (Exception e){ }
-
-        return BankName_String;
-    }
-
-    public boolean isSubmitted() {
-        try {
-            Thread.sleep(1);
-        } catch (Exception e){ }
-
-        return submitted;
     }
 }

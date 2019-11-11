@@ -32,46 +32,60 @@ public class TransactionListPage implements InterfacePage{
     private JLabel CustomLabel2;
     private JLabel CustomLabel3;
     private JButton BackButton;
+    private JButton newDepositButton;
+    private JButton newPayoutButton;
 
     private JTable transactionTable;
     private JScrollPane scrollPane;
 
+    private boolean newDepositWanted;
+    private boolean newPayoutWanted;
+    private boolean backWanted;
+
 
 
     public TransactionListPage(Account acc,User user) {
+        newDepositWanted = false;
+        newPayoutWanted = false;
+        backWanted = false;
 
-
-        CustomList<Transaction> transactionlist = user.getTransactions().get(acc.getAccount_number());
-        CustomIterator<Transaction> it = transactionlist.getIterator();
 
         components = new ArrayList<>();
 
         String[] TransactionDescription = {"Type","Descriptions","Amount","Creation-Date","Category"};
-        String[][] TransactionList_VISU = new String[transactionlist.size()][6];
+        CustomList<Transaction> transactionlist = user.getTransactions().get(acc.getAccount_number());
+        int listSize = transactionlist == null ? 0 : transactionlist.size();
+        String[][] TransactionList_VISU = new String[listSize][6];
 
-        int i=0;
+        if(listSize > 0) {
 
-        while(it.hasNext()){
-            Transaction transtemp = it.next();
+            CustomIterator<Transaction> it = transactionlist.getIterator();
 
-            if(transtemp instanceof Payout){
-                TransactionList_VISU[i][0] = "Payout";
-                TransactionList_VISU[i][4] = ((Payout)transtemp).getPayoutCategory().toString();
+
+            int i = 0;
+
+            while (it.hasNext()) {
+                Transaction transtemp = it.next();
+
+                if (transtemp instanceof Payout) {
+                    TransactionList_VISU[i][0] = "Payout";
+                    TransactionList_VISU[i][4] = ((Payout) transtemp).getPayoutCategory()
+                        .toString();
+                } else {
+                    TransactionList_VISU[i][0] = "Deposit";
+                    TransactionList_VISU[i][4] = ((Deposit) transtemp).getDepositCategory()
+                        .toString();
+                }
+
+                TransactionList_VISU[i][1] = transtemp.getDescription();
+                TransactionList_VISU[i][2] = "" + transtemp.getAmount();
+                TransactionList_VISU[i][5] = "" + transtemp.getID();
+                TransactionList_VISU[i++][3] = transtemp.getCreationDate().toString();
+
+
             }
-            else {
-                TransactionList_VISU[i][0] = "Deposit";
-                TransactionList_VISU[i][4] = ((Deposit)transtemp).getDepositCategory().toString();
-            }
-
-
-            TransactionList_VISU[i][1] = transtemp.getDescription();
-            TransactionList_VISU[i][2] = ""+transtemp.getAmount();
-            TransactionList_VISU[i][5] = ""+transtemp.getID();
-            TransactionList_VISU[i++][3] = transtemp.getCreationDate().toString();
-
 
         }
-
 
 
         transactionTable = new JTable(TransactionList_VISU,TransactionDescription);
@@ -93,7 +107,7 @@ public class TransactionListPage implements InterfacePage{
         });
 
         scrollPane = new JScrollPane(transactionTable);
-        scrollPane.setBounds(300,200,500,500);
+        scrollPane.setBounds(300,100,700,450);
         components.add(scrollPane);
 
 
@@ -157,10 +171,29 @@ public class TransactionListPage implements InterfacePage{
         BackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO GO BACK
+                backWanted = true;
             }
         });
 
+        newPayoutButton = new JButton("NEW PAYOUT");
+        newPayoutButton.setBounds(400,600,200,70);
+        newPayoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newPayoutWanted = true;
+            }
+        });
+        components.add(newPayoutButton);
+
+        newDepositButton = new JButton("NEW DEPOST");
+        newDepositButton.setBounds(700,600,200,70);
+        newDepositButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newDepositWanted = true;
+            }
+        });
+        components.add(newDepositButton);
 
     }
     /* TESTING PURPOSES ONLY */
@@ -188,11 +221,41 @@ public class TransactionListPage implements InterfacePage{
         //TEST DATA
 
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         TransactionListPage addp = new TransactionListPage(testbankacc,testUser);
         addp.configureFrame(frame);
 
     }
+
+    public boolean isNewDepositWanted() {
+        try {
+            Thread.sleep(1);
+        } catch (Exception e) {}
+
+        return newDepositWanted;
+    }
+
+    public boolean isNewPayoutWanted() {
+        try {
+            Thread.sleep(1);
+        } catch (Exception e) {}
+
+        return newPayoutWanted;
+    }
+
+    public boolean isBackWanted() {
+        try {
+            Thread.sleep(1);
+        } catch (Exception e) {}
+
+        return backWanted;
+    }
+
     public void configureFrame(JFrame frame) {
+        newDepositWanted = false;
+        newPayoutWanted = false;
+        backWanted = false;
+
         frame.setVisible(false);
         frame.setLayout(null);
         frame.setTitle("Add Cash Account");

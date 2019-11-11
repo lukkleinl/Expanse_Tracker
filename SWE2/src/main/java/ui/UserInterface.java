@@ -20,6 +20,7 @@ public class UserInterface {
     frame.setLayout(null);
     frame.setResizable(false);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    //frame.setLocationRelativeTo(null);
 
     loginPage.configureFrame(frame);
 
@@ -67,65 +68,55 @@ public class UserInterface {
       if(accountListPage.isNewAccountWanted()) {
         accountTypePage.configureFrame(frame);
 
-        while(accountTypePage.getPageWanted() == AccountTypes.NONE);
+        while(accountTypePage.getPageWanted() == AccountTypes.NONE && !accountTypePage.isBackWanted());
 
-        switch (accountTypePage.getPageWanted()) {
-          case CASH:
-            add_cashAccountPage.configureFrame(frame);
-            while(!add_cashAccountPage.isSubmitted());
-            break;
-          case DEBIT:
-            add_debitAccountPage.configureFrame(frame);
-            while (!add_debitAccountPage.isSubmitted());
-            break;
-          case CREDIT:
-            add_creditAccountPage.configureFrame(frame);
-            while (!add_creditAccountPage.isSubmitted());
-            break;
-          case STOCKS:
-            add_stockAccountPage.configureFrame(frame);
-            while(!add_stockAccountPage.isSubmitted());
-            break;
+        if(!accountTypePage.isBackWanted()) {
+          switch (accountTypePage.getPageWanted()) {
+            case CASH:
+              add_cashAccountPage.configureFrame(frame);
+              while (!add_cashAccountPage.isSubmitted());
+              break;
+            case DEBIT:
+              add_debitAccountPage.configureFrame(frame);
+              while (!add_debitAccountPage.isSubmitted());
+              break;
+            case CREDIT:
+              add_creditAccountPage.configureFrame(frame);
+              while (!add_creditAccountPage.isSubmitted());
+              break;
+            case STOCKS:
+              add_stockAccountPage.configureFrame(frame);
+              while (!add_stockAccountPage.isSubmitted());
+              break;
+          }
+          accountListPage.configureFrame(frame);
         }
-        accountTypePage.resetPageWanted();
-        accountListPage.configureFrame(frame);
+        else {
+          accountListPage.configureFrame(frame);
+        }
       }
-      else if(accountListPage.getSelectedAccount() instanceof Cash) {
+      else if(accountListPage.getSelectedAccount() != null) {
         transactionListPage = new TransactionListPage(accountListPage.getSelectedAccount(), user);
         transactionListPage.configureFrame(frame);
+
+        while(!transactionListPage.isNewDepositWanted() && !transactionListPage.isNewPayoutWanted() && !transactionListPage.isBackWanted());
+
+        if(transactionListPage.isNewPayoutWanted()) {
+          //open new Payout Page, for tests now add  cash account
+          add_cashAccountPage.configureFrame(frame);
+          while(!add_cashAccountPage.isSubmitted());
+        }
+        else if(transactionListPage.isNewDepositWanted()) {
+          //open new Deposit Page, for tests now add a credit account
+          add_creditAccountPage.configureFrame(frame);
+          while(!add_creditAccountPage.isSubmitted());
+        }
+        else {
+          accountListPage.configureFrame(frame);
+        }
       }
     }
 
-
-    /*
-    AccountTypePage accountTypePage = new AccountTypePage();
-    accountTypePage.configureFrame(frame);
-
-    while(true) {
-
-      while (accountTypePage.getPageWanted() == AccountTypes.NONE);
-
-      switch (accountTypePage.getPageWanted()) {
-        case CASH:
-          //TODO: new CashViewPage -> cashViewPage.configureFrame()
-          System.out.println("Cash view should open here");
-          break;
-        case DEBIT:
-          //TODO: new DebitViewPage -> debitViewPage.configureFrame()
-          System.out.println("Debit view should open here");
-          break;
-        case CREDIT:
-          //TODO: new CreditViewPage -> creditViewPage.configureFrame()
-          System.out.println("Credit view should open here");
-          break;
-        case STOCKS:
-          //TODO: new StockViewPage -> stockViewPage.configureFrame()
-          System.out.println("Stock view should open here");
-          break;
-      }
-      accountTypePage.resetPageWanted();
-    }
-    */
 
   }
 }

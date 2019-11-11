@@ -112,19 +112,23 @@ public class AccountListPage implements InterfacePage {
   private Object[][] getAccounts(User user) {
     CustomList<Account> userAccounts = user.getAccounts();
 
-    Object[][] accounts = new Object[userAccounts.size()][4];
+    int listSize = userAccounts == null ? 0 : userAccounts.size();
 
-    CustomIterator<Account> iterator = userAccounts.getIterator();
-    int i = 0;
+    Object[][] accounts = new Object[listSize][4];
 
-    while (iterator.hasNext()) {
-      Account acc = iterator.next();
+    if(listSize > 0) {
+      CustomIterator<Account> iterator = userAccounts.getIterator();
+      int i = 0;
 
-      accounts[i][0] = acc.getAccount_number();
-      accounts[i][1] = getAccountType(acc);
-      accounts[i][2] = acc.getName();
-      accounts[i][3] = acc.getBalance();
-      ++i;
+      while (iterator.hasNext()) {
+        Account acc = iterator.next();
+
+        accounts[i][0] = acc.getAccount_number();
+        accounts[i][1] = getAccountType(acc);
+        accounts[i][2] = acc.getName();
+        accounts[i][3] = acc.getBalance();
+        ++i;
+      }
     }
 
     return accounts;

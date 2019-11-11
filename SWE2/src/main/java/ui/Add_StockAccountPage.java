@@ -35,6 +35,66 @@ public class Add_StockAccountPage implements InterfacePage{
 
 
     public Add_StockAccountPage() {
+        createComponents();
+    }
+    /* TESTING PURPOSES ONLY */
+    public static void main(String args[]){
+
+        JFrame frame = new JFrame();
+        Add_StockAccountPage addp = new Add_StockAccountPage();
+        addp.configureFrame(frame);
+
+    }
+    public void configureFrame(JFrame frame) {
+        createComponents();
+
+        frame.setVisible(false);
+        frame.setLayout(null);
+        frame.setTitle("Add Stock Account");
+        frame.getContentPane().removeAll();
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+        for(JComponent comp: components) {
+            frame.add(comp);
+        }
+        frame.revalidate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
+    public String getAccName() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
+        return AccName_String;
+    }
+
+    public Date getBuyDate() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
+        return BuyDate_Date;
+    }
+
+    public double getLimit() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
+        return Limit_Double;
+    }
+
+    public boolean isSubmitted() {
+        try {
+            Thread.sleep(1);
+        } catch (Exception e){ }
+
+        return submitted;
+    }
+
+    private void createComponents() {
         components = new ArrayList<>();
         submitted = false;
 
@@ -81,13 +141,13 @@ public class Add_StockAccountPage implements InterfacePage{
 
                 //TODO check limit and DATE
 
-            System.out.println(
+                System.out.println(
                     "Name: " + AccName_String +
-                    "\nBuyDate: " + BuyDate_Date+
-                    "\nLimit: " + Limit_Double
-            );
+                        "\nBuyDate: " + BuyDate_Date+
+                        "\nLimit: " + Limit_Double
+                );
 
-            submitted = true;
+                submitted = true;
             }
         });
 
@@ -102,60 +162,5 @@ public class Add_StockAccountPage implements InterfacePage{
         });
 
 
-    }
-    /* TESTING PURPOSES ONLY */
-    public static void main(String args[]){
-
-        JFrame frame = new JFrame();
-        Add_StockAccountPage addp = new Add_StockAccountPage();
-        addp.configureFrame(frame);
-
-    }
-    public void configureFrame(JFrame frame) {
-        submitted = false;
-        frame.setVisible(false);
-        frame.setLayout(null);
-        frame.setTitle("Add Stock Account");
-        frame.getContentPane().removeAll();
-        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-        for(JComponent comp: components) {
-            frame.add(comp);
-        }
-        frame.revalidate();
-        frame.repaint();
-        frame.setVisible(true);
-    }
-
-    public String getAccName() {
-        try {
-            Thread.sleep(1);
-        }catch (Exception e){ }
-
-        return AccName_String;
-    }
-
-    public Date getBuyDate() {
-        try {
-            Thread.sleep(1);
-        }catch (Exception e){ }
-
-        return BuyDate_Date;
-    }
-
-    public double getLimit() {
-        try {
-            Thread.sleep(1);
-        }catch (Exception e){ }
-
-        return Limit_Double;
-    }
-
-    public boolean isSubmitted() {
-        try {
-            Thread.sleep(1);
-        } catch (Exception e){ }
-
-        return submitted;
     }
 }

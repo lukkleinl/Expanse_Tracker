@@ -39,6 +39,72 @@ public class Add_CreditAccountPage implements InterfacePage {
 
 
     public Add_CreditAccountPage() {
+        createComponents();
+    }
+    /* TESTING PURPOSES ONLY */
+    public static void main(String args[]){
+
+        JFrame frame = new JFrame();
+        Add_CreditAccountPage addp = new Add_CreditAccountPage();
+        addp.configureFrame(frame);
+
+    }
+    public void configureFrame(JFrame frame) {
+        createComponents();
+        frame.setVisible(false);
+        frame.setLayout(null);
+        frame.setTitle("Add Credid Card Account");
+        frame.getContentPane().removeAll();
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+        for(JComponent comp: components) {
+            frame.add(comp);
+        }
+        frame.revalidate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
+    public String getAccName() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
+        return AccName_String;
+    }
+
+    public Date getExpiry(){
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
+        return Expiry_Date;
+    }
+
+    public double getLimit() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
+        return Limit_Double;
+    }
+    public String getBankName_String() {
+        try {
+            Thread.sleep(1);
+        }catch (Exception e){ }
+
+        return BankName_String;
+    }
+
+    public boolean isSubmitted() {
+        try {
+            Thread.sleep(1);
+        } catch (Exception e){ }
+
+        return submitted;
+    }
+
+    private void createComponents() {
         components = new ArrayList<>();
         submitted = false;
 
@@ -96,11 +162,11 @@ public class Add_CreditAccountPage implements InterfacePage {
 
                 System.out.println(
                     "Name: " + AccName_String +
-                    "\nDate: " + Expiry_Date+
-                    "\nLimit: " + Limit_Double+
-                    "\nBankName: " + BankName_String
-            );
-            submitted = true;
+                        "\nDate: " + Expiry_Date+
+                        "\nLimit: " + Limit_Double+
+                        "\nBankName: " + BankName_String
+                );
+                submitted = true;
 
             }
         });
@@ -116,68 +182,5 @@ public class Add_CreditAccountPage implements InterfacePage {
         });
 
 
-    }
-    /* TESTING PURPOSES ONLY */
-    public static void main(String args[]){
-
-        JFrame frame = new JFrame();
-        Add_CreditAccountPage addp = new Add_CreditAccountPage();
-        addp.configureFrame(frame);
-
-    }
-    public void configureFrame(JFrame frame) {
-        submitted = false;
-
-        frame.setVisible(false);
-        frame.setLayout(null);
-        frame.setTitle("Add Credid Card Account");
-        frame.getContentPane().removeAll();
-        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-        for(JComponent comp: components) {
-            frame.add(comp);
-        }
-        frame.revalidate();
-        frame.repaint();
-        frame.setVisible(true);
-    }
-
-    public String getAccName() {
-        try {
-            Thread.sleep(1);
-        }catch (Exception e){ }
-
-        return AccName_String;
-    }
-
-    public Date getExpiry(){
-        try {
-            Thread.sleep(1);
-        }catch (Exception e){ }
-
-        return Expiry_Date;
-    }
-
-    public double getLimit() {
-        try {
-            Thread.sleep(1);
-        }catch (Exception e){ }
-
-        return Limit_Double;
-    }
-    public String getBankName_String() {
-        try {
-            Thread.sleep(1);
-        }catch (Exception e){ }
-
-        return BankName_String;
-    }
-
-    public boolean isSubmitted() {
-        try {
-            Thread.sleep(1);
-        } catch (Exception e){ }
-
-        return submitted;
     }
 }

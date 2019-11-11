@@ -21,22 +21,22 @@ public class AccountTypePage implements InterfacePage {
   private JButton debitCardButton;
   private JButton cashButton;
   private JButton stockButton;
+  private JButton backButton;
 
   private AccountTypes pageWanted;
-  private User user;
 
-  public AccountTypePage(/*User user*/) {
+  private boolean backWanted;
 
-    /*this.user = user;
-     */
+  public AccountTypePage() {
+
     pageWanted = AccountTypes.NONE;
     components = new ArrayList<>();
 
     //WELCOME MESSAGE
     welcomeMessage = new JLabel();
-    welcomeMessage.setText("Welcome *insert username here*!");
+    welcomeMessage.setText("Select the type of account you want to add!");
     welcomeMessage.setFont(new Font("Serif", Font.BOLD, 28));
-    welcomeMessage.setBounds(100,50,1000,50);
+    welcomeMessage.setBounds(350,50,1000,50);
 
     //CREDITCARD BUTTON
     creditCardButton = new JButton("CREDIT CARD ACCOUNTS");
@@ -87,15 +87,27 @@ public class AccountTypePage implements InterfacePage {
       }
     });
 
+    backButton = new JButton("BACK");
+    backButton.setBounds(10,10,100,50);
+    backButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        backWanted = true;
+      }
+    });
+
     components.add(welcomeMessage);
     components.add(creditCardButton);
     components.add(debitCardButton);
     components.add(cashButton);
     components.add(stockButton);
+    components.add(backButton);
 
   }
 
   public void configureFrame(JFrame frame){
+    pageWanted = AccountTypes.NONE;
+    backWanted = false;
 
     frame.setVisible(false);
     frame.setTitle("Account Types");
@@ -120,7 +132,13 @@ public class AccountTypePage implements InterfacePage {
     return pageWanted;
   }
 
-  public void resetPageWanted() {
-    this.pageWanted = AccountTypes.NONE;
+  public boolean isBackWanted() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return backWanted;
   }
 }
