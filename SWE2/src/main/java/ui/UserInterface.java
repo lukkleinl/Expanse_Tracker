@@ -58,6 +58,7 @@ public class UserInterface {
     Add_DebitAccountPage add_debitAccountPage = new Add_DebitAccountPage();
     Add_StockAccountPage add_stockAccountPage = new Add_StockAccountPage();
     Add_CreditAccountPage add_creditAccountPage = new Add_CreditAccountPage();
+    TransactionListPage transactionListPage;
 
     accountListPage.configureFrame(frame);
 
@@ -70,25 +71,28 @@ public class UserInterface {
 
         switch (accountTypePage.getPageWanted()) {
           case CASH:
-            //TODO: new CashViewPage -> cashViewPage.configureFrame()
-            System.out.println("Cash view should open here");
+            add_cashAccountPage.configureFrame(frame);
+            while(!add_cashAccountPage.isSubmitted());
             break;
           case DEBIT:
-            //TODO: new DebitViewPage -> debitViewPage.configureFrame()
-            System.out.println("Debit view should open here");
+            add_debitAccountPage.configureFrame(frame);
+            while (!add_debitAccountPage.isSubmitted());
             break;
           case CREDIT:
-            //TODO: new CreditViewPage -> creditViewPage.configureFrame()
-            System.out.println("Credit view should open here");
+            add_creditAccountPage.configureFrame(frame);
+            while (!add_creditAccountPage.isSubmitted());
             break;
           case STOCKS:
-            //TODO: new StockViewPage -> stockViewPage.configureFrame()
-            System.out.println("Stock view should open here");
+            add_stockAccountPage.configureFrame(frame);
+            while(!add_stockAccountPage.isSubmitted());
             break;
         }
         accountTypePage.resetPageWanted();
+        accountListPage.configureFrame(frame);
       }
       else if(accountListPage.getSelectedAccount() instanceof Cash) {
+        transactionListPage = new TransactionListPage(accountListPage.getSelectedAccount(), user);
+        transactionListPage.configureFrame(frame);
       }
     }
 

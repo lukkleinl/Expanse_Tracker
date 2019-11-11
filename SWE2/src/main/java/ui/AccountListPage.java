@@ -170,6 +170,9 @@ public class AccountListPage implements InterfacePage {
   }
 
   public void configureFrame(JFrame frame) {
+    newAccountWanted = false;
+    selectedAccount = null;
+
     frame.setVisible(false);
     frame.setTitle("Account Types");
     frame.getContentPane().removeAll();

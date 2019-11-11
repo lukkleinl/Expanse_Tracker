@@ -31,9 +31,12 @@ public class Add_StockAccountPage implements InterfacePage{
     private Date BuyDate_Date;
     private double Limit_Double = 0.00;
 
+    private boolean submitted;
+
 
     public Add_StockAccountPage() {
         components = new ArrayList<>();
+        submitted = false;
 
         IntroText = new JLabel("Please Enter The relevant Data!"+"                    "+"logged in as:"+"<USERNAME>");
         IntroText.setBounds(300,10,800,50);
@@ -84,7 +87,7 @@ public class Add_StockAccountPage implements InterfacePage{
                     "\nLimit: " + Limit_Double
             );
 
-
+            submitted = true;
             }
         });
 
@@ -109,6 +112,7 @@ public class Add_StockAccountPage implements InterfacePage{
 
     }
     public void configureFrame(JFrame frame) {
+        submitted = false;
         frame.setVisible(false);
         frame.setLayout(null);
         frame.setTitle("Add Stock Account");
@@ -145,5 +149,13 @@ public class Add_StockAccountPage implements InterfacePage{
         }catch (Exception e){ }
 
         return Limit_Double;
+    }
+
+    public boolean isSubmitted() {
+        try {
+            Thread.sleep(1);
+        } catch (Exception e){ }
+
+        return submitted;
     }
 }

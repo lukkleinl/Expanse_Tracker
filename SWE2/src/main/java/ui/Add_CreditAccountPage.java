@@ -35,9 +35,12 @@ public class Add_CreditAccountPage implements InterfacePage {
     private Date Expiry_Date;
     private double Limit_Double = 0.00;
 
+    private boolean submitted;
+
 
     public Add_CreditAccountPage() {
         components = new ArrayList<>();
+        submitted = false;
 
         IntroText = new JLabel("Please Enter The relevant Data!"+"                    "+"logged in as:"+"<USERNAME>");
         IntroText.setBounds(300,10,800,50);
@@ -97,7 +100,7 @@ public class Add_CreditAccountPage implements InterfacePage {
                     "\nLimit: " + Limit_Double+
                     "\nBankName: " + BankName_String
             );
-
+            submitted = true;
 
             }
         });
@@ -123,6 +126,8 @@ public class Add_CreditAccountPage implements InterfacePage {
 
     }
     public void configureFrame(JFrame frame) {
+        submitted = false;
+
         frame.setVisible(false);
         frame.setLayout(null);
         frame.setTitle("Add Credid Card Account");
@@ -166,5 +171,13 @@ public class Add_CreditAccountPage implements InterfacePage {
         }catch (Exception e){ }
 
         return BankName_String;
+    }
+
+    public boolean isSubmitted() {
+        try {
+            Thread.sleep(1);
+        } catch (Exception e){ }
+
+        return submitted;
     }
 }
