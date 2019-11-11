@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class AccountTypePage implements InterfacePage {
+
   private final int FRAME_WIDTH = 1200;
   private final int FRAME_HEIGHT = 800;
 
@@ -36,13 +37,13 @@ public class AccountTypePage implements InterfacePage {
     welcomeMessage = new JLabel();
     welcomeMessage.setText("Select the type of account you want to add!");
     welcomeMessage.setFont(new Font("Serif", Font.BOLD, 28));
-    welcomeMessage.setBounds(350,50,1000,50);
+    welcomeMessage.setBounds(350, 50, 1000, 50);
 
     //CREDITCARD BUTTON
     creditCardButton = new JButton("CREDIT CARD ACCOUNTS");
     creditCardButton.setBounds(200, 150, 350, 200);
-    creditCardButton.setFont(new Font("Serif",Font.PLAIN,22));
-    creditCardButton.setBackground(new Color(255,184,77));
+    creditCardButton.setFont(new Font("Serif", Font.PLAIN, 22));
+    creditCardButton.setBackground(new Color(255, 184, 77));
     creditCardButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -53,8 +54,8 @@ public class AccountTypePage implements InterfacePage {
     //DEBITCARD BUTTON
     debitCardButton = new JButton("DEBIT CARD ACCOUNTS");
     debitCardButton.setBounds(650, 150, 350, 200);
-    debitCardButton.setFont(new Font("Serif",Font.PLAIN,22));
-    debitCardButton.setBackground(new Color(255,184,77));
+    debitCardButton.setFont(new Font("Serif", Font.PLAIN, 22));
+    debitCardButton.setBackground(new Color(255, 184, 77));
     debitCardButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -62,12 +63,11 @@ public class AccountTypePage implements InterfacePage {
       }
     });
 
-
     //CASH BUTTON
     cashButton = new JButton("CASH ACCOUNTS");
-    cashButton.setBounds(200, 450,350,200);
-    cashButton.setFont(new Font("Serif",Font.PLAIN,22));
-    cashButton.setBackground(new Color(255,184,77));
+    cashButton.setBounds(200, 450, 350, 200);
+    cashButton.setFont(new Font("Serif", Font.PLAIN, 22));
+    cashButton.setBackground(new Color(255, 184, 77));
     cashButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -77,9 +77,9 @@ public class AccountTypePage implements InterfacePage {
 
     //STOCK BUTTON
     stockButton = new JButton("STOCK ACCOUNTS");
-    stockButton.setBounds(650, 450,350,200);
-    stockButton.setFont(new Font("Serif",Font.PLAIN,22));
-    stockButton.setBackground(new Color(255,184,77));
+    stockButton.setBounds(650, 450, 350, 200);
+    stockButton.setFont(new Font("Serif", Font.PLAIN, 22));
+    stockButton.setBackground(new Color(255, 184, 77));
     stockButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -88,7 +88,7 @@ public class AccountTypePage implements InterfacePage {
     });
 
     backButton = new JButton("BACK");
-    backButton.setBounds(10,10,100,50);
+    backButton.setBounds(10, 10, 100, 50);
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -105,7 +105,7 @@ public class AccountTypePage implements InterfacePage {
 
   }
 
-  public void configureFrame(JFrame frame){
+  public void configureFrame(JFrame frame) {
     pageWanted = AccountTypes.NONE;
     backWanted = false;
 
@@ -114,7 +114,7 @@ public class AccountTypePage implements InterfacePage {
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
-    for(JComponent comp: components) {
+    for (JComponent comp : components) {
       frame.add(comp);
     }
 

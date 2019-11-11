@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class RegistrationPage implements InterfacePage {
+
   private ArrayList<JComponent> components;
   private JLabel userLabel;
   private JLabel passwordLabel;
@@ -65,7 +66,7 @@ public class RegistrationPage implements InterfacePage {
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
-    for(JComponent comp : components) {
+    for (JComponent comp : components) {
       frame.add(comp);
     }
     frame.revalidate();
@@ -80,72 +81,72 @@ public class RegistrationPage implements InterfacePage {
 
     //INFO_LABEL
     infoLabel = new JLabel();
-    infoLabel.setBounds(130,380,150,30);
+    infoLabel.setBounds(130, 380, 150, 30);
 
     //USER_LABEL
     userLabel = new JLabel();
     userLabel.setText("User ID:");
-    userLabel.setBounds(30,40,100,30);
+    userLabel.setBounds(30, 40, 100, 30);
 
     //USER_TEXTFIELD
     userTextField = new JTextField();
-    userTextField.setBounds(130,40,150,30);
+    userTextField.setBounds(130, 40, 150, 30);
 
     //PASSWORD_LABEL
     passwordLabel = new JLabel();
     passwordLabel.setText("Password:");
-    passwordLabel.setBounds(30,100,100,30);
+    passwordLabel.setBounds(30, 100, 100, 30);
 
     //PASSWORD_TEXTFIELD
     passwordTextField = new JTextField();
-    passwordTextField.setBounds(130,100,150,30);
+    passwordTextField.setBounds(130, 100, 150, 30);
 
     //PASSWORD2_LABEL
     password2Label = new JLabel();
     password2Label.setText("Retype PW:");
-    password2Label.setBounds(30,160, 100, 30);
+    password2Label.setBounds(30, 160, 100, 30);
 
     //PASSWORD2_TEXTFIELD
     password2TextField = new JTextField();
-    password2TextField.setBounds(130,160,150,30);
+    password2TextField.setBounds(130, 160, 150, 30);
 
     //FIRSTNAME_LABEL
     firstnameLabel = new JLabel();
     firstnameLabel.setText("Firstname:");
-    firstnameLabel.setBounds(30,220,100,30);
+    firstnameLabel.setBounds(30, 220, 100, 30);
 
     //FIRSTNAME_TEXTFIELD
     firstnameTextField = new JTextField();
-    firstnameTextField.setBounds(130, 220,150,30);
+    firstnameTextField.setBounds(130, 220, 150, 30);
 
     //LASTNAME_TEXTFIELD
     lastnameLabel = new JLabel();
     lastnameLabel.setText("Firstname:");
-    lastnameLabel.setBounds(30,280,100,30);
+    lastnameLabel.setBounds(30, 280, 100, 30);
 
     //FIRSTNAME_TEXTFIELD
     lastnameTextField = new JTextField();
-    lastnameTextField.setBounds(130, 280,150,30);
+    lastnameTextField.setBounds(130, 280, 150, 30);
 
     //REGISTER_BUTTON
     registerButton = new JButton("Submit");
-    registerButton.setBounds(130,330,150,40);
+    registerButton.setBounds(130, 330, 150, 40);
     registerButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        if(!userTextField.getText().equals("") && !passwordTextField.getText().equals("") && !password2TextField.getText().equals("") && !firstnameTextField.getText().equals("") && !lastnameTextField.getText().equals("")) {
-          if(passwordTextField.getText().equals(password2TextField.getText())) {
+        if (!userTextField.getText().equals("") && !passwordTextField.getText().equals("")
+            && !password2TextField.getText().equals("") && !firstnameTextField.getText().equals("")
+            && !lastnameTextField.getText().equals("")) {
+          if (passwordTextField.getText().equals(password2TextField.getText())) {
             //TODO: ADD USER HERE
             user = userTextField.getText();
             password = passwordTextField.getText();
             infoLabel.setText("User added successfully!");
             registrationComplete = true;
-          }
-          else {
+          } else {
             infoLabel.setText("Passwords must match!");
           }
-        }
-        else {
+        } else {
           infoLabel.setText("No empty fields allowed!");
         }
       }

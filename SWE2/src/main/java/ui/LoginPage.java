@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class LoginPage implements InterfacePage {
+
   private ArrayList<JComponent> components;
   private JLabel userLabel;
   private JLabel passwordLabel;
@@ -33,37 +34,37 @@ public class LoginPage implements InterfacePage {
     //USER_LABEL
     userLabel = new JLabel();
     userLabel.setText("User:");
-    userLabel.setBounds(30,40,100,30);
+    userLabel.setBounds(30, 40, 100, 30);
 
     //USER_TEXTFIELD
     userTextField = new JTextField();
-    userTextField.setBounds(130,40,150,30);
+    userTextField.setBounds(130, 40, 150, 30);
 
     //PASSWORD_LABEL
     passwordLabel = new JLabel();
     passwordLabel.setText("Password:");
-    passwordLabel.setBounds(30,90,100,30);
+    passwordLabel.setBounds(30, 90, 100, 30);
 
     //PASSWORD_TEXTFIELD
     passwordTextField = new JTextField();
-    passwordTextField.setBounds(130,90,150,30);
+    passwordTextField.setBounds(130, 90, 150, 30);
 
     //SUBMIT_BUTTON
     submitButton = new JButton("Submit");
-    submitButton.setBounds(210,150,150,40);
+    submitButton.setBounds(210, 150, 150, 40);
     submitButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-          user = userTextField.getText();
-          password = passwordTextField.getText();
-          System.out.println(user);
-          System.out.println(password);
+        user = userTextField.getText();
+        password = passwordTextField.getText();
+        System.out.println(user);
+        System.out.println(password);
       }
     });
 
     //REGISTER_BUTTON
     registerButton = new JButton("Register");
-    registerButton.setBounds(30,150,150,40);
+    registerButton.setBounds(30, 150, 150, 40);
     registerButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -123,7 +124,7 @@ public class LoginPage implements InterfacePage {
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
-    for(JComponent comp: components) {
+    for (JComponent comp : components) {
       frame.add(comp);
     }
     frame.revalidate();

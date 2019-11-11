@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import user.User;
 
 public class UserInterface {
+
   private User user;
 
   public void start() {
@@ -26,22 +27,21 @@ public class UserInterface {
 
     boolean foundUser = false;
 
-    while(!foundUser) {
+    while (!foundUser) {
       //TODO: check if user exists and if password is correct
-      if(loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
+      if (loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
         //TODO: user = db.getUser(userid)
         user = TestUser.getTestUser();
         foundUser = true;
-      }
-      else if(loginPage.isRegistrationWanted()) {
+      } else if (loginPage.isRegistrationWanted()) {
 
         //OPEN REGISTRATION PAGE COMPONENTS
         registrationPage.configureFrame(frame);
 
         boolean registrationFinished = false;
 
-        while(!registrationFinished) {
-          if(registrationPage.isRegistrationComplete()) {
+        while (!registrationFinished) {
+          if (registrationPage.isRegistrationComplete()) {
             //TODO: save userdata here
             registrationFinished = true;
             loginPage.registrationFinished();
@@ -65,53 +65,67 @@ public class UserInterface {
 
     while (true) {
 
-      if(accountListPage.isNewAccountWanted()) {
+      if (accountListPage.isNewAccountWanted()) {
         accountTypePage.configureFrame(frame);
 
-        while(accountTypePage.getPageWanted() == AccountTypes.NONE && !accountTypePage.isBackWanted());
+        while (accountTypePage.getPageWanted() == AccountTypes.NONE && !accountTypePage
+            .isBackWanted()) {
+          ;
+        }
 
-        if(!accountTypePage.isBackWanted()) {
+        if (!accountTypePage.isBackWanted()) {
           switch (accountTypePage.getPageWanted()) {
             case CASH:
               add_cashAccountPage.configureFrame(frame);
-              while (!add_cashAccountPage.isSubmitted());
+              while (!add_cashAccountPage.isSubmitted()) {
+                ;
+              }
               break;
             case DEBIT:
               add_debitAccountPage.configureFrame(frame);
-              while (!add_debitAccountPage.isSubmitted());
+              while (!add_debitAccountPage.isSubmitted()) {
+                ;
+              }
               break;
             case CREDIT:
               add_creditAccountPage.configureFrame(frame);
-              while (!add_creditAccountPage.isSubmitted());
+              while (!add_creditAccountPage.isSubmitted()) {
+                ;
+              }
               break;
             case STOCKS:
               add_stockAccountPage.configureFrame(frame);
-              while (!add_stockAccountPage.isSubmitted());
+              while (!add_stockAccountPage.isSubmitted()) {
+                ;
+              }
               break;
           }
           accountListPage.configureFrame(frame);
-        }
-        else {
+        } else {
           accountListPage.configureFrame(frame);
         }
-      }
-      else if(accountListPage.getSelectedAccount() != null) {
+      } else if (accountListPage.getSelectedAccount() != null) {
         transactionListPage = new TransactionListPage(accountListPage.getSelectedAccount(), user);
         transactionListPage.configureFrame(frame);
 
-        while(!transactionListPage.isNewDepositWanted() && !transactionListPage.isNewPayoutWanted() && !transactionListPage.isBackWanted());
+        while (!transactionListPage.isNewDepositWanted() && !transactionListPage.isNewPayoutWanted()
+            && !transactionListPage.isBackWanted()) {
+          ;
+        }
 
-        if(transactionListPage.isNewPayoutWanted()) {
+        if (transactionListPage.isNewPayoutWanted()) {
           //open new Payout Page, for tests now add  cash account
           add_cashAccountPage.configureFrame(frame);
-          while(!add_cashAccountPage.isSubmitted());
-        }
-        else if(transactionListPage.isNewDepositWanted()) {
+          while (!add_cashAccountPage.isSubmitted()) {
+            ;
+          }
+        } else if (transactionListPage.isNewDepositWanted()) {
           //open new Deposit Page, for tests now add a credit account
           add_creditAccountPage.configureFrame(frame);
-          while(!add_creditAccountPage.isSubmitted());
-        }
-        else {
+          while (!add_creditAccountPage.isSubmitted()) {
+            ;
+          }
+        } else {
           accountListPage.configureFrame(frame);
         }
       }

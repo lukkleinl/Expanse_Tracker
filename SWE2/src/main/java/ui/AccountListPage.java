@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import user.User;
 
 public class AccountListPage implements InterfacePage {
+
   private final int FRAME_WIDTH = 1200;
   private final int FRAME_HEIGHT = 800;
 
@@ -53,7 +54,7 @@ public class AccountListPage implements InterfacePage {
 
     //NEW ACCOUNT BUTTON
     newAccountButton = new JButton("CREATE NEW ACCOUNT");
-    newAccountButton.setBounds(400,600, 400, 50);
+    newAccountButton.setBounds(400, 600, 400, 50);
     newAccountButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -62,16 +63,15 @@ public class AccountListPage implements InterfacePage {
     });
 
     //TABLE
-    Object[] columnNames = { "Nr.", "Account Type", "Account Name", "Balance"};
+    Object[] columnNames = {"Nr.", "Account Type", "Account Name", "Balance"};
     accountTable = new JTable(getAccounts(user), columnNames);
     accountTable.setRowHeight(70);
     accountTable.setDefaultEditor(Object.class, null);
 
-
     DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
     tableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-    for(int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i) {
       accountTable.getColumnModel().getColumn(i).setCellRenderer(tableCellRenderer);
     }
 
@@ -82,14 +82,14 @@ public class AccountListPage implements InterfacePage {
         JTable table = (JTable) mouseEvent.getSource();
         Point point = mouseEvent.getPoint();
         int row = table.rowAtPoint(point);
-        if(mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+        if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
           CustomList<Account> accountList = user.getAccounts();
 
           CustomIterator<Account> iterator = accountList.getIterator();
 
-          while(iterator.hasNext()) {
+          while (iterator.hasNext()) {
             Account acc = iterator.next();
-            if(acc.getAccount_number() == (Integer) accountTable.getValueAt(row,0)) {
+            if (acc.getAccount_number() == (Integer) accountTable.getValueAt(row, 0)) {
               selectedAccount = acc;
               System.out.println(acc.getAccount_number() + " selected");
               break;
@@ -116,7 +116,7 @@ public class AccountListPage implements InterfacePage {
 
     Object[][] accounts = new Object[listSize][4];
 
-    if(listSize > 0) {
+    if (listSize > 0) {
       CustomIterator<Account> iterator = userAccounts.getIterator();
       int i = 0;
 
@@ -136,19 +136,15 @@ public class AccountListPage implements InterfacePage {
 
   //Returns a string if the account type, needed for table creation.
   private String getAccountType(Account account) {
-    if(account instanceof Cash) {
+    if (account instanceof Cash) {
       return "Cash";
-    }
-    else if(account instanceof Stocks) {
+    } else if (account instanceof Stocks) {
       return "Stock";
-    }
-    else if(account instanceof DebitCard) {
+    } else if (account instanceof DebitCard) {
       return "Debit Card";
-    }
-    else if(account instanceof CreditCard) {
+    } else if (account instanceof CreditCard) {
       return "Credit Card";
-    }
-    else {
+    } else {
       return null;
     }
   }
@@ -182,13 +178,14 @@ public class AccountListPage implements InterfacePage {
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
-    for(JComponent comp: components) {
+    for (JComponent comp : components) {
       frame.add(comp);
     }
 
     frame.revalidate();
     frame.repaint();
-    frame.setVisible(true);  }
+    frame.setVisible(true);
+  }
 
   public static void main(String[] args) {
     JFrame frame = new JFrame();
