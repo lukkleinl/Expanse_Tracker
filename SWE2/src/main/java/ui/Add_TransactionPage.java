@@ -70,6 +70,7 @@ public class Add_TransactionPage implements InterfacePage{
 
             TransactionList_VISU[i][1] = transtemp.getDescription();
             TransactionList_VISU[i][2] = ""+transtemp.getAmount();
+            TransactionList_VISU[i][5] = ""+transtemp.getID();
             TransactionList_VISU[i++][3] = transtemp.getCreationDate().toString();
 
 
@@ -78,8 +79,9 @@ public class Add_TransactionPage implements InterfacePage{
 
 
         transactionTable = new JTable(TransactionList_VISU,TransactionDescription);
-        
+
         //https://stackoverflow.com/questions/9919230/disable-user-edit-in-jtable
+        // MAKES THE ELEMENTS IN THE TABLE UNEDITABLE
         transactionTable.setDefaultEditor(Object.class, null);
 
 
@@ -87,6 +89,8 @@ public class Add_TransactionPage implements InterfacePage{
         //https://stackoverflow.com/questions/10128064/jtable-selected-row-click-event
         transactionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
+
+                int ID_OF_SELECTED_TRANSACTION = Integer.valueOf(TransactionList_VISU[transactionTable.getSelectedRow()][5]);
 
                 System.out.println("selected Row Nr:" + transactionTable.getSelectedRow());
             }
