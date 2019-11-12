@@ -1,19 +1,22 @@
 package ui;
 
-import accounts.Account;
-import accounts.Cash;
-import java.util.Observable;
-
 import javax.swing.JFrame;
 import user.User;
 
+/**
+ * This class is contains the whole procedure of the GUI.
+ *
+ * @author Patrick Gmasz
+ */
 public class UserInterface {
 
   private User user;
+  //MongoDB db = new MongoDB();
 
+  /**
+   * This method starts the GUI and starts the whole procedure.
+   */
   public void start() {
-    //MongoDB db = new MongoDB();
-
     LoginPage loginPage = new LoginPage();
     RegistrationPage registrationPage = new RegistrationPage();
 
@@ -30,10 +33,16 @@ public class UserInterface {
 
     while (!foundUser) {
       //TODO: check if user exists and if password is correct
-      if (loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
-        //TODO: user = db.getUser(userid)
-        user = TestUser.getTestUser();
-        foundUser = true;
+      if (loginPage.isLoginWanted()) {
+        if(loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
+          //TODO: user = db.getUser(userid)
+          user = TestUser.getTestUser();
+          foundUser = true;
+        }
+        else {
+          loginPage.configureFrame(frame);
+          //TODO: display error message
+        }
       } else if (loginPage.isRegistrationWanted()) {
 
         //OPEN REGISTRATION PAGE COMPONENTS
@@ -45,7 +54,6 @@ public class UserInterface {
           if (registrationPage.isRegistrationComplete()) {
             //TODO: save userdata here
             registrationFinished = true;
-            loginPage.registrationFinished();
 
             //OPEN LOGIN PAGE COMPONENTS AGAIN
             loginPage.configureFrame(frame);

@@ -4,12 +4,18 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
 
-import user.User;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+
+/**
+ * This page gives 4 buttons, one for every account page type.
+ * This page will come up, when the user wants to add a new account type.
+ * Here he will be asked what type of account he wants to create.
+ *
+ * @author Patrick Gmasz
+ */
 public class AccountTypePage implements InterfacePage {
 
   private final int FRAME_WIDTH = 1200;
@@ -28,8 +34,10 @@ public class AccountTypePage implements InterfacePage {
 
   private boolean backWanted;
 
+  /**
+   * Creates a new AccountTypePage, which will load all needed components to a list.
+   */
   public AccountTypePage() {
-
     pageWanted = AccountTypes.NONE;
     components = new ArrayList<>();
 
@@ -105,6 +113,12 @@ public class AccountTypePage implements InterfacePage {
 
   }
 
+
+  /**
+   * This method updates the given JFrame with every components, e.g. buttons, and also sets indicators to default.
+   *
+   * @param frame The JFrame, which components will be updated
+   */
   public void configureFrame(JFrame frame) {
     pageWanted = AccountTypes.NONE;
     backWanted = false;
@@ -123,6 +137,13 @@ public class AccountTypePage implements InterfacePage {
     //frame.setVisible(true);
   }
 
+  /**
+   * This page has 4 buttons, one for every account type.
+   * Pressing on one will set a variable to pressed account type.
+   * This method returns the account type, the user wants to create.
+   *
+   * @return The account type, which the user clicked.
+   */
   public AccountTypes getPageWanted() {
     try {
       Thread.sleep(1);
@@ -132,6 +153,12 @@ public class AccountTypePage implements InterfacePage {
     return pageWanted;
   }
 
+  /**
+   * Pressing the back button on this page will set a boolean flag, that the button was pressed.
+   * This method returns the boolean, it will be true, when the user wanted to go a page back.
+   *
+   * @return The boolean flag, true, if user pressed back button
+   */
   public boolean isBackWanted() {
     try {
       Thread.sleep(1);

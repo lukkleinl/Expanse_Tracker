@@ -23,6 +23,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import user.User;
 
+/**
+ * This is the main page of the GUI, which will be displayed after the log in.
+ * It contains a table of all accounts, which can be pressed to get more details and transactions of them.
+ *
+ * @author Patrick Gmasz
+ */
 public class AccountListPage implements InterfacePage {
 
   private final int FRAME_WIDTH = 1200;
@@ -40,6 +46,11 @@ public class AccountListPage implements InterfacePage {
   private Account selectedAccount;
   private boolean newAccountWanted;
 
+  /**
+   * Creates a new AccountListPage, which will load all needed components to a list.
+   *
+   * @param user The user object, who logged in.
+   */
   public AccountListPage(User user) {
     this.user = user;
 
@@ -109,6 +120,12 @@ public class AccountListPage implements InterfacePage {
     components.add(newAccountButton);
   }
 
+  /**
+   * Returns a 2D-array of all accounts, which is needed for creating the JTable of the accounts.
+   *
+   * @param user The user object, which contains the accounts.
+   * @return A 2D-array of accounts for the JTable, which has account number on first, account type on second, account name on third and account balance on fourth place.
+   */
   private Object[][] getAccounts(User user) {
     CustomContainer<Account> userAccounts = user.getAccounts();
 
@@ -134,7 +151,13 @@ public class AccountListPage implements InterfacePage {
     return accounts;
   }
 
-  //Returns a string if the account type, needed for table creation.
+  /**
+   * Returns a String, which represents the account type.
+   * Needed for the table creation.
+   *
+   * @param account The account, which we want to display the type of.
+   * @return A string of the account type.
+   */
   private String getAccountType(Account account) {
     if (account instanceof Cash) {
       return "Cash";
@@ -149,6 +172,12 @@ public class AccountListPage implements InterfacePage {
     }
   }
 
+  /**
+   * If the user double-clicks on a account in the table, a indicator variable will be set to clicked account.
+   * This method returns the account, which the user wants to open.
+   *
+   * @return The account object, which the user wants to open.
+   */
   public Account getSelectedAccount() {
     try {
       Thread.sleep(1);
@@ -159,6 +188,13 @@ public class AccountListPage implements InterfacePage {
     return selectedAccount;
   }
 
+  /**
+   * The page has a button, which the user can press if he wants to add a new account.
+   * Pressing the button will set a boolean flag, that the button was pressed.
+   * This method returns the boolean, it will be true, if the user wants to create a new account.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the create-new-account button.
+   */
   public boolean isNewAccountWanted() {
     try {
       Thread.sleep(1);
@@ -169,6 +205,11 @@ public class AccountListPage implements InterfacePage {
     return newAccountWanted;
   }
 
+  /**
+   * This method updates the given JFrame with every components, e.g. buttons and tables, and also sets indicators to default.
+   *
+   * @param frame The JFrame, which components will be updated
+   */
   public void configureFrame(JFrame frame) {
     newAccountWanted = false;
     selectedAccount = null;
@@ -185,15 +226,5 @@ public class AccountListPage implements InterfacePage {
     frame.revalidate();
     frame.repaint();
     //frame.setVisible(true);
-  }
-
-  public static void main(String[] args) {
-    JFrame frame = new JFrame();
-    frame.setLayout(null);
-    frame.setResizable(false);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    AccountListPage accountListPage = new AccountListPage(TestUser.getTestUser());
-    accountListPage.configureFrame(frame);
   }
 }

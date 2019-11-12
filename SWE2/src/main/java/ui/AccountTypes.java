@@ -1,5 +1,10 @@
 package ui;
 
+/**
+ * Enums of the different account types.
+ *
+ * @author Patrick Gmasz
+ */
 public enum AccountTypes {
   CASH,
   CREDIT,

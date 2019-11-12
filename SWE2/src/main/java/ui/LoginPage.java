@@ -9,6 +9,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+
+/**
+ * This page will be the start page, when the application is started.
+ * The user can input his user id and password.
+ * There is also a button, which will direct the user to a registration page.
+ *
+ * @author Patrick Gmasz
+ */
 public class LoginPage implements InterfacePage {
 
   private ArrayList<JComponent> components;
@@ -25,11 +33,106 @@ public class LoginPage implements InterfacePage {
   private String user;
   private String password;
   private boolean registrationWanted;
+  private boolean loginWanted;
 
+
+  /**
+   * Creates a new LoginPage, which will load all needed components in a list.
+   */
   public LoginPage() {
+    createComponents();
+  }
+
+  /**
+   * Returns the input, which is in the user textfield.
+   *
+   * @return The string, which the user wrote in the user textfield
+   */
+  public String getUser() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return user;
+  }
+
+
+  /**
+   * Returns the input, which is in the password textfield.
+   *
+   * @return The string, which the user wrote in the password textfield
+   */
+  public String getPassword() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return password;
+  }
+
+  /**
+   * The page has a button, which the user can press if he wants to register a new user account.
+   * If the button gets pressed, a boolean flag will be set to true.
+   *
+   * @return The boolean flag, which will be true, if the user pressed the register button.
+   */
+  public boolean isRegistrationWanted() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return registrationWanted;
+  }
+
+  /**
+   * The page has a button, which the user can press of he wants to log in.
+   * If the button gets pressed, a boolean flag will be set to true.
+   *
+   * @return The boolean flag, which will be true, if the user pressed the login button:
+   */
+  public boolean isLoginWanted() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return loginWanted;
+  }
+
+  /**
+   * This method updates the given JFrame with every components, e.g. buttons or text fields, and also sets indicators to default.
+   *
+   * @param frame The JFrame, which components will be updated
+   */
+  public void configureFrame(JFrame frame) {
+    createComponents();
+
+    //frame.setVisible(false);
+    frame.setTitle("Login");
+    frame.getContentPane().removeAll();
+    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+    for (JComponent comp : components) {
+      frame.add(comp);
+    }
+    frame.revalidate();
+    frame.repaint();
+    //frame.setVisible(true);
+  }
+
+  /**
+   * This method creates all components, such as buttons and text fields, and adds it to a list.
+   * It also sets every indicator variables to default.
+   */
+  private void createComponents() {
     user = "";
     password = "";
     registrationWanted = false;
+    loginWanted = false;
 
     //USER_LABEL
     userLabel = new JLabel();
@@ -57,8 +160,7 @@ public class LoginPage implements InterfacePage {
       public void actionPerformed(ActionEvent e) {
         user = userTextField.getText();
         password = passwordTextField.getText();
-        System.out.println(user);
-        System.out.println(password);
+        loginWanted = true;
       }
     });
 
@@ -79,56 +181,5 @@ public class LoginPage implements InterfacePage {
     components.add(passwordTextField);
     components.add(submitButton);
     components.add(registerButton);
-  }
-
-  public String getUser() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return user;
-  }
-
-  public String getPassword() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return password;
-  }
-
-  public boolean isRegistrationWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return registrationWanted;
-  }
-
-  public void registrationFinished() {
-    registrationWanted = false;
-
-    try {
-      Thread.sleep(1000);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  public void configureFrame(JFrame frame) {
-    //frame.setVisible(false);
-    frame.setTitle("Login");
-    frame.getContentPane().removeAll();
-    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-    for (JComponent comp : components) {
-      frame.add(comp);
-    }
-    frame.revalidate();
-    frame.repaint();
-    //frame.setVisible(true);
   }
 }
