@@ -165,8 +165,11 @@ public class UserInterface {
           }
 
           if (addPayoutPage.isSubmitted()) {
-            //TODO: SAFE PAYOUT HERE
-          }
+            try {
+              user.payOut(addPayoutPage.getCatego(), addPayoutPage.getAmount(), addPayoutPage.getDescription(), accountListPage.getSelectedAccount());
+            } catch (Exception e) {
+              System.out.println("ERR:" + e.getMessage()); //TODO BETTER
+            }          }
 
           transactionListPage.configureFrame(frame);
         } else if (transactionListPage.isNewDepositWanted()) {
@@ -178,8 +181,11 @@ public class UserInterface {
           }
 
           if (addDepositPage.isSubmitted()) {
-            //TODO: SAFE DEPOSIT HERE
-          }
+            try {
+              user.deposit(addDepositPage.getCatego(), addDepositPage.getAmount(), addDepositPage.getDescription(), accountListPage.getSelectedAccount());
+            } catch (Exception e) {
+              System.out.println("ERR:" + e.getMessage()); //TODO BETTER
+            }          }
 
           transactionListPage.configureFrame(frame);
         } else {
