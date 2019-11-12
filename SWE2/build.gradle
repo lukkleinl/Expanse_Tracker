@@ -11,13 +11,21 @@ repositories {
     mavenCentral()
 }
 
+test {
+	useJUnitPlatform()
+}
+
 sourceSets {
 	sourceSets.main.java.srcDirs = ['src/main/java']
 	sourceSets.test.java.srcDirs = ['src/tests/java']
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+	// JUnit test framework 5.4.0
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-params:5.4.0'
+    
     compile 'org.mongodb:mongodb-driver-sync:3.11.1'
     compile 'org.mongodb:mongodb-driver-legacy:3.11.1'
     compile 'org.mongodb:mongodb-driver:3.11.1'
