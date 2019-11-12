@@ -73,6 +73,8 @@ public class UserInterface {
     Add_DebitAccountPage add_debitAccountPage = new Add_DebitAccountPage();
     Add_StockAccountPage add_stockAccountPage = new Add_StockAccountPage();
     Add_CreditAccountPage add_creditAccountPage = new Add_CreditAccountPage();
+    AddDepositPage addDepositPage = new AddDepositPage();
+    AddPayoutPage addPayoutPage = new AddPayoutPage();
     TransactionListPage transactionListPage;
     AddDepositPage addDepositPage = new AddDepositPage();
     AddPayoutPage addPayoutPage = new AddPayoutPage();
@@ -154,6 +156,7 @@ public class UserInterface {
         }
 
         if (transactionListPage.isNewPayoutWanted()) {
+<<<<<<< HEAD
           //open new Payout Page, for tests now add  cash account
           addPayoutPage.configureFrame(frame);
           while (!addPayoutPage.isSubmitted() && !addPayoutPage.isBackWanted());
@@ -174,6 +177,36 @@ public class UserInterface {
           }
 
           transactionListPage.configureFrame(frame);
+=======
+          addPayoutPage.configureFrame(frame);
+          while (!addPayoutPage.isSubmitted()  && !addPayoutPage.isBackWanted()) {
+            ;
+          }
+          if(addPayoutPage.isSubmitted()) {
+            try {
+              user.payOut(addPayoutPage.getCatego(), addPayoutPage.getAmount(), addPayoutPage.getDescription(), accountListPage.getSelectedAccount());
+            } catch (Exception e) {
+              System.out.println("ERR:" + e.getMessage()); //TODO BETTER
+            }
+          }else{
+            addPayoutPage.configureFrame(frame);
+          }
+        } else if (transactionListPage.isNewDepositWanted()) {
+          addDepositPage.configureFrame(frame);
+          while (!addDepositPage.isSubmitted() &&  !addDepositPage.isBackWanted()) {
+            ;
+          }
+          if(addDepositPage.isSubmitted()) {
+            try {
+              user.deposit(addDepositPage.getCatego(), addDepositPage.getAmount(), addDepositPage.getDescription(), accountListPage.getSelectedAccount());
+            } catch (Exception e) {
+              System.out.println("ERR:" + e.getMessage()); //TODO BETTER
+            }
+          }
+        }else{
+          addPayoutPage.configureFrame(frame);
+        }
+>>>>>>> fc1588fd164931db25281cba1d3c1d7797384c35
         } else {
           accountListPage.configureFrame(frame);
         }
@@ -182,4 +215,4 @@ public class UserInterface {
 
 
   }
-}
+
