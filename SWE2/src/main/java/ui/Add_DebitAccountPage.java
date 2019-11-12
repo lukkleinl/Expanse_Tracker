@@ -33,7 +33,7 @@ public class Add_DebitAccountPage implements InterfacePage {
 
   private String BankName_String = "";
   private String IBAN_STRING = "";
-  private double Limit_Double = 0.00;
+  private float Limit_Double = 0.00f;
 
   private boolean submitted;
   private boolean backWanted;
@@ -77,7 +77,7 @@ public class Add_DebitAccountPage implements InterfacePage {
     return AccName_String;
   }
 
-  public String getIBANy() {
+  public String getIBAN() {
     try {
       Thread.sleep(1);
     } catch (Exception e) {
@@ -86,7 +86,7 @@ public class Add_DebitAccountPage implements InterfacePage {
     return IBAN_STRING;
   }
 
-  public double getLimit() {
+  public float getLimit() {
     try {
       Thread.sleep(1);
     } catch (Exception e) {
@@ -174,7 +174,7 @@ public class Add_DebitAccountPage implements InterfacePage {
       public void actionPerformed(ActionEvent e) {
         AccName_String = AccNameText.getText();
         IBAN_STRING = IBANField.getText();
-        Limit_Double = Double.valueOf(LimitText.getText());
+        Limit_Double = Float.valueOf(LimitText.getText());
         BankName_String = BankNameText.getText();
 
         //TODO check limit and IBAN

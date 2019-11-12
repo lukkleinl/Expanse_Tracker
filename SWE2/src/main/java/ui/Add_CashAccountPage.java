@@ -27,7 +27,7 @@ public class Add_CashAccountPage implements InterfacePage {
 
   private String AccName_String = "";
   private String Currency_String = "";
-  private double Limit_Double = 0.00;
+  private float Limit_Double = 0.00f;
 
   private boolean submitted;
   private boolean backWanted;
@@ -82,7 +82,7 @@ public class Add_CashAccountPage implements InterfacePage {
     return Currency_String;
   }
 
-  public double getLimit() {
+  public float getLimit() {
     try {
       Thread.sleep(1);
     } catch (Exception e) {
@@ -153,7 +153,7 @@ public class Add_CashAccountPage implements InterfacePage {
       public void actionPerformed(ActionEvent e) {
         AccName_String = AccNameText.getText();
         Currency_String = CurrencyText.getText();
-        Limit_Double = Double.valueOf(LimitText.getText());
+        Limit_Double = Float.valueOf(LimitText.getText());
 
         if (Limit_Double < 0) {
           //TODO throw Exception or so // check LIMIT

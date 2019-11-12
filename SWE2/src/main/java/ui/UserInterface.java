@@ -1,6 +1,11 @@
 package ui;
 
 import javax.swing.JFrame;
+
+import accounts.Cash;
+import accounts.CreditCard;
+import accounts.DebitCard;
+import accounts.Stocks;
 import user.User;
 
 /**
@@ -90,7 +95,7 @@ public class UserInterface {
                 ;
               }
               if(add_cashAccountPage.isSubmitted()) {
-                //TODO: ADD ACCOUNT
+                user.addAccount(new Cash(add_cashAccountPage.getAccName(),add_cashAccountPage.getLimit(),add_cashAccountPage.getCurrency()));
               }
               else {
                 accountTypePage.configureFrame(frame);
@@ -102,7 +107,7 @@ public class UserInterface {
                 ;
               }
               if(add_debitAccountPage.isSubmitted()) {
-                //TODO: ADD ACCOUNT
+                user.addAccount(new DebitCard(add_debitAccountPage.getAccName(),add_debitAccountPage.getBankName_String(),add_debitAccountPage.getLimit(),add_debitAccountPage.getIBAN()));
               }
               else {
                 accountTypePage.configureFrame(frame);
@@ -114,7 +119,7 @@ public class UserInterface {
                 ;
               }
               if(add_creditAccountPage.isSubmitted()) {
-                //TODO:: ADD ACCOUNT
+                user.addAccount(new CreditCard(add_creditAccountPage.getAccName(),add_creditAccountPage.getBankName_String(),add_creditAccountPage.getLimit(),add_creditAccountPage.getExpiry()));
               }
               else {
                 accountTypePage.configureFrame(frame);
@@ -126,7 +131,7 @@ public class UserInterface {
                 ;
               }
               if(add_stockAccountPage.isSubmitted()) {
-                //TODO: ADD ACCOUNT
+                user.addAccount(new Stocks(add_stockAccountPage.getAccName(),add_stockAccountPage.getBuyDate(),add_stockAccountPage.getLimit()));
               }
               else {
                 accountTypePage.configureFrame(frame);
@@ -148,6 +153,9 @@ public class UserInterface {
 
         if (transactionListPage.isNewPayoutWanted()) {
           //open new Payout Page, for tests now add  cash account
+
+
+
           add_cashAccountPage.configureFrame(frame);
           while (!add_cashAccountPage.isSubmitted()) {
             ;

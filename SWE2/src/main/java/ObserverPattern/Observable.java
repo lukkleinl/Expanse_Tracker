@@ -22,7 +22,7 @@ public class Observable{
      */
     public void subscribe(Observer obs) throws Exception{
         if(observerList.contains(obs))
-            throw new Exception("Observable ALREADY SUBSCRIBED to this Observer - can not subscribe!");
+            throw new SubscriptionException("Observable ALREADY SUBSCRIBED to this Observer - can not subscribe!");
         else
             observerList.add(obs);
     }
@@ -33,7 +33,7 @@ public class Observable{
      */
     public void unSubscribe(Observer obs) throws Exception{
         if(!observerList.contains(obs))
-            throw new Exception("Observable was NOT SUBSCRIBED to this Observer - can not unsubscribe!");
+            throw new SubscriptionException("Observable was NOT SUBSCRIBED to this Observer - can not unsubscribe!");
         else
             observerList.remove(obs);
     }
@@ -47,3 +47,4 @@ public class Observable{
         }
     }
 }
+

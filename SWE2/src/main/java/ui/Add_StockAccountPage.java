@@ -30,7 +30,7 @@ public class Add_StockAccountPage implements InterfacePage {
 
   private String AccName_String = "";
   private Date BuyDate_Date;
-  private double Limit_Double = 0.00;
+  private float Limit_Double = 0.00f;
 
   private boolean submitted;
   private boolean backWanted;
@@ -84,7 +84,7 @@ public class Add_StockAccountPage implements InterfacePage {
     return BuyDate_Date;
   }
 
-  public double getLimit() {
+  public float getLimit() {
     try {
       Thread.sleep(1);
     } catch (Exception e) {
@@ -157,7 +157,7 @@ public class Add_StockAccountPage implements InterfacePage {
       public void actionPerformed(ActionEvent e) {
         AccName_String = AccNameText.getText();
         BuyDate_Date = (Date) BuyDateText.getValue();
-        Limit_Double = Double.valueOf(LimitText.getText());
+        Limit_Double = Float.valueOf(LimitText.getText());
 
         //TODO check limit and DATE
 

@@ -33,7 +33,7 @@ public class Add_CreditAccountPage implements InterfacePage {
 
   private String BankName_String = "";
   private Date Expiry_Date;
-  private double Limit_Double = 0.00;
+  private float Limit_Double = 0.00f;
 
   private boolean submitted;
   private boolean backWanted;
@@ -87,7 +87,7 @@ public class Add_CreditAccountPage implements InterfacePage {
     return Expiry_Date;
   }
 
-  public double getLimit() {
+  public float getLimit() {
     try {
       Thread.sleep(1);
     } catch (Exception e) {
@@ -177,7 +177,7 @@ public class Add_CreditAccountPage implements InterfacePage {
       public void actionPerformed(ActionEvent e) {
         AccName_String = AccNameText.getText();
         Expiry_Date = (Date) ExpiryField.getValue();
-        Limit_Double = Double.valueOf(LimitText.getText());
+        Limit_Double = Float.valueOf(LimitText.getText());
         BankName_String = BankNameText.getText();
 
         //TODO check limit and DATE
