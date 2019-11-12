@@ -74,6 +74,8 @@ public class UserInterface {
     Add_StockAccountPage add_stockAccountPage = new Add_StockAccountPage();
     Add_CreditAccountPage add_creditAccountPage = new Add_CreditAccountPage();
     TransactionListPage transactionListPage;
+    AddDepositPage addDepositPage = new AddDepositPage();
+    AddPayoutPage addPayoutPage = new AddPayoutPage();
 
     accountListPage.configureFrame(frame);
 
@@ -153,19 +155,25 @@ public class UserInterface {
 
         if (transactionListPage.isNewPayoutWanted()) {
           //open new Payout Page, for tests now add  cash account
+          addPayoutPage.configureFrame(frame);
+          while (!addPayoutPage.isSubmitted() && !addPayoutPage.isBackWanted());
 
-
-
-          add_cashAccountPage.configureFrame(frame);
-          while (!add_cashAccountPage.isSubmitted()) {
-            ;
+          if(addPayoutPage.isSubmitted()) {
+            //TODO: SAFE PAYOUT HERE
           }
+
+          transactionListPage.configureFrame(frame);
         } else if (transactionListPage.isNewDepositWanted()) {
           //open new Deposit Page, for tests now add a credit account
-          add_creditAccountPage.configureFrame(frame);
-          while (!add_creditAccountPage.isSubmitted()) {
-            ;
+          addDepositPage.configureFrame(frame);
+
+          while(!addDepositPage.isSubmitted() && !addDepositPage.isBackWanted());
+
+          if(addDepositPage.isSubmitted()) {
+            //TODO: SAFE DEPOSIT HERE
           }
+
+          transactionListPage.configureFrame(frame);
         } else {
           accountListPage.configureFrame(frame);
         }
