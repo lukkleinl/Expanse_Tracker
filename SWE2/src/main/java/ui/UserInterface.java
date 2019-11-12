@@ -39,12 +39,11 @@ public class UserInterface {
     while (!foundUser) {
       //TODO: check if user exists and if password is correct
       if (loginPage.isLoginWanted()) {
-        if(loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
+        if (loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
           //TODO: user = db.getUser(userid)
           user = TestUser.getTestUser();
           foundUser = true;
-        }
-        else {
+        } else {
           loginPage.configureFrame(frame);
           //TODO: display error message
         }
@@ -76,8 +75,6 @@ public class UserInterface {
     AddDepositPage addDepositPage = new AddDepositPage();
     AddPayoutPage addPayoutPage = new AddPayoutPage();
     TransactionListPage transactionListPage;
-    AddDepositPage addDepositPage = new AddDepositPage();
-    AddPayoutPage addPayoutPage = new AddPayoutPage();
 
     accountListPage.configureFrame(frame);
 
@@ -98,10 +95,11 @@ public class UserInterface {
               while (!add_cashAccountPage.isSubmitted() && !add_cashAccountPage.isBackWanted()) {
                 ;
               }
-              if(add_cashAccountPage.isSubmitted()) {
-                user.addAccount(new Cash(add_cashAccountPage.getAccName(),add_cashAccountPage.getLimit(),add_cashAccountPage.getCurrency()));
-              }
-              else {
+              if (add_cashAccountPage.isSubmitted()) {
+                user.addAccount(
+                    new Cash(add_cashAccountPage.getAccName(), add_cashAccountPage.getLimit(),
+                        add_cashAccountPage.getCurrency()));
+              } else {
                 accountTypePage.configureFrame(frame);
               }
               break;
@@ -110,22 +108,25 @@ public class UserInterface {
               while (!add_debitAccountPage.isSubmitted() && !add_debitAccountPage.isBackWanted()) {
                 ;
               }
-              if(add_debitAccountPage.isSubmitted()) {
-                user.addAccount(new DebitCard(add_debitAccountPage.getAccName(),add_debitAccountPage.getBankName_String(),add_debitAccountPage.getLimit(),add_debitAccountPage.getIBAN()));
-              }
-              else {
+              if (add_debitAccountPage.isSubmitted()) {
+                user.addAccount(new DebitCard(add_debitAccountPage.getAccName(),
+                    add_debitAccountPage.getBankName_String(), add_debitAccountPage.getLimit(),
+                    add_debitAccountPage.getIBAN()));
+              } else {
                 accountTypePage.configureFrame(frame);
               }
               break;
             case CREDIT:
               add_creditAccountPage.configureFrame(frame);
-              while (!add_creditAccountPage.isSubmitted() && !add_creditAccountPage.isBackWanted()) {
+              while (!add_creditAccountPage.isSubmitted() && !add_creditAccountPage
+                  .isBackWanted()) {
                 ;
               }
-              if(add_creditAccountPage.isSubmitted()) {
-                user.addAccount(new CreditCard(add_creditAccountPage.getAccName(),add_creditAccountPage.getBankName_String(),add_creditAccountPage.getLimit(),add_creditAccountPage.getExpiry()));
-              }
-              else {
+              if (add_creditAccountPage.isSubmitted()) {
+                user.addAccount(new CreditCard(add_creditAccountPage.getAccName(),
+                    add_creditAccountPage.getBankName_String(), add_creditAccountPage.getLimit(),
+                    add_creditAccountPage.getExpiry()));
+              } else {
                 accountTypePage.configureFrame(frame);
               }
               break;
@@ -134,10 +135,11 @@ public class UserInterface {
               while (!add_stockAccountPage.isSubmitted() && !add_stockAccountPage.isBackWanted()) {
                 ;
               }
-              if(add_stockAccountPage.isSubmitted()) {
-                user.addAccount(new Stocks(add_stockAccountPage.getAccName(),add_stockAccountPage.getBuyDate(),add_stockAccountPage.getLimit()));
-              }
-              else {
+              if (add_stockAccountPage.isSubmitted()) {
+                user.addAccount(
+                    new Stocks(add_stockAccountPage.getAccName(), add_stockAccountPage.getBuyDate(),
+                        add_stockAccountPage.getLimit()));
+              } else {
                 accountTypePage.configureFrame(frame);
               }
               break;
@@ -156,12 +158,13 @@ public class UserInterface {
         }
 
         if (transactionListPage.isNewPayoutWanted()) {
-<<<<<<< HEAD
           //open new Payout Page, for tests now add  cash account
           addPayoutPage.configureFrame(frame);
-          while (!addPayoutPage.isSubmitted() && !addPayoutPage.isBackWanted());
+          while (!addPayoutPage.isSubmitted() && !addPayoutPage.isBackWanted()) {
+            ;
+          }
 
-          if(addPayoutPage.isSubmitted()) {
+          if (addPayoutPage.isSubmitted()) {
             //TODO: SAFE PAYOUT HERE
           }
 
@@ -170,43 +173,15 @@ public class UserInterface {
           //open new Deposit Page, for tests now add a credit account
           addDepositPage.configureFrame(frame);
 
-          while(!addDepositPage.isSubmitted() && !addDepositPage.isBackWanted());
+          while (!addDepositPage.isSubmitted() && !addDepositPage.isBackWanted()) {
+            ;
+          }
 
-          if(addDepositPage.isSubmitted()) {
+          if (addDepositPage.isSubmitted()) {
             //TODO: SAFE DEPOSIT HERE
           }
 
           transactionListPage.configureFrame(frame);
-=======
-          addPayoutPage.configureFrame(frame);
-          while (!addPayoutPage.isSubmitted()  && !addPayoutPage.isBackWanted()) {
-            ;
-          }
-          if(addPayoutPage.isSubmitted()) {
-            try {
-              user.payOut(addPayoutPage.getCatego(), addPayoutPage.getAmount(), addPayoutPage.getDescription(), accountListPage.getSelectedAccount());
-            } catch (Exception e) {
-              System.out.println("ERR:" + e.getMessage()); //TODO BETTER
-            }
-          }else{
-            addPayoutPage.configureFrame(frame);
-          }
-        } else if (transactionListPage.isNewDepositWanted()) {
-          addDepositPage.configureFrame(frame);
-          while (!addDepositPage.isSubmitted() &&  !addDepositPage.isBackWanted()) {
-            ;
-          }
-          if(addDepositPage.isSubmitted()) {
-            try {
-              user.deposit(addDepositPage.getCatego(), addDepositPage.getAmount(), addDepositPage.getDescription(), accountListPage.getSelectedAccount());
-            } catch (Exception e) {
-              System.out.println("ERR:" + e.getMessage()); //TODO BETTER
-            }
-          }
-        }else{
-          addPayoutPage.configureFrame(frame);
-        }
->>>>>>> fc1588fd164931db25281cba1d3c1d7797384c35
         } else {
           accountListPage.configureFrame(frame);
         }
@@ -215,4 +190,5 @@ public class UserInterface {
 
 
   }
+}
 
