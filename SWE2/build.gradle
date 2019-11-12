@@ -11,18 +11,14 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+	sourceSets.main.java.srcDirs = ['src/main/java']
+	sourceSets.test.java.srcDirs = ['src/tests/java']
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-
-dependencies {
     compile 'org.mongodb:mongodb-driver-sync:3.11.1'
-}
-
-dependencies {
     compile 'org.mongodb:mongodb-driver-legacy:3.11.1'
-}
-
-dependencies {
     compile 'org.mongodb:mongodb-driver:3.11.1'
 }
