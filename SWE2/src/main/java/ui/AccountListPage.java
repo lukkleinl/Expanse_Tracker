@@ -53,71 +53,8 @@ public class AccountListPage implements InterfacePage {
    */
   public AccountListPage(User user) {
     this.user = user;
+    createComponents();
 
-    selectedAccount = null;
-    newAccountWanted = false;
-
-    //WELCOME MESSAGE
-    welcomeMessage = new JLabel();
-    welcomeMessage.setText("Welcome, " + user.getFirstname() + " " + user.getLastname() + "!");
-    welcomeMessage.setFont(new Font("Serif", Font.BOLD, 28));
-    welcomeMessage.setBounds(100, 50, 1000, 50);
-
-    //NEW ACCOUNT BUTTON
-    newAccountButton = new JButton("CREATE NEW ACCOUNT");
-    newAccountButton.setBounds(400, 600, 400, 50);
-    newAccountButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        newAccountWanted = true;
-      }
-    });
-
-    //TABLE
-    Object[] columnNames = {"Nr.", "Account Type", "Account Name", "Balance"};
-    accountTable = new JTable(getAccounts(user), columnNames);
-    accountTable.setRowHeight(70);
-    accountTable.setDefaultEditor(Object.class, null);
-
-    DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
-    tableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-    for (int i = 0; i < 4; ++i) {
-      accountTable.getColumnModel().getColumn(i).setCellRenderer(tableCellRenderer);
-    }
-
-    //TABLE MOUSE LISTENER
-    accountTable.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent mouseEvent) {
-        JTable table = (JTable) mouseEvent.getSource();
-        Point point = mouseEvent.getPoint();
-        int row = table.rowAtPoint(point);
-        if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-          CustomContainer<Account> accountList = user.getAccounts();
-
-          CustomIterator<Account> iterator = accountList.getIterator();
-
-          while (iterator.hasNext()) {
-            Account acc = iterator.next();
-            if (acc.getAccount_number() == (Integer) accountTable.getValueAt(row, 0)) {
-              selectedAccount = acc;
-              System.out.println(acc.getAccount_number() + " selected");
-              break;
-            }
-          }
-        }
-      }
-    });
-
-    //SCROLL PANE
-    accountTablePane = new JScrollPane(accountTable);
-    accountTablePane.setBounds(100, 150, 975, 370);
-
-    components = new ArrayList<>();
-    components.add(welcomeMessage);
-    components.add(accountTablePane);
-    components.add(newAccountButton);
   }
 
   /**
@@ -211,8 +148,7 @@ public class AccountListPage implements InterfacePage {
    * @param frame The JFrame, which components will be updated
    */
   public void configureFrame(JFrame frame) {
-    newAccountWanted = false;
-    selectedAccount = null;
+    createComponents();
 
     //frame.setVisible(false);
     frame.setTitle("Account Types");
@@ -226,5 +162,77 @@ public class AccountListPage implements InterfacePage {
     frame.revalidate();
     frame.repaint();
     //frame.setVisible(true);
+  }
+
+  /**
+   * This method creates all components, such as buttons and text fields, and adds it to a list.
+   * It also sets every indicator variables to default and updates the account list of the user.
+   */
+  private void createComponents() {
+
+    selectedAccount = null;
+    newAccountWanted = false;
+
+    //WELCOME MESSAGE
+    welcomeMessage = new JLabel();
+    welcomeMessage.setText("Welcome, " + user.getFirstname() + " " + user.getLastname() + "!");
+    welcomeMessage.setFont(new Font("Serif", Font.BOLD, 28));
+    welcomeMessage.setBounds(100, 50, 1000, 50);
+
+    //NEW ACCOUNT BUTTON
+    newAccountButton = new JButton("CREATE NEW ACCOUNT");
+    newAccountButton.setBounds(400, 600, 400, 50);
+    newAccountButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        newAccountWanted = true;
+      }
+    });
+
+    //TABLE
+    Object[] columnNames = {"Nr.", "Account Type", "Account Name", "Balance"};
+    accountTable = new JTable(getAccounts(user), columnNames);
+    accountTable.setRowHeight(70);
+    accountTable.setDefaultEditor(Object.class, null);
+
+    DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+    tableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+    for (int i = 0; i < 4; ++i) {
+      accountTable.getColumnModel().getColumn(i).setCellRenderer(tableCellRenderer);
+    }
+
+    //TABLE MOUSE LISTENER
+    accountTable.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mousePressed(MouseEvent mouseEvent) {
+        JTable table = (JTable) mouseEvent.getSource();
+        Point point = mouseEvent.getPoint();
+        int row = table.rowAtPoint(point);
+        if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+          CustomContainer<Account> accountList = user.getAccounts();
+
+          CustomIterator<Account> iterator = accountList.getIterator();
+
+          while (iterator.hasNext()) {
+            Account acc = iterator.next();
+            if (acc.getAccount_number() == (Integer) accountTable.getValueAt(row, 0)) {
+              selectedAccount = acc;
+              System.out.println(acc.getAccount_number() + " selected");
+              break;
+            }
+          }
+        }
+      }
+    });
+
+    //SCROLL PANE
+    accountTablePane = new JScrollPane(accountTable);
+    accountTablePane.setBounds(100, 150, 975, 370);
+
+    components = new ArrayList<>();
+    components.add(welcomeMessage);
+    components.add(accountTablePane);
+    components.add(newAccountButton);
   }
 }
