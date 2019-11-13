@@ -1,6 +1,5 @@
-package ui.test;
+package ui_tests;
 
-import accounts.Account;
 import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
@@ -9,8 +8,22 @@ import java.util.Date;
 import transactions.DepositCategory;
 import user.User;
 
+/**
+ * This class is in here for SUPD.
+ * Its method returns a test user object.
+ * The user object is needed for the GUI.
+ * THIS CLASS WILL BE GONE IN FINAL SUBMISSION
+ *
+ * @author Patrick Gmasz
+ */
 public class TestUser {
 
+  /**
+   * Returns a test user object.
+   *
+   *
+   * @return The test user object.
+   */
   public static User getTestUser() {
     User user = new User(1234, "Max", "Mustermann", "123");
     Cash cash = new Cash("Wallet", 0, "Euro");

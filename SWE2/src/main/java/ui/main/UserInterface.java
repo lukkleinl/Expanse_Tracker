@@ -18,7 +18,7 @@ import ui.listPages.AccountTypes;
 import ui.listPages.TransactionListPage;
 import ui.login.LoginPage;
 import ui.login.RegistrationPage;
-import ui.test.TestUser;
+import ui.TestUser;
 import user.User;
 
 /**

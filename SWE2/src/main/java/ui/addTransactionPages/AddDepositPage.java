@@ -164,17 +164,4 @@ public class AddDepositPage implements InterfacePage {
 
     }
 
-
-    public static void main(String args[]){
-        JFrame frame = new JFrame();
-        frame.setLayout(null);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        AddDepositPage page = new AddDepositPage();
-        page.configureFrame(frame);
-
-    }
-
 }

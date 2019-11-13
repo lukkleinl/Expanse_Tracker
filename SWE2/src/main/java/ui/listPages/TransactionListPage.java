@@ -53,36 +53,6 @@ public class TransactionListPage implements InterfacePage {
     createComponents();
   }
 
-  /* TESTING PURPOSES ONLY */
-  public static void main(String args[]) {
-
-    //TEST DATA
-
-    BankAccount testbankacc = new BankAccount("pauls acc", "BAWAG", 1000);
-    User testUser = new User(1, "paul", "kraft", "qwerty");
-
-    for (int i = 0; i < 100; i++) {
-      if (i < 50) {
-        try {
-          testUser.deposit(DepositCategory.SALARY, i % 3 + 1000, "desc" + i, testbankacc);
-        } catch (Exception e) {
-        }
-      } else {
-        try {
-          testUser.payOut(PayoutCategory.FOOD, i % 3, "desc" + i, testbankacc);
-        } catch (Exception e) {
-        }
-      }
-    }
-    //TEST DATA
-
-    JFrame frame = new JFrame();
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    TransactionListPage addp = new TransactionListPage(testbankacc, testUser);
-    addp.configureFrame(frame);
-
-  }
-
   public boolean isNewDepositWanted() {
     try {
       Thread.sleep(1);

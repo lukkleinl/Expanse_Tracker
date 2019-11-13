@@ -16,6 +16,7 @@ import java.util.Map;
 import transactions.DepositCategory;
 import transactions.PayoutCategory;
 import transactions.Transaction;
+import ui.main.UserInterface;
 import user.User;
 
 public class Client {
@@ -25,6 +26,12 @@ public class Client {
   public static void main(String[] args) {
     // TODO Auto-generated method stub
 
+    //FOR SUPD
+    UserInterface userInterface = new UserInterface();
+    userInterface.start();
+
+
+    /*
     Date date=new Date();
     double x=22;
     DepositCategory cat=SALARY;
@@ -53,14 +60,14 @@ public class Client {
     {
       System.out.println(abc.next().getBalance());
     }
-    /*for (Entry e : map.entrySet()) {
+    for (Entry e : map.entrySet()) {
       e.getValue();
       System.out.println(e.getKey());
     }
-    System.out.println(map.size());*/
+    System.out.println(map.size());
 
 
     mongo.insert(user);
-
+    */
   }
 }

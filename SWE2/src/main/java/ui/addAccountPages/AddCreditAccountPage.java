@@ -44,15 +44,6 @@ public class AddCreditAccountPage implements InterfacePage {
     createComponents();
   }
 
-  /* TESTING PURPOSES ONLY */
-  public static void main(String args[]) {
-
-    JFrame frame = new JFrame();
-    AddCreditAccountPage addp = new AddCreditAccountPage();
-    addp.configureFrame(frame);
-
-  }
-
   public void configureFrame(JFrame frame) {
     createComponents();
 
@@ -170,7 +161,7 @@ public class AddCreditAccountPage implements InterfacePage {
     components.add(BankNameText);
 
     SubmitButton = new JButton("SUBMIT");
-    SubmitButton.setBounds(10 + SHIFT_LEFT, 700, 300, 50);
+    SubmitButton.setBounds(10 + SHIFT_LEFT, 650, 300, 50);
     components.add(SubmitButton);
 
     SubmitButton.addActionListener(new ActionListener() {

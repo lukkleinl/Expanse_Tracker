@@ -41,15 +41,6 @@ public class AddStockAccountPage implements InterfacePage {
     createComponents();
   }
 
-  /* TESTING PURPOSES ONLY */
-  public static void main(String args[]) {
-
-    JFrame frame = new JFrame();
-    AddStockAccountPage addp = new AddStockAccountPage();
-    addp.configureFrame(frame);
-
-  }
-
   public void configureFrame(JFrame frame) {
     createComponents();
 

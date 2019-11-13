@@ -39,15 +39,6 @@ public class AddCashAccountPage implements InterfacePage {
 
   }
 
-  /* TESTING PURPOSES ONLY */
-  public static void main(String args[]) {
-
-    JFrame frame = new JFrame();
-    AddCashAccountPage addp = new AddCashAccountPage();
-    addp.configureFrame(frame);
-
-  }
-
   public void configureFrame(JFrame frame) {
     createComponents();
 
