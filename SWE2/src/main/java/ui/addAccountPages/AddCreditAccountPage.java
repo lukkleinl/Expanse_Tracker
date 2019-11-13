@@ -1,4 +1,4 @@
-package ui;
+package ui.addAccountPages;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -7,38 +7,40 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import ui.InterfacePage;
 
-public class Add_DebitAccountPage implements InterfacePage {
+public class AddCreditAccountPage implements InterfacePage {
 
-  public final static int FRAME_WIDTH = 1200;
-  public final static int FRAME_HEIGHT = 800;
+  private final static int FRAME_WIDTH = 1200;
+  private final static int FRAME_HEIGHT = 800;
 
-  public final static int SHIFT_LEFT = 300;
-  public final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
+  private final static int SHIFT_LEFT = 300;
+  private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
   private ArrayList<JComponent> components;
   private JLabel IntroText;
   private JLabel AccountName;
   private JLabel Limit;
   private JLabel BankName;
-  private JLabel IBAN;
+  private JLabel Expiry;
   private JButton SubmitButton;
   private JButton BackButton;
 
   private JTextField AccNameText;
   private JTextField LimitText;
   private JTextField BankNameText;
-  private JTextField IBANField;
+  private JFormattedTextField ExpiryField;
   private String AccName_String = "";
 
   private String BankName_String = "";
-  private String IBAN_STRING = "";
+  private Date Expiry_Date;
   private float Limit_Double = 0.00f;
 
   private boolean submitted;
   private boolean backWanted;
 
-  public Add_DebitAccountPage() {
+
+  public AddCreditAccountPage() {
     createComponents();
   }
 
@@ -46,7 +48,7 @@ public class Add_DebitAccountPage implements InterfacePage {
   public static void main(String args[]) {
 
     JFrame frame = new JFrame();
-    Add_DebitAccountPage addp = new Add_DebitAccountPage();
+    AddCreditAccountPage addp = new AddCreditAccountPage();
     addp.configureFrame(frame);
 
   }
@@ -54,18 +56,18 @@ public class Add_DebitAccountPage implements InterfacePage {
   public void configureFrame(JFrame frame) {
     createComponents();
 
-   // frame.setVisible(false);
+    //frame.setVisible(false);
     frame.setLayout(null);
-    frame.setTitle("Add Debit Card Account");
+    frame.setTitle("Add Credid Card Account");
     frame.getContentPane().removeAll();
-    //frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
     for (JComponent comp : components) {
       frame.add(comp);
     }
     frame.revalidate();
     frame.repaint();
-    frame.setVisible(true);
+    //frame.setVisible(true);
   }
 
   public String getAccName() {
@@ -77,13 +79,13 @@ public class Add_DebitAccountPage implements InterfacePage {
     return AccName_String;
   }
 
-  public String getIBAN() {
+  public Date getExpiry() {
     try {
       Thread.sleep(1);
     } catch (Exception e) {
     }
 
-    return IBAN_STRING;
+    return Expiry_Date;
   }
 
   public float getLimit() {
@@ -149,13 +151,15 @@ public class Add_DebitAccountPage implements InterfacePage {
     LimitText.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
     components.add(LimitText);
 
-    IBAN = new JLabel("IBAN:");
-    IBAN.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
-    components.add(IBAN);
+    Expiry = new JLabel("Expiry-Date:");
+    Expiry.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    components.add(Expiry);
 
-    IBANField = new JTextField();
-    IBANField.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
-    components.add(IBANField);
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    ExpiryField = new JFormattedTextField(df);
+    ExpiryField.setText("dd/mm/yyyy");
+    ExpiryField.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
+    components.add(ExpiryField);
 
     BankName = new JLabel("Bank Name:");
     BankName.setBounds(10 + SHIFT_LEFT, 500, 300, 50);
@@ -173,21 +177,19 @@ public class Add_DebitAccountPage implements InterfacePage {
       @Override
       public void actionPerformed(ActionEvent e) {
         AccName_String = AccNameText.getText();
-        IBAN_STRING = IBANField.getText();
+        Expiry_Date = (Date) ExpiryField.getValue();
         Limit_Double = Float.valueOf(LimitText.getText());
         BankName_String = BankNameText.getText();
 
-        //TODO check limit and IBAN
+        //TODO check limit and DATE
 
         System.out.println(
             "Name: " + AccName_String +
-                "\nIBAN: " + IBAN_STRING +
+                "\nDate: " + Expiry_Date +
                 "\nLimit: " + Limit_Double +
                 "\nBankName: " + BankName_String
         );
-
         submitted = true;
-
 
       }
     });

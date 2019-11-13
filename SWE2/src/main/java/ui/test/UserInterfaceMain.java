@@ -1,4 +1,6 @@
-package ui;
+package ui.test;
+
+import ui.UserInterface;
 
 public class UserInterfaceMain {
 

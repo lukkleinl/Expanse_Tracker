@@ -1,9 +1,10 @@
-package ui;
+package ui.listPages;
 
 import accounts.*;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import transactions.*;
+import ui.InterfacePage;
 import user.User;
 
 import javax.swing.*;
@@ -42,8 +43,91 @@ public class TransactionListPage implements InterfacePage {
   private boolean newPayoutWanted;
   private boolean backWanted;
 
+  private Account acc;
+  private User user;
+
 
   public TransactionListPage(Account acc, User user) {
+    this.acc = acc;
+    this.user = user;
+    createComponents();
+  }
+
+  /* TESTING PURPOSES ONLY */
+  public static void main(String args[]) {
+
+    //TEST DATA
+
+    BankAccount testbankacc = new BankAccount("pauls acc", "BAWAG", 1000);
+    User testUser = new User(1, "paul", "kraft", "qwerty");
+
+    for (int i = 0; i < 100; i++) {
+      if (i < 50) {
+        try {
+          testUser.deposit(DepositCategory.SALARY, i % 3 + 1000, "desc" + i, testbankacc);
+        } catch (Exception e) {
+        }
+      } else {
+        try {
+          testUser.payOut(PayoutCategory.FOOD, i % 3, "desc" + i, testbankacc);
+        } catch (Exception e) {
+        }
+      }
+    }
+    //TEST DATA
+
+    JFrame frame = new JFrame();
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    TransactionListPage addp = new TransactionListPage(testbankacc, testUser);
+    addp.configureFrame(frame);
+
+  }
+
+  public boolean isNewDepositWanted() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+    }
+
+    return newDepositWanted;
+  }
+
+  public boolean isNewPayoutWanted() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+    }
+
+    return newPayoutWanted;
+  }
+
+  public boolean isBackWanted() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+    }
+
+    return backWanted;
+  }
+
+  public void configureFrame(JFrame frame) {
+    createComponents();
+
+    //frame.setVisible(false);
+    frame.setLayout(null);
+    frame.setTitle("Add Cash Account");
+    frame.getContentPane().removeAll();
+    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+    for (JComponent comp : components) {
+      frame.add(comp);
+    }
+    frame.revalidate();
+    frame.repaint();
+    //frame.setVisible(true);
+  }
+
+  private void createComponents() {
     newDepositWanted = false;
     newPayoutWanted = false;
     backWanted = false;
@@ -183,82 +267,5 @@ public class TransactionListPage implements InterfacePage {
       }
     });
     components.add(newDepositButton);
-
-  }
-
-  /* TESTING PURPOSES ONLY */
-  public static void main(String args[]) {
-
-    //TEST DATA
-
-    BankAccount testbankacc = new BankAccount("pauls acc", "BAWAG", 1000);
-    User testUser = new User(1, "paul", "kraft", "qwerty");
-
-    for (int i = 0; i < 100; i++) {
-      if (i < 50) {
-        try {
-          testUser.deposit(DepositCategory.SALARY, i % 3 + 1000, "desc" + i, testbankacc);
-        } catch (Exception e) {
-        }
-      } else {
-        try {
-          testUser.payOut(PayoutCategory.FOOD, i % 3, "desc" + i, testbankacc);
-        } catch (Exception e) {
-        }
-      }
-    }
-    //TEST DATA
-
-    JFrame frame = new JFrame();
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    TransactionListPage addp = new TransactionListPage(testbankacc, testUser);
-    addp.configureFrame(frame);
-
-  }
-
-  public boolean isNewDepositWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
-    return newDepositWanted;
-  }
-
-  public boolean isNewPayoutWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
-    return newPayoutWanted;
-  }
-
-  public boolean isBackWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
-    return backWanted;
-  }
-
-  public void configureFrame(JFrame frame) {
-    newDepositWanted = false;
-    newPayoutWanted = false;
-    backWanted = false;
-
-    //frame.setVisible(false);
-    frame.setLayout(null);
-    frame.setTitle("Add Cash Account");
-    frame.getContentPane().removeAll();
-    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-    for (JComponent comp : components) {
-      frame.add(comp);
-    }
-    frame.revalidate();
-    frame.repaint();
-    //frame.setVisible(true);
   }
 }

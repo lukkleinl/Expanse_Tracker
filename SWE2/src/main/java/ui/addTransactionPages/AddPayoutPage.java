@@ -1,14 +1,14 @@
-package ui;
+package ui.addTransactionPages;
 
-import transactions.DepositCategory;
 import transactions.PayoutCategory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import ui.InterfacePage;
 
-public class AddDepositPage implements InterfacePage {
+public class AddPayoutPage implements InterfacePage {
     public final static int FRAME_WIDTH = 1200;
     public final static int FRAME_HEIGHT = 800;
 
@@ -22,9 +22,9 @@ public class AddDepositPage implements InterfacePage {
     private JTextField DescriptionInp;
     private JLabel Categorytext;
     private JComboBox EnumsCategorysBox;
-    private Object[] PayoutCategorys = {DepositCategory.SALARY,DepositCategory.DIVIDEND};
+    private Object[] PayoutCategorys = {PayoutCategory.EDUCATION,PayoutCategory.FOOD,PayoutCategory.TRANSPORTATION};
 
-    public DepositCategory getCatego() {
+    public PayoutCategory getCatego() {
         try {
             Thread.sleep(1);
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class AddDepositPage implements InterfacePage {
         return backWanted;
     }
 
-    private DepositCategory catego;
+    private PayoutCategory catego;
     private String description;
     private float Amount;
 
@@ -76,7 +76,7 @@ public class AddDepositPage implements InterfacePage {
 
 
 
-    public AddDepositPage() {
+    public AddPayoutPage() {
         createComponents();
     }
 
@@ -86,7 +86,7 @@ public class AddDepositPage implements InterfacePage {
 
         //frame.setVisible(false);
         frame.setLayout(null);
-        frame.setTitle("Add Deposit - Page");
+        frame.setTitle("Add Payout - Page");
         frame.getContentPane().removeAll();
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
@@ -128,7 +128,7 @@ public class AddDepositPage implements InterfacePage {
         DescriptionInp.setBounds(100, 300, 300, 50);
         components.add(DescriptionInp);
 
-        SubmitButton = new JButton("Deposit");
+        SubmitButton = new JButton("Payout");
         SubmitButton.setBounds(100, 500, 300, 50);
         components.add(SubmitButton);
 
@@ -137,7 +137,7 @@ public class AddDepositPage implements InterfacePage {
             public void actionPerformed(ActionEvent actionEvent) {
                 description = DescriptionInp.getText();
                 Amount = Float.valueOf(AmountInp.getText());
-                catego = (DepositCategory) EnumsCategorysBox.getSelectedItem();
+                catego = (PayoutCategory) EnumsCategorysBox.getSelectedItem();
 
                 //TODO negative AMOUNT
                 //TODO strings are Empty
@@ -172,7 +172,7 @@ public class AddDepositPage implements InterfacePage {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        AddDepositPage page = new AddDepositPage();
+        AddPayoutPage page = new AddPayoutPage();
         page.configureFrame(frame);
 
     }

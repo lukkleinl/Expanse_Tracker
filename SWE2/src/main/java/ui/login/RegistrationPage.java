@@ -1,4 +1,4 @@
-package ui;
+package ui.login;
 
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
@@ -9,6 +9,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import ui.InterfacePage;
 
 /**
  *
@@ -30,17 +31,19 @@ public class RegistrationPage implements InterfacePage {
   private JTextField passwordTextField;
   private JTextField password2TextField;
   private JButton registerButton;
+  private JButton backButton;
   private JTextField firstnameTextField;
   private JTextField lastnameTextField;
 
   private final int FRAME_WIDTH = 410;
-  private final int FRAME_HEIGHT = 480;
+  private final int FRAME_HEIGHT = 530;
 
   private String user;
   private String password;
   private String firstname;
   private String lastname;
   private boolean registrationComplete;
+  private boolean backWanted;
 
 
   /**
@@ -121,6 +124,15 @@ public class RegistrationPage implements InterfacePage {
     return registrationComplete;
   }
 
+  public boolean isBackWanted() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return backWanted;
+  }
+
   /**
    * This method updates the given JFrame with every components, e.g. buttons or text fields, and also sets indicators to default.
    *
@@ -148,60 +160,64 @@ public class RegistrationPage implements InterfacePage {
   private void createComponents() {
     user = "";
     password = "";
+    firstname = "";
+    lastname = "";
+
     registrationComplete = false;
+    backWanted = false;
 
     //INFO_LABEL
     infoLabel = new JLabel();
-    infoLabel.setBounds(130, 380, 150, 30);
+    infoLabel.setBounds(130, 430, 150, 30);
 
     //USER_LABEL
     userLabel = new JLabel();
     userLabel.setText("User ID:");
-    userLabel.setBounds(30, 40, 100, 30);
+    userLabel.setBounds(30, 90, 100, 30);
 
     //USER_TEXTFIELD
     userTextField = new JTextField();
-    userTextField.setBounds(130, 40, 150, 30);
+    userTextField.setBounds(130, 90, 150, 30);
 
     //PASSWORD_LABEL
     passwordLabel = new JLabel();
     passwordLabel.setText("Password:");
-    passwordLabel.setBounds(30, 100, 100, 30);
+    passwordLabel.setBounds(30, 150, 100, 30);
 
     //PASSWORD_TEXTFIELD
     passwordTextField = new JTextField();
-    passwordTextField.setBounds(130, 100, 150, 30);
+    passwordTextField.setBounds(130, 150, 150, 30);
 
     //PASSWORD2_LABEL
     password2Label = new JLabel();
     password2Label.setText("Retype PW:");
-    password2Label.setBounds(30, 160, 100, 30);
+    password2Label.setBounds(30, 210, 100, 30);
 
     //PASSWORD2_TEXTFIELD
     password2TextField = new JTextField();
-    password2TextField.setBounds(130, 160, 150, 30);
+    password2TextField.setBounds(130, 210, 150, 30);
 
     //FIRSTNAME_LABEL
     firstnameLabel = new JLabel();
     firstnameLabel.setText("Firstname:");
-    firstnameLabel.setBounds(30, 220, 100, 30);
+    firstnameLabel.setBounds(30, 270, 100, 30);
 
     //FIRSTNAME_TEXTFIELD
     firstnameTextField = new JTextField();
-    firstnameTextField.setBounds(130, 220, 150, 30);
+    firstnameTextField.setBounds(130, 270, 150, 30);
 
     //LASTNAME_TEXTFIELD
     lastnameLabel = new JLabel();
     lastnameLabel.setText("Firstname:");
-    lastnameLabel.setBounds(30, 280, 100, 30);
+    lastnameLabel.setBounds(30, 330, 100, 30);
 
     //FIRSTNAME_TEXTFIELD
     lastnameTextField = new JTextField();
-    lastnameTextField.setBounds(130, 280, 150, 30);
+    lastnameTextField.setBounds(130, 330, 150, 30);
 
     //REGISTER_BUTTON
     registerButton = new JButton("Submit");
-    registerButton.setBounds(130, 330, 150, 40);
+    registerButton.setBounds(130, 380, 150, 40);
     registerButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -209,7 +225,6 @@ public class RegistrationPage implements InterfacePage {
             && !password2TextField.getText().equals("") && !firstnameTextField.getText().equals("")
             && !lastnameTextField.getText().equals("")) {
           if (passwordTextField.getText().equals(password2TextField.getText())) {
-            //TODO: ADD USER HERE
             user = userTextField.getText();
             password = passwordTextField.getText();
             firstname = firstnameTextField.getText();
@@ -222,6 +237,16 @@ public class RegistrationPage implements InterfacePage {
         } else {
           infoLabel.setText("No empty fields allowed!");
         }
+      }
+    });
+
+    //BACK_BUTTON
+    backButton = new JButton("BACK");
+    backButton.setBounds(10, 10, 100, 50);
+    backButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        backWanted = true;
       }
     });
 
@@ -238,5 +263,7 @@ public class RegistrationPage implements InterfacePage {
     components.add(firstnameTextField);
     components.add(lastnameLabel);
     components.add(lastnameTextField);
+    components.add(backButton);
+
   }
 }

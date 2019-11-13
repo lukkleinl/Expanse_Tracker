@@ -1,11 +1,12 @@
-package ui;
+package ui.addAccountPages;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import ui.InterfacePage;
 
-public class Add_CashAccountPage implements InterfacePage {
+public class AddDebitAccountPage implements InterfacePage {
 
   public final static int FRAME_WIDTH = 1200;
   public final static int FRAME_HEIGHT = 800;
@@ -17,32 +18,33 @@ public class Add_CashAccountPage implements InterfacePage {
   private JLabel IntroText;
   private JLabel AccountName;
   private JLabel Limit;
-  private JLabel Currency;
+  private JLabel BankName;
+  private JLabel IBAN;
   private JButton SubmitButton;
   private JButton BackButton;
 
   private JTextField AccNameText;
-  private JTextField CurrencyText;
   private JTextField LimitText;
-
+  private JTextField BankNameText;
+  private JTextField IBANField;
   private String AccName_String = "";
-  private String Currency_String = "";
+
+  private String BankName_String = "";
+  private String IBAN_STRING = "";
   private float Limit_Double = 0.00f;
 
   private boolean submitted;
   private boolean backWanted;
 
-
-  public Add_CashAccountPage() {
+  public AddDebitAccountPage() {
     createComponents();
-
   }
 
   /* TESTING PURPOSES ONLY */
   public static void main(String args[]) {
 
     JFrame frame = new JFrame();
-    Add_CashAccountPage addp = new Add_CashAccountPage();
+    AddDebitAccountPage addp = new AddDebitAccountPage();
     addp.configureFrame(frame);
 
   }
@@ -50,18 +52,18 @@ public class Add_CashAccountPage implements InterfacePage {
   public void configureFrame(JFrame frame) {
     createComponents();
 
-    //frame.setVisible(false);
+   // frame.setVisible(false);
     frame.setLayout(null);
-    frame.setTitle("Add Cash Account");
+    frame.setTitle("Add Debit Card Account");
     frame.getContentPane().removeAll();
-    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+    //frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
     for (JComponent comp : components) {
       frame.add(comp);
     }
     frame.revalidate();
     frame.repaint();
-    //frame.setVisible(true);
+    frame.setVisible(true);
   }
 
   public String getAccName() {
@@ -73,13 +75,13 @@ public class Add_CashAccountPage implements InterfacePage {
     return AccName_String;
   }
 
-  public String getCurrency() {
+  public String getIBAN() {
     try {
       Thread.sleep(1);
     } catch (Exception e) {
     }
 
-    return Currency_String;
+    return IBAN_STRING;
   }
 
   public float getLimit() {
@@ -89,6 +91,15 @@ public class Add_CashAccountPage implements InterfacePage {
     }
 
     return Limit_Double;
+  }
+
+  public String getBankName_String() {
+    try {
+      Thread.sleep(1);
+    } catch (Exception e) {
+    }
+
+    return BankName_String;
   }
 
   public boolean isSubmitted() {
@@ -136,36 +147,46 @@ public class Add_CashAccountPage implements InterfacePage {
     LimitText.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
     components.add(LimitText);
 
-    Currency = new JLabel("Currency:");
-    Currency.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
-    components.add(Currency);
+    IBAN = new JLabel("IBAN:");
+    IBAN.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    components.add(IBAN);
 
-    CurrencyText = new JTextField();
-    CurrencyText.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
-    components.add(CurrencyText);
+    IBANField = new JTextField();
+    IBANField.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
+    components.add(IBANField);
+
+    BankName = new JLabel("Bank Name:");
+    BankName.setBounds(10 + SHIFT_LEFT, 500, 300, 50);
+    components.add(BankName);
+
+    BankNameText = new JTextField();
+    BankNameText.setBounds(10 + SHIFT_LEFT, 500 + OFFSET_Y, 300, 50);
+    components.add(BankNameText);
 
     SubmitButton = new JButton("SUBMIT");
-    SubmitButton.setBounds(10 + SHIFT_LEFT, 600, 300, 50);
+    SubmitButton.setBounds(10 + SHIFT_LEFT, 700, 300, 50);
     components.add(SubmitButton);
 
     SubmitButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         AccName_String = AccNameText.getText();
-        Currency_String = CurrencyText.getText();
+        IBAN_STRING = IBANField.getText();
         Limit_Double = Float.valueOf(LimitText.getText());
+        BankName_String = BankNameText.getText();
 
-        if (Limit_Double < 0) {
-          //TODO throw Exception or so // check LIMIT
-        }
-            /*
-            System.out.println(
-                    "Name: " + AccName_String +
-                    "\nCurrency: " + Currency_String +
-                    "\nLimit: " + Limit_Double
-            );
-            */
+        //TODO check limit and IBAN
+
+        System.out.println(
+            "Name: " + AccName_String +
+                "\nIBAN: " + IBAN_STRING +
+                "\nLimit: " + Limit_Double +
+                "\nBankName: " + BankName_String
+        );
+
         submitted = true;
+
+
       }
     });
 
@@ -178,6 +199,7 @@ public class Add_CashAccountPage implements InterfacePage {
         backWanted = true;
       }
     });
+
 
   }
 }

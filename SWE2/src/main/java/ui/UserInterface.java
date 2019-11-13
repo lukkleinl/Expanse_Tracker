@@ -6,6 +6,19 @@ import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
+import ui.addAccountPages.AddCashAccountPage;
+import ui.addAccountPages.AddCreditAccountPage;
+import ui.addAccountPages.AddDebitAccountPage;
+import ui.addAccountPages.AddStockAccountPage;
+import ui.addTransactionPages.AddDepositPage;
+import ui.addTransactionPages.AddPayoutPage;
+import ui.listPages.AccountListPage;
+import ui.listPages.AccountTypePage;
+import ui.listPages.AccountTypes;
+import ui.listPages.TransactionListPage;
+import ui.login.LoginPage;
+import ui.login.RegistrationPage;
+import ui.test.TestUser;
 import user.User;
 
 /**
@@ -52,26 +65,27 @@ public class UserInterface {
         //OPEN REGISTRATION PAGE COMPONENTS
         registrationPage.configureFrame(frame);
 
-        boolean registrationFinished = false;
-
-        while (!registrationFinished) {
+        while (!registrationPage.isRegistrationComplete() && !registrationPage.isBackWanted());
           if (registrationPage.isRegistrationComplete()) {
+            try {
+              Thread.sleep(1000);
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
             //TODO: save userdata here
-            registrationFinished = true;
-
-            //OPEN LOGIN PAGE COMPONENTS AGAIN
-            loginPage.configureFrame(frame);
           }
-        }
+          //OPEN LOGIN PAGE COMPONENTS AGAIN
+          loginPage.configureFrame(frame);
+
       }
     }
 
     AccountListPage accountListPage = new AccountListPage(user);
     AccountTypePage accountTypePage = new AccountTypePage();
-    Add_CashAccountPage add_cashAccountPage = new Add_CashAccountPage();
-    Add_DebitAccountPage add_debitAccountPage = new Add_DebitAccountPage();
-    Add_StockAccountPage add_stockAccountPage = new Add_StockAccountPage();
-    Add_CreditAccountPage add_creditAccountPage = new Add_CreditAccountPage();
+    AddCashAccountPage add_cashAccountPage = new AddCashAccountPage();
+    AddDebitAccountPage add_debitAccountPage = new AddDebitAccountPage();
+    AddStockAccountPage add_stockAccountPage = new AddStockAccountPage();
+    AddCreditAccountPage add_creditAccountPage = new AddCreditAccountPage();
     AddDepositPage addDepositPage = new AddDepositPage();
     AddPayoutPage addPayoutPage = new AddPayoutPage();
     TransactionListPage transactionListPage;

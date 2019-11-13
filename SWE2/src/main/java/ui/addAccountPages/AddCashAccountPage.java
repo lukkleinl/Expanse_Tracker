@@ -1,50 +1,49 @@
-package ui;
+package ui.addAccountPages;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import ui.InterfacePage;
 
-public class Add_StockAccountPage implements InterfacePage {
+public class AddCashAccountPage implements InterfacePage {
 
-  public final static int FRAME_WIDTH = 1200;
-  public final static int FRAME_HEIGHT = 800;
+  private final static int FRAME_WIDTH = 1200;
+  private final static int FRAME_HEIGHT = 800;
 
-  public final static int SHIFT_LEFT = 300;
-  public final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
+  private final static int SHIFT_LEFT = 300;
+  private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
   private ArrayList<JComponent> components;
   private JLabel IntroText;
   private JLabel AccountName;
   private JLabel Limit;
-  private JLabel BuyDate;
+  private JLabel Currency;
   private JButton SubmitButton;
   private JButton BackButton;
 
   private JTextField AccNameText;
-  private JFormattedTextField BuyDateText;
+  private JTextField CurrencyText;
   private JTextField LimitText;
 
   private String AccName_String = "";
-  private Date BuyDate_Date;
+  private String Currency_String = "";
   private float Limit_Double = 0.00f;
 
   private boolean submitted;
   private boolean backWanted;
 
 
-  public Add_StockAccountPage() {
+  public AddCashAccountPage() {
     createComponents();
+
   }
 
   /* TESTING PURPOSES ONLY */
   public static void main(String args[]) {
 
     JFrame frame = new JFrame();
-    Add_StockAccountPage addp = new Add_StockAccountPage();
+    AddCashAccountPage addp = new AddCashAccountPage();
     addp.configureFrame(frame);
 
   }
@@ -54,7 +53,7 @@ public class Add_StockAccountPage implements InterfacePage {
 
     //frame.setVisible(false);
     frame.setLayout(null);
-    frame.setTitle("Add Stock Account");
+    frame.setTitle("Add Cash Account");
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
@@ -75,13 +74,13 @@ public class Add_StockAccountPage implements InterfacePage {
     return AccName_String;
   }
 
-  public Date getBuyDate() {
+  public String getCurrency() {
     try {
       Thread.sleep(1);
     } catch (Exception e) {
     }
 
-    return BuyDate_Date;
+    return Currency_String;
   }
 
   public float getLimit() {
@@ -138,15 +137,13 @@ public class Add_StockAccountPage implements InterfacePage {
     LimitText.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
     components.add(LimitText);
 
-    BuyDate = new JLabel("BuyDate:");
-    BuyDate.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
-    components.add(BuyDate);
+    Currency = new JLabel("Currency:");
+    Currency.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    components.add(Currency);
 
-    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-    BuyDateText = new JFormattedTextField(df);
-    BuyDateText.setText("dd/mm/yyyy");
-    BuyDateText.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
-    components.add(BuyDateText);
+    CurrencyText = new JTextField();
+    CurrencyText.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
+    components.add(CurrencyText);
 
     SubmitButton = new JButton("SUBMIT");
     SubmitButton.setBounds(10 + SHIFT_LEFT, 600, 300, 50);
@@ -156,17 +153,19 @@ public class Add_StockAccountPage implements InterfacePage {
       @Override
       public void actionPerformed(ActionEvent e) {
         AccName_String = AccNameText.getText();
-        BuyDate_Date = (Date) BuyDateText.getValue();
+        Currency_String = CurrencyText.getText();
         Limit_Double = Float.valueOf(LimitText.getText());
 
-        //TODO check limit and DATE
-
-        System.out.println(
-            "Name: " + AccName_String +
-                "\nBuyDate: " + BuyDate_Date +
-                "\nLimit: " + Limit_Double
-        );
-
+        if (Limit_Double < 0) {
+          //TODO throw Exception or so // check LIMIT
+        }
+            /*
+            System.out.println(
+                    "Name: " + AccName_String +
+                    "\nCurrency: " + Currency_String +
+                    "\nLimit: " + Limit_Double
+            );
+            */
         submitted = true;
       }
     });
@@ -180,7 +179,6 @@ public class Add_StockAccountPage implements InterfacePage {
         backWanted = true;
       }
     });
-
 
   }
 }

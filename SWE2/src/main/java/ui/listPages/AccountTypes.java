@@ -1,4 +1,4 @@
-package ui;
+package ui.listPages;
 
 /**
  * Enums of the different account types.

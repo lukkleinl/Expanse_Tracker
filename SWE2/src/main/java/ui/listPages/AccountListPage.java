@@ -1,4 +1,4 @@
-package ui;
+package ui.listPages;
 
 import accounts.Account;
 import accounts.Cash;
@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import ui.InterfacePage;
 import user.User;
 
 /**

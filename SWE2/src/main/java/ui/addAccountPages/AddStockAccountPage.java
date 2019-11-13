@@ -1,4 +1,4 @@
-package ui;
+package ui.addAccountPages;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -7,8 +7,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import ui.InterfacePage;
 
-public class Add_CreditAccountPage implements InterfacePage {
+public class AddStockAccountPage implements InterfacePage {
 
   public final static int FRAME_WIDTH = 1200;
   public final static int FRAME_HEIGHT = 800;
@@ -20,26 +21,23 @@ public class Add_CreditAccountPage implements InterfacePage {
   private JLabel IntroText;
   private JLabel AccountName;
   private JLabel Limit;
-  private JLabel BankName;
-  private JLabel Expiry;
+  private JLabel BuyDate;
   private JButton SubmitButton;
   private JButton BackButton;
 
   private JTextField AccNameText;
+  private JFormattedTextField BuyDateText;
   private JTextField LimitText;
-  private JTextField BankNameText;
-  private JFormattedTextField ExpiryField;
-  private String AccName_String = "";
 
-  private String BankName_String = "";
-  private Date Expiry_Date;
+  private String AccName_String = "";
+  private Date BuyDate_Date;
   private float Limit_Double = 0.00f;
 
   private boolean submitted;
   private boolean backWanted;
 
 
-  public Add_CreditAccountPage() {
+  public AddStockAccountPage() {
     createComponents();
   }
 
@@ -47,7 +45,7 @@ public class Add_CreditAccountPage implements InterfacePage {
   public static void main(String args[]) {
 
     JFrame frame = new JFrame();
-    Add_CreditAccountPage addp = new Add_CreditAccountPage();
+    AddStockAccountPage addp = new AddStockAccountPage();
     addp.configureFrame(frame);
 
   }
@@ -57,7 +55,7 @@ public class Add_CreditAccountPage implements InterfacePage {
 
     //frame.setVisible(false);
     frame.setLayout(null);
-    frame.setTitle("Add Credid Card Account");
+    frame.setTitle("Add Stock Account");
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
@@ -78,13 +76,13 @@ public class Add_CreditAccountPage implements InterfacePage {
     return AccName_String;
   }
 
-  public Date getExpiry() {
+  public Date getBuyDate() {
     try {
       Thread.sleep(1);
     } catch (Exception e) {
     }
 
-    return Expiry_Date;
+    return BuyDate_Date;
   }
 
   public float getLimit() {
@@ -94,15 +92,6 @@ public class Add_CreditAccountPage implements InterfacePage {
     }
 
     return Limit_Double;
-  }
-
-  public String getBankName_String() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
-    return BankName_String;
   }
 
   public boolean isSubmitted() {
@@ -150,46 +139,36 @@ public class Add_CreditAccountPage implements InterfacePage {
     LimitText.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
     components.add(LimitText);
 
-    Expiry = new JLabel("Expiry-Date:");
-    Expiry.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
-    components.add(Expiry);
+    BuyDate = new JLabel("BuyDate:");
+    BuyDate.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    components.add(BuyDate);
 
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-    ExpiryField = new JFormattedTextField(df);
-    ExpiryField.setText("dd/mm/yyyy");
-    ExpiryField.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
-    components.add(ExpiryField);
-
-    BankName = new JLabel("Bank Name:");
-    BankName.setBounds(10 + SHIFT_LEFT, 500, 300, 50);
-    components.add(BankName);
-
-    BankNameText = new JTextField();
-    BankNameText.setBounds(10 + SHIFT_LEFT, 500 + OFFSET_Y, 300, 50);
-    components.add(BankNameText);
+    BuyDateText = new JFormattedTextField(df);
+    BuyDateText.setText("dd/mm/yyyy");
+    BuyDateText.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
+    components.add(BuyDateText);
 
     SubmitButton = new JButton("SUBMIT");
-    SubmitButton.setBounds(10 + SHIFT_LEFT, 700, 300, 50);
+    SubmitButton.setBounds(10 + SHIFT_LEFT, 600, 300, 50);
     components.add(SubmitButton);
 
     SubmitButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         AccName_String = AccNameText.getText();
-        Expiry_Date = (Date) ExpiryField.getValue();
+        BuyDate_Date = (Date) BuyDateText.getValue();
         Limit_Double = Float.valueOf(LimitText.getText());
-        BankName_String = BankNameText.getText();
 
         //TODO check limit and DATE
 
         System.out.println(
             "Name: " + AccName_String +
-                "\nDate: " + Expiry_Date +
-                "\nLimit: " + Limit_Double +
-                "\nBankName: " + BankName_String
+                "\nBuyDate: " + BuyDate_Date +
+                "\nLimit: " + Limit_Double
         );
-        submitted = true;
 
+        submitted = true;
       }
     });
 

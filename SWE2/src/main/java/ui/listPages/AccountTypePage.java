@@ -1,4 +1,4 @@
-package ui;
+package ui.listPages;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import ui.InterfacePage;
 
 
 /**
