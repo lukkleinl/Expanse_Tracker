@@ -4,7 +4,7 @@ import accounts.*;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import transactions.*;
-import ui.InterfacePage;
+import ui.main.InterfacePage;
 import user.User;
 
 import javax.swing.*;

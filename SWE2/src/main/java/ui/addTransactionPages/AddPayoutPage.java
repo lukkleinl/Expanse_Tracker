@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import ui.InterfacePage;
+import ui.main.InterfacePage;
 
 public class AddPayoutPage implements InterfacePage {
     public final static int FRAME_WIDTH = 1200;

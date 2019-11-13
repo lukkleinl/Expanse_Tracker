@@ -1,6 +1,5 @@
 package ui.login;
 
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import ui.InterfacePage;
+import ui.main.InterfacePage;
 
 /**
  *
@@ -124,6 +123,12 @@ public class RegistrationPage implements InterfacePage {
     return registrationComplete;
   }
 
+  /**
+   * Pressing the back button on this page will set a boolean flag, that the button was pressed.
+   * This method returns the boolean, it will be true, when the user wanted to go a page back.
+   *
+   * @return The boolean flag, true, if user pressed back button
+   */
   public boolean isBackWanted() {
     try {
       Thread.sleep(1);

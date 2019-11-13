@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import ui.InterfacePage;
+import ui.main.InterfacePage;
 
 public class AddCashAccountPage implements InterfacePage {
 

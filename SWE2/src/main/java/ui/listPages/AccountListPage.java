@@ -21,7 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import ui.InterfacePage;
+import ui.main.InterfacePage;
 import user.User;
 
 /**

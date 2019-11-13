@@ -8,7 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import ui.InterfacePage;
+import ui.main.InterfacePage;
 
 
 /**

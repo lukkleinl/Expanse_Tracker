@@ -1,6 +1,6 @@
 package ui.test;
 
-import ui.UserInterface;
+import ui.main.UserInterface;
 
 public class UserInterfaceMain {
 
