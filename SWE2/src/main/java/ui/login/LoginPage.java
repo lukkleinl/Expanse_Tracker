@@ -33,8 +33,8 @@ public class LoginPage implements InterfacePage {
 
   private String user;
   private String password;
-  private boolean registrationWanted;
-  private boolean loginWanted;
+  private volatile boolean registrationWanted;
+  private volatile boolean loginWanted;
 
 
   /**
@@ -50,11 +50,6 @@ public class LoginPage implements InterfacePage {
    * @return The string, which the user wrote in the user textfield
    */
   public String getUser() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
     return user;
   }
 
@@ -65,11 +60,6 @@ public class LoginPage implements InterfacePage {
    * @return The string, which the user wrote in the password textfield
    */
   public String getPassword() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
     return password;
   }
 
@@ -80,11 +70,6 @@ public class LoginPage implements InterfacePage {
    * @return The boolean flag, which will be true, if the user pressed the register button.
    */
   public boolean isRegistrationWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
     return registrationWanted;
   }
 
@@ -95,12 +80,6 @@ public class LoginPage implements InterfacePage {
    * @return The boolean flag, which will be true, if the user pressed the login button:
    */
   public boolean isLoginWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
     return loginWanted;
   }
 

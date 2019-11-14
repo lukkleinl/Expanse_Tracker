@@ -33,7 +33,7 @@ public class AccountTypePage implements InterfacePage {
 
   private AccountTypes pageWanted;
 
-  private boolean backWanted;
+  private volatile boolean backWanted;
 
   /**
    * Creates a new AccountTypePage, which will load all needed components to a list.
@@ -146,11 +146,6 @@ public class AccountTypePage implements InterfacePage {
    * @return The account type, which the user clicked.
    */
   public AccountTypes getPageWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
     return pageWanted;
   }
 
@@ -161,12 +156,6 @@ public class AccountTypePage implements InterfacePage {
    * @return The boolean flag, true, if user pressed back button
    */
   public boolean isBackWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
     return backWanted;
   }
 }

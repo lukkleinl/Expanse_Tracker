@@ -45,7 +45,7 @@ public class AccountListPage implements InterfacePage {
   private User user;
 
   private Account selectedAccount;
-  private boolean newAccountWanted;
+  private volatile boolean newAccountWanted;
 
   /**
    * Creates a new AccountListPage, which will load all needed components to a list.
@@ -117,12 +117,6 @@ public class AccountListPage implements InterfacePage {
    * @return The account object, which the user wants to open.
    */
   public Account getSelectedAccount() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
     return selectedAccount;
   }
 
@@ -134,12 +128,6 @@ public class AccountListPage implements InterfacePage {
    * @return The boolean flag, it will be true, if the user pressed the create-new-account button.
    */
   public boolean isNewAccountWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
     return newAccountWanted;
   }
 

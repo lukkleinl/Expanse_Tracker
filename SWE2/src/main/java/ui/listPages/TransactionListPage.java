@@ -14,6 +14,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * This Page Displays the Transactions of 1 Account of 1 User and has 2 Buttons to start a new Deposit. Implements the Interface 'InterfacePage'
+ * @author Paul Kraft
+ */
+
 public class TransactionListPage implements InterfacePage {
 
   public final static int FRAME_WIDTH = 1200;
@@ -39,53 +44,54 @@ public class TransactionListPage implements InterfacePage {
   private JTable transactionTable;
   private JScrollPane scrollPane;
 
-  private boolean newDepositWanted;
-  private boolean newPayoutWanted;
-  private boolean backWanted;
+  private volatile boolean newDepositWanted;
+  private volatile boolean newPayoutWanted;
+  private volatile boolean backWanted;
 
   private Account acc;
   private User user;
 
-
+  /**
+   * Creates a new TransactionListPage, which will load all needed components to a list.
+   * @param acc who's transactions should be displayed.
+   * @param user User who belongs to that account.
+   */
   public TransactionListPage(Account acc, User user) {
     this.acc = acc;
     this.user = user;
     createComponents();
   }
 
+  /**
+   * @return current boolean value of neDepositWanted( whether the User wants to do a Deposit or not! )
+   */
   public boolean isNewDepositWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
     return newDepositWanted;
   }
-
+  /**
+   * @return current boolean value of newPayoutWanted( whether the User wants to do a Payout or not! )
+   */
   public boolean isNewPayoutWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
     return newPayoutWanted;
   }
-
+  /**
+   * @return current boolean value of backWanted( whether the User wants to go back or not! )
+   */
   public boolean isBackWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
     return backWanted;
   }
-
+  /**
+   * Configures the JFrame, adds all the components(resets the values of the JTextFields to hard coded default).
+   * Names the Frame to 'List Transactions - Page'.
+   * Sets the Size of the Frame. (Default is 1200 by 800).
+   * calls revalidate() and repaint() on the Frame.
+   * @param frame The JFrame, which components will be updated
+   */
   public void configureFrame(JFrame frame) {
     createComponents();
 
-    //frame.setVisible(false);
     frame.setLayout(null);
-    frame.setTitle("Add Cash Account");
+    frame.setTitle("List Transactions - Page");
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
@@ -94,7 +100,6 @@ public class TransactionListPage implements InterfacePage {
     }
     frame.revalidate();
     frame.repaint();
-    //frame.setVisible(true);
   }
 
   private void createComponents() {
@@ -213,6 +218,9 @@ public class TransactionListPage implements InterfacePage {
     components.add(BackButton);
     BackButton.addActionListener(new ActionListener() {
       @Override
+      /**
+       * sets backWanted to true
+       */
       public void actionPerformed(ActionEvent e) {
         backWanted = true;
       }
@@ -222,6 +230,9 @@ public class TransactionListPage implements InterfacePage {
     newPayoutButton.setBounds(400, 600, 200, 70);
     newPayoutButton.addActionListener(new ActionListener() {
       @Override
+      /**
+       * sets newPayoutWanted to true
+       */
       public void actionPerformed(ActionEvent e) {
         newPayoutWanted = true;
       }
@@ -232,6 +243,9 @@ public class TransactionListPage implements InterfacePage {
     newDepositButton.setBounds(700, 600, 200, 70);
     newDepositButton.addActionListener(new ActionListener() {
       @Override
+      /**
+       * sets newDepositWanted to true
+       */
       public void actionPerformed(ActionEvent e) {
         newDepositWanted = true;
       }
