@@ -1,5 +1,9 @@
 package ui.addAccountPages;
-
+/**
+ * This Page collects all necessary data needed to create a new 'CreditCard'-Account.
+ * By Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired through getters.
+ * @author Paul Kraft
+ */
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,18 +40,29 @@ public class AddCreditAccountPage implements InterfacePage {
   private Date Expiry_Date;
   private float Limit_Double = 0.00f;
 
-  private boolean submitted;
-  private boolean backWanted;
+  private volatile boolean submitted;
+  private volatile boolean backWanted;
 
-
+  /**
+   * Creates a new AddCreditAccountPage, which will load all needed components to a list.
+   * By Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired through getters.
+   */
+  // In Final Version might take a User object to display additional User information.
   public AddCreditAccountPage() {
     createComponents();
   }
 
+
+  /**
+   * Configures the JFrame, adds all the components(resets the values of the JTextFields to hard coded default).
+   * Names the Frame to 'Add Credit Card Account'.
+   * Sets the Size of the Frame. (Default is 1200 by 800).
+   * calls revalidate() and repaint() on the Frame.
+   * @param frame The JFrame, which components will be updated
+   */
   public void configureFrame(JFrame frame) {
     createComponents();
 
-    //frame.setVisible(false);
     frame.setLayout(null);
     frame.setTitle("Add Credid Card Account");
     frame.getContentPane().removeAll();
@@ -58,60 +73,41 @@ public class AddCreditAccountPage implements InterfacePage {
     }
     frame.revalidate();
     frame.repaint();
-    //frame.setVisible(true);
   }
-
+  /**
+   * @return accName input from the User or default val.
+   */
   public String getAccName() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
     return AccName_String;
   }
-
+  /**
+   * @return Expiy Date input from the User or default val.
+   */
   public Date getExpiry() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
     return Expiry_Date;
   }
-
+  /**
+   * @return Limit input from the User or default val.
+   */
   public float getLimit() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
     return Limit_Double;
   }
-
+  /**
+   * @return BankName input from the User or default val.
+   */
   public String getBankName_String() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
     return BankName_String;
   }
-
+  /**
+   * @return current boolean value of submitted(whether the User submitted or not! )
+   */
   public boolean isSubmitted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
     return submitted;
   }
-
+  /**
+   * @return current boolean value of backWanted( whether the User wants to go back or not! )
+   */
   public boolean isBackWanted() {
-    try {
-      Thread.sleep(1);
-    } catch (Exception e) {
-    }
-
     return backWanted;
   }
 
@@ -166,6 +162,11 @@ public class AddCreditAccountPage implements InterfacePage {
 
     SubmitButton.addActionListener(new ActionListener() {
       @Override
+      /**
+       * @param e Action event
+       * sets Submitted to true
+       * extracts the Input Values and provides them for getters.
+       */
       public void actionPerformed(ActionEvent e) {
         AccName_String = AccNameText.getText();
         Expiry_Date = (Date) ExpiryField.getValue();
@@ -190,6 +191,10 @@ public class AddCreditAccountPage implements InterfacePage {
     components.add(BackButton);
     BackButton.addActionListener(new ActionListener() {
       @Override
+      /**
+       * @param e Action event
+       * sets BackWanted to true
+       */
       public void actionPerformed(ActionEvent e) {
         backWanted = true;
       }
