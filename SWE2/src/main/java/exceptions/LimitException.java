@@ -4,7 +4,7 @@ package exceptions;
  * @author: Patrick Gmasz
  */
 
-public class LimitException extends Exception {
+public class LimitException extends SWE_Exception {
 
   /**
    * Limit Exception will be thrown, when amount of payout exceeds limit

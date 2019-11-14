@@ -1,7 +1,10 @@
-package ObserverPattern;
+package swe_ObserverPattern;
 
 import java.util.ArrayList;
 import java.util.List;
+import exceptions.SWE_Exception;
+import exceptions.SWE_RuntimeException;
+import exceptions.SubscriptionException;
 
 
 /**
@@ -20,7 +23,7 @@ public class SWE_Observable{
      * @param obs the Observer that should be added.
      * @throws Exception if Observer already subscribed.
      */
-    public void subscribe(SWE_Observer obs) throws Exception{
+    public void subscribe(SWE_Observer obs) throws SWE_Exception{
         if(observerList.contains(obs))
             throw new SubscriptionException("Observable ALREADY SUBSCRIBED to this Observer - can not subscribe!");
         else
@@ -31,7 +34,7 @@ public class SWE_Observable{
      * @param obs the Observer that should be removed.
      * @throws Exception if Observer not subscribed at this time.
      */
-    public void unSubscribe(SWE_Observer obs) throws Exception{
+    public void unSubscribe(SWE_Observer obs) throws SWE_Exception{
         if(!observerList.contains(obs))
             throw new SubscriptionException("Observable was NOT SUBSCRIBED to this Observer - can not unsubscribe!");
         else

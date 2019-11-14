@@ -1,4 +1,4 @@
-package iteration;
+package swe_IteratorPattern;
 
 /**
  * Defines the necessary functionality of all {@code CustomContainer}s.

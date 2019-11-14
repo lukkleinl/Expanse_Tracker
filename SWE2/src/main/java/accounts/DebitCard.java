@@ -16,7 +16,6 @@ public class DebitCard extends BankAccount {
   public DebitCard(String accountName, String bankName, float limit,String IBAN) {
     super(accountName, bankName, limit);
     this.IBAN=IBAN;
-    //this.IBAN = NumberGenerator.genenerateIBAN();
   }
 
   /**

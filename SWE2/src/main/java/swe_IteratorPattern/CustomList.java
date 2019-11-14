@@ -1,4 +1,4 @@
-package iteration;
+package swe_IteratorPattern;
 
 import java.util.ArrayList;
 import java.util.List;

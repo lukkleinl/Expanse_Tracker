@@ -1,4 +1,4 @@
-package iteration;
+package swe_IteratorPattern;
 
 import exceptions.NoElementException;
 

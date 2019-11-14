@@ -8,11 +8,12 @@ import accounts.Account;
 import accounts.Cash;
 import accounts.Stocks;
 import exceptions.LimitException;
-import iteration.CustomContainer;
-import iteration.CustomIterator;
+import swe_IteratorPattern.CustomContainer;
+import swe_IteratorPattern.CustomIterator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import transactions.DepositCategory;
 import transactions.PayoutCategory;
 import transactions.Transaction;
@@ -28,10 +29,10 @@ public class Client {
 
     //FOR SUPD
     UserInterface userInterface = new UserInterface();
-    userInterface.start();
+   // userInterface.start();
 
 
-    /*
+    
     Date date=new Date();
     double x=22;
     DepositCategory cat=SALARY;
@@ -68,6 +69,6 @@ public class Client {
 
 
     mongo.insert(user);
-    */
+    
   }
 }

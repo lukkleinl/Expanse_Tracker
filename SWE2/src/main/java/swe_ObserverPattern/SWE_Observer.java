@@ -1,4 +1,4 @@
-package ObserverPattern;
+package swe_ObserverPattern;
 /**
  * DIY Observer Pattern - defines the Observer.
  * @author Paul Kraft

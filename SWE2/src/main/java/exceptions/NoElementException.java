@@ -6,7 +6,7 @@ package exceptions;
  * 
  * @author Michael Watholowitsch
  */
-public class NoElementException extends RuntimeExceptionClass {
+public class NoElementException extends SWE_RuntimeException {
 
   public NoElementException(String message) {
     super(message);

@@ -3,11 +3,11 @@ package user;
 
 import accounts.Account;
 import exceptions.LimitException;
-import iteration.CustomContainer;
-import iteration.CustomList;
+import swe_IteratorPattern.CustomContainer;
+import swe_IteratorPattern.CustomList;
+import swe_ObserverPattern.SWE_Observer;
 import java.util.HashMap;
 import java.util.Map;
-import ObserverPattern.SWE_Observer;
 import java.util.Date;
 import transactions.Deposit;
 import transactions.DepositCategory;
@@ -36,8 +36,8 @@ public class User implements SWE_Observer {
     this.userID = userID;
     this.firstname = firstname;
     this.lastname = lastname;
-    this.accounts=new CustomList<>();
-    this.transactions=new HashMap<>();
+    this.accounts = new CustomList<>();
+    this.transactions = new HashMap<>();
     this.password = password;
   }
 
@@ -60,21 +60,18 @@ public class User implements SWE_Observer {
    * 
    * @throws LimitException if the resulting account-balance would be smaller than the limit
    */
-  public void payOut(PayoutCategory category, float amount, String description,Account acc) throws LimitException {
-    Date date=new Date();
+  public void payOut(PayoutCategory category, float amount, String description, Account acc)
+      throws LimitException {
+    Date date = new Date();
 
-    if(acc.getBalance()-amount<acc.getLimit()) throw new LimitException("Limit exceeded!");
+    if (acc.getBalance() - amount < acc.getLimit())
+      throw new LimitException("Limit exceeded!");
 
-    Payout payout=new Payout(date,amount,category,description);
+    Payout payout = new Payout(date, amount, category, description);
     acc.payout(amount);
 
-    if(transactions.containsKey(acc.getAccount_number())) transactions.get(acc.getAccount_number()).add(payout);
-    else
-    {
-      CustomContainer<Transaction> cont =new CustomList<>();
-      cont.add(payout);
-      transactions.put(acc.getAccount_number(),cont);
-    }
+    transactions.putIfAbsent(acc.getAccount_number(), new CustomList<>());
+    transactions.get(acc.getAccount_number()).add(payout);
   }
 
   /**
@@ -85,19 +82,14 @@ public class User implements SWE_Observer {
    * @param description the description of the {@code Transaction}
    * @param acc the account where money is added to
    */
-  public void deposit(DepositCategory category, float amount, String description,Account acc) {
-    Date date=new Date();
-    
-    Deposit deposit=new Deposit(date,amount,category,description);
+  public void deposit(DepositCategory category, float amount, String description, Account acc) {
+    Date date = new Date();
+
+    Deposit deposit = new Deposit(date, amount, category, description);
     acc.deposit(amount);
 
-    if(transactions.containsKey(acc.getAccount_number())) transactions.get(acc.getAccount_number()).add(deposit);
-    else
-    {
-      CustomContainer<Transaction> cont =new CustomList<>();
-      cont.add(deposit);
-      transactions.put(acc.getAccount_number(),cont);
-    }
+    transactions.putIfAbsent(acc.getAccount_number(), new CustomList<>());
+    transactions.get(acc.getAccount_number()).add(deposit);
   }
 
   /** Updates the data of the User according to the input of the UserInterface. */
@@ -105,6 +97,8 @@ public class User implements SWE_Observer {
   public void update(Object obj) {
     // TODO Auto-generated method stub
   }
+
+  /* ---------- getters ---------- */
 
   /**
    * Returns the Firstname.

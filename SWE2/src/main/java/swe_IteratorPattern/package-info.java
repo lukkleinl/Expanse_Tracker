@@ -3,4 +3,4 @@
  * a List.
  */
 /** @author Michael Watholowitsch */
-package iteration;
+package swe_IteratorPattern;
