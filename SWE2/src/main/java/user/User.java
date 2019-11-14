@@ -7,8 +7,7 @@ import iteration.CustomContainer;
 import iteration.CustomList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
+import ObserverPattern.SWE_Observer;
 import java.util.Date;
 import transactions.Deposit;
 import transactions.DepositCategory;
@@ -17,7 +16,7 @@ import transactions.PayoutCategory;
 import transactions.Transaction;
 
 /** @author Michael Watholowitsch */
-public class User implements Observer {
+public class User implements SWE_Observer {
   private String firstname;
   private String lastname;
   private int userID;
@@ -103,9 +102,8 @@ public class User implements Observer {
 
   /** Updates the data of the User according to the input of the UserInterface. */
   @Override
-  public void update(Observable o, Object arg) {
+  public void update(Object obj) {
     // TODO Auto-generated method stub
-
   }
 
   /**
