@@ -12,7 +12,7 @@ public class Client {
 
     //FOR SUPD
     UserInterface userInterface = new UserInterface();
-   // userInterface.start();
+    userInterface.start();
 
   }
 }

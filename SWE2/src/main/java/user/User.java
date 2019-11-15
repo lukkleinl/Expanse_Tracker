@@ -17,7 +17,7 @@ import transactions.PayoutCategory;
 import transactions.Transaction;
 
 /** @author Michael Watholowitsch */
-public class User implements SWE_Observer {
+public class User {
   private String firstname;
   private String lastname;
   private int userID;
@@ -135,7 +135,6 @@ public class User implements SWE_Observer {
   }
 
   /** Updates the data of the User according to the input of the UserInterface. */
-  @Override
   public void update(Object obj) {
     // TODO Auto-generated method stub
   }
