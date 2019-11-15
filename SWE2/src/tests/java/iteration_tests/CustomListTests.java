@@ -2,6 +2,8 @@ package iteration_tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import exceptions.NoElementException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,9 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import exceptions.NoElementException;
-import iteration.CustomIterator;
-import iteration.CustomList;
+import swe_IteratorPattern.CustomIterator;
+import swe_IteratorPattern.CustomList;
+
 
 class CustomListTests {
   CustomList<Object> list;

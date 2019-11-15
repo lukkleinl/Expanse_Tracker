@@ -4,6 +4,7 @@ import user.User;
 
 public interface Persistency {
 
-  void insert(User user);
-  void deleteUser();
+  void insertUser(User user);
+  void updateUser(User user);
+  void deleteUser(User user);
 }

@@ -8,15 +8,15 @@ import accounts.Stocks;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import iteration.CustomContainer;
-import iteration.CustomIterator;
-import iteration.CustomList;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.bson.Document;
+import swe_IteratorPattern.CustomContainer;
+import swe_IteratorPattern.CustomIterator;
+import swe_IteratorPattern.CustomList;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
@@ -42,48 +42,34 @@ public class MongoDB implements Persistency
     }
 
 
-    private Document getTrans(Deposit trans,int key)
-    {
-      Document doc = new Document("id", trans.getID())
-          .append("Date", trans.getCreationDate())
-          .append("amount", trans.getAmount())
-          .append("category", trans.getDepositCategory().name())
-          .append("Account_Number",key)
-          .append("Description", trans.getDescription());
-
-      return doc;
-    }
-
-  private Document getTrans(Payout trans,int key)
-  {
-    Document doc = new Document("id", trans.getID())
-        .append("Date", trans.getCreationDate())
-        .append("amount", trans.getAmount())
-        .append("category", trans.getPayoutCategory().name())
-        .append("Account_Number",key)
-        .append("Description", trans.getDescription());
-
-    return doc;
-  }
-
-
-
     private Document getTrans(Object trans,int key)
     {
+      Document doc;
       switch (trans.toString()) {
         case "PAYOUT":
-          System.out.println("PAYOUT");
           Payout payout = (Payout) trans;
-          return getTrans(payout, key);
+          doc = new Document("id", payout.getID())
+              .append("Date", payout.getCreationDate())
+              .append("amount", payout.getAmount())
+              .append("category", payout.getPayoutCategory().name())
+              .append("Account_Number",key)
+              .append("Description", payout.getDescription());
+          return doc;
+
         case "DEPOSIT":
-          System.out.println("DEPOSIT");
           Deposit deposit = (Deposit) trans;
-          return getTrans(deposit, key);
+          doc = new Document("id", deposit.getID())
+              .append("Date", deposit.getCreationDate())
+              .append("amount", deposit.getAmount())
+              .append("category", deposit.getDepositCategory().name())
+              .append("Account_Number",key)
+              .append("Description", deposit.getDescription());
+          return doc;
       }
-      return null;
+      throw new IllegalArgumentException("wrong object");
     }
 
-    public void insert(User user)
+    public void insertUser(User user)
     {
       Map<Integer, CustomContainer<Transaction>>  Transactions =user.getTransactions();
       CustomContainer<Account>  accounts =user.getAccounts();
@@ -105,7 +91,6 @@ public class MongoDB implements Persistency
         while (iterator.hasNext()) {
           Document doc=getTrans(iterator.next(),account_number);
           trans_array.add(doc);
-          System.out.println(transaction_array.size());
         }
       }
 
@@ -120,86 +105,78 @@ public class MongoDB implements Persistency
       collection.insertOne(dep);
     }
 
+
   private Document Account(Object account)
   {
     Date date = new Date();
+    Document doc;
     switch(account.toString()) {
       case "STOCKS":
-        System.out.println("Stocks");
         Stocks stock= (Stocks) account;
-        return getAccount(stock);
+        doc = new Document("id", stock.getAccount_number())
+            .append("Balance",stock.getBalance())
+            .append("Name",stock.getName())
+            .append("Buy Date",stock.getBuyDate());
+        return doc;
+
       case "DEBITCARD":
-        System.out.println("DebitCard");
         DebitCard debit= (DebitCard) account;
-        return getAccount(debit);
+        doc = new Document("id", debit.getAccount_number())
+            .append("Balance",debit.getBalance())
+            .append("IBAN",debit.getIBAN())
+            .append("Name",debit.getName());
+        return doc;
+
       case "CREDITCARD":
-        System.out.println("CreditCard");
         CreditCard credit= (CreditCard) account;
-        return getAccount(credit);
+        doc = new Document("id", credit.getAccount_number())
+            .append("Balance",credit.getBalance())
+            .append("Expiry Date",credit.getExpiryDate())
+            .append("Name",credit.getName());
+        return doc;
+
       case "CASH":
-        System.out.println("Cash");
         Cash cash= (Cash) account;
-        return getAccount(cash);
+        doc = new Document("id", cash.getAccount_number())
+            .append("Balance",cash.getBalance())
+            .append("Currency",cash.getCurrency())
+            .append("Name",cash.getName());
+        return doc;
     }
-    return null;
+    throw new IllegalArgumentException("wrong object");
   }
 
-  private Document getAccount(Stocks account)
+  public void insertAccount(Account acc)
   {
-    Document doc = new Document("id", account.getAccount_number())
-        .append("Balance",account.getBalance())
-        .append("Name",account.getName())
-        .append("Buy Date",account.getBuyDate());
-
-    return doc;
+  // TODO
   }
-
-  private Document getAccount(Cash account)
+  public void insertTransaction(Transaction trans)
   {
-    Document doc = new Document("id", account.getAccount_number())
-        .append("Balance",account.getBalance())
-        .append("Currency",account.getCurrency())
-        .append("Name",account.getName());
-
-    return doc;
+    // TODO
   }
 
-  private Document getAccount(DebitCard account)
+  public void updateUser(User user)
   {
-    Document doc = new Document("id", account.getAccount_number())
-        .append("Balance",account.getBalance())
-        .append("IBAN",account.getIBAN())
-        .append("Name",account.getName());
-
-    return doc;
+    // TODO
   }
-
-  private Document getAccount(CreditCard account)
+  public void updateAccount(Account acc)
   {
-    Document doc = new Document("id", account.getAccount_number())
-        .append("Balance",account.getBalance())
-        .append("Expiry Date",account.getExpiryDate())
-        .append("Name",account.getName());
-
-    return doc;
+    // TODO
   }
-
-  public void deleteUser()
+  public void updateTransaction(Transaction trans)
+  {
+    // TODO
+  }
+  public void deleteUser(User user)
     {
       // TODO
     }
-
-    public void deleteTransaction()
-    {
-      // TODO
-    }
-
-    public void deleteAccount()
-    {
-      // TODO
-    }
-
-
-
-
+  public void deleteAccount(Account acc)
+  {
+    // TODO
+  }
+  public void deleteTransaction(Transaction trans)
+  {
+    // TODO
+  }
 }
