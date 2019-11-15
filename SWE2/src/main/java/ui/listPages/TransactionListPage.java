@@ -1,18 +1,28 @@
 package ui.listPages;
 
-import accounts.*;
-import iteration.CustomContainer;
-import iteration.CustomIterator;
-import transactions.*;
-import ui.main.InterfacePage;
-import user.User;
-
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import accounts.Account;
+import accounts.BankAccount;
+import accounts.Cash;
+import accounts.CreditCard;
+import accounts.DebitCard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import swe_IteratorPattern.CustomContainer;
+import swe_IteratorPattern.CustomIterator;
+import transactions.Deposit;
+import transactions.Payout;
+import transactions.Transaction;
+import ui.main.InterfacePage;
+import user.User;
 
 /**
  * This Page Displays the Transactions of 1 Account of 1 User and has 2 Buttons to start a new Deposit. Implements the Interface 'InterfacePage'

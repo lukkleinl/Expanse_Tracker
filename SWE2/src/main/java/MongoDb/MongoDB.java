@@ -8,6 +8,8 @@ import accounts.Stocks;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import exceptions.UnknownAccountException;
+import exceptions.UnknownTransactionException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,7 +68,7 @@ public class MongoDB implements Persistency
               .append("Description", deposit.getDescription());
           return doc;
       }
-      throw new IllegalArgumentException("wrong object");
+      throw new UnknownTransactionException("Unknown transaction");
     }
 
     public void insertUser(User user)
@@ -143,7 +145,7 @@ public class MongoDB implements Persistency
             .append("Name",cash.getName());
         return doc;
     }
-    throw new IllegalArgumentException("wrong object");
+    throw new UnknownAccountException("Unknown account type");
   }
 
   public void insertAccount(Account acc)
