@@ -5,18 +5,13 @@ import Transaction_Strategy.AddTransaction;
 import Transaction_Strategy.Add_Deposit;
 import Transaction_Strategy.Add_Payout;
 import accounts.Account;
-import exceptions.LimitException;
 import exceptions.UnknownTransactionException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import swe_IteratorPattern.CustomContainer;
 import swe_IteratorPattern.CustomList;
-import swe_ObserverPattern.SWE_Observer;
 import transactions.Deposit;
-import transactions.DepositCategory;
 import transactions.Payout;
-import transactions.PayoutCategory;
 import transactions.Transaction;
 
 /** @author Michael Watholowitsch */
@@ -54,46 +49,6 @@ public class User {
     accounts.add(acc);
   }
 
-  /**
-   * Deductes the specified amount of money from the specified account.
-   *
-   * @param category the category of the {@code Transaction}
-   * @param amount the amount of money
-   * @param description the description of the {@code Transaction}
-   * @param acc the account where money is deducted from
-   * 
-   * @throws LimitException if the resulting account-balance would be smaller than the limit
-   */
-  public void payOut(PayoutCategory category, float amount, String description, Account acc)
-      throws LimitException {
-    Date date = new Date();
-
-    if (acc.getBalance() - amount < acc.getLimit())
-      throw new LimitException("Limit exceeded!");
-
-    Payout payout = new Payout(date, amount, category, description);
-    acc.payout(amount);
-
-    transactions.putIfAbsent(acc.getAccount_number(), new CustomList<>());
-    transactions.get(acc.getAccount_number()).add(payout);
-  }
-
-  /**
-   * Adds the specified amount of money to the specified account.
-   *
-   * @param category the category of the {@code Transaction}
-   * @param amount the amount of money
-   * @param description the description of the {@code Transaction}
-   * @param acc the account where money is added to
-   */
-  public void deposit(DepositCategory category, float amount, String description, Account acc) {
-    Date date = new Date();
-    Deposit deposit = new Deposit(date, amount, category, description);
-    acc.deposit(amount);
-
-    transactions.putIfAbsent(acc.getAccount_number(), new CustomList<>());
-    transactions.get(acc.getAccount_number()).add(deposit);
-  }
 
   /**
    * Performs either a Deposit or a Payout
