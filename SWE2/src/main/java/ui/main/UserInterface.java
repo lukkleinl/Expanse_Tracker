@@ -1,11 +1,14 @@
 package ui.main;
 
+import java.util.Date;
 import javax.swing.JFrame;
 
 import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
+import transactions.Deposit;
+import transactions.Payout;
 import ui.addAccountPages.AddCashAccountPage;
 import ui.addAccountPages.AddCreditAccountPage;
 import ui.addAccountPages.AddDebitAccountPage;
@@ -172,7 +175,6 @@ public class UserInterface {
         }
 
         if (transactionListPage.isNewPayoutWanted()) {
-          //open new Payout Page, for tests now add  cash account
           addPayoutPage.configureFrame(frame);
           while (!addPayoutPage.isSubmitted() && !addPayoutPage.isBackWanted()) {
             ;
@@ -180,23 +182,25 @@ public class UserInterface {
 
           if (addPayoutPage.isSubmitted()) {
             try {
-              user.payOut(addPayoutPage.getCatego(), addPayoutPage.getAmount(), addPayoutPage.getDescription(), accountListPage.getSelectedAccount());
+              Payout payout = new Payout(new Date(), addPayoutPage.getAmount(), addPayoutPage.getCatego(), addPayoutPage.getDescription());
+              user.addTransaction(payout, accountListPage.getSelectedAccount());
+              //user.payOut(addPayoutPage.getCatego(), addPayoutPage.getAmount(), addPayoutPage.getDescription(), accountListPage.getSelectedAccount());
             } catch (Exception e) {
               System.out.println("ERR:" + e.getMessage()); //TODO BETTER
             }          }
 
           transactionListPage.configureFrame(frame);
         } else if (transactionListPage.isNewDepositWanted()) {
-          //open new Deposit Page, for tests now add a credit account
           addDepositPage.configureFrame(frame);
-
           while (!addDepositPage.isSubmitted() && !addDepositPage.isBackWanted()) {
             ;
           }
 
           if (addDepositPage.isSubmitted()) {
             try {
-              user.deposit(addDepositPage.getCatego(), addDepositPage.getAmount(), addDepositPage.getDescription(), accountListPage.getSelectedAccount());
+              Deposit deposit = new Deposit(new Date(), addDepositPage.getAmount(), addDepositPage.getCatego(), addPayoutPage.getDescription());
+              user.addTransaction(deposit, accountListPage.getSelectedAccount());
+              //user.deposit(addDepositPage.getCatego(), addDepositPage.getAmount(), addDepositPage.getDescription(), accountListPage.getSelectedAccount());
             } catch (Exception e) {
               System.out.println("ERR:" + e.getMessage()); //TODO BETTER
             }          }
