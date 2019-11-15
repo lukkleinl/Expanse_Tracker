@@ -1,6 +1,9 @@
 /** */
 package user;
 
+import Transaction_Strategy.AddTransaction;
+import Transaction_Strategy.Add_Deposit;
+import Transaction_Strategy.Add_Payout;
 import accounts.Account;
 import exceptions.LimitException;
 import exceptions.UnknownTransactionException;
