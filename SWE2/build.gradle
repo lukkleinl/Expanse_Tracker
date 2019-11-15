@@ -22,11 +22,13 @@ sourceSets {
 
 dependencies {
 	// JUnit test framework 5.4.0
-    testCompile 'org.junit.jupiter:junit-jupiter-api:5.4.0'
-    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.4.0'
-    testCompile 'org.junit.jupiter:junit-jupiter-params:5.4.0'
-    
+    compile 'org.junit.jupiter:junit-jupiter-api:5.4.0'
+    compile 'org.junit.jupiter:junit-jupiter-engine:5.4.0'
+    compile 'org.junit.jupiter:junit-jupiter-params:5.4.0'
+
+    // MongoDB
     compile 'org.mongodb:mongodb-driver-sync:3.11.1'
     compile 'org.mongodb:mongodb-driver-legacy:3.11.1'
     compile 'org.mongodb:mongodb-driver:3.11.1'
+
 }

@@ -6,6 +6,7 @@ import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
 import java.util.Date;
+import transactions.Deposit;
 import transactions.DepositCategory;
 import user.User;
 
@@ -21,7 +22,8 @@ public class TestUser {
         new CreditCard("MasterCard CreditCard", "Austria", 5000, new Date(2022, 1, 1)));
     user.addAccount(new DebitCard("Giro Account", "Bank Austria", 1000, "AT121200001203250544"));
     user.addAccount(new Stocks("Amazon Stocks", new Date(2013, 2, 5), 0));
-    user.deposit(DepositCategory.SALARY, 10350.35f, "Test", cash);
+    Deposit deposit = new Deposit(new Date(), 10350.35f, DepositCategory.SALARY, "Test");
+    user.addTransaction(deposit, cash);
     return user;
   }
 }

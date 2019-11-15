@@ -34,18 +34,18 @@ public class Insert_User {
     user.addAccount(cash);
     user.addAccount(stock);
 
-    user.deposit(cat,100,"Auszahlun",stock);
-    user.deposit(cat,100,"Auszahlung",stock);
+   // user.deposit(cat,100,"Auszahlun",stock);
+   // user.deposit(cat,100,"Auszahlung",stock);
     //user.deposit(cat,100,"Auszahlun",cash);
-    user.deposit(cat,1000,"einzahl",cash);
-    try {
-      user.payOut(pay, 100, "Auszahlun", cash);
-    } catch (LimitException e) {
-      System.out.println(e.getMessage());
+    //user.deposit(cat,1000,"einzahl",cash);
+   // try {
+      //user.payOut(pay, 100, "Auszahlun", cash);
+    //} catch (LimitException e) {
+      //System.out.println(e.getMessage());
     }
     Map<Integer, CustomContainer<Transaction>> map;
-    map=user.getTransactions();
-
+    //map=user.getTransactions();
+/*
     CustomIterator<Account> abc=user.getAccounts().getIterator();
     while(abc.hasNext())
     {
@@ -58,7 +58,5 @@ public class Insert_User {
 
 
     mongo.insertUser(user);
-
-  }
-
+*/
 }
