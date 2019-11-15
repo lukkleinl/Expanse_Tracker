@@ -22,7 +22,7 @@ public class Add_Payout implements AddTransaction {
    */
 
   @Override
-  public Map<Integer, CustomContainer<Transaction>> add(Object Transaction,
+  public void add(Object Transaction,
       Map<Integer, CustomContainer<Transaction>> transactions, Account account)
       throws LimitException {
     Date date = new Date();
@@ -34,6 +34,5 @@ public class Add_Payout implements AddTransaction {
 
     transactions.putIfAbsent(account.getAccount_number(), new CustomList<>());
     transactions.get(account.getAccount_number()).add(payout);
-    return transactions;
   }
 }
