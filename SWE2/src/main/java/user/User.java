@@ -108,7 +108,7 @@ public class User implements SWE_Observer {
       add=new Add_Deposit();
       try
       {
-        transactions=add.add(transaction,transactions,account);
+        add.add(transaction,transactions,account);
       }
       catch (Exception e)
       {
@@ -120,7 +120,7 @@ public class User implements SWE_Observer {
       add=new Add_Payout();
       try
       {
-        transactions=add.add(transaction,transactions,account);
+        add.add(transaction,transactions,account);
       }
       catch (Exception e)
       {

@@ -20,7 +20,7 @@ public class Add_Deposit implements AddTransaction {
    */
 
   @Override
-  public Map<Integer, CustomContainer<Transaction>> add(Object Transaction,
+  public void add(Object Transaction,
       Map<Integer, CustomContainer<Transaction>> transactions, Account account) {
     Date date = new Date();
     Deposit deposit=(Deposit) Transaction;
@@ -28,6 +28,5 @@ public class Add_Deposit implements AddTransaction {
 
     transactions.putIfAbsent(account.getAccount_number(), new CustomList<>());
     transactions.get(account.getAccount_number()).add(deposit);
-    return transactions;
   }
 }

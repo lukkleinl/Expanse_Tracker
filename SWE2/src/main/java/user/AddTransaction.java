@@ -15,7 +15,7 @@ public interface AddTransaction {
    * @param transactions list of executed transactions
    * @param account Account on which the transaction should be performed
    */
-  Map<Integer, CustomContainer<Transaction>>  add(Object Transaction,
+  void  add(Object Transaction,
       Map<Integer, CustomContainer<Transaction>> transactions, Account account)
       throws LimitException;
 
