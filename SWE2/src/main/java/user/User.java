@@ -3,12 +3,13 @@ package user;
 
 import accounts.Account;
 import exceptions.LimitException;
+import exceptions.UnknownTransactionException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import swe_IteratorPattern.CustomContainer;
 import swe_IteratorPattern.CustomList;
 import swe_ObserverPattern.SWE_Observer;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Date;
 import transactions.Deposit;
 import transactions.DepositCategory;
 import transactions.Payout;
@@ -84,12 +85,53 @@ public class User implements SWE_Observer {
    */
   public void deposit(DepositCategory category, float amount, String description, Account acc) {
     Date date = new Date();
-
     Deposit deposit = new Deposit(date, amount, category, description);
     acc.deposit(amount);
 
     transactions.putIfAbsent(acc.getAccount_number(), new CustomList<>());
     transactions.get(acc.getAccount_number()).add(deposit);
+  }
+
+  /**
+   * Performs either a Deposit or a Payout
+   *
+   * @param transaction Transaction which should be performed
+   * @param account Account where the transaction will be performed
+   *
+   * @throws UnknownTransactionException if the Object type is neither a Deposit nor a Payout
+   */
+  public void addTransaction(Object transaction,Account account)
+  {
+    AddTransaction add;
+    if(transaction.getClass().equals(Deposit.class))
+    {
+      add=new Add_Deposit();
+      try
+      {
+        transactions=add.add(transaction,transactions,account);
+      }
+      catch (Exception e)
+      {
+        System.out.println(e);
+      }
+    }
+    else if(transaction.getClass().equals(Payout.class))
+    {
+      add=new Add_Payout();
+      try
+      {
+        transactions=add.add(transaction,transactions,account);
+      }
+      catch (Exception e)
+      {
+        System.out.println(e);
+      }
+    }
+    else
+    {
+      throw new UnknownTransactionException("Unknown Transaction");
+    }
+
   }
 
   /** Updates the data of the User according to the input of the UserInterface. */

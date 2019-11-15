@@ -1,8 +1,22 @@
 package user;
 
 import accounts.Account;
+import exceptions.LimitException;
+import java.util.Map;
+import swe_IteratorPattern.CustomContainer;
+import transactions.Transaction;
 
 public interface AddTransaction {
-  void add(String Category, float amount, String description, Account acc);
+
+  /**
+   * Performs either a Deposit or a Payout
+   *
+   * @param Transaction the transaction which should be performed
+   * @param transactions list of executed transactions
+   * @param account Account on which the transaction should be performed
+   */
+  Map<Integer, CustomContainer<Transaction>>  add(Object Transaction,
+      Map<Integer, CustomContainer<Transaction>> transactions, Account account)
+      throws LimitException;
 
 }

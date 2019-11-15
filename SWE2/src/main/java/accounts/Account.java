@@ -14,9 +14,9 @@ public abstract class Account {
    * Creates a new Account with a random generated account number and a balance of 0.
    *
    * @param name The name of the account
+   * @param limit Limit of the account
    */
   public Account(String name,float limit) {
-    //this.account_number = NumberGenerator.generateAccountNumber();
     account_number=nextId.incrementAndGet();
     this.name = name;
     this.limit=limit;
@@ -50,16 +50,29 @@ public abstract class Account {
     return balance;
   }
 
-  public float payout(float amount) {
+  /**
+   *  Performs a payout on the account
+   *
+   * @param amount Amount of the payout
+   */
+  public void payout(float amount) {
     balance-=amount;
-    return balance;
   }
 
-  public float deposit(float amount) {
+  /**
+   *  Performs a deposit on the account
+   *
+   * @param amount Amount of the deposit
+   */
+  public void deposit(float amount) {
     balance+=amount;
-    return balance;
   }
 
+  /**
+   * Returns the limit of the account.
+   *
+   * @return the limit
+   */
   public float getLimit() { return limit; }
 
 }

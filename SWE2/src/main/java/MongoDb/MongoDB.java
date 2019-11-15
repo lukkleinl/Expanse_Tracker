@@ -30,6 +30,13 @@ public class MongoDB implements Persistency
     private MongoDatabase database;
     private MongoCollection collection;
 
+
+  /**
+   * Creates a new Connection with the MongoDB and uses the DB ExpanseTracker
+   *
+
+   */
+
     public MongoDB()
     {
       try
@@ -43,6 +50,13 @@ public class MongoDB implements Persistency
       }
     }
 
+  /**
+   * Returns a document of a transaction
+   *
+   * @return a transaction document
+   *
+   * @throws UnknownTransactionException if the object type is neither a deposit nor a payout
+   */
 
     private Document getTrans(Object trans,int key)
     {
@@ -71,6 +85,11 @@ public class MongoDB implements Persistency
       throw new UnknownTransactionException("Unknown transaction");
     }
 
+  /**
+   * inserts the user into the DB
+   *
+   * @param user User which should be inserted
+   */
     public void insertUser(User user)
     {
       Map<Integer, CustomContainer<Transaction>>  Transactions =user.getTransactions();
@@ -108,6 +127,13 @@ public class MongoDB implements Persistency
     }
 
 
+  /**
+   * Returns a Document of an account
+   *
+   * @return a account document
+   *
+   * @throws UnknownAccountException throe when the object type is not an account
+   */
   private Document Account(Object account)
   {
     Date date = new Date();
@@ -148,35 +174,81 @@ public class MongoDB implements Persistency
     throw new UnknownAccountException("Unknown account type");
   }
 
+  /**
+   * inserts the account into the DB
+   *
+   * @param acc Account which should be inserted
+   */
   public void insertAccount(Account acc)
   {
   // TODO
   }
+
+  /**
+   * inserts the transaction into the DB
+   *
+   * @param trans User which should be inserted
+   */
   public void insertTransaction(Transaction trans)
   {
     // TODO
   }
 
+  /**
+   * updates the user within the DB
+   *
+   * @param user User which should be updated
+   */
   public void updateUser(User user)
   {
     // TODO
   }
+
+  /**
+   * updates the account within the DB
+   *
+   * @param acc Account which should be updated
+   */
   public void updateAccount(Account acc)
   {
     // TODO
   }
+
+  /**
+   * updates the transaction within the DB
+   *
+   * @param trans Transaction which should be updated
+   */
   public void updateTransaction(Transaction trans)
   {
     // TODO
   }
+
+  /**
+   * deletes the user within the DB
+   *
+   * @param user User which should be deleted
+   */
   public void deleteUser(User user)
     {
       // TODO
     }
+
+  /**
+   * deletes the account within the DB
+   *
+   * @param acc Account which should be deleted
+   */
   public void deleteAccount(Account acc)
   {
     // TODO
   }
+
+  /**
+   * deletes the transaction within the DB
+   *
+   * @param trans Transaction which should be deleted
+   */
   public void deleteTransaction(Transaction trans)
   {
     // TODO
