@@ -107,7 +107,6 @@ public class MongoDB implements Persistency
       {
         CustomContainer<Object> list = (CustomList<Object>) e.getValue();
         CustomIterator<Object> iterator = list.getIterator();
-        List<Document> transaction_array = new ArrayList<>();
         Integer account_number = (Integer) e.getKey();
         while (iterator.hasNext()) {
           Document doc=getTrans(iterator.next(),account_number);
