@@ -12,11 +12,11 @@ import ui.main.InterfacePage;
 
 public class AddDebitAccountPage implements InterfacePage {
 
-  public final static int FRAME_WIDTH = 1200;
-  public final static int FRAME_HEIGHT = 800;
+  private final static int FRAME_WIDTH = 1200;
+  private final static int FRAME_HEIGHT = 800;
 
-  public final static int SHIFT_LEFT = 300;
-  public final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
+  private final static int SHIFT_LEFT = 300;
+  private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
   private ArrayList<JComponent> components;
   private JLabel IntroText;

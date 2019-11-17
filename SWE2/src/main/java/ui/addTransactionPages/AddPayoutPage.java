@@ -15,8 +15,8 @@ import ui.main.InterfacePage;
 
 
 public class AddPayoutPage implements InterfacePage {
-    public final static int FRAME_WIDTH = 1200;
-    public final static int FRAME_HEIGHT = 800;
+    private final static int FRAME_WIDTH = 1200;
+    private final static int FRAME_HEIGHT = 800;
 
 
     private ArrayList<JComponent> components;

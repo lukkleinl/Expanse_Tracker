@@ -34,8 +34,8 @@ public class RegistrationPage implements InterfacePage {
   private JTextField firstnameTextField;
   private JTextField lastnameTextField;
 
-  private final int FRAME_WIDTH = 410;
-  private final int FRAME_HEIGHT = 530;
+  private final static int FRAME_WIDTH = 410;
+  private final static int FRAME_HEIGHT = 530;
 
   private String user;
   private String password;

@@ -19,8 +19,8 @@ import ui.main.InterfacePage;
  */
 public class AccountTypePage implements InterfacePage {
 
-  private final int FRAME_WIDTH = 1200;
-  private final int FRAME_HEIGHT = 800;
+  private final static int FRAME_WIDTH = 1200;
+  private final static int FRAME_HEIGHT = 800;
 
   private ArrayList<JComponent> components;
 

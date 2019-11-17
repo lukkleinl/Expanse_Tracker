@@ -32,8 +32,8 @@ import user.User;
  */
 public class AccountListPage implements InterfacePage {
 
-  private final int FRAME_WIDTH = 1200;
-  private final int FRAME_HEIGHT = 800;
+  private final static int FRAME_WIDTH = 1200;
+  private final static int FRAME_HEIGHT = 800;
 
   private ArrayList<JComponent> components;
 

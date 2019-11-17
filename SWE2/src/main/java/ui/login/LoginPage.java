@@ -28,8 +28,8 @@ public class LoginPage implements InterfacePage {
   private JButton submitButton;
   private JButton registerButton;
 
-  private final int FRAME_WIDTH = 410;
-  private final int FRAME_HEIGHT = 280;
+  private final static int FRAME_WIDTH = 410;
+  private final static int FRAME_HEIGHT = 280;
 
   private String user;
   private String password;
