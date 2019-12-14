@@ -9,12 +9,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Patrick Gmasz
  */
 public abstract class Transaction {
-  private String description;
-  private float amount;
-  private Date creationDate;
+  private final String description;
+  private final float amount;
+  private final Date creationDate;
   private int ID;
   private static AtomicInteger nextId = new AtomicInteger();
-  private int id;
+  private final int id;
 
   /**
    * Creates a new Transaction.
@@ -23,7 +23,7 @@ public abstract class Transaction {
    * @param amount The amount of money the transaction was about.
    * @param description A description the user can add to a transaction.
    */
-  public Transaction(Date creationDate, float amount, String description) {
+  public Transaction(final Date creationDate, final float amount, final String description) {
     id = nextId.incrementAndGet();
     this.description = description;
     this.amount = amount;
@@ -65,4 +65,14 @@ public abstract class Transaction {
    * @return The integer id.
    */
   public int getID()  { return id;}
+
+  /**
+   * @return the simple name of this transaction
+   */
+  public final String getSimpleName() {
+    return this.getClass().getSimpleName().toUpperCase();
+  }
 }
+
+
+

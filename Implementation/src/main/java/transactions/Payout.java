@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Patrick Gmasz
  */
 public class Payout extends Transaction {
-  private PayoutCategory payoutCategory;
+  private final PayoutCategory payoutCategory;
 
   /**
    * Creates a new Payout object.
@@ -19,7 +19,7 @@ public class Payout extends Transaction {
    * @param description Description of the payout
    */
   public Payout(
-      Date creationDate, float amount, PayoutCategory payoutCategory, String description) {
+      final Date creationDate, final float amount, final PayoutCategory payoutCategory, final String description) {
     super(creationDate, amount, description);
     this.payoutCategory = payoutCategory;
   }
@@ -41,6 +41,6 @@ public class Payout extends Transaction {
   @Override
   public String toString()
   {
-    return "PAYOUT";
+    return this.getSimpleName();
   }
 }

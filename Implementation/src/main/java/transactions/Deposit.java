@@ -9,7 +9,7 @@ import java.util.Date;
  * @author Patrick Gmasz
  */
 public class Deposit extends Transaction {
-  private DepositCategory depositCategory;
+  private final DepositCategory depositCategory;
 
   /**
    * Creates a new Depost object.
@@ -20,7 +20,7 @@ public class Deposit extends Transaction {
    * @param description Description of the deposit
    */
   public Deposit(
-      Date creationDate, float amount, DepositCategory depositCategory, String description) {
+      final Date creationDate, final float amount, final DepositCategory depositCategory, final String description) {
     super(creationDate, amount, description);
     this.depositCategory = depositCategory;
   }
@@ -42,6 +42,6 @@ public class Deposit extends Transaction {
   @Override
   public String toString()
   {
-    return "DEPOSIT";
+    return this.getSimpleName();
   }
 }
