@@ -75,22 +75,21 @@ public class JElementFactory {
           comp.setForeground(this.getForeground());
           comp.setFont(this.getFont());
 
-          // TODO
-
           int modelRow = this.convertRowIndexToModel(row);
           String type = (String) this.getModel().getValueAt(modelRow, 0);
 
-          if (type.equals(new Payout(null,0,null,null).getSimpleName())) {
+          // TODO - maybe different mechanism for choosing
+          if ((negRenderer != null) && type.equals(new Payout(null,0,null,null).getSimpleName())) {
             comp.setBackground(negRenderer.getBG());
             comp.setForeground(negRenderer.getFG());
             comp.setFont(negRenderer.getFont());
           }
-          else if (type.equals(new Deposit(null,0,null,null).getSimpleName())) {
+          else if ((posRenderer != null) && type.equals(new Deposit(null,0,null,null).getSimpleName())) {
             comp.setBackground(posRenderer.getBG());
             comp.setForeground(posRenderer.getFG());
             comp.setFont(posRenderer.getFont());
           }
-          else {
+          else if (defaultrenderer != null) {
             comp.setBackground(defaultrenderer.getBG());
             comp.setForeground(defaultrenderer.getFG());
             comp.setFont(defaultrenderer.getFont());

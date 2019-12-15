@@ -1,13 +1,14 @@
-package ui.rendering.renderers;
+package ui.rendering.renderers.background;
 
 import java.awt.Color;
+import ui.rendering.renderers.TableColors;
 
 /**
  * Class for making the background red.
  *
  * @author Michael Watholowitsch
  */
-public class BG_Red extends AbstractTableColorRenderer {
+public class BG_Red extends BackgroundTableColorRenderer {
 
   /**
    * Constructor
@@ -21,6 +22,6 @@ public class BG_Red extends AbstractTableColorRenderer {
   @Override
   public void render() {
     super.decRenderer.render();
-    super.decRenderer.background = Color.RED;
+    super.background = Color.RED;
   }
 }

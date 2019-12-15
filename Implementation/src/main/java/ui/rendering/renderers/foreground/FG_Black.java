@@ -1,13 +1,14 @@
-package ui.rendering.renderers;
+package ui.rendering.renderers.foreground;
 
 import java.awt.Color;
+import ui.rendering.renderers.TableColors;
 
 /**
  * Class for making the foreground black.
  *
  * @author Michael Watholowitsch
  */
-public class FG_Black extends AbstractTableColorRenderer {
+public class FG_Black extends ForegroundTableColorRenderer {
 
   /**
    * Constructor
@@ -21,6 +22,6 @@ public class FG_Black extends AbstractTableColorRenderer {
   @Override
   public void render() {
     super.decRenderer.render();
-    super.decRenderer.foreground = Color.BLACK;
+    super.foreground = Color.BLACK;
   }
 }

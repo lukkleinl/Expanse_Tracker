@@ -4,11 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 
 /**
- * Provides a basic color scheme for JTables. Necessary as base since it sets the font of the text.
+ * Acts as a base for defining JTable layout. Provides a font for JTables.
  *
  * @author Michael Watholowitsch
  */
-public final class BasicCell_Font extends TableColors {
+public final class FontCell implements TableColors {
   private final Font font;
 
   /**
@@ -16,7 +16,7 @@ public final class BasicCell_Font extends TableColors {
    *
    * @param font the desired text-font
    */
-  public BasicCell_Font(final Font font) {
+  public FontCell(final Font font) {
     this.font = font;
   }
 
@@ -24,21 +24,18 @@ public final class BasicCell_Font extends TableColors {
    * {@inheritDoc}
    */
   @Override
-  public void render() {
-    super.background = Color.WHITE;
-    super.foreground = Color.BLACK;
-  }
+  public void render() { }
 
   /* ---------- getters ---------- */
 
   @Override
   public Color getBG() {
-    return super.background;
+    throw new UnsupportedOperationException("No Background defined !");
   }
 
   @Override
   public Color getFG() {
-    return super.foreground;
+    throw new UnsupportedOperationException("No Foreground defined !");
   }
 
   @Override
@@ -51,7 +48,7 @@ public final class BasicCell_Font extends TableColors {
    */
   @Override
   public String toString() {
-    return "Foreground: " + super.foreground + "\nBackground: " + super.background + "\nFont: " + font;
+    return "\nFont: " + font;
   }
 }
 

@@ -8,36 +8,27 @@ import java.awt.Font;
  *
  * @author Michael Watholowitsch
  */
-public abstract class TableColors {
-  protected Color foreground;
-  protected Color background;
-
-  /**
-   * Constructor
-   */
-  public TableColors() { }
+public interface TableColors {
 
   /**
    * Dynamically changes the background and foreground color.
    */
-  public abstract void render();
-
-  /* ---------- getters ---------- */
+  void render();
 
   /**
    * @return the background color
    */
-  public abstract Color getBG();
+  Color getBG();
 
   /**
    * @return the foreground color
    */
-  public abstract Color getFG();
+  Color getFG();
 
   /**
    * @return the Font
    */
-  public abstract Font getFont();
+  Font getFont();
 }
 
 
