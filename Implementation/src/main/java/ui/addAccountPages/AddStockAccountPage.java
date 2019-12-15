@@ -11,17 +11,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import ui.main.InterfacePage;
+import ui.main.AbstractPage;
 
-public class AddStockAccountPage implements InterfacePage {
-
-  private final static int FRAME_WIDTH = 1200;
-  private final static int FRAME_HEIGHT = 800;
+public class AddStockAccountPage extends AbstractPage {
 
   private final static int SHIFT_LEFT = 300;
   private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
-  private ArrayList<JComponent> components;
   private JLabel IntroText;
   private JLabel AccountName;
   private JLabel Limit;
@@ -48,28 +44,6 @@ public class AddStockAccountPage implements InterfacePage {
     createComponents();
   }
 
-
-  /**
-   * Configures the JFrame, adds all the components(resets the values of the JTextFields to hard coded default).
-   * Names the Frame to 'Add Stock Account'.
-   * Sets the Size of the Frame. (Default is 1200 by 800).
-   * calls revalidate() and repaint() on the Frame.
-   * @param frame The JFrame, which components will be updated
-   */
-  public void configureFrame(JFrame frame) {
-    createComponents();
-
-    frame.setLayout(null);
-    frame.setTitle("Add Stock Account");
-    frame.getContentPane().removeAll();
-    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-    for (JComponent comp : components) {
-      frame.add(comp);
-    }
-    frame.revalidate();
-    frame.repaint();
-  }
   /**
    * @return accName input from the User or default val.
    */
@@ -103,7 +77,8 @@ public class AddStockAccountPage implements InterfacePage {
     return backWanted;
   }
 
-  private void createComponents() {
+  @Override
+  protected void createComponents() {
     components = new ArrayList<>();
     submitted = false;
     backWanted = false;
@@ -181,7 +156,10 @@ public class AddStockAccountPage implements InterfacePage {
         backWanted = true;
       }
     });
+  }
 
-
+  @Override
+  protected void resetTitle(JFrame frame) {
+    frame.setTitle("Add Stock Account");
   }
 }

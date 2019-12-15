@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import ui.main.InterfacePage;
+import ui.main.AbstractPage;
 
 /**
  * This Page collects all necessary data needed to create a new 'Deposit' Transaction. Implements the Interface 'InterfacePage'
@@ -14,12 +14,7 @@ import ui.main.InterfacePage;
  * @author Paul Kraft
  */
 
-public class AddDepositPage implements InterfacePage {
-    private final static int FRAME_WIDTH = 1200;
-    private final static int FRAME_HEIGHT = 800;
-
-
-    private ArrayList<JComponent> components;
+public class AddDepositPage extends AbstractPage {
 
     private JLabel IntroText;
     private JLabel Amounttext;
@@ -78,31 +73,8 @@ public class AddDepositPage implements InterfacePage {
         createComponents();
     }
 
-    /**
-     * Configures the JFrame, adds all the components(resets the values of the JTextFields to hard coded default).
-     * Names the Frame to 'Add Deposit - Page'.
-     * Sets the Size of the Frame. (Default is 1200 by 800).
-     * calls revalidate() and repaint() on the Frame.
-     * @param frame The JFrame, which components will be updated
-     */
-    public void configureFrame(JFrame frame) {
-        createComponents();
-
-        //frame.setVisible(false);
-        frame.setLayout(null);
-        frame.setTitle("Add Deposit - Page");
-        frame.getContentPane().removeAll();
-        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-        for (JComponent comp : components) {
-            frame.add(comp);
-        }
-        frame.revalidate();
-        frame.repaint();
-        //frame.setVisible(true);
-    }
-
-    private void createComponents() {
+    @Override
+    protected void createComponents() {
 
         components = new ArrayList<>();
         submitted = false;
@@ -177,4 +149,8 @@ public class AddDepositPage implements InterfacePage {
 
     }
 
+    @Override
+    protected void resetTitle(JFrame frame) {
+        frame.setTitle("Add Deposit - Page");
+    }
 }

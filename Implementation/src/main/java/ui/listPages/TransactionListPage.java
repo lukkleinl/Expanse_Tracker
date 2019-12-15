@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -21,7 +20,7 @@ import swe_IteratorPattern.CustomIterator;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
-import ui.main.InterfacePage;
+import ui.main.AbstractPage;
 import user.User;
 
 /**
@@ -29,15 +28,11 @@ import user.User;
  * @author Paul Kraft
  */
 
-public class TransactionListPage implements InterfacePage {
-
-  private final static int FRAME_WIDTH = 1200;
-  private final static int FRAME_HEIGHT = 800;
+public class TransactionListPage extends AbstractPage {
 
   private final static int SHIFT_LEFT = 0;
   private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
-  private ArrayList<JComponent> components;
   private JLabel IntroText;
   private String IntroTextMessage;
 
@@ -90,29 +85,9 @@ public class TransactionListPage implements InterfacePage {
   public boolean isBackWanted() {
     return backWanted;
   }
-  /**
-   * Configures the JFrame, adds all the components(resets the values of the JTextFields to hard coded default).
-   * Names the Frame to 'List Transactions - Page'.
-   * Sets the Size of the Frame. (Default is 1200 by 800).
-   * calls revalidate() and repaint() on the Frame.
-   * @param frame The JFrame, which components will be updated
-   */
-  public void configureFrame(JFrame frame) {
-    createComponents();
 
-    frame.setLayout(null);
-    frame.setTitle("List Transactions - Page");
-    frame.getContentPane().removeAll();
-    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-    for (JComponent comp : components) {
-      frame.add(comp);
-    }
-    frame.revalidate();
-    frame.repaint();
-  }
-
-  private void createComponents() {
+  @Override
+  protected void createComponents() {
     newDepositWanted = false;
     newPayoutWanted = false;
     backWanted = false;
@@ -261,5 +236,10 @@ public class TransactionListPage implements InterfacePage {
       }
     });
     components.add(newDepositButton);
+  }
+
+  @Override
+  protected void resetTitle(JFrame frame) {
+    frame.setTitle("List Transactions - Page");
   }
 }

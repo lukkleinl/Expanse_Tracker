@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import ui.main.InterfacePage;
+import ui.main.AbstractPage;
 /**
  * This Page collects all necessary data needed to create a new 'Payout' Transaction. Implements the Interface 'InterfacePage'
  * By Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired through getters.
@@ -14,12 +14,7 @@ import ui.main.InterfacePage;
  */
 
 
-public class AddPayoutPage implements InterfacePage {
-    private final static int FRAME_WIDTH = 1200;
-    private final static int FRAME_HEIGHT = 800;
-
-
-    private ArrayList<JComponent> components;
+public class AddPayoutPage extends AbstractPage {
 
     private JLabel IntroText;
     private JLabel Amounttext;
@@ -79,31 +74,8 @@ public class AddPayoutPage implements InterfacePage {
         createComponents();
     }
 
-    /**
-     * Configures the JFrame, adds all the components(resets the values of the JTextFields to hard coded default).
-     * Names the Frame to 'Add Payout - Page'.
-     * Sets the Size of the Frame. (Default is 1200 by 800).
-     * calls revalidate() and repaint() on the Frame.
-     * @param frame The JFrame, which components will be updated
-     */
-    public void configureFrame(JFrame frame) {
-        createComponents();
-
-        //frame.setVisible(false);
-        frame.setLayout(null);
-        frame.setTitle("Add Payout - Page");
-        frame.getContentPane().removeAll();
-        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-        for (JComponent comp : components) {
-            frame.add(comp);
-        }
-        frame.revalidate();
-        frame.repaint();
-        //frame.setVisible(true);
-    }
-
-    private void createComponents() {
+    @Override
+    protected void createComponents() {
 
         components = new ArrayList<>();
         submitted = false;
@@ -178,4 +150,8 @@ public class AddPayoutPage implements InterfacePage {
 
     }
 
+    @Override
+    protected void resetTitle(JFrame frame) {
+        frame.setTitle("Add Payout - Page");
+    }
 }
