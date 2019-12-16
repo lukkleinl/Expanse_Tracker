@@ -1,9 +1,9 @@
 package Transaction_Strategy;
 
-import accounts.Account;
-import exceptions.LimitException;
 import java.util.Date;
 import java.util.Map;
+import accounts.Account;
+import exceptions.LimitException;
 import swe_IteratorPattern.CustomContainer;
 import swe_IteratorPattern.CustomList;
 import transactions.Payout;
@@ -15,16 +15,16 @@ public class Add_Payout implements AddTransaction {
    * Deductes the specified amount of money from the specified account.
    *
    * @param Transaction the transaction which should be performed
-   * @param transactions list of executed transactions
+   * @param transactions2 list of executed transactions2
    * @param account Account on which the transaction should be performed
    *
    * @throws LimitException if the resulting account-balance would be smaller than the limit
    */
 
   @Override
-  public void add(Object Transaction,
-      Map<Integer, CustomContainer<Transaction>> transactions, Account account)
-      throws LimitException {
+  public void add(final Object Transaction,
+      final Map<Integer, CustomContainer<Transaction>> transactions, final Account account)
+          throws LimitException {
     Date date = new Date();
     Payout payout =(Payout) Transaction;
     if (account.getBalance() - payout.getAmount()  < account.getLimit())

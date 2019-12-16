@@ -3,7 +3,6 @@ package user;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import Transaction_Strategy.AddTransaction;
 import Transaction_Strategy.Add_Deposit;
 import Transaction_Strategy.Add_Payout;
@@ -14,7 +13,6 @@ import swe_IteratorPattern.CustomList;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
-import transactions.changes.CategoryStore;
 
 /** @author Michael Watholowitsch */
 public class User {
@@ -24,7 +22,6 @@ public class User {
   private final String password;
   private final CustomContainer<Account> accounts;
   private final Map<Integer, CustomContainer<Transaction>> transactions;
-  private final CategoryStore categories;
 
   /**
    * Creates a new User without any Accounts or Transactions.
@@ -39,19 +36,18 @@ public class User {
     this.userID = userID;
     this.firstname = firstname;
     this.lastname = lastname;
-    this.accounts = new CustomList<>();
-    this.transactions = new HashMap<>();
+    accounts = new CustomList<>();
+    transactions = new HashMap<>();
     this.password = password;
-    this.categories = new CategoryStore();
   }
 
   /**
    * Adds a new Account to the CustomContainer of this Users Accounts.
-   * 
+   *
    * @param acc the new account
    */
   public void addAccount(final Account acc) {
-    this.accounts.add(acc);
+    accounts.add(acc);
   }
 
 
@@ -68,46 +64,19 @@ public class User {
     if (transaction.getClass().equals(Deposit.class)) {
       add = new Add_Deposit();
       try {
-        add.add(transaction, this.transactions, account);
+        add.add(transaction, transactions, account);
       } catch (Exception e) {
         System.out.println(e);
       }
     } else if (transaction.getClass().equals(Payout.class)) {
       add = new Add_Payout();
       try {
-        add.add(transaction, this.transactions, account);
+        add.add(transaction, transactions, account);
       } catch (Exception e) {
         System.out.println(e);
       }
-    } else {
+    } else
       throw new UnknownTransactionException("Unknown Transaction");
-    }
-  }
-
-  /**
-   * Adds a new category for this users transactions.
-   * 
-   * @param categoryname the name of the new category
-   */
-  public void newTransactionCategory(final String categoryname) {
-    this.categories.addCategory(categoryname);
-  }
-
-  /**
-   * Removes a category of transaction of this user if it is present.
-   * 
-   * @param categoryname the name of the to-be removed category
-   */
-  public void removeTransactionCategory(final String categoryname) {
-    this.categories.removeCategory(categoryname);
-  }
-
-  /**
-   * @param categoryname the name of the requested category
-   * @return an Optional with the category if it is provided.
-   */
-  public Optional<String> getCategory(final String categoryname) {
-    return this.categories.getCategory(categoryname);
   }
 
   /** Updates the data of the User according to the input of the UserInterface. */
@@ -123,7 +92,7 @@ public class User {
    * @return the firstname
    */
   public String getFirstname() {
-    return this.firstname;
+    return firstname;
   }
 
   /**
@@ -132,7 +101,7 @@ public class User {
    * @return the lastname
    */
   public String getLastname() {
-    return this.lastname;
+    return lastname;
   }
 
   /**
@@ -141,7 +110,7 @@ public class User {
    * @return the userID
    */
   public int getUserID() {
-    return this.userID;
+    return userID;
   }
 
   /**
@@ -150,7 +119,7 @@ public class User {
    * @return A CustomContainer of this Users' Accounts
    */
   public CustomContainer<Account> getAccounts() {
-    return this.accounts;
+    return accounts;
   }
 
   /**
@@ -159,7 +128,7 @@ public class User {
    * @return A Map of all the Transactions by the User
    */
   public Map<Integer, CustomContainer<Transaction>> getTransactions() {
-    return this.transactions;
+    return transactions;
   }
 
   /**
@@ -168,6 +137,6 @@ public class User {
    * @return The password of the user
    */
   public String getPassword() {
-    return this.password;
+    return password;
   }
 }
