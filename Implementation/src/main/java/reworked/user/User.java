@@ -2,11 +2,11 @@
 package reworked.user;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import accounts.Account;
-import exceptions.LimitException;
+import exceptions.SWE_Exception;
+import exceptions.SWE_RuntimeException;
 import exceptions.UnknownTransactionException;
 import reworked.transactions.Deposit;
 import reworked.transactions.Payout;
@@ -19,7 +19,9 @@ import reworked.transactions.strategy.SimplePayout;
 import swe_IteratorPattern.CustomContainer;
 import swe_IteratorPattern.CustomList;
 
-/** @author Michael Watholowitsch */
+/**
+ * Representation of a user.
+ */
 public class User {
   private final String firstname;
   private final String lastname;
@@ -69,18 +71,18 @@ public class User {
   public void handleTransaction(final Transaction transaction, final Account account) {
     BalanceChange strategy;
 
-    if (transaction instanceof Deposit) {
-      strategy = new SimpleDeposit();
-    } else if (transaction instanceof Payout) {
-      strategy = new SimplePayout();
-    } else
-      throw new UnknownTransactionException("Unknown Transaction");
-
     try {
+      if (transaction instanceof Deposit) {
+        strategy = new SimpleDeposit();
+      } else if (transaction instanceof Payout) {
+        strategy = new SimplePayout();
+      } else
+        throw new SWE_RuntimeException("Unknown Transaction");
+
       strategy.applyBalanceChange(transaction, account);
       transactions.putIfAbsent(account.getAccount_number(), new CustomList<>());
       transactions.get(account.getAccount_number()).add(transaction);
-    } catch (LimitException e) {
+    } catch (SWE_Exception e) {
       // TODO
       e.printStackTrace();
     }
@@ -88,7 +90,7 @@ public class User {
 
   /**
    * @param strategy the strategy which determines what kind of categories are retrieved
-   * @return a {@linkplain List} of categories
+   * @return a {@linkplain Set} of categories
    */
   public Set<String> getCategories(final TransactionCategoryFunctionality strategy) {
     return categories.getCategories(strategy);
@@ -180,4 +182,19 @@ public class User {
   public String getPassword() {
     return password;
   }
+
+  /**
+   * Returns the CategoryStore of the user.
+   *
+   * @return The CategoryStore of the user
+   */
+  public CategoryStore getStore() {
+    return categories;
+  }
 }
+
+
+
+
+
+

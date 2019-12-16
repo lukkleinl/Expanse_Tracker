@@ -3,6 +3,7 @@ package reworked.transactions.categories;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import transactions.Payout;
 
 /**
  * Handles operations for payout categories.
@@ -10,7 +11,7 @@ import java.util.Set;
  * @author Michael Watholowitsch
  */
 public class PayoutCategory implements TransactionCategoryFunctionality {
-  public static final String CATEGORY = "Payout";
+  public static final String CATEGORY = new Payout(null, 0, null, null).getSimpleName();
   private final String categoryname;
 
   /** Only used for category retrieval. */

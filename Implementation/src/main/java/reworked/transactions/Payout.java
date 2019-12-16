@@ -16,8 +16,7 @@ public class Payout extends Transaction {
    * @param payoutCategory the payout category
    * @param description Description of the payout
    */
-  public Payout(
-      final Date creationDate, final float amount, final String payoutCategory, final String description) {
+  Payout(final Date creationDate, final float amount, final String payoutCategory, final String description) {
     super(creationDate, amount, description);
     this.payoutCategory = payoutCategory;
   }

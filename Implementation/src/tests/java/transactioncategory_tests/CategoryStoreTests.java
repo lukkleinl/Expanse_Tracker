@@ -1,9 +1,9 @@
 package transactioncategory_tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,16 +17,18 @@ import reworked.transactions.categories.PayoutCategory;
 import reworked.transactions.categories.TransactionCategoryFunctionality;
 
 class CategoryStoreTests {
-  private int defaultsize = 5;
-  private int defaultdepo = 2;
-  private int defaultpay = 3;
-  private final String defaultdepocat = "SALARY";
-  private final String defaultpaycat = "FOOD";
+  private final String supporteddepo = "SALARY";
+  private final String supportedpay = "FOOD";
+  private final String unsupported = "UnsupportedCategory";
   private final String dummydepocat = "DummyDepo";
   private final String dummypaycat = "DummyPay";
+
   private CategoryStore store;
   private TransactionCategoryFunctionality depo;
   private TransactionCategoryFunctionality pay;
+  private int defaultsize;
+  private int defaultdepo;
+  private int defaultpay;
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {}
@@ -86,28 +88,27 @@ class CategoryStoreTests {
   void addingExistingCategory_shouldNotChangeNumberOfCategories() {
     assertEquals(defaultsize,store.getCategories(null).size());
     assertEquals(defaultdepo,store.getCategories(new DepositCategory()).size());
-    store.addTransactionCategory(new DepositCategory(defaultdepocat));
+    store.addTransactionCategory(new DepositCategory(supporteddepo));
     assertEquals(defaultsize,store.getCategories(null).size());
     assertEquals(defaultdepo,store.getCategories(new DepositCategory()).size());
 
     assertEquals(defaultsize,store.getCategories(null).size());
     assertEquals(defaultpay,store.getCategories(new PayoutCategory()).size());
-    store.addTransactionCategory(new PayoutCategory(defaultpaycat));
+    store.addTransactionCategory(new PayoutCategory(supportedpay));
     assertEquals(defaultsize,store.getCategories(null).size());
     assertEquals(defaultpay,store.getCategories(new PayoutCategory()).size());
   }
 
 
   @ParameterizedTest
-  @ValueSource(strings = {defaultdepocat,defaultpaycat})
+  @ValueSource(strings = {supporteddepo,supportedpay})
   void categorySupportedOnDefaultCategory_shouldBeTrue(final String category) {
     assertTrue(store.categorySupported(category));
   }
 
-  @ParameterizedTest
-  @ValueSource(strings = {dummydepocat,dummypaycat})
-  void categorySupportedOnUnsupportedCategory_shouldBeFalse(final String category) {
-    assertFalse(store.categorySupported(category));
+  @Test
+  void categorySupportedOnUnsupportedCategory_shouldBeFalse() {
+    assertFalse(store.categorySupported(unsupported));
   }
 
   @Test
@@ -119,10 +120,9 @@ class CategoryStoreTests {
     assertTrue(store.categorySupported(dummypaycat));
   }
 
-  @ParameterizedTest
-  @ValueSource(strings = {dummydepocat,dummypaycat})
-  void removeCategoryOnUnsupportedCategory_shouldNotChangeNumberOfCategories(final String category) {
-    store.removeCategory(category);
+  @Test
+  void removeCategoryOnUnsupportedCategory_shouldNotChangeNumberOfCategories() {
+    store.removeCategory(unsupported);
 
     assertEquals(defaultsize,store.getCategories(null).size());
     assertEquals(defaultdepo,store.getCategories(new DepositCategory()).size());
@@ -131,13 +131,13 @@ class CategoryStoreTests {
 
   @Test
   void removeCategoryOnDefaultCategory_shouldRemove() {
-    store.removeCategory(defaultdepocat);
+    store.removeCategory(supporteddepo);
 
     assertNotEquals(defaultsize,store.getCategories(null).size());
     assertNotEquals(defaultdepo,store.getCategories(new DepositCategory()).size());
     assertEquals(defaultpay,store.getCategories(new PayoutCategory()).size());
 
-    store.removeCategory(defaultpaycat);
+    store.removeCategory(supportedpay);
 
     assertNotEquals(defaultsize,store.getCategories(null).size());
     assertNotEquals(defaultdepo,store.getCategories(new DepositCategory()).size());
@@ -154,7 +154,24 @@ class CategoryStoreTests {
     store.removeCategory(dummydepocat);
     assertEquals(before,store.getCategories(null).size());
   }
+
+  @Test
+  void keyOfUnsupportedCategory_shouldBeEmpty() {
+    assertTrue(store.keyOfCategory(null).isEmpty());
+    assertTrue(store.keyOfCategory(unsupported).isEmpty());
+  }
+  @Test
+  void keyOfSupportedCategory_shouldBePresentAndNotEmpty() {
+    assertFalse(store.keyOfCategory(supporteddepo).isEmpty());
+    assertFalse(store.keyOfCategory(supportedpay).isEmpty());
+  }
+  @Test
+  void keyOfCategory_shouldBeEqual() {
+    assertEquals(DepositCategory.CATEGORY,store.keyOfCategory(supporteddepo));
+    assertEquals(PayoutCategory.CATEGORY,store.keyOfCategory(supportedpay));
+  }
 }
+
 
 
 

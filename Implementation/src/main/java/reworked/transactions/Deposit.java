@@ -17,8 +17,7 @@ public class Deposit extends Transaction {
    * @param depositCategory the deposit category
    * @param description Description of the deposit
    */
-  public Deposit(
-      final Date creationDate, final float amount, final String depositCategory, final String description) {
+  Deposit (final Date creationDate, final float amount, final String depositCategory, final String description) {
     super(creationDate, amount, description);
     this.depositCategory = depositCategory;
   }

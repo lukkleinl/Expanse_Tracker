@@ -5,8 +5,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Abstract class of a transaction for the different accounts.
- *
- * @author Patrick Gmasz
  */
 public abstract class Transaction {
   private final String description;
@@ -22,7 +20,7 @@ public abstract class Transaction {
    * @param amount The amount of money the transaction was about.
    * @param description A description the user can add to a transaction.
    */
-  public Transaction(final Date creationDate, final float amount, final String description) {
+  Transaction(final Date creationDate, final float amount, final String description) {
     id = nextId.incrementAndGet();
     this.description = description;
     this.amount = amount;

@@ -2,7 +2,6 @@ package reworked.transactions.categories;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -12,7 +11,7 @@ import java.util.Set;
  *
  * @author Michael Watholowitsch
  */
-public class CategoryStore {
+public final class CategoryStore {
   private final Map<String,Set<String>> categories;
 
   /** Constructor with basic provided categories for transactions. */
@@ -30,7 +29,7 @@ public class CategoryStore {
   /**
    * @param strategy The strategy which determines what kind of categories are retrieved.
    * If this parameter is {@code null}, then all stored categories are retrieved.
-   * @return a {@linkplain List} of categories
+   * @return a {@linkplain Set} of categories
    */
   public Set<String> getCategories(final TransactionCategoryFunctionality strategy) {
     if (strategy != null) return strategy.getCategories(categories);
@@ -71,6 +70,21 @@ public class CategoryStore {
   }
 
   /**
+   * Returns the key to which {@code category} is mapped or an empty string if no mapping is present.
+   * @param category the category of which the key should be be
+   * @return the key
+   */
+  public String keyOfCategory(final String category) {
+    if (category != null) {
+      for (Entry entry : categories.entrySet()) {
+        if (categories.get(entry.getKey()).contains(category))
+          return (String) entry.getKey();
+      }
+    }
+    return "";
+  }
+
+  /**
    * @param categoryname the name of the category in question
    * @return {@code true} if the category is supported, else {@code false} (NOTE: the comparison of names is case-insensitive)
    */
@@ -84,5 +98,21 @@ public class CategoryStore {
     return false;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
