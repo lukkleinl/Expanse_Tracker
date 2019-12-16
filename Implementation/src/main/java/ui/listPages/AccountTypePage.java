@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import ui.main.InterfacePage;
+import ui.main.AbstractPage;
 
 
 /**
@@ -17,12 +17,7 @@ import ui.main.InterfacePage;
  *
  * @author Patrick Gmasz
  */
-public class AccountTypePage implements InterfacePage {
-
-  private final static int FRAME_WIDTH = 1200;
-  private final static int FRAME_HEIGHT = 800;
-
-  private ArrayList<JComponent> components;
+public class AccountTypePage extends AbstractPage {
 
   private JLabel welcomeMessage;
   private JButton creditCardButton;
@@ -39,6 +34,32 @@ public class AccountTypePage implements InterfacePage {
    * Creates a new AccountTypePage, which will load all needed components to a list.
    */
   public AccountTypePage() {
+    createComponents();
+  }
+
+  /**
+   * This page has 4 buttons, one for every account type.
+   * Pressing on one will set a variable to pressed account type.
+   * This method returns the account type, the user wants to create.
+   *
+   * @return The account type, which the user clicked.
+   */
+  public AccountTypes getPageWanted() {
+    return pageWanted;
+  }
+
+  /**
+   * Pressing the back button on this page will set a boolean flag, that the button was pressed.
+   * This method returns the boolean, it will be true, when the user wanted to go a page back.
+   *
+   * @return The boolean flag, true, if user pressed back button
+   */
+  public boolean isBackWanted() {
+    return backWanted;
+  }
+
+  @Override
+  protected void createComponents() {
     pageWanted = AccountTypes.NONE;
     components = new ArrayList<>();
 
@@ -111,51 +132,10 @@ public class AccountTypePage implements InterfacePage {
     components.add(cashButton);
     components.add(stockButton);
     components.add(backButton);
-
   }
 
-
-  /**
-   * This method updates the given JFrame with every components, e.g. buttons, and also sets indicators to default.
-   *
-   * @param frame The JFrame, which components will be updated
-   */
-  public void configureFrame(JFrame frame) {
-    pageWanted = AccountTypes.NONE;
-    backWanted = false;
-
-    //frame.setVisible(false);
+  @Override
+  protected void resetTitle(JFrame frame) {
     frame.setTitle("Account Types");
-    frame.getContentPane().removeAll();
-    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-    for (JComponent comp : components) {
-      frame.add(comp);
-    }
-
-    frame.revalidate();
-    frame.repaint();
-    //frame.setVisible(true);
-  }
-
-  /**
-   * This page has 4 buttons, one for every account type.
-   * Pressing on one will set a variable to pressed account type.
-   * This method returns the account type, the user wants to create.
-   *
-   * @return The account type, which the user clicked.
-   */
-  public AccountTypes getPageWanted() {
-    return pageWanted;
-  }
-
-  /**
-   * Pressing the back button on this page will set a boolean flag, that the button was pressed.
-   * This method returns the boolean, it will be true, when the user wanted to go a page back.
-   *
-   * @return The boolean flag, true, if user pressed back button
-   */
-  public boolean isBackWanted() {
-    return backWanted;
   }
 }

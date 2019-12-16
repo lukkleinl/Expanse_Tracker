@@ -8,7 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import ui.main.InterfacePage;
+import ui.main.AbstractPage;
 
 /**
  *
@@ -17,7 +17,7 @@ import ui.main.InterfacePage;
  *
  * @author Patrick Gmasz
  */
-public class RegistrationPage implements InterfacePage {
+public class RegistrationPage extends AbstractPage {
 
   private ArrayList<JComponent> components;
   private JLabel userLabel;
@@ -139,30 +139,11 @@ public class RegistrationPage implements InterfacePage {
   }
 
   /**
-   * This method updates the given JFrame with every components, e.g. buttons or text fields, and also sets indicators to default.
-   *
-   * @param frame The JFrame, which components will be updated
-   */
-  public void configureFrame(JFrame frame) {
-    createComponents();
-    //frame.setVisible(false);
-    frame.setTitle("Registration");
-    frame.getContentPane().removeAll();
-    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-    for (JComponent comp : components) {
-      frame.add(comp);
-    }
-    frame.revalidate();
-    frame.repaint();
-    //frame.setVisible(true);
-  }
-
-  /**
    * This method creates all components, such as buttons and text fields, and adds it to a list.
    * It also sets every indicator variables to default.
    */
-  private void createComponents() {
+  protected void createComponents() {
+    components = new ArrayList<>();
     user = "";
     password = "";
     firstname = "";
@@ -270,5 +251,10 @@ public class RegistrationPage implements InterfacePage {
     components.add(lastnameTextField);
     components.add(backButton);
 
+  }
+
+  @Override
+  protected void resetTitle(JFrame frame) {
+    frame.setTitle("Registration");
   }
 }

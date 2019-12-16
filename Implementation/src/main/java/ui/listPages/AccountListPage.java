@@ -13,7 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -21,7 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import swe_IteratorPattern.CustomContainer;
 import swe_IteratorPattern.CustomIterator;
-import ui.main.InterfacePage;
+import ui.main.AbstractPage;
 import user.User;
 
 /**
@@ -30,13 +29,7 @@ import user.User;
  *
  * @author Patrick Gmasz
  */
-public class AccountListPage implements InterfacePage {
-
-  private final static int FRAME_WIDTH = 1200;
-  private final static int FRAME_HEIGHT = 800;
-
-  private ArrayList<JComponent> components;
-
+public class AccountListPage extends AbstractPage {
   private JLabel welcomeMessage;
   private JTable accountTable;
   private JScrollPane accountTablePane;
@@ -136,6 +129,7 @@ public class AccountListPage implements InterfacePage {
    *
    * @param frame The JFrame, which components will be updated
    */
+  /*
   public void configureFrame(JFrame frame) {
     createComponents();
 
@@ -152,13 +146,15 @@ public class AccountListPage implements InterfacePage {
     frame.repaint();
     //frame.setVisible(true);
   }
-
+*/
   /**
    * This method creates all components, such as buttons and text fields, and adds it to a list.
    * It also sets every indicator variables to default and updates the account list of the user.
    */
-  private void createComponents() {
+  @Override
+  protected void createComponents() {
 
+    components = new ArrayList<>();
     selectedAccount = null;
     newAccountWanted = false;
 
@@ -223,5 +219,10 @@ public class AccountListPage implements InterfacePage {
     components.add(welcomeMessage);
     components.add(accountTablePane);
     components.add(newAccountButton);
+  }
+
+  @Override
+  protected void resetTitle(JFrame frame) {
+    frame.setTitle("Account List");
   }
 }
