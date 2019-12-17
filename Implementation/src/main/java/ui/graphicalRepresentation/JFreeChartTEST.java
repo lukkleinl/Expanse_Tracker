@@ -1,17 +1,17 @@
 package ui.graphicalRepresentation;
-/*
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
-*/
+
 import javax.swing.*;
 import java.awt.*;
 
 public class JFreeChartTEST {
-/*
+
     private static void pie() {
         DefaultPieDataset pieDataset = new DefaultPieDataset();
         pieDataset.setValue("One", new Integer(10));
@@ -58,5 +58,5 @@ public class JFreeChartTEST {
         pie();
         bar();
     }
-    */
+    
 }
