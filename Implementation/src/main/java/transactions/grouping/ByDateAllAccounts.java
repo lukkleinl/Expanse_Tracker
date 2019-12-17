@@ -8,29 +8,42 @@ import iteration.CustomList;
 import transactions.Transaction;
 import user.TransactionStore;
 
-public class SortBetweenAccounts implements TransactionOrganizing {
+public class ByDateAllAccounts implements TransactionOrganizing {
 
   private final TransactionStore store;
   private final List<CustomIterator<Transaction>> iterators;
 
-  public SortBetweenAccounts(final TransactionStore store) {
+  public ByDateAllAccounts(final TransactionStore store) {
     this.store = store;
     iterators = new ArrayList<>();
   }
 
   @Override
   public CustomContainer<Transaction> organize() {
-    CustomContainer<Transaction> organized = new CustomList<>();
-    List<Transaction> transactions = new ArrayList<>();
+    final CustomContainer<Transaction> organized = new CustomList<>();
+    final List<Transaction> transactions = new ArrayList<>();
 
     for (Integer key : store.getTransactions().keySet()) {
       iterators.add(store.getTransactions().get(key).getIterator());
     }
 
-    while (this.notDone()) {
-      Transaction nextToAdd = null;
+    for (CustomIterator<Transaction> iter : iterators) {
+      transactions.add(iter.next());
+    }
 
-      // TODO - find the 'oldest' transaction in transactions and assign it to nextToAdd
+    Transaction nextToAdd = null;
+    Transaction currentlychecked = null;
+    do {
+      nextToAdd = transactions.get(0);
+      currentlychecked = null;
+
+      // TODO - TESTING !!!
+      for (int i = 1; i < transactions.size(); i++) {
+        currentlychecked = transactions.get(i);
+        if (nextToAdd.getCreationDate().isAfter(currentlychecked.getCreationDate())) {
+          nextToAdd = currentlychecked;
+        }
+      }
 
       organized.add(nextToAdd);
       int idx = transactions.indexOf(nextToAdd);
@@ -40,8 +53,7 @@ public class SortBetweenAccounts implements TransactionOrganizing {
       transactions.add(idx,iterators.get(idx).next());
       // remove the 'old oldest' transaction from the list
       transactions.remove(nextToAdd);
-    }
-
+    } while (this.notDone());
     return organized;
   }
 
