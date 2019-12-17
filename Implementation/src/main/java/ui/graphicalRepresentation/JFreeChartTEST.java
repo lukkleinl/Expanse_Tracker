@@ -58,5 +58,5 @@ public class JFreeChartTEST {
         pie();
         bar();
     }
-    
+
 }

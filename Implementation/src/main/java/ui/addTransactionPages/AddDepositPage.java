@@ -23,7 +23,7 @@ public class AddDepositPage extends AbstractPage {
   private JTextField DescriptionInp;
   private JLabel Categorytext;
   private JComboBox CategorysBox;
-  private volatile Object[] PayoutCategorys; /* = {"SALARY","DIVIDEND"}; */
+  private Object[] PayoutCategorys; /* = {"SALARY","DIVIDEND"}; */
   private String category;
   private String description;
   private float Amount;
@@ -36,6 +36,13 @@ public class AddDepositPage extends AbstractPage {
 
   private volatile boolean submitted;
   private volatile boolean backWanted;
+
+  public boolean isRefreshWanted() {
+    return refreshWanted;
+  }
+
+  private volatile boolean refreshWanted;
+
 
   /**
    * @return DepositCategory Input from User or Default value.
@@ -124,6 +131,7 @@ public class AddDepositPage extends AbstractPage {
       System.out.println(categoryName);
       user.newTransactionCategory(new DepositCategory(categoryName));
       PayoutCategorys = user.getCategories(new DepositCategory()).toArray();
+      refreshWanted = true;
     });
 
     SubmitButton.addActionListener(actionEvent -> {

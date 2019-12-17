@@ -24,7 +24,7 @@ public class AddPayoutPage extends AbstractPage {
   private JTextField DescriptionInp;
   private JLabel Categorytext;
   private JComboBox EnumsCategorysBox;
-  private Object[] PayoutCategorys = {"EDUCATION","FOOD","TRANSPORTATION"};
+  private  Object[] PayoutCategorys = {"EDUCATION","FOOD","TRANSPORTATION"};
   private String category;
   private String description;
   private float Amount;
@@ -36,6 +36,12 @@ public class AddPayoutPage extends AbstractPage {
 
   private volatile boolean submitted;
   private volatile boolean backWanted;
+
+  public boolean isRefreshWanted() {
+    return refreshWanted;
+  }
+
+  private volatile boolean refreshWanted;
 
   /**
    * @return PayoutCategory Input from User or Default value.
@@ -121,10 +127,11 @@ public class AddPayoutPage extends AbstractPage {
     components.add(SubmitButton);
 
     newOptionPane.addActionListener(actionEvent -> {
-      String categoryName = JOptionPane.showInputDialog("Enter Name of New Category!");
-      System.out.println(categoryName);
-      user.newTransactionCategory(new PayoutCategory(categoryName));
-      PayoutCategorys = user.getCategories(new PayoutCategory()).toArray();
+        String categoryName = JOptionPane.showInputDialog("Enter Name of New Category!");
+        System.out.println(categoryName);
+        user.newTransactionCategory(new PayoutCategory(categoryName));
+        PayoutCategorys = user.getCategories(new PayoutCategory()).toArray();
+        refreshWanted = true;
     });
 
     SubmitButton.addActionListener(actionEvent -> {
