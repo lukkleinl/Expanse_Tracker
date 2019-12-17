@@ -1,24 +1,24 @@
-package ui.jtable_adjustment.renderers.background;
+package ui.jcomponent_creation.renderers.foreground;
 
 import java.awt.Color;
 import java.awt.Font;
-import ui.jtable_adjustment.renderers.TableColors;
+import ui.jcomponent_creation.renderers.TableColors;
 
 /**
- * Used as base for all background color renderers.
+ * Used as base for all foreground color renderers.
  *
  * @author Michael Watholowitsch
  */
-public abstract class BackgroundTableColorRenderer implements TableColors {
+public abstract class ForegroundTableColorRenderer implements TableColors {
   protected final TableColors decRenderer;
-  protected Color background;
+  protected Color foreground;
 
   /**
    * Constructor
    *
    * @param renderer the wrapped renderer
    */
-  public BackgroundTableColorRenderer(final TableColors renderer) {
+  public ForegroundTableColorRenderer(final TableColors renderer) {
     decRenderer = renderer;
   }
 
@@ -35,7 +35,7 @@ public abstract class BackgroundTableColorRenderer implements TableColors {
    */
   @Override
   public final Color getBG() {
-    return background;
+    return decRenderer.getBG();
   }
 
   /**
@@ -43,7 +43,7 @@ public abstract class BackgroundTableColorRenderer implements TableColors {
    */
   @Override
   public final Color getFG() {
-    return decRenderer.getFG();
+    return foreground;
   }
 
   /**
@@ -51,7 +51,7 @@ public abstract class BackgroundTableColorRenderer implements TableColors {
    */
   @Override
   public String toString() {
-    return "\nBackground: " + background + decRenderer.toString();
+    return "\nForeground: " + foreground + decRenderer.toString();
   }
 }
 

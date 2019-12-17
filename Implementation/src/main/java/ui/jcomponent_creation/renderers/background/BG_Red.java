@@ -1,7 +1,7 @@
-package ui.jtable_adjustment.renderers.background;
+package ui.jcomponent_creation.renderers.background;
 
 import java.awt.Color;
-import ui.jtable_adjustment.renderers.TableColors;
+import ui.jcomponent_creation.renderers.TableColors;
 
 /**
  * Class for making the background red.

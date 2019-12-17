@@ -1,4 +1,4 @@
-package ui.jtable_adjustment.renderers;
+package ui.jcomponent_creation.renderers;
 
 import java.awt.Color;
 import java.awt.Font;

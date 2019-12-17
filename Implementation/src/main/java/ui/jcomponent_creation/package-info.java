@@ -5,4 +5,4 @@
  * @author Michael Watholowitsch
  *
  */
-package ui.jtable_adjustment;
+package ui.jcomponent_creation;
