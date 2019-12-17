@@ -1,12 +1,12 @@
 package ui.addTransactionPages;
 
 import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.*;
+
+import transactions.categories.DepositCategory;
+import transactions.categories.PayoutCategory;
 import ui.main.AbstractPage;
+import user.User;
 
 /**
  * This Page collects all necessary data needed to create a new 'Deposit' Transaction. Implements the Interface 'InterfacePage'
@@ -23,10 +23,13 @@ public class AddDepositPage extends AbstractPage {
   private JTextField DescriptionInp;
   private JLabel Categorytext;
   private JComboBox CategorysBox;
-  private final Object[] PayoutCategorys = {"SALARY","DIVIDEND"};
+  private volatile Object[] PayoutCategorys; /* = {"SALARY","DIVIDEND"}; */
   private String category;
   private String description;
   private float Amount;
+  private User user;
+  private JButton newOptionPane;
+
 
   private JButton SubmitButton;
   private JButton BackButton;
@@ -69,7 +72,10 @@ public class AddDepositPage extends AbstractPage {
    * Creates a new AddDepositPage, which will load all needed components to a list.
    */
   // In Final Version might take a User object to display additional User information.
-  public AddDepositPage() {
+  public AddDepositPage(User user)
+  {
+    this.user = user;
+    PayoutCategorys = this.user.getCategories(new DepositCategory()).toArray();
     this.createComponents();
   }
 
@@ -88,6 +94,10 @@ public class AddDepositPage extends AbstractPage {
     CategorysBox = new JComboBox(PayoutCategorys);
     CategorysBox.setBounds(100, 100, 300, 50);
     components.add(CategorysBox);
+
+    newOptionPane = new JButton("Create Custom Deposit-Category");
+    newOptionPane.setBounds(450,100,300,50);
+    components.add(newOptionPane);
 
     Amounttext = new JLabel("Amount:");
     Amounttext.setBounds(100, 150, 300, 50);
@@ -108,6 +118,13 @@ public class AddDepositPage extends AbstractPage {
     SubmitButton = new JButton("Deposit");
     SubmitButton.setBounds(100, 500, 300, 50);
     components.add(SubmitButton);
+
+    newOptionPane.addActionListener(actionEvent -> {
+      String categoryName = JOptionPane.showInputDialog("Enter Name of New Category!");
+      System.out.println(categoryName);
+      user.newTransactionCategory(new DepositCategory(categoryName));
+      PayoutCategorys = user.getCategories(new DepositCategory()).toArray();
+    });
 
     SubmitButton.addActionListener(actionEvent -> {
       description = DescriptionInp.getText();

@@ -1,12 +1,13 @@
 package ui.addTransactionPages;
 
 import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.*;
+
+import transactions.categories.DepositCategory;
+import transactions.categories.PayoutCategory;
 import ui.main.AbstractPage;
+import user.User;
+
 /**
  * This Page collects all necessary data needed to create a new 'Payout' Transaction. Implements the Interface 'InterfacePage'
  * By Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired through getters.
@@ -23,10 +24,12 @@ public class AddPayoutPage extends AbstractPage {
   private JTextField DescriptionInp;
   private JLabel Categorytext;
   private JComboBox EnumsCategorysBox;
-  private final Object[] PayoutCategorys = {"EDUCATION","FOOD","TRANSPORTATION"};
+  private Object[] PayoutCategorys = {"EDUCATION","FOOD","TRANSPORTATION"};
   private String category;
   private String description;
   private float Amount;
+  private User user;
+  private JButton newOptionPane;
 
   private JButton SubmitButton;
   private JButton BackButton;
@@ -70,7 +73,9 @@ public class AddPayoutPage extends AbstractPage {
    * Creates a new AddPayoutPage, which will load all needed components to a list.
    */
   // In Final Version might take a User object to display additional User information.
-  public AddPayoutPage() {
+  public AddPayoutPage(User user) {
+    this.user = user;
+    PayoutCategorys = user.getCategories(new PayoutCategory()).toArray();
     this.createComponents();
   }
 
@@ -84,6 +89,11 @@ public class AddPayoutPage extends AbstractPage {
     Categorytext = new JLabel("Payout Category:");
     Categorytext.setBounds(100, 50, 300, 50);
     components.add(Categorytext);
+
+    newOptionPane = new JButton("Create Custom Payout-Category");
+    newOptionPane.setBounds(450,100,300,50);
+    components.add(newOptionPane);
+
 
     // TODO - take categories of user instead
     EnumsCategorysBox = new JComboBox(PayoutCategorys);
@@ -109,6 +119,13 @@ public class AddPayoutPage extends AbstractPage {
     SubmitButton = new JButton("Payout");
     SubmitButton.setBounds(100, 500, 300, 50);
     components.add(SubmitButton);
+
+    newOptionPane.addActionListener(actionEvent -> {
+      String categoryName = JOptionPane.showInputDialog("Enter Name of New Category!");
+      System.out.println(categoryName);
+      user.newTransactionCategory(new PayoutCategory(categoryName));
+      PayoutCategorys = user.getCategories(new PayoutCategory()).toArray();
+    });
 
     SubmitButton.addActionListener(actionEvent -> {
       description = DescriptionInp.getText();

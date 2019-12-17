@@ -89,8 +89,8 @@ public class UserInterface {
     AddDebitAccountPage add_debitAccountPage = new AddDebitAccountPage();
     AddStockAccountPage add_stockAccountPage = new AddStockAccountPage();
     AddCreditAccountPage add_creditAccountPage = new AddCreditAccountPage();
-    AddDepositPage addDepositPage = new AddDepositPage();
-    AddPayoutPage addPayoutPage = new AddPayoutPage();
+    AddDepositPage addDepositPage = new AddDepositPage(user);
+    AddPayoutPage addPayoutPage = new AddPayoutPage(user);
     TransactionListPage transactionListPage;
 
     //END DEFINITION OF PAGES
