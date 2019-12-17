@@ -1,8 +1,8 @@
 package reworked.transactions.categories;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import transactions.Deposit;
 
 /**
@@ -19,20 +19,20 @@ public class DepositCategory implements TransactionCategoryFunctionality {
     categoryname = null;
   }
   public DepositCategory(final String newcategory) {
-    categoryname = newcategory;
+    categoryname = newcategory.toUpperCase();
   }
 
   @Override
   public void addCategory(final Map<String,Set<String>> categories) {
     if (categoryname == null) return;
-    categories.putIfAbsent(CATEGORY, new HashSet<>());
+    categories.putIfAbsent(CATEGORY, new TreeSet<>());
     categories.get(CATEGORY).add(categoryname);
   }
 
   @Override
   public Set<String> getCategories(final Map<String,Set<String>> categories) {
-    if (categories == null) return new HashSet<>();
-    Set<String> list = categories.get(CATEGORY);
-    return list != null ? list : new HashSet<>();
+    if (categories == null) return new TreeSet<>();
+    Set<String> filtered = categories.get(CATEGORY);
+    return filtered != null ? filtered : new TreeSet<>();
   }
 }

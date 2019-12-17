@@ -1,10 +1,10 @@
 package reworked.transactions.categories;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * Used to store a users categories for transactions.
@@ -16,14 +16,14 @@ public final class CategoryStore {
 
   /** Constructor with basic provided categories for transactions. */
   public CategoryStore() {
-    categories = new HashMap<>();
-
-    this.addTransactionCategory(new DepositCategory("SALARY"));
-    this.addTransactionCategory(new DepositCategory("DIVIDEND"));
+    categories = new TreeMap<>();
 
     this.addTransactionCategory(new PayoutCategory("EDUCATION"));
     this.addTransactionCategory(new PayoutCategory("FOOD"));
     this.addTransactionCategory(new PayoutCategory("TRANSPORTATION"));
+
+    this.addTransactionCategory(new DepositCategory("SALARY"));
+    this.addTransactionCategory(new DepositCategory("DIVIDEND"));
   }
 
   /**
@@ -34,7 +34,7 @@ public final class CategoryStore {
   public Set<String> getCategories(final TransactionCategoryFunctionality strategy) {
     if (strategy != null) return strategy.getCategories(categories);
 
-    Set<String> all = new HashSet<>();
+    Set<String> all = new LinkedHashSet<>();
 
     for (Entry<String,Set<String>> key : categories.entrySet()) {
       all.addAll(key.getValue());
@@ -96,6 +96,17 @@ public final class CategoryStore {
       }
     }
     return false;
+  }
+
+  public static void main(final String[] args) {
+    CategoryStore cs = new CategoryStore();
+    System.out.println(cs.getCategories(null));
+    cs.addTransactionCategory(new PayoutCategory("Sprit"));
+    cs.addTransactionCategory(new PayoutCategory("Coiffeur"));
+    cs.addTransactionCategory(new DepositCategory("Pocketmoney"));
+    cs.addTransactionCategory(new PayoutCategory("IceSkating"));
+    cs.addTransactionCategory(new PayoutCategory("Oktoberfest"));
+    System.out.println(cs.getCategories(null));
   }
 }
 
