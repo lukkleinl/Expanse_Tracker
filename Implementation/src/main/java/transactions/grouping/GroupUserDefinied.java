@@ -1,13 +1,14 @@
 package transactions.grouping;
 
+import java.time.ZonedDateTime;
 import iteration.CustomContainer;
 import transactions.Transaction;
 
 public class GroupUserDefinied extends OrganizingRoot {
-  private final String begin;
-  private final String end;
+  private final ZonedDateTime begin;
+  private final ZonedDateTime end;
 
-  public GroupUserDefinied(final TransactionOrganizing to, final String begin, final String end) {
+  public GroupUserDefinied(final TransactionOrganizing to, final ZonedDateTime begin, final ZonedDateTime end) {
     super(to);
     this.begin = begin;
     this.end = end;
