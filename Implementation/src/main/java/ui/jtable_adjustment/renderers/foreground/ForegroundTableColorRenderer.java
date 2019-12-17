@@ -1,8 +1,8 @@
-package ui.rendering.renderers.foreground;
+package ui.jtable_adjustment.renderers.foreground;
 
 import java.awt.Color;
 import java.awt.Font;
-import ui.rendering.renderers.TableColors;
+import ui.jtable_adjustment.renderers.TableColors;
 
 /**
  * Used as base for all foreground color renderers.

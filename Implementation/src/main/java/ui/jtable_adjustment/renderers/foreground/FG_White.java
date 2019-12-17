@@ -1,7 +1,7 @@
-package ui.rendering.renderers.foreground;
+package ui.jtable_adjustment.renderers.foreground;
 
 import java.awt.Color;
-import ui.rendering.renderers.TableColors;
+import ui.jtable_adjustment.renderers.TableColors;
 
 /**
  * Class for making the foreground white.

@@ -1,5 +1,11 @@
 package ui.listPages;
 
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import accounts.Account;
 import accounts.BankAccount;
 import accounts.Cash;
@@ -7,16 +13,6 @@ import accounts.CreditCard;
 import accounts.DebitCard;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
@@ -53,18 +49,18 @@ public class TransactionListPage extends AbstractPage {
   private volatile boolean newPayoutWanted;
   private volatile boolean backWanted;
 
-  private Account acc;
-  private User user;
+  private final Account acc;
+  private final User user;
 
   /**
    * Creates a new TransactionListPage, which will load all needed components to a list.
    * @param acc who's transactions should be displayed.
    * @param user User who belongs to that account.
    */
-  public TransactionListPage(Account acc, User user) {
+  public TransactionListPage(final Account acc, final User user) {
     this.acc = acc;
     this.user = user;
-    createComponents();
+    this.createComponents();
   }
 
   /**
@@ -95,8 +91,8 @@ public class TransactionListPage extends AbstractPage {
     components = new ArrayList<>();
 
     String[] TransactionDescription = {"Type", "Descriptions", "Amount", "Creation-Date",
-        "Category"};
-    CustomContainer<Transaction> transactionlist = user.getTransactions().get(acc.getAccount_number());
+    "Category"};
+    CustomContainer<Transaction> transactionlist = user.getTransactionStore().getTransactions().get(acc.getAccount_number());
     int listSize = transactionlist == null ? 0 : transactionlist.size();
     String[][] TransactionList_VISU = new String[listSize][6];
 
@@ -122,7 +118,7 @@ public class TransactionListPage extends AbstractPage {
         TransactionList_VISU[i][1] = transtemp.getDescription();
         TransactionList_VISU[i][2] = "" + transtemp.getAmount();
         TransactionList_VISU[i][5] = "" + transtemp.getID();
-        TransactionList_VISU[i++][3] = transtemp.getCreationDate().toString();
+        TransactionList_VISU[i++][3] = transtemp.getFormattedCreationDate();
 
 
       }
@@ -136,18 +132,16 @@ public class TransactionListPage extends AbstractPage {
     transactionTable.setDefaultEditor(Object.class, null);
 
     //https://stackoverflow.com/questions/10128064/jtable-selected-row-click-event
-    transactionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-      public void valueChanged(ListSelectionEvent event) {
+    transactionTable.getSelectionModel().addListSelectionListener(event -> {
 
-        int ID_OF_SELECTED_TRANSACTION = Integer
-            .valueOf(TransactionList_VISU[transactionTable.getSelectedRow()][5]);
+      int ID_OF_SELECTED_TRANSACTION = Integer
+          .valueOf(TransactionList_VISU[transactionTable.getSelectedRow()][5]);
 
-        System.out.println("selected Row Nr:" + transactionTable.getSelectedRow());
-      }
+      System.out.println("selected Row Nr:" + transactionTable.getSelectedRow());
     });
 
     scrollPane = new JScrollPane(transactionTable);
-    scrollPane.setBounds(300, 100, 700, 450);
+    scrollPane.setBounds(225, 100, 900, 450);
     components.add(scrollPane);
 
     IntroTextMessage = "Account-Type: ";
@@ -201,45 +195,21 @@ public class TransactionListPage extends AbstractPage {
     BackButton = new JButton("BACK");
     BackButton.setBounds(10, 10, 100, 50);
     components.add(BackButton);
-    BackButton.addActionListener(new ActionListener() {
-      @Override
-      /**
-       * sets backWanted to true
-       */
-      public void actionPerformed(ActionEvent e) {
-        backWanted = true;
-      }
-    });
+    BackButton.addActionListener(e -> backWanted = true);
 
     newPayoutButton = new JButton("NEW PAYOUT");
     newPayoutButton.setBounds(400, 600, 200, 70);
-    newPayoutButton.addActionListener(new ActionListener() {
-      @Override
-      /**
-       * sets newPayoutWanted to true
-       */
-      public void actionPerformed(ActionEvent e) {
-        newPayoutWanted = true;
-      }
-    });
+    newPayoutButton.addActionListener(e -> newPayoutWanted = true);
     components.add(newPayoutButton);
 
     newDepositButton = new JButton("NEW DEPOST");
     newDepositButton.setBounds(700, 600, 200, 70);
-    newDepositButton.addActionListener(new ActionListener() {
-      @Override
-      /**
-       * sets newDepositWanted to true
-       */
-      public void actionPerformed(ActionEvent e) {
-        newDepositWanted = true;
-      }
-    });
+    newDepositButton.addActionListener(e -> newDepositWanted = true);
     components.add(newDepositButton);
   }
 
   @Override
-  protected void resetTitle(JFrame frame) {
+  protected void resetTitle(final JFrame frame) {
     frame.setTitle("List Transactions - Page");
   }
 }

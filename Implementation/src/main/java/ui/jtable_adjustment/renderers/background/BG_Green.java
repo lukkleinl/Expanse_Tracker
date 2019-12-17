@@ -1,7 +1,7 @@
-package ui.rendering.renderers.background;
+package ui.jtable_adjustment.renderers.background;
 
 import java.awt.Color;
-import ui.rendering.renderers.TableColors;
+import ui.jtable_adjustment.renderers.TableColors;
 
 /**
  * Class for making the background green.

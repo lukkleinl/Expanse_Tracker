@@ -1,17 +1,14 @@
 package ui_tests.listPages;
 
-import accounts.BankAccount;
-import java.util.Date;
 import javax.swing.JFrame;
-import transactions.Deposit;
-import transactions.DepositCategory;
-import transactions.Payout;
-import transactions.PayoutCategory;
+import accounts.BankAccount;
+import transactions.Transaction;
+import transactions.TransactionCreator;
 import ui.listPages.TransactionListPage;
 import user.User;
 
 public class TransactionListPageVIEW {
-  public static void main(String args[]) {
+  public static void main(final String args[]) {
 
     //TEST DATA
 
@@ -21,14 +18,14 @@ public class TransactionListPageVIEW {
     for (int i = 0; i < 100; i++) {
       if (i < 50) {
         try {
-          Deposit deposit =  new Deposit(new Date(), i % 3 + 1000, DepositCategory.SALARY, "desc" + i);
-          testUser.addTransaction(deposit, testbankacc);
+          Transaction deposit = TransactionCreator.newTransactionWith("SALARY", i % 3 + 1000, "desc" + i, testUser.getCategoryStore());
+          testUser.handleTransaction(deposit, testbankacc);
         } catch (Exception e) {
         }
       } else {
         try {
-          Payout payout = new Payout(new Date(), i % 3, PayoutCategory.FOOD,"dec" + i);
-          testUser.addTransaction(payout, testbankacc);
+          Transaction payout = TransactionCreator.newTransactionWith("FOOD", i % 3 + 1000, "dec" + i, testUser.getCategoryStore());
+          testUser.handleTransaction(payout, testbankacc);
         } catch (Exception e) {
         }
       }

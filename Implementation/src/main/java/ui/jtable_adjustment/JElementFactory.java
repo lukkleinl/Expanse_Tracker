@@ -1,4 +1,4 @@
-package ui.rendering;
+package ui.jtable_adjustment;
 
 import java.awt.Component;
 import javax.swing.JFrame;
@@ -6,9 +6,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import transactions.Deposit;
-import transactions.Payout;
-import ui.rendering.renderers.TableColors;
+import ui.jtable_adjustment.renderers.TableColors;
 
 // class created with https://stackoverflow.com/a/8372821
 @SuppressWarnings("serial")
@@ -79,12 +77,12 @@ public class JElementFactory {
           String type = (String) this.getModel().getValueAt(modelRow, 0);
 
           // TODO - maybe different mechanism for choosing
-          if ((negRenderer != null) && type.equals(new Payout(null,0,null,null).getSimpleName())) {
+          if ((negRenderer != null) && type.equalsIgnoreCase("PAYOUT")) {
             comp.setBackground(negRenderer.getBG());
             comp.setForeground(negRenderer.getFG());
             comp.setFont(negRenderer.getFont());
           }
-          else if ((posRenderer != null) && type.equals(new Deposit(null,0,null,null).getSimpleName())) {
+          else if ((posRenderer != null) && type.equalsIgnoreCase("DEPOSIT")) {
             comp.setBackground(posRenderer.getBG());
             comp.setForeground(posRenderer.getFG());
             comp.setFont(posRenderer.getFont());

@@ -1,14 +1,13 @@
 package ui.main;
 
-import java.util.Date;
 import javax.swing.JFrame;
-
 import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
-import transactions.Deposit;
-import transactions.Payout;
+import transactions.Transaction;
+import transactions.TransactionCreator;
+import ui.TestUser;
 import ui.addAccountPages.AddCashAccountPage;
 import ui.addAccountPages.AddCreditAccountPage;
 import ui.addAccountPages.AddDebitAccountPage;
@@ -21,7 +20,6 @@ import ui.listPages.AccountTypes;
 import ui.listPages.TransactionListPage;
 import ui.login.LoginPage;
 import ui.login.RegistrationPage;
-import ui.TestUser;
 import user.User;
 
 /**
@@ -66,17 +64,20 @@ public class UserInterface {
         //OPEN REGISTRATION PAGE COMPONENTS
         registrationPage.configureFrame(frame);
 
-        while (!registrationPage.isRegistrationComplete() && !registrationPage.isBackWanted()); //wait until either registration or back button got pressed
-          if (registrationPage.isRegistrationComplete()) { //if registration button got pressed, save userdata
-            try {
-              Thread.sleep(1000); //wait one second, before login page gets opened, so successful message can be read
-            } catch (InterruptedException e) {
-              e.printStackTrace();
-            }
-            //TODO: save userdata here
+        while (!registrationPage.isRegistrationComplete() && !registrationPage.isBackWanted())
+        {
+          //wait until either registration or back button got pressed
+        }
+        if (registrationPage.isRegistrationComplete()) { //if registration button got pressed, save userdata
+          try {
+            Thread.sleep(1000); //wait one second, before login page gets opened, so successful message can be read
+          } catch (InterruptedException e) {
+            e.printStackTrace();
           }
-          //OPEN LOGIN PAGE COMPONENTS AGAIN
-          loginPage.configureFrame(frame); //after registration is complete or back button got pressed, open login page again
+          //TODO: save userdata here
+        }
+        //OPEN LOGIN PAGE COMPONENTS AGAIN
+        loginPage.configureFrame(frame); //after registration is complete or back button got pressed, open login page again
       }
     }
 
@@ -181,8 +182,8 @@ public class UserInterface {
 
           if (addPayoutPage.isSubmitted()) { //if submit button got pressed, add new payout to account of the user
             try {
-              Payout payout = new Payout(new Date(), addPayoutPage.getAmount(), addPayoutPage.getCatego(), addPayoutPage.getDescription());
-              user.addTransaction(payout, accountListPage.getSelectedAccount());
+              Transaction payout = TransactionCreator.newTransactionWith(addPayoutPage.getCatego(), addPayoutPage.getAmount(),addPayoutPage.getDescription(), user.getCategoryStore());
+              user.handleTransaction(payout, accountListPage.getSelectedAccount());
             } catch (Exception e) {
               System.out.println("ERR:" + e.getMessage()); //TODO BETTER
             }          }
@@ -197,8 +198,8 @@ public class UserInterface {
 
           if (addDepositPage.isSubmitted()) { //if submit button got pressed, add new deposit page to account of the user
             try {
-              Deposit deposit = new Deposit(new Date(), addDepositPage.getAmount(), addDepositPage.getCatego(), addDepositPage.getDescription());
-              user.addTransaction(deposit, accountListPage.getSelectedAccount());
+              Transaction deposit = TransactionCreator.newTransactionWith(addPayoutPage.getCatego(), addPayoutPage.getAmount(),addPayoutPage.getDescription(), user.getCategoryStore());
+              user.handleTransaction(deposit, accountListPage.getSelectedAccount());
             } catch (Exception e) {
               System.out.println("ERR:" + e.getMessage()); //TODO BETTER
             }          }

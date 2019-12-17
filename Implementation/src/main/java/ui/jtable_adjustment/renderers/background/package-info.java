@@ -5,4 +5,4 @@
  * @author Michael Watholowitsch
  *
  */
-package ui.rendering.renderers.background;
+package ui.jtable_adjustment.renderers.background;

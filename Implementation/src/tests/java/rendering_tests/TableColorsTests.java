@@ -16,10 +16,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ui.rendering.renderers.FontCell;
-import ui.rendering.renderers.TableColors;
-import ui.rendering.renderers.background.BG_Green;
-import ui.rendering.renderers.foreground.FG_White;
+import ui.jtable_adjustment.renderers.FontCell;
+import ui.jtable_adjustment.renderers.TableColors;
+import ui.jtable_adjustment.renderers.background.BG_Green;
+import ui.jtable_adjustment.renderers.foreground.FG_White;
 
 class TableColorsTests {
   private final Font defaultfont = new Font("Verdana", Font.PLAIN, 11);
