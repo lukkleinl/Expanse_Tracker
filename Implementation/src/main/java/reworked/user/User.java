@@ -1,8 +1,6 @@
 /** */
 package reworked.user;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import accounts.Account;
 import exceptions.SWE_Exception;
@@ -28,7 +26,7 @@ public class User {
   private final int userID;
   private final String password;
   private final CustomContainer<Account> accounts;
-  private final Map<Integer, CustomContainer<Transaction>> transactions;
+  private final TransactionStore transactions;
   private final CategoryStore categories;
 
   /**
@@ -45,7 +43,7 @@ public class User {
     this.firstname = firstname;
     this.lastname = lastname;
     accounts = new CustomList<>();
-    transactions = new HashMap<>();
+    transactions = new TransactionStore();
     this.password = password;
     categories = new CategoryStore();
   }
@@ -80,8 +78,7 @@ public class User {
         throw new SWE_RuntimeException("Unknown Transaction");
 
       strategy.applyBalanceChange(transaction, account);
-      transactions.putIfAbsent(account.getAccount_number(), new CustomList<>());
-      transactions.get(account.getAccount_number()).add(transaction);
+      transactions.addTransactionUnderKey(account.getAccount_number(), transaction);
     } catch (SWE_Exception e) {
       // TODO
       e.printStackTrace();
@@ -166,11 +163,11 @@ public class User {
   }
 
   /**
-   * Returns a {@linkplain Map} of all the {@code Transactions} by the User.
+   * Returns a {@linkplain TransactionStore} of all the {@code Transactions} by the User.
    *
-   * @return A Map of all the Transactions by the User
+   * @return all transactions of the user
    */
-  public Map<Integer, CustomContainer<Transaction>> getTransactions() {
+  public TransactionStore getTransactions() {
     return transactions;
   }
 
@@ -184,11 +181,11 @@ public class User {
   }
 
   /**
-   * Returns the CategoryStore of the user.
+   * Returns the {@linkplain CategoryStore} of the user.
    *
-   * @return The CategoryStore of the user
+   * @return all categories of the user
    */
-  public CategoryStore getStore() {
+  public CategoryStore getCategoryStore() {
     return categories;
   }
 }
