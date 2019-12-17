@@ -1,8 +1,9 @@
 package ui_tests.listPages;
 
-import accounts.Account;import javax.swing.JFrame;
-import swe_IteratorPattern.CustomContainer;
-import swe_IteratorPattern.CustomIterator;
+import accounts.Account;
+import iteration.CustomContainer;
+import iteration.CustomIterator;
+import javax.swing.JFrame;
 import ui.listPages.AccountListPage;
 import ui_tests.TestUser;
 import user.User;

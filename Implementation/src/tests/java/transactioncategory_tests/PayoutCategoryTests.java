@@ -10,8 +10,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import reworked.transactions.categories.PayoutCategory;
-import reworked.transactions.categories.TransactionCategoryFunctionality;
+import transactions.categories.PayoutCategory;
+import transactions.categories.TransactionCategoryFunctionality;
 
 class PayoutCategoryTests {
   private final String newcat = "RENT";

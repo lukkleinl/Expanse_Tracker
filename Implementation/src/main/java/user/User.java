@@ -1,27 +1,32 @@
 /** */
 package user;
 
-import java.util.HashMap;
-import java.util.Map;
-import Transaction_Strategy.AddTransaction;
-import Transaction_Strategy.Add_Deposit;
-import Transaction_Strategy.Add_Payout;
+import java.util.Set;
 import accounts.Account;
-import exceptions.UnknownTransactionException;
-import swe_IteratorPattern.CustomContainer;
-import swe_IteratorPattern.CustomList;
+import exceptions.SWE_Exception;
+import exceptions.SWE_RuntimeException;
+import iteration.CustomContainer;
+import iteration.CustomList;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
+import transactions.categories.CategoryStore;
+import transactions.categories.TransactionCategoryFunctionality;
+import transactions.strategy.BalanceChange;
+import transactions.strategy.SimpleDeposit;
+import transactions.strategy.SimplePayout;
 
-/** @author Michael Watholowitsch */
+/**
+ * Representation of a user.
+ */
 public class User {
   private final String firstname;
   private final String lastname;
   private final int userID;
   private final String password;
   private final CustomContainer<Account> accounts;
-  private final Map<Integer, CustomContainer<Transaction>> transactions;
+  private final TransactionStore transactions;
+  private final CategoryStore categories;
 
   /**
    * Creates a new User without any Accounts or Transactions.
@@ -37,8 +42,9 @@ public class User {
     this.firstname = firstname;
     this.lastname = lastname;
     accounts = new CustomList<>();
-    transactions = new HashMap<>();
+    transactions = new TransactionStore();
     this.password = password;
+    categories = new CategoryStore();
   }
 
   /**
@@ -59,24 +65,57 @@ public class User {
    *
    * @throws UnknownTransactionException if the Object type is neither a Deposit nor a Payout
    */
-  public void addTransaction(final Object transaction, final Account account) {
-    AddTransaction add;
-    if (transaction.getClass().equals(Deposit.class)) {
-      add = new Add_Deposit();
-      try {
-        add.add(transaction, transactions, account);
-      } catch (Exception e) {
-        System.out.println(e);
-      }
-    } else if (transaction.getClass().equals(Payout.class)) {
-      add = new Add_Payout();
-      try {
-        add.add(transaction, transactions, account);
-      } catch (Exception e) {
-        System.out.println(e);
-      }
-    } else
-      throw new UnknownTransactionException("Unknown Transaction");
+  public void handleTransaction(final Transaction transaction, final Account account) {
+    BalanceChange strategy;
+
+    try {
+      if (transaction instanceof Deposit) {
+        strategy = new SimpleDeposit();
+      } else if (transaction instanceof Payout) {
+        strategy = new SimplePayout();
+      } else
+        throw new SWE_RuntimeException("Unknown Transaction");
+
+      strategy.applyBalanceChange(transaction, account);
+      transactions.addTransactionUnderKey(account.getAccount_number(), transaction);
+    } catch (SWE_Exception e) {
+      // TODO
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * @param strategy the strategy which determines what kind of categories are retrieved
+   * @return a {@linkplain Set} of categories
+   */
+  public Set<String> getCategories(final TransactionCategoryFunctionality strategy) {
+    return categories.getCategories(strategy);
+  }
+
+  /**
+   * Adds a new transaction category.
+   *
+   * @param strategy the strategy which determines what kind of category is added
+   */
+  public void newTransactionCategory(final TransactionCategoryFunctionality strategy) {
+    categories.addTransactionCategory(strategy);
+  }
+
+  /**
+   * Removes a category if it is supported.
+   *
+   * @param categoryname the name of the to-be removed category (NOTE: the comparison of names is case-insensitive)
+   */
+  public void removeTransactionCategory(final String categoryname) {
+    categories.removeCategory(categoryname);
+  }
+
+  /**
+   * @param categoryname the name of the category in question
+   * @return {@code true} if the category is supported, else {@code false} (NOTE: the comparison of names is case-insensitive)
+   */
+  public boolean categorySupported(final String categoryname) {
+    return categories.categorySupported(categoryname);
   }
 
   /** Updates the data of the User according to the input of the UserInterface. */
@@ -123,11 +162,11 @@ public class User {
   }
 
   /**
-   * Returns a {@linkplain Map} of all the {@code Transactions} by the User.
+   * Returns a {@linkplain TransactionStore} of all the {@code Transactions} by the User.
    *
-   * @return A Map of all the Transactions by the User
+   * @return a store with all transactions of the user
    */
-  public Map<Integer, CustomContainer<Transaction>> getTransactions() {
+  public TransactionStore getTransactionStore() {
     return transactions;
   }
 
@@ -139,4 +178,19 @@ public class User {
   public String getPassword() {
     return password;
   }
+
+  /**
+   * Returns the {@linkplain CategoryStore} of the user.
+   *
+   * @return all categories of the user
+   */
+  public CategoryStore getCategoryStore() {
+    return categories;
+  }
 }
+
+
+
+
+
+

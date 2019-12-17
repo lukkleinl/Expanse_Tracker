@@ -1,18 +1,17 @@
 package transactions;
 
-import java.util.Date;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Abstract class of a transaction for the different accounts.
- *
- * @author Patrick Gmasz
  */
 public abstract class Transaction {
   private final String description;
   private final float amount;
-  private final Date creationDate;
-  private int ID;
+  private final ZonedDateTime creationDate;
   private static AtomicInteger nextId = new AtomicInteger();
   private final int id;
 
@@ -23,11 +22,11 @@ public abstract class Transaction {
    * @param amount The amount of money the transaction was about.
    * @param description A description the user can add to a transaction.
    */
-  public Transaction(final Date creationDate, final float amount, final String description) {
+  Transaction(final float amount, final String description) {
+    creationDate = ZonedDateTime.now(ZoneId.of("UTC"));
     id = nextId.incrementAndGet();
     this.description = description;
     this.amount = amount;
-    this.creationDate = creationDate;
   }
 
   /**
@@ -40,7 +39,6 @@ public abstract class Transaction {
   }
 
   /**
-   *
    * Getter for the amount.
    *
    * @return The float amount.
@@ -50,13 +48,23 @@ public abstract class Transaction {
   }
 
   /**
-   *
    * Getter for the creation date.
    *
    * @return The Date, when the transaction was created.
    */
-  public Date getCreationDate() {
+  public ZonedDateTime getCreationDate() {
     return creationDate;
+  }
+
+
+  /**
+   * Getter for the formatted creation date. Should only be used for displaying purposes.
+   * Shows the stored creation time according to the timezone of the system that runs this method.
+   *
+   * @return The Date, when the transaction was created.
+   */
+  public String getFormattedCreationDate() {
+    return creationDate.withZoneSameInstant(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss 'UTC'X"));
   }
 
   /**
@@ -64,7 +72,7 @@ public abstract class Transaction {
    *
    * @return The integer id.
    */
-  public int getID()  { return id;}
+  public int getID()  { return id; }
 
   /**
    * @return the simple name of this transaction

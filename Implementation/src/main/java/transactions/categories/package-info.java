@@ -5,4 +5,4 @@
  * @author Michael Watholowitsch
  *
  */
-package exceptions;
+package transactions.categories;

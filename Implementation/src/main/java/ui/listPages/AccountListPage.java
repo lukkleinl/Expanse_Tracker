@@ -5,6 +5,8 @@ import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
+import iteration.CustomContainer;
+import iteration.CustomIterator;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -18,8 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import swe_IteratorPattern.CustomContainer;
-import swe_IteratorPattern.CustomIterator;
 import ui.main.AbstractPage;
 import user.User;
 

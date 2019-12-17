@@ -11,10 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import reworked.transactions.categories.CategoryStore;
-import reworked.transactions.categories.DepositCategory;
-import reworked.transactions.categories.PayoutCategory;
-import reworked.transactions.categories.TransactionCategoryFunctionality;
+import transactions.categories.CategoryStore;
+import transactions.categories.DepositCategory;
+import transactions.categories.PayoutCategory;
+import transactions.categories.TransactionCategoryFunctionality;
 
 class CategoryStoreTests {
   private final String supporteddepo = "SALARY";

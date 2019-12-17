@@ -2,8 +2,6 @@ package iteration_tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import exceptions.NoElementException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,8 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import swe_IteratorPattern.CustomIterator;
-import swe_IteratorPattern.CustomList;
+import exceptions.SWE_RuntimeException;
+import iteration.CustomIterator;
+import iteration.CustomList;
 
 
 class CustomListTests {
@@ -26,7 +25,7 @@ class CustomListTests {
 
   @BeforeEach
   void setUp() throws Exception {
-    this.list = new CustomList<>();
+    list = new CustomList<>();
   }
 
   @AfterEach
@@ -34,33 +33,33 @@ class CustomListTests {
 
   @Test
   void nextOnNewList_shouldThrowNoElementException() {
-    assertThrows(NoElementException.class, () -> this.list.getIterator().next());
+    assertThrows(SWE_RuntimeException.class, () -> list.getIterator().next());
   }
 
   @Test
   void hasNextOnNewList_shouldReturnFalse() {
-    assertEquals(false,this.list.getIterator().hasNext());
+    assertEquals(false,list.getIterator().hasNext());
   }
 
   @Test
   void addedElement_shouldBeEqual() {
     Object o = new Object();
-    this.list.add(o);
-    assertEquals(o,this.list.getIterator().next());
+    list.add(o);
+    assertEquals(o,list.getIterator().next());
   }
 
   @Test
   void sizeOfNewList_shouldBeZero() {
-    assertEquals(0,this.list.size());
+    assertEquals(0,list.size());
   }
 
   @ParameterizedTest
   @ValueSource(strings = {"abc","abcd","abcde","abcdef"})
-  void sizeAfterAdding_shouldBeLarger(String param) {
+  void sizeAfterAdding_shouldBeLarger(final String param) {
     for (int i = 0; i < param.length(); i++) {
-      this.list.add(param.charAt(i));
+      list.add(param.charAt(i));
     }
-    assertEquals(this.list.size(),param.length());
+    assertEquals(list.size(),param.length());
   }
 
   @Test
@@ -69,12 +68,12 @@ class CustomListTests {
     String s = "text";
     String nums = "" + number;
 
-    this.list.add(s);
-    this.list.add(s + number);
-    this.list.add(nums);
+    list.add(s);
+    list.add(s + number);
+    list.add(nums);
 
     Object result = "";
-    CustomIterator<Object> iter = this.list.getIterator();
+    CustomIterator<Object> iter = list.getIterator();
 
     while (iter.hasNext()) {
       result = iter.next();
@@ -89,17 +88,17 @@ class CustomListTests {
     String s = "text";
     String nums = "" + number;
 
-    this.list.add(s);
-    this.list.add(s + number);
-    this.list.add(nums);
+    list.add(s);
+    list.add(s + number);
+    list.add(nums);
 
-    CustomIterator<Object> iter = this.list.getIterator();
+    CustomIterator<Object> iter = list.getIterator();
 
     while (iter.hasNext()) {
       iter.next();
     }
 
-    assertThrows(NoElementException.class, () -> iter.next());
+    assertThrows(SWE_RuntimeException.class, () -> iter.next());
   }
 
 }
