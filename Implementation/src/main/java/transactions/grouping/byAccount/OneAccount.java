@@ -1,15 +1,16 @@
-package transactions.grouping;
+package transactions.grouping.byAccount;
 
 import iteration.CustomContainer;
 import transactions.Transaction;
+import transactions.grouping.TransactionOrganizing;
 import user.TransactionStore;
 
-public class ByDateOneAccount implements TransactionOrganizing {
+public class OneAccount implements TransactionOrganizing {
 
   private final TransactionStore store;
   private final Integer ID;
 
-  public ByDateOneAccount(final TransactionStore store, final Integer accountID) {
+  public OneAccount(final TransactionStore store, final Integer accountID) {
     this.store = store;
     ID = accountID;
   }

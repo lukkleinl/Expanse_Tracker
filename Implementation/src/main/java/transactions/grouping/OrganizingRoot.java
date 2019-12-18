@@ -6,11 +6,11 @@ import iteration.CustomIterator;
 import transactions.Transaction;
 
 public abstract class OrganizingRoot implements TransactionOrganizing {
-  protected final TransactionOrganizing root;
+  protected final TransactionOrganizing decFilter;
   protected final List<CustomIterator<Transaction>> iterators;
 
-  public OrganizingRoot(final TransactionOrganizing to) {
-    root = to;
+  public OrganizingRoot(final TransactionOrganizing method) {
+    decFilter = method;
     iterators = new ArrayList<>();
   }
 

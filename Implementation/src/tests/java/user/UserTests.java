@@ -54,7 +54,6 @@ class UserTests {
     assertEquals(acc,user.getAccounts().getIterator().next());
   }
 
-  /* ---------- only testing the adding since other functionality is tested seperately ---------- */
   @Test
   void applyAndSaveTransaction_shouldChangeBalanceAndStoreTransaction() throws SWE_Exception {
     user.addAccount(acc);

@@ -1,4 +1,4 @@
-package transactions.grouping;
+package transactions.grouping.byAccount;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,14 +6,15 @@ import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
 import transactions.Transaction;
+import transactions.grouping.TransactionOrganizing;
 import user.TransactionStore;
 
-public class ByDateAllAccounts implements TransactionOrganizing {
+public class AllAccounts implements TransactionOrganizing {
 
   private final TransactionStore store;
   private final List<CustomIterator<Transaction>> iterators;
 
-  public ByDateAllAccounts(final TransactionStore store) {
+  public AllAccounts(final TransactionStore store) {
     this.store = store;
     iterators = new ArrayList<>();
   }

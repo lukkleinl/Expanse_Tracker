@@ -9,11 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Abstract class of a transaction for the different accounts.
  */
 public abstract class Transaction {
+  private static AtomicInteger nextId = new AtomicInteger();
   private final String description;
   private final float amount;
   private final ZonedDateTime creationDate;
-  private static AtomicInteger nextId = new AtomicInteger();
-  private final int id;
+  private final Integer ID;
 
   /**
    * Creates a new Transaction.
@@ -21,10 +21,12 @@ public abstract class Transaction {
    * @param date The date, when the transaction was created.
    * @param amount The amount of money the transaction was about.
    * @param description A description the user can add to a transaction.
+   * @param ID the ID of this transaction.
    */
-  Transaction(final ZonedDateTime date, final float amount, final String description) {
+  Transaction(final ZonedDateTime date, final float amount, final String description, final Integer ID) {
     creationDate = (date != null ? date : ZonedDateTime.now(ZoneId.of("UTC")));
-    id = nextId.incrementAndGet();
+    this.ID = (ID != null ? ID : nextId.incrementAndGet());
+
     this.description = description;
     this.amount = amount;
   }
@@ -68,19 +70,27 @@ public abstract class Transaction {
   }
 
   /**
-   * Getter for the id.
+   * Getter for the ID.
    *
-   * @return The integer id.
+   * @return the ID
    */
-  public int getID()  { return id; }
+  public int getID()  { return ID; }
 
-  /**
-   * @return the simple name of this transaction
-   */
-  public final String getSimpleName() {
-    return this.getClass().getSimpleName().toUpperCase();
+  /** Override for comparing by the unique ID. */
+  @Override
+  public boolean equals(final Object obj) {
+    if (!(obj instanceof Transaction)) return false;
+    return ((Transaction) obj).ID == ID;
+  }
+
+  @Override
+  public String toString() {
+    return " ID=" + this.getID() + ", Creation=" + this.getFormattedCreationDate() + ", Amount=" + this.getAmount() + ", Description=" + this.getDescription();
   }
 }
+
+
+
 
 
 

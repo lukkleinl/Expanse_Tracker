@@ -15,9 +15,10 @@ public class Payout extends Transaction {
    * @param amount Amount of the payout
    * @param payoutCategory the payout category
    * @param description Description of the payout
+   * @param ID the ID of this transaction.
    */
-  Payout(final ZonedDateTime date, final float amount, final String payoutCategory, final String description) {
-    super(date,amount,description);
+  Payout(final ZonedDateTime date, final float amount, final String payoutCategory, final String description, final Integer ID) {
+    super(date,amount,description,ID);
     this.payoutCategory = payoutCategory;
   }
 
@@ -32,6 +33,18 @@ public class Payout extends Transaction {
 
   @Override
   public String toString() {
-    return this.getSimpleName();
+    return getSimpleName() + ", Category=" + payoutCategory + super.toString();
+  }
+
+  /**
+   * Convenience method for simpler checking.
+   * @return the string PAYOUT
+   */
+  public static String getSimpleName() {
+    return "PAYOUT";
   }
 }
+
+
+
+

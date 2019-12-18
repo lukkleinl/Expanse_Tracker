@@ -3,6 +3,7 @@ package user;
 import java.util.HashMap;
 import java.util.Map;
 import iteration.CustomContainer;
+import iteration.CustomIterator;
 import iteration.CustomList;
 import transactions.Transaction;
 
@@ -14,6 +15,7 @@ public class TransactionStore {
   }
 
   public void addTransactionUnderKey(final Integer key, final Transaction transaction) {
+    if (this.alreadyStored(transaction)) return;
     transactions.putIfAbsent(key,new CustomList<>());
     transactions.get(key).add(transaction);
   }
@@ -24,5 +26,15 @@ public class TransactionStore {
 
   public int accountsWithTransactions() {
     return transactions.keySet().size();
+  }
+
+  private boolean alreadyStored(final Transaction trans) {
+    for (Integer key : transactions.keySet()) {
+      CustomIterator<Transaction> iter = transactions.get(key).getIterator();
+      while (iter.hasNext()) {
+        if (iter.next().equals(trans)) return true;
+      }
+    }
+    return false;
   }
 }

@@ -3,6 +3,7 @@ package transactions.categories;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import transactions.Payout;
 
 /**
  * Handles operations for payout categories.
@@ -10,7 +11,7 @@ import java.util.TreeSet;
  * @author Michael Watholowitsch
  */
 public class PayoutCategory extends TransactionCategoryFunctionality {
-  public static final String CATEGORY = "PAYOUT";
+  public static final String CATEGORY = Payout.getSimpleName();
   private final String categoryname;
 
   /** Only used for category retrieval. */

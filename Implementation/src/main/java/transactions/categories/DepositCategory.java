@@ -3,6 +3,7 @@ package transactions.categories;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import transactions.Deposit;
 
 /**
  * Handles operations for deposit categories.
@@ -10,7 +11,7 @@ import java.util.TreeSet;
  * @author Michael Watholowitsch
  */
 public class DepositCategory extends TransactionCategoryFunctionality {
-  public static final String CATEGORY = "DEPOSIT";
+  public static final String CATEGORY = Deposit.getSimpleName();
   private final String categoryname;
 
   /** Only used for category retrieval. */

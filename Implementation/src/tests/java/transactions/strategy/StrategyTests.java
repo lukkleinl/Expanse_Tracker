@@ -45,7 +45,6 @@ class StrategyTests {
   void depositOfHundred_shouldChangeBalanceToHundred() throws SWE_RuntimeException, SWE_Exception {
     change = new SimpleDeposit(deposit,acc);
     change.applyBalanceChange();
-    System.out.println(acc.getBalance());
     assertEquals(amountdepo,acc.getBalance());
   }
 
@@ -53,7 +52,6 @@ class StrategyTests {
   void payoutOfHundred_shouldChangeBalanceToNegativeHundred() throws SWE_RuntimeException, SWE_Exception {
     change = new SimplePayout(payout,acc);
     change.applyBalanceChange();
-    System.out.println(acc.getBalance());
     assertEquals(-amountpay,acc.getBalance());
   }
 
