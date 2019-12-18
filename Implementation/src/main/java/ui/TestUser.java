@@ -22,7 +22,7 @@ public class TestUser {
     user.addAccount(new DebitCard("Giro Account", "Bank Austria", 1000, "AT121200001203250544"));
     user.addAccount(new Stocks("Amazon Stocks", new Date(2013, 2, 5), 0));
     Transaction trans1 = TransactionCreator.newTransactionWith("SALARY",10350.35f,"Test",user.getCategoryStore());
-    user.handleTransaction(trans1, cash);
+    //user.handleTransaction(trans1, cash);
     return user;
   }
 }

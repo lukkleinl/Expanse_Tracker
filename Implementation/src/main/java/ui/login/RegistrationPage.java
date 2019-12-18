@@ -19,7 +19,6 @@ import ui.main.AbstractPage;
  */
 public class RegistrationPage extends AbstractPage {
 
-  private ArrayList<JComponent> components;
   private JLabel userLabel;
   private JLabel passwordLabel;
   private JLabel password2Label;
@@ -142,6 +141,7 @@ public class RegistrationPage extends AbstractPage {
    * This method creates all components, such as buttons and text fields, and adds it to a list.
    * It also sets every indicator variables to default.
    */
+  @Override
   protected void createComponents() {
     components = new ArrayList<>();
     user = "";
@@ -236,7 +236,6 @@ public class RegistrationPage extends AbstractPage {
       }
     });
 
-    components = new ArrayList<>();
     components.add(userLabel);
     components.add(userTextField);
     components.add(passwordLabel);

@@ -36,8 +36,6 @@ public class UserInterface {
    * This method starts the GUI and starts the whole procedure.
    */
   public void start() {
-    LoginPage loginPage = new LoginPage();
-    RegistrationPage registrationPage = new RegistrationPage();
 
     JFrame frame = new JFrame(); //Main frame, which components will be updated.
     frame.setLayout(null);
@@ -45,7 +43,10 @@ public class UserInterface {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
 
-    loginPage.configureFrame(frame); //starts frame with login page
+    LoginPage loginPage = new LoginPage();
+    RegistrationPage registrationPage = new RegistrationPage();
+
+    loginPage.configureFrame(frame, 410, 280); //starts frame with login page
 
     boolean foundUser = false;
     while (!foundUser) { //lets the login page opened until someone logged in successfully
@@ -56,13 +57,13 @@ public class UserInterface {
           user = TestUser.getTestUser();
           foundUser = true;
         } else {
-          loginPage.configureFrame(frame);
+          loginPage.configureFrame(frame, 410, 280);
           //TODO: display error message
         }
       } else if (loginPage.isRegistrationWanted()) { //check if registration button got pressed, if yes, open registration page
 
         //OPEN REGISTRATION PAGE COMPONENTS
-        registrationPage.configureFrame(frame);
+        registrationPage.configureFrame(frame,410,530);
 
         while (!registrationPage.isRegistrationComplete() && !registrationPage.isBackWanted())
         {
@@ -77,7 +78,7 @@ public class UserInterface {
           //TODO: save userdata here
         }
         //OPEN LOGIN PAGE COMPONENTS AGAIN
-        loginPage.configureFrame(frame); //after registration is complete or back button got pressed, open login page again
+        loginPage.configureFrame(frame, 410, 280); //after registration is complete or back button got pressed, open login page again
       }
     }
 
@@ -183,7 +184,7 @@ public class UserInterface {
           if (addPayoutPage.isSubmitted()) { //if submit button got pressed, add new payout to account of the user
             try {
               Transaction payout = TransactionCreator.newTransactionWith(addPayoutPage.getCatego(), addPayoutPage.getAmount(),addPayoutPage.getDescription(), user.getCategoryStore());
-              user.handleTransaction(payout, accountListPage.getSelectedAccount());
+              //user.handleTransaction(payout, accountListPage.getSelectedAccount());
             } catch (Exception e) {
               System.out.println("ERR:" + e.getMessage()); //TODO BETTER
             }
@@ -201,7 +202,7 @@ public class UserInterface {
           if (addDepositPage.isSubmitted()) { //if submit button got pressed, add new deposit page to account of the user
             try {
               Transaction deposit = TransactionCreator.newTransactionWith(addPayoutPage.getCatego(), addPayoutPage.getAmount(),addPayoutPage.getDescription(), user.getCategoryStore());
-              user.handleTransaction(deposit, accountListPage.getSelectedAccount());
+              //user.handleTransaction(deposit, accountListPage.getSelectedAccount());
             } catch (Exception e) {
               System.out.println("ERR:" + e.getMessage()); //TODO BETTER
             }
