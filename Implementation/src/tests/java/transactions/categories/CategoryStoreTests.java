@@ -1,4 +1,4 @@
-package transactioncategory_tests;
+package transactions.categories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -38,7 +38,7 @@ class CategoryStoreTests {
 
   @BeforeEach
   void setUp() throws Exception {
-    store = new CategoryStore();
+    store = new CategoryStore().withDefaultCategories();
     depo = new DepositCategory(dummydepocat);
     pay = new PayoutCategory(dummypaycat);
     defaultsize = store.getCategories(null).size();
@@ -48,6 +48,11 @@ class CategoryStoreTests {
 
   @AfterEach
   void tearDown() throws Exception {}
+
+  @Test
+  void getCategoriesWithoutAddedValues_shouldReturnEmptySet() {
+    assertTrue(new CategoryStore().getCategories(null).isEmpty());
+  }
 
   @Test
   void addWithNullStrategy_shouldNotAdd() {

@@ -18,12 +18,12 @@ public abstract class Transaction {
   /**
    * Creates a new Transaction.
    *
-   * @param creationDate The date, when the transaction was executed.
+   * @param date The date, when the transaction was created.
    * @param amount The amount of money the transaction was about.
    * @param description A description the user can add to a transaction.
    */
-  Transaction(final float amount, final String description) {
-    creationDate = ZonedDateTime.now(ZoneId.of("UTC"));
+  Transaction(final ZonedDateTime date, final float amount, final String description) {
+    creationDate = (date != null ? date : ZonedDateTime.now(ZoneId.of("UTC")));
     id = nextId.incrementAndGet();
     this.description = description;
     this.amount = amount;

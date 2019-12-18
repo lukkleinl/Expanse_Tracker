@@ -1,4 +1,4 @@
-package iteration_tests;
+package iteration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

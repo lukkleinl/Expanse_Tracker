@@ -4,7 +4,6 @@ package user;
 import java.util.Set;
 import accounts.Account;
 import exceptions.SWE_Exception;
-import exceptions.SWE_RuntimeException;
 import iteration.CustomContainer;
 import iteration.CustomList;
 import transactions.Deposit;
@@ -56,32 +55,27 @@ public class User {
     accounts.add(acc);
   }
 
-
   /**
    * Performs either a Deposit or a Payout
    *
    * @param transaction Transaction which should be performed
    * @param account Account where the transaction will be performed
    *
-   * @throws UnknownTransactionException if the Object type is neither a Deposit nor a Payout
+   * @throws SWE_Exception if the resulting account-balance would be smaller than the limit or if
+   *         the transaction is neither a Deposit nor a Payout
    */
-  public void handleTransaction(final Transaction transaction, final Account account) {
+  public void applyAndSaveTransaction(final Transaction transaction, final Account account) throws SWE_Exception {
     BalanceChange strategy;
 
-    try {
-      if (transaction instanceof Deposit) {
-        strategy = new SimpleDeposit();
-      } else if (transaction instanceof Payout) {
-        strategy = new SimplePayout();
-      } else
-        throw new SWE_RuntimeException("Unknown Transaction");
+    if (transaction instanceof Deposit) {
+      strategy = new SimpleDeposit(transaction, account);
+    } else if (transaction instanceof Payout) {
+      strategy = new SimplePayout(transaction, account);
+    } else
+      throw new SWE_Exception("Unknown Transaction !");
 
-      strategy.applyBalanceChange(transaction, account);
-      transactions.addTransactionUnderKey(account.getAccount_number(), transaction);
-    } catch (SWE_Exception e) {
-      // TODO
-      e.printStackTrace();
-    }
+    strategy.applyBalanceChange();
+    transactions.addTransactionUnderKey(account.getAccount_number(), transaction);
   }
 
   /**
@@ -104,7 +98,8 @@ public class User {
   /**
    * Removes a category if it is supported.
    *
-   * @param categoryname the name of the to-be removed category (NOTE: the comparison of names is case-insensitive)
+   * @param categoryname the name of the to-be removed category (NOTE: the comparison of names is
+   *        case-insensitive)
    */
   public void removeTransactionCategory(final String categoryname) {
     categories.removeCategory(categoryname);
@@ -112,15 +107,11 @@ public class User {
 
   /**
    * @param categoryname the name of the category in question
-   * @return {@code true} if the category is supported, else {@code false} (NOTE: the comparison of names is case-insensitive)
+   * @return {@code true} if the category is supported, else {@code false} (NOTE: the comparison of
+   *         names is case-insensitive)
    */
   public boolean categorySupported(final String categoryname) {
     return categories.categorySupported(categoryname);
-  }
-
-  /** Updates the data of the User according to the input of the UserInterface. */
-  public void update(final Object obj) {
-    // TODO Auto-generated method stub
   }
 
   /* ---------- getters ---------- */
@@ -188,9 +179,5 @@ public class User {
     return categories;
   }
 }
-
-
-
-
 
 

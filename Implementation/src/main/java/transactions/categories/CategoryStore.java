@@ -12,31 +12,25 @@ import java.util.TreeMap;
  * @author Michael Watholowitsch
  */
 public final class CategoryStore {
-  private final Map<String,Set<String>> categories;
+  private final Map<String, Set<String>> categories;
 
-  /** Constructor with basic provided categories for transactions. */
+  /** Constructor */
   public CategoryStore() {
     categories = new TreeMap<>();
-
-    this.addTransactionCategory(new PayoutCategory("EDUCATION"));
-    this.addTransactionCategory(new PayoutCategory("FOOD"));
-    this.addTransactionCategory(new PayoutCategory("TRANSPORTATION"));
-
-    this.addTransactionCategory(new DepositCategory("SALARY"));
-    this.addTransactionCategory(new DepositCategory("DIVIDEND"));
   }
 
   /**
-   * @param strategy The strategy which determines what kind of categories are retrieved.
-   * If this parameter is {@code null}, then all stored categories are retrieved.
+   * @param strategy The strategy which determines what kind of categories are retrieved. If this
+   *        parameter is {@code null}, then all stored categories are retrieved.
    * @return a {@linkplain Set} of categories
    */
   public Set<String> getCategories(final TransactionCategoryFunctionality strategy) {
-    if (strategy != null) return strategy.getCategories(categories);
+    if (strategy != null)
+      return strategy.getCategories(categories);
 
     Set<String> all = new LinkedHashSet<>();
 
-    for (Entry<String,Set<String>> key : categories.entrySet()) {
+    for (Entry<String, Set<String>> key : categories.entrySet()) {
       all.addAll(key.getValue());
     }
 
@@ -49,16 +43,19 @@ public final class CategoryStore {
    * @param strategy the strategy which determines what kind of category is added
    */
   public void addTransactionCategory(final TransactionCategoryFunctionality strategy) {
-    if (strategy == null) return;
+    if (strategy == null)
+      return;
     strategy.addCategory(categories);
   }
 
   /**
    * Removes a category if it is supported.
    *
-   * @param categoryname the name of the to-be removed category (NOTE: the comparison of names is case-insensitive)
+   * @param categoryname the name of the to-be removed category (NOTE: the comparison of names is
+   *        case-insensitive)
    */
   public void removeCategory(final String categoryname) {
+    if (categoryname == null) return;
     for (String key : categories.keySet()) {
       for (String type : categories.get(key)) {
         if (type.equalsIgnoreCase(categoryname)) {
@@ -70,7 +67,9 @@ public final class CategoryStore {
   }
 
   /**
-   * Returns the key to which {@code category} is mapped or an empty string if no mapping is present.
+   * Returns the key to which {@code category} is mapped or an empty string if no mapping is
+   * present.
+   *
    * @param category the category of which the key should be be
    * @return the key
    */
@@ -86,9 +85,11 @@ public final class CategoryStore {
 
   /**
    * @param categoryname the name of the category in question
-   * @return {@code true} if the category is supported, else {@code false} (NOTE: the comparison of names is case-insensitive)
+   * @return {@code true} if the category is supported, else {@code false} (NOTE: the comparison of
+   *         names is case-insensitive)
    */
   public boolean categorySupported(final String categoryname) {
+    if (categoryname == null) return false;
     for (String key : categories.keySet()) {
       for (String type : categories.get(key)) {
         if (type.equalsIgnoreCase(categoryname))
@@ -97,22 +98,23 @@ public final class CategoryStore {
     }
     return false;
   }
+
+  /**
+   * Adds default categories for the user. Returns the same instance for smooth calling without
+   * extra instantiation when the store should be passed to a method.
+   *
+   * @return the calling CategoryStore
+   */
+  public CategoryStore withDefaultCategories() {
+    this.addTransactionCategory(new PayoutCategory("EDUCATION"));
+    this.addTransactionCategory(new PayoutCategory("FOOD"));
+    this.addTransactionCategory(new PayoutCategory("TRANSPORTATION"));
+
+    this.addTransactionCategory(new DepositCategory("SALARY"));
+    this.addTransactionCategory(new DepositCategory("DIVIDEND"));
+
+    return this;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -1,4 +1,4 @@
-package transactioncategory_tests;
+package transactions.categories;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,10 +10,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import transactions.categories.PayoutCategory;
+import transactions.categories.DepositCategory;
 import transactions.categories.TransactionCategoryFunctionality;
 
-class PayoutCategoryTests {
+class DepositCategoryTests {
   private final String newcat = "RENT";
   private TransactionCategoryFunctionality stratNullMember;
   private TransactionCategoryFunctionality stratNonNullMember;
@@ -27,8 +27,8 @@ class PayoutCategoryTests {
 
   @BeforeEach
   void setUp() throws Exception {
-    stratNullMember = new PayoutCategory();
-    stratNonNullMember = new PayoutCategory(newcat);
+    stratNullMember = new DepositCategory();
+    stratNonNullMember = new DepositCategory(newcat);
     categor = new HashMap<>();
   }
 
@@ -61,11 +61,11 @@ class PayoutCategoryTests {
   @Test
   void addOnPrivateNonNullField_shouldBeEqual() {
     stratNonNullMember.addCategory(categor);
-    assertTrue(categor.get(PayoutCategory.CATEGORY).contains(newcat));
+    assertTrue(categor.get(DepositCategory.CATEGORY).contains(newcat));
   }
 
   @Test
-  void gettingAfterAdding_shouldReturnNonEmptyList() {
+  void gettingAfterSuccessfulAdding_shouldReturnNonEmptyList() {
     assertTrue(stratNonNullMember.getCategories(null).isEmpty());
     assertTrue(stratNullMember.getCategories(null).isEmpty());
     assertTrue(stratNonNullMember.getCategories(categor).isEmpty());
@@ -85,5 +85,7 @@ class PayoutCategoryTests {
     assertFalse(stratNonNullMember.getCategories(categor).isEmpty());
     assertFalse(stratNullMember.getCategories(categor).isEmpty());
   }
+
+
 
 }

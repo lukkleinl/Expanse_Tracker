@@ -9,7 +9,7 @@ import java.util.TreeSet;
  *
  * @author Michael Watholowitsch
  */
-public class PayoutCategory implements TransactionCategoryFunctionality {
+public class PayoutCategory extends TransactionCategoryFunctionality {
   public static final String CATEGORY = "PAYOUT";
   private final String categoryname;
 
@@ -17,19 +17,24 @@ public class PayoutCategory implements TransactionCategoryFunctionality {
   public PayoutCategory() {
     categoryname = null;
   }
+
+  /**
+   * Allows adding a new Payout Category.
+   * @param newcategory the name of the new category
+   */
   public PayoutCategory(final String newcategory) {
     categoryname = newcategory.toUpperCase();
   }
 
   @Override
-  public void addCategory(final Map<String,Set<String>> categories) {
+  void addCategory(final Map<String,Set<String>> categories) {
     if (categoryname == null) return;
     categories.putIfAbsent(CATEGORY, new TreeSet<>());
     categories.get(CATEGORY).add(categoryname);
   }
 
   @Override
-  public Set<String> getCategories(final Map<String,Set<String>> categories) {
+  Set<String> getCategories(final Map<String,Set<String>> categories) {
     if (categories == null) return new TreeSet<>();
     Set<String> filtered = categories.get(CATEGORY);
     return filtered != null ? filtered : new TreeSet<>();
