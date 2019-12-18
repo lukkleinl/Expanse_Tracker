@@ -37,9 +37,6 @@ public class AddPayoutPage extends AbstractPage {
   private volatile boolean submitted;
   private volatile boolean backWanted;
 
-  public boolean isRefreshWanted() {
-    return refreshWanted;
-  }
 
   private volatile boolean refreshWanted;
 
@@ -74,6 +71,9 @@ public class AddPayoutPage extends AbstractPage {
     return backWanted;
   }
 
+  public boolean isRefreshWanted() {
+    return refreshWanted;
+  }
 
   /**
    * Creates a new AddPayoutPage, which will load all needed components to a list.
@@ -91,6 +91,7 @@ public class AddPayoutPage extends AbstractPage {
     components = new ArrayList<>();
     submitted = false;
     backWanted = false;
+    refreshWanted = false;
 
     Categorytext = new JLabel("Payout Category:");
     Categorytext.setBounds(100, 50, 300, 50);

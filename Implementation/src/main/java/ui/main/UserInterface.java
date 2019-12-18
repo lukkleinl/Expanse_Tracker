@@ -176,7 +176,7 @@ public class UserInterface {
 
         if (transactionListPage.isNewPayoutWanted()) { //if new pay out button got pressed, open page to add new pay out
           addPayoutPage.configureFrame(frame);
-          while (!addPayoutPage.isSubmitted() && !addPayoutPage.isBackWanted()) {
+          while (!addPayoutPage.isSubmitted() && !addPayoutPage.isBackWanted() && !addPayoutPage.isRefreshWanted()) {
             //wait until either back button or submit button got pressed
           }
 
@@ -186,13 +186,15 @@ public class UserInterface {
               user.handleTransaction(payout, accountListPage.getSelectedAccount());
             } catch (Exception e) {
               System.out.println("ERR:" + e.getMessage()); //TODO BETTER
-            }          }
-
-          transactionListPage.configureFrame(frame); // open transaction list page of the account again
-
+            }
+          } else if (addPayoutPage.isBackWanted()) {
+            transactionListPage.configureFrame(frame); // open transaction list page of the account again
+          } else { //refresh add payout page.
+            addPayoutPage.configureFrame(frame);
+          }
         } else if (transactionListPage.isNewDepositWanted()) { //if new deposit button got pressed, open page to add new deposit
           addDepositPage.configureFrame(frame);
-          while (!addDepositPage.isSubmitted() && !addDepositPage.isBackWanted()) {
+          while (!addDepositPage.isSubmitted() && !addDepositPage.isBackWanted() && !addDepositPage.isRefreshWanted()) {
             //wait until either back button or submit button got pressed
           }
 
@@ -202,10 +204,12 @@ public class UserInterface {
               user.handleTransaction(deposit, accountListPage.getSelectedAccount());
             } catch (Exception e) {
               System.out.println("ERR:" + e.getMessage()); //TODO BETTER
-            }          }
-
-          transactionListPage.configureFrame(frame); //open transaction list page of the account again
-
+            }
+          } else if (addDepositPage.isBackWanted()) {
+            transactionListPage.configureFrame(frame); // open transaction list page of the account again
+          } else {
+            addDepositPage.configureFrame(frame);
+          }
         } else { //if back button of transaction list page got pressed, open account list page again
           accountListPage.configureFrame(frame);
         }
