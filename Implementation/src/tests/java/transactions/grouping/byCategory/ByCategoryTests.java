@@ -1,7 +1,8 @@
-package transactions.grouping.byAccount;
+package transactions.grouping.byCategory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import accounts.Account;
@@ -9,17 +10,16 @@ import accounts.Cash;
 import accounts.DebitCard;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
-import iteration.CustomList;
 import transactions.Transaction;
 import transactions.TransactionCreator;
+import transactions.grouping.byAccount.AllAccounts;
 import user.User;
 
-class OneAccountTests {
+class ByCategoryTests {
   private static final int limit = Integer.MIN_VALUE;
   private static User user;
   private static Account cash;
   private static Account debit;
-  private static CustomContainer<Transaction> storedcash;
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
@@ -30,20 +30,24 @@ class OneAccountTests {
     user.addAccount(cash);
     user.addAccount(debit);
 
-    storedcash = new CustomList<>();
     try {
       String[] categories = user.getCategories(null).toArray(new String[0]);
 
       final int rounds = 5;
 
-      for (int i = 0; i < (5 * categories.length); i++) {
+      for (int i = 0; i < (rounds * categories.length); i++) {
         Transaction transcash = TransactionCreator.newTransactionWith(categories[i % rounds],
             i * 100, "", user.getCategoryStore());
+        user.applyAndSaveTransaction(transcash, cash);
+
+        Thread.sleep(10);
+
         Transaction transdebit = TransactionCreator.newTransactionWith(
             categories[categories.length - 1 - (i % rounds)], i * 200, "", user.getCategoryStore());
-        user.applyAndSaveTransaction(transcash, cash);
-        storedcash.add(transcash);
         user.applyAndSaveTransaction(transdebit, debit);
+
+        Thread.sleep(10);
+
         // System.out.println("i: " + i + ", " + transcash);
         // System.out.println("i: " + i + ", " + transdebit);
       }
@@ -52,18 +56,21 @@ class OneAccountTests {
     }
   }
 
+  @AfterEach
+  void tearDown() throws Exception {}
+
   @Test
   void afterOrganizing_shouldBeSameTransactions() {
-    CustomContainer<Transaction> afterOrganizing =
-        new OneAccount(user, cash.getAccount_number()).organize();
+    Map<String, CustomContainer<Transaction>> afterOrganizing =
+        new ByCategory(new AllAccounts(user)).organize();
 
-    assertEquals(storedcash.size(), afterOrganizing.size());
-
-    CustomIterator<Transaction> iter = afterOrganizing.getIterator();
-    CustomIterator<Transaction> it = storedcash.getIterator();
-
-    while (iter.hasNext()) {
-      assertTrue(iter.next().equals(it.next()));
+    CustomIterator<Transaction> iter = null;
+    for (String category : afterOrganizing.keySet()) {
+      System.out.println("Category: " + category.toUpperCase());
+      iter = afterOrganizing.get(category).getIterator();
+      while (iter.hasNext()) {
+        assertEquals(category, iter.next().getCategory());
+      }
     }
   }
 }

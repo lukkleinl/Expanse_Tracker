@@ -1,5 +1,6 @@
 package transactions.grouping.byTime;
 
+import java.util.Map;
 import iteration.CustomContainer;
 import transactions.Transaction;
 import transactions.grouping.OrganizingRoot;
@@ -12,7 +13,7 @@ public class ByTimeMonthly extends OrganizingRoot {
   }
 
   @Override
-  public CustomContainer<Transaction> organize() {
+  public Map<String, CustomContainer<Transaction>> organize() {
     // TODO Auto-generated method stub
     return null;
   }

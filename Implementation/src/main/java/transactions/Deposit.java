@@ -17,33 +17,30 @@ public class Deposit extends Transaction {
    * @param description Description of the deposit
    * @param ID the ID of this transaction.
    */
-  Deposit(final ZonedDateTime date, final float amount, final String depositCategory, final String description, final Integer ID) {
-    super(date,amount,description,ID);
+  Deposit(final ZonedDateTime date, final float amount, final String depositCategory,
+      final String description, final Integer ID) {
+    super(date, amount, description, ID);
     this.depositCategory = depositCategory;
-  }
-
-  /**
-   * Getter for the deposit category
-   *
-   * @return the deposit category
-   */
-  public String getDepositCategory() {
-    return depositCategory;
   }
 
   @Override
   public String toString() {
-    return getSimpleName() + ", Category=" + depositCategory + super.toString();
+    return getSimpleName() + ", Category=" + this.depositCategory + super.toString();
   }
 
   /**
    * Convenience method for simpler checking.
+   * 
    * @return the string DEPOSIT
    */
   public static String getSimpleName() {
     return "DEPOSIT";
   }
-}
 
+  @Override
+  public String getCategory() {
+    return this.depositCategory;
+  }
+}
 
 

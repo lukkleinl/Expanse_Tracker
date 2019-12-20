@@ -1,8 +1,19 @@
 package transactions.grouping;
 
-import iteration.CustomContainer;
-import transactions.Transaction;
+import java.time.ZonedDateTime;
+import java.util.Set;
 
 public interface TransactionOrganizing {
-  CustomContainer<Transaction> organize();
+  /**
+   * Implementations decorate the grouping.
+   * 
+   * @return the grouped transactions
+   */
+  <T> T organize();
+
+  /** @return the categories */
+  Set<String> getNestedCategories();
+
+  /** @return the earliest time depending on the transaction and implementation */
+  ZonedDateTime earliest();
 }

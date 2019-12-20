@@ -1,6 +1,9 @@
 package transactions.grouping.byCategory;
 
+import java.time.ZonedDateTime;
+import java.util.Map;
 import iteration.CustomContainer;
+import iteration.CustomIterator;
 import transactions.Transaction;
 import transactions.grouping.OrganizingRoot;
 import transactions.grouping.TransactionOrganizing;
@@ -12,9 +15,28 @@ public class ByCategory extends OrganizingRoot {
   }
 
   @Override
-  public CustomContainer<Transaction> organize() {
-    // TODO Auto-generated method stub
-    return null;
+  public Map<String, CustomContainer<Transaction>> organize() {
+    CustomContainer<Transaction> toDec = this.decFilter.organize();
+    CustomIterator<Transaction> iter = toDec.getIterator();
+
+    Transaction nextToAdd = iter.next();
+
+    for (String category : this.decFilter.getNestedCategories()) {
+      while (iter.hasNext()) {
+        nextToAdd = iter.next();
+        if (category.equalsIgnoreCase(nextToAdd.getCategory())) {
+          this.grouped.get(category).add(nextToAdd);
+        }
+      }
+    }
+
+    return this.grouped;
   }
 
+  @Override
+  public ZonedDateTime earliest() {
+    return this.decFilter.earliest();
+  }
 }
+
+
