@@ -3,7 +3,6 @@ package ui.addTransactionPages;
 import java.util.ArrayList;
 import javax.swing.*;
 
-import transactions.categories.DepositCategory;
 import transactions.categories.PayoutCategory;
 import ui.main.AbstractPage;
 import user.User;
@@ -17,22 +16,22 @@ import user.User;
 
 public class AddPayoutPage extends AbstractPage {
 
-  private JLabel IntroText;
-  private JLabel Amounttext;
-  private JTextField AmountInp;
-  private JLabel descriptiontext;
-  private JTextField DescriptionInp;
-  private JLabel Categorytext;
-  private JComboBox EnumsCategorysBox;
-  private  Object[] PayoutCategorys = {"EDUCATION","FOOD","TRANSPORTATION"};
-  private String category;
-  private String description;
-  private float Amount;
+  private JLabel introText;
+  private JLabel amountInputText;
+  private JTextField amuntInputField;
+  private JLabel descriptionInputText;
+  private JTextField descriptionInputField;
+  private JLabel categoryInputText;
+  private JComboBox categoryInputBox;
+  private  Object[] payoutCategorys = {"EDUCATION","FOOD","TRANSPORTATION"};
+  private String categoryInputValue;
+  private String descriptionInputValue;
+  private float amountInputValue;
   private User user;
-  private JButton newOptionPane;
+  private JButton newCategoryOptionPaneButton;
 
-  private JButton SubmitButton;
-  private JButton BackButton;
+  private JButton submitButton;
+  private JButton backButton;
 
   private volatile boolean submitted;
   private volatile boolean backWanted;
@@ -43,20 +42,20 @@ public class AddPayoutPage extends AbstractPage {
   /**
    * @return PayoutCategory Input from User or Default value.
    */
-  public String getCatego() {
-    return category;
+  public String getCategory() {
+    return categoryInputValue;
   }
   /**
    * @return Description Input from User or Default value.
    */
   public String getDescription() {
-    return description;
+    return descriptionInputValue;
   }
   /**
    * @return Amount Input from User or Default value.
    */
   public float getAmount() {
-    return Amount;
+    return amountInputValue;
   }
   /**
    * @return current boolean value of submitted(whether the User submitted or not! )
@@ -81,7 +80,7 @@ public class AddPayoutPage extends AbstractPage {
   // In Final Version might take a User object to display additional User information.
   public AddPayoutPage(User user) {
     this.user = user;
-    PayoutCategorys = user.getCategories(new PayoutCategory()).toArray();
+    payoutCategorys = user.getCategories(new PayoutCategory()).toArray();
     this.createComponents();
   }
 
@@ -93,69 +92,72 @@ public class AddPayoutPage extends AbstractPage {
     backWanted = false;
     refreshWanted = false;
 
-    Categorytext = new JLabel("Payout Category:");
-    Categorytext.setBounds(100, 50, 300, 50);
-    components.add(Categorytext);
+    categoryInputText = new JLabel("Payout Category:");
+    categoryInputText.setBounds(100, 50, 300, 50);
+    components.add(categoryInputText);
 
-    newOptionPane = new JButton("Create Custom Payout-Category");
-    newOptionPane.setBounds(450,100,300,50);
-    components.add(newOptionPane);
+    newCategoryOptionPaneButton = new JButton("Create Custom Payout-Category");
+    newCategoryOptionPaneButton.setBounds(450,100,300,50);
+    components.add(newCategoryOptionPaneButton);
 
 
     // TODO - take categories of user instead
-    EnumsCategorysBox = new JComboBox(PayoutCategorys);
-    EnumsCategorysBox.setBounds(100, 100, 300, 50);
-    components.add(EnumsCategorysBox);
+    categoryInputBox = new JComboBox(payoutCategorys);
+    categoryInputBox.setBounds(100, 100, 300, 50);
+    components.add(categoryInputBox);
 
-    Amounttext = new JLabel("Amount:");
-    Amounttext.setBounds(100, 150, 300, 50);
-    components.add(Amounttext);
+    amountInputText = new JLabel("Amount:");
+    amountInputText.setBounds(100, 150, 300, 50);
+    components.add(amountInputText);
 
-    AmountInp = new JTextField("");
-    AmountInp.setBounds(100, 200, 300, 50);
-    components.add(AmountInp);
+    amuntInputField = new JTextField("");
+    amuntInputField.setBounds(100, 200, 300, 50);
+    components.add(amuntInputField);
 
-    descriptiontext = new JLabel("Description:");
-    descriptiontext.setBounds(100, 250, 300, 50);
-    components.add(descriptiontext);
+    descriptionInputText = new JLabel("Description:");
+    descriptionInputText.setBounds(100, 250, 300, 50);
+    components.add(descriptionInputText);
 
-    DescriptionInp = new JTextField("");
-    DescriptionInp.setBounds(100, 300, 300, 50);
-    components.add(DescriptionInp);
+    descriptionInputField = new JTextField("");
+    descriptionInputField.setBounds(100, 300, 300, 50);
+    components.add(descriptionInputField);
 
-    SubmitButton = new JButton("Payout");
-    SubmitButton.setBounds(100, 500, 300, 50);
-    components.add(SubmitButton);
+    submitButton = new JButton("Payout");
+    submitButton.setBounds(100, 500, 300, 50);
+    components.add(submitButton);
 
-    newOptionPane.addActionListener(actionEvent -> {
+    newCategoryOptionPaneButton.addActionListener(actionEvent -> {
         String categoryName = JOptionPane.showInputDialog("Enter Name of New Category!");
         System.out.println(categoryName);
         user.newTransactionCategory(new PayoutCategory(categoryName));
-        PayoutCategorys = user.getCategories(new PayoutCategory()).toArray();
+        payoutCategorys = user.getCategories(new PayoutCategory()).toArray();
         refreshWanted = true;
     });
 
-    SubmitButton.addActionListener(actionEvent -> {
-      description = DescriptionInp.getText();
-      Amount = Float.valueOf(AmountInp.getText());
-      category = (String) EnumsCategorysBox.getSelectedItem();
+    submitButton.addActionListener(actionEvent -> {
+      descriptionInputValue = descriptionInputField.getText();
+      amountInputValue = Float.valueOf(amuntInputField.getText());
+      categoryInputValue = (String) categoryInputBox.getSelectedItem();
 
-      //TODO negative AMOUNT
-      //TODO strings are Empty
+      if(amountInputValue<=0)
+        //TODO handle Exception that is thrown @ALL
+        // throw new IOException("Invalid Amount Input!");
 
-      System.out.println("Description: " + description +
-          "\nAmount: " + Amount +
-          "\nCategory: " + category
-          );
+        if(descriptionInputValue.isEmpty())
+          //TODO handle Exception that is thrown @ALL
+          // throw new IOException("Invalid Description Input, supply Description please!");
+
+
+          //TODO check more Invalid Inputs?
 
       submitted = true;
     });
 
 
-    BackButton = new JButton("BACK");
-    BackButton.setBounds(10, 10, 100, 50);
-    components.add(BackButton);
-    BackButton.addActionListener(e -> backWanted = true);
+    backButton = new JButton("BACK");
+    backButton.setBounds(10, 10, 100, 50);
+    components.add(backButton);
+    backButton.addActionListener(e -> backWanted = true);
 
   }
 

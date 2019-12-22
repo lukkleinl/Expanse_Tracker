@@ -1,6 +1,5 @@
 package ui.addTransactionPages;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -19,7 +18,7 @@ public class AddDepositPage extends AbstractPage {
   private JLabel introText;
   private JLabel amountInputText;
   private JTextField amountInputField;
-  private JLabel descriptionText;
+  private JLabel descriptionInputText;
   private JTextField descriptionInputField;
   private JLabel categoryInputText;
   private JComboBox categoryInputBox;
@@ -42,21 +41,19 @@ public class AddDepositPage extends AbstractPage {
   /**
    * @return DepositCategory Input from User or Default value.
    */
-  public String getCategoryInputValue() {
+  public String getCategory() {
     return categoryInputValue;
   }
   /**
    * @return Description Input from User or Default value.
    */
-  public String getDescriptionInputValue() {
+  public String getDescription() {
     return descriptionInputValue;
   }
   /**
    * @return Amount Input from User or Default value.
    */
-  public float getAmountInputValue() {
-    return amountInputValue;
-  }
+  public float getAmount() { return amountInputValue; }
   /**
    * @return current boolean value of submitted(whether the User submitted or not! )
    */
@@ -113,9 +110,9 @@ public class AddDepositPage extends AbstractPage {
     amountInputField.setBounds(100, 200, 300, 50);
     components.add(amountInputField);
 
-    descriptionText = new JLabel("Description:");
-    descriptionText.setBounds(100, 250, 300, 50);
-    components.add(descriptionText);
+    descriptionInputText = new JLabel("Description:");
+    descriptionInputText.setBounds(100, 250, 300, 50);
+    components.add(descriptionInputText);
 
     descriptionInputField = new JTextField("");
     descriptionInputField.setBounds(100, 300, 300, 50);
