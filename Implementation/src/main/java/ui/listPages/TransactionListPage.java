@@ -111,7 +111,7 @@ public class TransactionListPage extends AbstractPage {
               .toString();
         } else {
           TransactionList_VISU[i][0] = "Deposit";
-          TransactionList_VISU[i][4] = ((Deposit) transtemp).getDepositCategory()
+          TransactionList_VISU[i][4] = ((Deposit) transtemp).getCategory()
               .toString();
         }
 

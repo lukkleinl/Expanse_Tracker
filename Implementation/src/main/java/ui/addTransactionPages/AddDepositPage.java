@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import transactions.categories.DepositCategory;
-import transactions.categories.PayoutCategory;
 import ui.main.AbstractPage;
 import user.User;
 
@@ -16,13 +15,13 @@ import user.User;
 
 public class AddDepositPage extends AbstractPage {
 
-  private JLabel IntroText;
-  private JLabel Amounttext;
+  private JLabel introText;
+  private JLabel amountInpText;
   private JTextField AmountInp;
-  private JLabel descriptiontext;
+  private JLabel descriptionText;
   private JTextField DescriptionInp;
-  private JLabel Categorytext;
-  private JComboBox CategorysBox;
+  private JLabel categoryText;
+  private JComboBox categoryBox;
   private Object[] PayoutCategorys; /* = {"SALARY","DIVIDEND"}; */
   private String category;
   private String description;
@@ -94,30 +93,30 @@ public class AddDepositPage extends AbstractPage {
     backWanted = false;
     refreshWanted = false;
 
-    Categorytext = new JLabel("Payout Category:");
-    Categorytext.setBounds(100, 50, 300, 50);
-    components.add(Categorytext);
+    categoryText = new JLabel("Payout Category:");
+    categoryText.setBounds(100, 50, 300, 50);
+    components.add(categoryText);
 
     // TODO - take categories of user instead
-    CategorysBox = new JComboBox(PayoutCategorys);
-    CategorysBox.setBounds(100, 100, 300, 50);
-    components.add(CategorysBox);
+    categoryBox = new JComboBox(PayoutCategorys);
+    categoryBox.setBounds(100, 100, 300, 50);
+    components.add(categoryBox);
 
     newOptionPane = new JButton("Create Custom Deposit-Category");
     newOptionPane.setBounds(450,100,300,50);
     components.add(newOptionPane);
 
-    Amounttext = new JLabel("Amount:");
-    Amounttext.setBounds(100, 150, 300, 50);
-    components.add(Amounttext);
+    amountInpText = new JLabel("Amount:");
+    amountInpText.setBounds(100, 150, 300, 50);
+    components.add(amountInpText);
 
     AmountInp = new JTextField("");
     AmountInp.setBounds(100, 200, 300, 50);
     components.add(AmountInp);
 
-    descriptiontext = new JLabel("Description:");
-    descriptiontext.setBounds(100, 250, 300, 50);
-    components.add(descriptiontext);
+    descriptionText = new JLabel("Description:");
+    descriptionText.setBounds(100, 250, 300, 50);
+    components.add(descriptionText);
 
     DescriptionInp = new JTextField("");
     DescriptionInp.setBounds(100, 300, 300, 50);
@@ -138,7 +137,7 @@ public class AddDepositPage extends AbstractPage {
     SubmitButton.addActionListener(actionEvent -> {
       description = DescriptionInp.getText();
       Amount = Float.valueOf(AmountInp.getText());
-      category = (String) CategorysBox.getSelectedItem();
+      category = (String) categoryBox.getSelectedItem();
 
       //TODO negative AMOUNT
       //TODO strings are Empty

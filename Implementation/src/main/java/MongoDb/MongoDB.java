@@ -76,7 +76,7 @@ public class MongoDB implements Persistency
         doc = new Document("id", deposit.getID())
             .append("Date", deposit.getCreationDate())
             .append("amount", deposit.getAmount())
-            .append("category", deposit.getDepositCategory())
+            .append("category", deposit.getCategory())
             .append("Account_Number",key)
             .append("Description", deposit.getDescription());
         return doc;

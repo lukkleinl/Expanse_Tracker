@@ -24,4 +24,8 @@ public class ByTime_UserDefined extends OrganizingRoot {
     return null;
   }
 
+  @Override
+  public ZonedDateTime earliest() {
+    return null;
+  }
 }
