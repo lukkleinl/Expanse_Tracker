@@ -1,7 +1,10 @@
 package transactions.grouping;
 
 import java.time.ZonedDateTime;
+import java.util.Map;
 import java.util.Set;
+import iteration.CustomContainer;
+import transactions.Transaction;
 
 public interface TransactionOrganizing {
   /**
@@ -9,7 +12,7 @@ public interface TransactionOrganizing {
    * 
    * @return the grouped transactions
    */
-  <T> T organize();
+  Map<String, CustomContainer<Transaction>> organize();
 
   /** @return the categories */
   Set<String> getNestedCategories();

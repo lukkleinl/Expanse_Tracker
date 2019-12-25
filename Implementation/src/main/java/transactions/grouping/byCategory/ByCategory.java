@@ -16,16 +16,20 @@ public class ByCategory extends OrganizingRoot {
 
   @Override
   public Map<String, CustomContainer<Transaction>> organize() {
-    CustomContainer<Transaction> toDec = this.decFilter.organize();
-    CustomIterator<Transaction> iter = toDec.getIterator();
+    Map<String, CustomContainer<Transaction>> toDec = this.decFilter.organize();
+    CustomIterator<Transaction> iter;
 
-    Transaction nextToAdd = iter.next();
+    for (String key : toDec.keySet()) {
+      iter = toDec.get(key).getIterator();
 
-    for (String category : this.decFilter.getNestedCategories()) {
-      while (iter.hasNext()) {
-        nextToAdd = iter.next();
-        if (category.equalsIgnoreCase(nextToAdd.getCategory())) {
-          this.grouped.get(category).add(nextToAdd);
+      Transaction nextToAdd = iter.next();
+
+      for (String category : this.decFilter.getNestedCategories()) {
+        while (iter.hasNext()) {
+          nextToAdd = iter.next();
+          if (category.equalsIgnoreCase(nextToAdd.getCategory())) {
+            this.grouped.get(category).add(nextToAdd);
+          }
         }
       }
     }

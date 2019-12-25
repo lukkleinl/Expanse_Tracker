@@ -4,10 +4,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /** @author Patrick Gmasz */
 public abstract class Account {
-  private int account_number;
-  private String name;
+  private final int account_number;
+  private final String name;
   private float balance;
-  private float limit;
+  private final float limit;
   private static AtomicInteger nextId = new AtomicInteger();
 
   /**
@@ -16,10 +16,10 @@ public abstract class Account {
    * @param name The name of the account
    * @param limit Limit of the account
    */
-  public Account(String name,float limit) {
-    account_number=nextId.incrementAndGet();
+  public Account(final String name, final float limit) {
+    this.account_number = nextId.incrementAndGet();
     this.name = name;
-    this.limit=limit;
+    this.limit = limit;
     this.balance = 0;
   }
 
@@ -29,7 +29,7 @@ public abstract class Account {
    * @return the account number
    */
   public int getAccount_number() {
-    return account_number;
+    return this.account_number;
   }
 
   /**
@@ -38,7 +38,7 @@ public abstract class Account {
    * @return the account name
    */
   public String getName() {
-    return name;
+    return this.name;
   }
 
   /**
@@ -47,25 +47,25 @@ public abstract class Account {
    * @return the balance
    */
   public float getBalance() {
-    return balance;
+    return this.balance;
   }
 
   /**
-   *  Performs a payout on the account
+   * Performs a payout on the account
    *
    * @param amount Amount of the payout
    */
-  public void payout(float amount) {
-    balance-=amount;
+  public void payout(final float amount) {
+    this.balance -= amount;
   }
 
   /**
-   *  Performs a deposit on the account
+   * Performs a deposit on the account
    *
    * @param amount Amount of the deposit
    */
-  public void deposit(float amount) {
-    balance+=amount;
+  public void deposit(final float amount) {
+    this.balance += amount;
   }
 
   /**
@@ -73,6 +73,16 @@ public abstract class Account {
    *
    * @return the limit
    */
-  public float getLimit() { return limit; }
+  public float getLimit() {
+    return this.limit;
+  }
 
+  @Override
+  public final boolean equals(final Object obj) {
+    if (!(obj instanceof Account))
+      return false;
+    return this.account_number == ((Account) obj).account_number;
+  }
 }
+
+

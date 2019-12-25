@@ -2,7 +2,9 @@ package transactions.grouping.byAccount;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
@@ -22,8 +24,9 @@ public class AllAccounts implements TransactionOrganizing {
   }
 
   @Override
-  public CustomContainer<Transaction> organize() {
-    final CustomContainer<Transaction> organized = new CustomList<>();
+  public Map<String, CustomContainer<Transaction>> organize() {
+    Map<String, CustomContainer<Transaction>> organized = new HashMap<>();
+    CustomContainer<Transaction> orgacont = new CustomList<>();
     final List<Transaction> transactions = new ArrayList<>();
 
     for (Integer key : this.user.getTransactionStore().getTransactions().keySet()) {
@@ -46,7 +49,7 @@ public class AllAccounts implements TransactionOrganizing {
         }
       }
 
-      organized.add(nextToAdd);
+      orgacont.add(nextToAdd);
       int idx = transactions.indexOf(nextToAdd);
 
       // if-case - the iterator cannot contribute any new elements and is therefore removed from the
@@ -73,10 +76,11 @@ public class AllAccounts implements TransactionOrganizing {
           nextToAdd = currentlychecked;
         }
       }
-      organized.add(nextToAdd);
+      orgacont.add(nextToAdd);
       transactions.remove(nextToAdd);
     }
 
+    organized.put("AllAccounts", orgacont);
     return organized;
   }
 

@@ -1,6 +1,8 @@
 package transactions.grouping.byAccount;
 
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import iteration.CustomContainer;
 import transactions.Transaction;
@@ -18,8 +20,11 @@ public class OneAccount implements TransactionOrganizing {
   }
 
   @Override
-  public CustomContainer<Transaction> organize() {
-    return this.user.getTransactionStore().getTransactions().get(this.ID);
+  public Map<String, CustomContainer<Transaction>> organize() {
+    Map<String, CustomContainer<Transaction>> organized = new HashMap<>();
+    organized.put("Account " + this.ID,
+        this.user.getTransactionStore().getTransactions().get(this.ID));
+    return organized;
   }
 
   @Override
