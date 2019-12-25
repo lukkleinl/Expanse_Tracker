@@ -67,15 +67,15 @@ class OneAccountTests {
     Map<String, CustomContainer<Transaction>> afterOrganizing =
         new OneAccount(user, acc.getAccount_number()).organize();
 
-    int transcount = 0;
+    int sum = 0;
     for (String key : afterOrganizing.keySet()) {
-      // TODO - size() throws NoClassDefFoundError for some reason
-      transcount += afterOrganizing.get(key).size();
+      // TODO - size() throws NullPointerException for the 2nd account
+      sum += afterOrganizing.get(key).size();
     }
-    assertEquals(storedtrans.size(), transcount);
+    assertEquals(storedtrans.size(), sum);
 
     for (String key : afterOrganizing.keySet()) {
-      // TODO - getIterator() throws NoClassDefFoundError for some reason
+      // TODO - getIterator() throws NullPointerException for the 2nd account
       CustomIterator<Transaction> iter = afterOrganizing.get(key).getIterator();
       CustomIterator<Transaction> it = storedtrans.getIterator();
 

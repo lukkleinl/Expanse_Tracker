@@ -64,13 +64,11 @@ class AllAccountsTests {
 
     int transcount = 0;
     for (String key : afterOrganizing.keySet()) {
-      // TODO - size() throws NoClassDefFoundError for some reason
       transcount += afterOrganizing.get(key).size();
     }
     assertEquals(storedtrans.size(), transcount);
 
     for (String key : afterOrganizing.keySet()) {
-      // TODO - getIterator() throws NoClassDefFoundError for some reason
       CustomIterator<Transaction> iter = afterOrganizing.get(key).getIterator();
       CustomIterator<Transaction> it = storedtrans.getIterator();
 

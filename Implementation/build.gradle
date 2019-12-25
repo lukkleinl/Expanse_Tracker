@@ -25,6 +25,9 @@ dependencies {
     compile 'org.junit.jupiter:junit-jupiter-api:5.4.0'
     compile 'org.junit.jupiter:junit-jupiter-engine:5.4.0'
     compile 'org.junit.jupiter:junit-jupiter-params:5.4.0'
+    
+    // JUnit4 needed for the grouping tests
+    compile 'junit:junit:4.12'
 
     // MongoDB
     compile 'org.mongodb:mongodb-driver-sync:3.11.1'
