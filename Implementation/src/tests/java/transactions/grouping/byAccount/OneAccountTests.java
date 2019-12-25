@@ -2,8 +2,14 @@ package transactions.grouping.byAccount;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import accounts.Account;
 import accounts.Cash;
 import accounts.DebitCard;
@@ -15,56 +21,79 @@ import transactions.TransactionCreator;
 import user.User;
 
 class OneAccountTests {
-  private static final int limit = Integer.MIN_VALUE;
+  private static final int rounds = 5;
   private static User user;
-  private static Account cash;
-  private static Account debit;
-  private static CustomContainer<Transaction> storedcash;
+  private static CustomContainer<Transaction> storedtrans;
+  private static String[] categories;
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
     user = new User(1234, "firstname", "lastname", "password");
     user.getCategoryStore().withDefaultCategories();
-    cash = new Cash("Wallet", limit, "Euro");
-    debit = new DebitCard("Giro Account", "Bank Austria", limit, "AT121200001203250544");
-    user.addAccount(cash);
-    user.addAccount(debit);
 
-    storedcash = new CustomList<>();
-    try {
-      String[] categories = user.getCategories(null).toArray(new String[0]);
+    user.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
+    user.addAccount(
+        new DebitCard("Giro Account", "Bank Austria", Integer.MIN_VALUE, "AT121200001203250544"));
 
-      final int rounds = 5;
+    categories = user.getCategories(null).toArray(new String[0]);
+  }
 
-      for (int i = 0; i < (5 * categories.length); i++) {
-        Transaction transcash = TransactionCreator.newTransactionWith(categories[i % rounds],
-            i * 100, "", user.getCategoryStore());
-        Transaction transdebit = TransactionCreator.newTransactionWith(
-            categories[categories.length - 1 - (i % rounds)], i * 200, "", user.getCategoryStore());
-        user.applyAndSaveTransaction(transcash, cash);
-        storedcash.add(transcash);
-        user.applyAndSaveTransaction(transdebit, debit);
-        // System.out.println("i: " + i + ", " + transcash);
-        // System.out.println("i: " + i + ", " + transdebit);
+  @BeforeEach
+  void setUp() throws Exception {
+    storedtrans = new CustomList<>();
+    CustomIterator<Account> iter = null;
+
+    int accpos = 0;
+
+    for (int i = 0; i < (rounds * categories.length); i++) {
+      iter = user.getAccounts().getIterator();
+      accpos = ThreadLocalRandom.current().nextInt(user.getAccounts().size()) - 1;
+
+      for (int j = 0; j < accpos; j++) {
+        iter.next();
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+
+      Transaction trans = TransactionCreator.newTransactionWith(categories[i % rounds], i * 100, "",
+          user.getCategoryStore());
+
+      user.applyAndSaveTransaction(trans, iter.next());
+      storedtrans.add(trans);
     }
   }
 
-  @Test
-  void afterOrganizing_shouldBeSameTransactions() {
-    CustomContainer<Transaction> afterOrganizing =
-        new OneAccount(user, cash.getAccount_number()).organize();
+  @ParameterizedTest
+  @MethodSource("userAccounts")
+  void afterOrganizing_shouldBeSameTransactions(final Account acc) {
+    Map<String, CustomContainer<Transaction>> afterOrganizing =
+        new OneAccount(user, acc.getAccount_number()).organize();
 
-    assertEquals(storedcash.size(), afterOrganizing.size());
+    int transcount = 0;
+    for (String key : afterOrganizing.keySet()) {
+      // TODO - size() throws NoClassDefFoundError for some reason
+      transcount += afterOrganizing.get(key).size();
+    }
+    assertEquals(storedtrans.size(), transcount);
 
-    CustomIterator<Transaction> iter = afterOrganizing.getIterator();
-    CustomIterator<Transaction> it = storedcash.getIterator();
+    for (String key : afterOrganizing.keySet()) {
+      // TODO - getIterator() throws NoClassDefFoundError for some reason
+      CustomIterator<Transaction> iter = afterOrganizing.get(key).getIterator();
+      CustomIterator<Transaction> it = storedtrans.getIterator();
+
+      while (iter.hasNext()) {
+        assertTrue(iter.next().equals(it.next()));
+      }
+    }
+  }
+
+  static List<Account> userAccounts() {
+    List<Account> list = new ArrayList<>();
+    CustomIterator<Account> iter = user.getAccounts().getIterator();
 
     while (iter.hasNext()) {
-      assertTrue(iter.next().equals(it.next()));
+      list.add(iter.next());
     }
+
+    return list;
   }
 }
 

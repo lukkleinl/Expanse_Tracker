@@ -2,7 +2,10 @@ package transactions.grouping.byAccount;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import accounts.Account;
 import accounts.Cash;
@@ -15,10 +18,8 @@ import transactions.TransactionCreator;
 import user.User;
 
 class AllAccountsTests {
-  private static final int limit = Integer.MIN_VALUE;
+  private static final int rounds = 5;
   private static User user;
-  private static Account cash;
-  private static Account debit;
   private static CustomContainer<Transaction> storedtrans;
   private static String[] categories;
 
@@ -26,51 +27,56 @@ class AllAccountsTests {
   static void setUpBeforeClass() throws Exception {
     user = new User(1234, "firstname", "lastname", "password");
     user.getCategoryStore().withDefaultCategories();
-    cash = new Cash("Wallet", limit, "Euro");
-    debit = new DebitCard("Giro Account", "Bank Austria", limit, "AT121200001203250544");
-    user.addAccount(cash);
-    user.addAccount(debit);
 
-    try {
-      categories = user.getCategories(null).toArray(new String[0]);
-      storedtrans = new CustomList<>();
+    user.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
+    user.addAccount(
+        new DebitCard("Giro Account", "Bank Austria", Integer.MIN_VALUE, "AT121200001203250544"));
 
-      final int rounds = 5;
+    categories = user.getCategories(null).toArray(new String[0]);
+  }
 
-      for (int i = 0; i < (rounds * categories.length); i++) {
-        Transaction transcash = TransactionCreator.newTransactionWith(categories[i % rounds],
-            i * 100, "", user.getCategoryStore());
-        user.applyAndSaveTransaction(transcash, cash);
-        storedtrans.add(transcash);
+  @BeforeEach
+  void setUp() throws Exception {
+    storedtrans = new CustomList<>();
+    CustomIterator<Account> iter = null;
 
-        Thread.sleep(10);
+    int accpos = 0;
 
-        Transaction transdebit = TransactionCreator.newTransactionWith(
-            categories[categories.length - 1 - (i % rounds)], i * 200, "", user.getCategoryStore());
-        user.applyAndSaveTransaction(transdebit, debit);
-        storedtrans.add(transdebit);
+    for (int i = 0; i < (rounds * categories.length); i++) {
+      iter = user.getAccounts().getIterator();
+      accpos = ThreadLocalRandom.current().nextInt(user.getAccounts().size()) - 1;
 
-        Thread.sleep(10);
-
-        // System.out.println("i: " + i + ", " + transcash);
-        // System.out.println("i: " + i + ", " + transdebit);
+      for (int j = 0; j < accpos; j++) {
+        iter.next();
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+
+      Transaction trans = TransactionCreator.newTransactionWith(categories[i % rounds], i * 100, "",
+          user.getCategoryStore());
+
+      user.applyAndSaveTransaction(trans, iter.next());
+      storedtrans.add(trans);
     }
   }
 
   @Test
   void afterOrganizing_shouldBeSameTransactions() {
-    CustomContainer<Transaction> afterOrganizing = new AllAccounts(user).organize();
+    Map<String, CustomContainer<Transaction>> afterOrganizing = new AllAccounts(user).organize();
 
-    assertEquals(storedtrans.size(), afterOrganizing.size());
+    int transcount = 0;
+    for (String key : afterOrganizing.keySet()) {
+      // TODO - size() throws NoClassDefFoundError for some reason
+      transcount += afterOrganizing.get(key).size();
+    }
+    assertEquals(storedtrans.size(), transcount);
 
-    CustomIterator<Transaction> iter = afterOrganizing.getIterator();
-    CustomIterator<Transaction> it = storedtrans.getIterator();
+    for (String key : afterOrganizing.keySet()) {
+      // TODO - getIterator() throws NoClassDefFoundError for some reason
+      CustomIterator<Transaction> iter = afterOrganizing.get(key).getIterator();
+      CustomIterator<Transaction> it = storedtrans.getIterator();
 
-    while (iter.hasNext()) {
-      assertTrue(iter.next().equals(it.next()));
+      while (iter.hasNext()) {
+        assertTrue(iter.next().equals(it.next()));
+      }
     }
   }
 }
