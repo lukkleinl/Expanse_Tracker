@@ -60,23 +60,29 @@ public class CustomList<T> implements CustomContainer<T> {
    * first element of the CustomList. Implemented as a private nested class inside the
    * CustomList since this Iterator directly belongs to the CustomList.
    */
+  @SuppressWarnings({"unchecked", "hiding"})
   private class CustomListIterator<T> implements CustomIterator<T> {
     private int position = 0;
 
     private CustomListIterator() {}
 
-    /** {@inheritDoc} */
     @Override
     public boolean hasNext() {
       return this.position < CustomList.this.list.size();
     }
 
-    /** {@inheritDoc} */
     @Override
     public T next() throws SWE_RuntimeException {
       if (!this.hasNext()) throw new SWE_RuntimeException("This iterator has already processed all elements !");
       T elem = (T) CustomList.this.list.get(this.position);
       this.position++;
+      return elem;
+    }
+
+    @Override
+    public T element() throws SWE_RuntimeException {
+      if (!this.hasNext()) throw new SWE_RuntimeException("This iterator has already processed all elements !");
+      T elem = (T) CustomList.this.list.get(this.position);
       return elem;
     }
   }

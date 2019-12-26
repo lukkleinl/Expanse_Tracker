@@ -19,7 +19,7 @@ public abstract class TransactionCreator {
    *
    * @throws SWE_RuntimeException if the passed category is not related with this user or if either the category or the store was {@code null}
    */
-  public static Transaction newTransactionWith(final String category, final float amount, final String description, final CategoryStore store) {
+  public static Transaction newTransaction(final String category, final float amount, final String description, final CategoryStore store) {
     if (store == null || category == null) throw new SWE_RuntimeException("Could not check if the category is known !");
 
     if (store.categorySupported(category)) {
@@ -46,7 +46,7 @@ public abstract class TransactionCreator {
    *
    * @throws SWE_RuntimeException if the passed category is not related with this user or if either the category or the store was {@code null}
    */
-  public static Transaction newTransactionWith(final ZonedDateTime date, final String category, final float amount, final String description, final CategoryStore store, final Integer ID) {
+  public static Transaction transactionFromDatabaseData(final ZonedDateTime date, final String category, final float amount, final String description, final CategoryStore store, final Integer ID) {
     if (store == null || category == null) throw new SWE_RuntimeException("Could not check if the category is known !");
 
     if (store.categorySupported(category)) {

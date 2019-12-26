@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import exceptions.SWE_RuntimeException;
-import iteration.CustomIterator;
-import iteration.CustomList;
 
 
 class CustomListTests {
@@ -33,6 +31,7 @@ class CustomListTests {
 
   @Test
   void nextOnNewList_shouldThrowNoElementException() {
+    assertThrows(SWE_RuntimeException.class, () -> list.getIterator().element());
     assertThrows(SWE_RuntimeException.class, () -> list.getIterator().next());
   }
 
@@ -45,6 +44,7 @@ class CustomListTests {
   void addedElement_shouldBeEqual() {
     Object o = new Object();
     list.add(o);
+    assertEquals(o,list.getIterator().element());
     assertEquals(o,list.getIterator().next());
   }
 
@@ -83,7 +83,7 @@ class CustomListTests {
   }
 
   @Test
-  void nextAfterLastElement_shouldThrowNoElementException() {
+  void accessAfterLastElement_shouldThrowNoElementException() {
     int number = 7;
     String s = "text";
     String nums = "" + number;
@@ -98,6 +98,7 @@ class CustomListTests {
       iter.next();
     }
 
+    assertThrows(SWE_RuntimeException.class, () -> iter.element());
     assertThrows(SWE_RuntimeException.class, () -> iter.next());
   }
 

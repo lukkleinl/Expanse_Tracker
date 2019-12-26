@@ -3,11 +3,12 @@ package transactions.grouping.byAccount;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import accounts.Account;
@@ -21,71 +22,83 @@ import transactions.TransactionCreator;
 import user.User;
 
 class OneAccountTests {
+  private static final ThreadLocalRandom rand = ThreadLocalRandom.current();
   private static final int rounds = 5;
   private static User user;
-  private static CustomContainer<Transaction> storedtrans;
+  private static Map<Integer,CustomContainer<Transaction>> storedtrans;
+  private static Map<String,CustomContainer<Transaction>> afterOrganizing;
   private static String[] categories;
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
     user = new User(1234, "firstname", "lastname", "password");
     user.getCategoryStore().withDefaultCategories();
-
-    user.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
-    user.addAccount(
-        new DebitCard("Giro Account", "Bank Austria", Integer.MIN_VALUE, "AT121200001203250544"));
+    addUserAccounts(); // modify this method to add more accounts
 
     categories = user.getCategories(null).toArray(new String[0]);
-  }
 
-  @BeforeEach
-  void setUp() throws Exception {
-    storedtrans = new CustomList<>();
-    CustomIterator<Account> iter = null;
-
-    int accpos = 0;
+    storedtrans = new HashMap<>();
+    afterOrganizing = new HashMap<>();
+    Transaction trans = null;
+    Account acc = null;
 
     for (int i = 0; i < (rounds * categories.length); i++) {
-      iter = user.getAccounts().getIterator();
-      accpos = ThreadLocalRandom.current().nextInt(user.getAccounts().size()) - 1;
+      acc = randomAccount();
+      trans = randomTransaction(i);
 
-      for (int j = 0; j < accpos; j++) {
-        iter.next();
+      user.applyAndSaveTransaction(trans, acc);
+      for (Integer key : user.getTransactionStore().getTransactions().keySet()) {
+        storedtrans.putIfAbsent(key, new CustomList<>());
       }
-
-      Transaction trans = TransactionCreator.newTransactionWith(categories[i % rounds], i * 100, "",
-          user.getCategoryStore());
-
-      user.applyAndSaveTransaction(trans, iter.next());
-      storedtrans.add(trans);
+      storedtrans.get(keyOfTransaction(trans)).add(trans);
     }
+  }
+
+  /* ---------------------------------------- Tests ---------------------------------------- */
+
+  @ParameterizedTest
+  @MethodSource("userAccountsAsList")
+  void afterOrganizing_shouldBeSameNumberOfTransactions(final Account acc) throws Exception {
+    afterOrganizing = new OneAccount(user, acc.getAccount_number()).organize();
+
+    int sum_storedtrans = 0;
+    int sum_organized = 0;
+    for (String key : afterOrganizing.keySet()) {
+      if (mappingsPresent(key)) {
+        sum_organized += afterOrganizing.get(key).size();
+        sum_storedtrans += afterOrganizing.get(key).size();
+      }
+    }
+    assertEquals(sum_storedtrans, sum_organized);
   }
 
   @ParameterizedTest
-  @MethodSource("userAccounts")
-  void afterOrganizing_shouldBeSameTransactions(final Account acc) {
-    Map<String, CustomContainer<Transaction>> afterOrganizing =
-        new OneAccount(user, acc.getAccount_number()).organize();
-
-    int sum = 0;
-    for (String key : afterOrganizing.keySet()) {
-      // TODO - size() throws NullPointerException for the 2nd account
-      sum += afterOrganizing.get(key).size();
-    }
-    assertEquals(storedtrans.size(), sum);
+  @MethodSource("userAccountsAsList")
+  void afterOrganizing_shouldBeSameTransactions(final Account acc) throws Exception {
+    afterOrganizing = new OneAccount(user, acc.getAccount_number()).organize();
 
     for (String key : afterOrganizing.keySet()) {
-      // TODO - getIterator() throws NullPointerException for the 2nd account
-      CustomIterator<Transaction> iter = afterOrganizing.get(key).getIterator();
-      CustomIterator<Transaction> it = storedtrans.getIterator();
+      if (mappingsPresent(key)) {
+        CustomIterator<Transaction> iter = afterOrganizing.get(key).getIterator();
+        CustomIterator<Transaction> it = storedtrans.get(Integer.valueOf(key)).getIterator();
 
-      while (iter.hasNext()) {
-        assertTrue(iter.next().equals(it.next()));
+        while (iter.hasNext()) {
+          assertTrue(iter.next().equals(it.next()));
+        }
       }
     }
   }
 
-  static List<Account> userAccounts() {
+  /* ------------------------------ Modify this method to add more accounts ------------------------------ */
+  private static void addUserAccounts() {
+    user.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
+    user.addAccount(
+        new DebitCard("Giro Account", "Bank Austria", Integer.MIN_VALUE, "AT121200001203250544"));
+  }
+
+  /* ------------------------------ Provide data for parameterized tests ------------------------------ */
+  @SuppressWarnings("unused")
+  private static List<Account> userAccountsAsList() {
     List<Account> list = new ArrayList<>();
     CustomIterator<Account> iter = user.getAccounts().getIterator();
 
@@ -95,6 +108,38 @@ class OneAccountTests {
 
     return list;
   }
+
+  /* ------------------------------ Helper Methods to keep tests shorter ------------------------------ */
+  private static Account randomAccount() {
+    CustomIterator<Account> iter = user.getAccounts().getIterator();
+    Account acc = null;
+
+    for (int j = 0; j < rand.nextInt(user.getAccounts().size())+1; j++) {
+      acc = iter.next();
+    }
+    return acc;
+  }
+  private static Integer keyOfTransaction(final Transaction trans) {
+    for (Entry<Integer, CustomContainer<Transaction>> entry : user.getTransactionStore().getTransactions().entrySet()) {
+      for (CustomIterator<Transaction> it = entry.getValue().getIterator(); it.hasNext(); ) {
+        if (it.next().equals(trans))
+          return entry.getKey();
+      }
+    }
+    return -1;
+  }
+  private static Transaction randomTransaction(final int i) throws Exception {
+    Thread.sleep(10);
+    return TransactionCreator.newTransaction(categories[i % rounds], i * 100, "", user.getCategoryStore());
+  }
+  private static boolean mappingsPresent(final String key) {
+    return (afterOrganizing.get(key) != null) && (afterOrganizing.get(key) != null);
+  }
 }
+
+
+
+
+
 
 

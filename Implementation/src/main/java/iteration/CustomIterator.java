@@ -21,7 +21,15 @@ public interface CustomIterator<T> {
    *
    * @return the current Object
    *
-   * @throws NoElementException if this {@code CustomIterator} has already processed all elements in the list
+   * @throws SWE_RuntimeException if this {@code CustomIterator} has already processed all elements in the list
    */
   public T next() throws SWE_RuntimeException;
+  /**
+   * Return the current Object if there is one.
+   *
+   * @return the current Object
+   *
+   * @throws SWE_RuntimeException if this {@code CustomIterator} has already processed all elements in the list
+   */
+  public T element() throws SWE_RuntimeException;
 }

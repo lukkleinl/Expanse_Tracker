@@ -1,6 +1,7 @@
 package accounts;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import exceptions.SWE_Exception;
 
 /** @author Patrick Gmasz */
 public abstract class Account {
@@ -17,10 +18,10 @@ public abstract class Account {
    * @param limit Limit of the account
    */
   public Account(final String name, final float limit) {
-    this.account_number = nextId.incrementAndGet();
+    account_number = nextId.incrementAndGet();
     this.name = name;
     this.limit = limit;
-    this.balance = 0;
+    balance = 0;
   }
 
   /**
@@ -29,7 +30,7 @@ public abstract class Account {
    * @return the account number
    */
   public int getAccount_number() {
-    return this.account_number;
+    return account_number;
   }
 
   /**
@@ -38,7 +39,7 @@ public abstract class Account {
    * @return the account name
    */
   public String getName() {
-    return this.name;
+    return name;
   }
 
   /**
@@ -47,7 +48,7 @@ public abstract class Account {
    * @return the balance
    */
   public float getBalance() {
-    return this.balance;
+    return balance;
   }
 
   /**
@@ -55,8 +56,9 @@ public abstract class Account {
    *
    * @param amount Amount of the payout
    */
-  public void payout(final float amount) {
-    this.balance -= amount;
+  public void payout(final float amount) throws SWE_Exception {
+    if (balance-amount < limit) throw new SWE_Exception("Limit exceeded !");
+    balance -= amount;
   }
 
   /**
@@ -65,7 +67,7 @@ public abstract class Account {
    * @param amount Amount of the deposit
    */
   public void deposit(final float amount) {
-    this.balance += amount;
+    balance += amount;
   }
 
   /**
@@ -74,14 +76,14 @@ public abstract class Account {
    * @return the limit
    */
   public float getLimit() {
-    return this.limit;
+    return limit;
   }
 
   @Override
   public final boolean equals(final Object obj) {
     if (!(obj instanceof Account))
       return false;
-    return this.account_number == ((Account) obj).account_number;
+    return account_number == ((Account) obj).account_number;
   }
 }
 

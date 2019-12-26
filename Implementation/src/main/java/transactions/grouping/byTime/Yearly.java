@@ -8,9 +8,9 @@ import transactions.Transaction;
 import transactions.grouping.OrganizingRoot;
 import transactions.grouping.TransactionOrganizing;
 
-public class ByTimeYearly extends OrganizingRoot {
+public class Yearly extends OrganizingRoot {
 
-  public ByTimeYearly(final TransactionOrganizing to) {
+  public Yearly(final TransactionOrganizing to) {
     super(to);
   }
 

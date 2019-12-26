@@ -35,13 +35,13 @@ class TransactionStoreTests {
   @Test
   void addTransactionUnderKey_shouldStoreTransaction() {
     assertEquals(0,store.accountsWithTransactions());
-    store.addTransactionUnderKey(1, TransactionCreator.newTransactionWith("FOOD", 50f, "", new CategoryStore().withDefaultCategories()));
+    store.addTransactionUnderKey(1, TransactionCreator.newTransaction("FOOD", 50f, "", new CategoryStore().withDefaultCategories()));
     assertEquals(1,store.accountsWithTransactions());
   }
 
   @Test
   void addingSameTransactionForSameAccountMoreThanOnce_shouldNotAddMoreThanOnce() {
-    Transaction trans = TransactionCreator.newTransactionWith("FOOD", 50f, "", new CategoryStore().withDefaultCategories());
+    Transaction trans = TransactionCreator.newTransaction("FOOD", 50f, "", new CategoryStore().withDefaultCategories());
     assertEquals(0,store.accountsWithTransactions());
     store.addTransactionUnderKey(1, trans);
     assertEquals(1,store.accountsWithTransactions());
@@ -51,7 +51,7 @@ class TransactionStoreTests {
 
   @Test
   void addingSameTransactionForDifferentAccountsMoreThanOnce_shouldNotAddMoreThanOnce() {
-    Transaction trans = TransactionCreator.newTransactionWith("FOOD", 50f, "", new CategoryStore().withDefaultCategories());
+    Transaction trans = TransactionCreator.newTransaction("FOOD", 50f, "", new CategoryStore().withDefaultCategories());
     assertEquals(0,store.accountsWithTransactions());
     store.addTransactionUnderKey(10, trans);
     assertEquals(1,store.accountsWithTransactions());

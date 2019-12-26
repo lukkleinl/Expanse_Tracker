@@ -70,14 +70,14 @@ public final class CategoryStore {
    * Returns the key to which {@code category} is mapped or an empty string if no mapping is
    * present.
    *
-   * @param category the category of which the key should be be
+   * @param category the category of which the key should be found
    * @return the key
    */
   public String keyOfCategory(final String category) {
     if (category != null) {
-      for (Entry entry : categories.entrySet()) {
+      for (Entry<String, Set<String>> entry : categories.entrySet()) {
         if (categories.get(entry.getKey()).contains(category))
-          return (String) entry.getKey();
+          return entry.getKey();
       }
     }
     return "";

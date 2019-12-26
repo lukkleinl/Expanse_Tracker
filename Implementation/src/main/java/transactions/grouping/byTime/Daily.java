@@ -7,9 +7,9 @@ import transactions.Transaction;
 import transactions.grouping.OrganizingRoot;
 import transactions.grouping.TransactionOrganizing;
 
-public class ByTimeDaily extends OrganizingRoot {
+public class Daily extends OrganizingRoot {
 
-  public ByTimeDaily(final TransactionOrganizing to) {
+  public Daily(final TransactionOrganizing to) {
     super(to);
   }
 

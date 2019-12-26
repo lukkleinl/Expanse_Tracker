@@ -19,10 +19,10 @@ class StrategyTests {
   private final float limit = -200f;
   private final float amountdepo = -limit/2;
   private final float amountpay = -limit/4;
-  private final Transaction deposit = TransactionCreator.newTransactionWith("SALARY", amountdepo, "", new CategoryStore().withDefaultCategories());
-  private final Transaction payout = TransactionCreator.newTransactionWith("FOOD", amountpay, "", new CategoryStore().withDefaultCategories());
+  private final Transaction deposit = TransactionCreator.newTransaction("SALARY", amountdepo, "", new CategoryStore().withDefaultCategories());
+  private final Transaction payout = TransactionCreator.newTransaction("FOOD", amountpay, "", new CategoryStore().withDefaultCategories());
   // since costs usually do not go lower than 0.1 cent (see fuel prices), checking with 0.01 cent is good enough
-  private final Transaction tooLargePayout = TransactionCreator.newTransactionWith("FOOD", 3*amountdepo + 0.0001f, "", new CategoryStore().withDefaultCategories());
+  private final Transaction tooLargePayout = TransactionCreator.newTransaction("FOOD", 3*amountdepo + 0.0001f, "", new CategoryStore().withDefaultCategories());
 
   private Account acc;
   private BalanceChange change;

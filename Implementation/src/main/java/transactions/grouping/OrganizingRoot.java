@@ -1,15 +1,20 @@
 package transactions.grouping;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
-import iteration.CustomList;
 import transactions.Transaction;
 
+/**
+ * Superclass for all non-base decorators.
+ *
+ * @author Michael Watholowitsch
+ */
 public abstract class OrganizingRoot implements TransactionOrganizing {
 
   protected final TransactionOrganizing decFilter;
@@ -17,21 +22,27 @@ public abstract class OrganizingRoot implements TransactionOrganizing {
   protected final List<CustomIterator<Transaction>> iterators;
 
   public OrganizingRoot(final TransactionOrganizing method) {
-    this.decFilter = method;
-    this.iterators = new ArrayList<>();
-    this.grouped = new TreeMap<>();
-    for (String category : this.decFilter.getNestedCategories()) {
-      this.grouped.put(category, new CustomList<>());
-    }
+    decFilter = method;
+    iterators = new ArrayList<>();
+    grouped = new HashMap<>();
   }
 
   @Override
   public final Set<String> getNestedCategories() {
-    return this.decFilter.getNestedCategories();
+    return decFilter.getNestedCategories();
   }
 
+  @Override
+  public ZonedDateTime earliest() {
+    return decFilter.earliest();
+  }
+
+  /**
+   * @return {@code true} if there is still an iterator that has elements left to process
+   */
+  @SuppressWarnings("rawtypes")
   protected boolean notDone() {
-    for (CustomIterator iter : this.iterators) {
+    for (CustomIterator iter : iterators) {
       if (iter.hasNext())
         return true;
     }

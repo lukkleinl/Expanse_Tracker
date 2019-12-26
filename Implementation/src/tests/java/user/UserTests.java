@@ -51,6 +51,7 @@ class UserTests {
   @Test
   void addedAccount_shouldBeEqual() {
     user.addAccount(acc);
+    assertEquals(acc,user.getAccounts().getIterator().element());
     assertEquals(acc,user.getAccounts().getIterator().next());
   }
 
@@ -58,7 +59,7 @@ class UserTests {
   void applyAndSaveTransaction_shouldChangeBalanceAndStoreTransaction() throws SWE_Exception {
     user.addAccount(acc);
     assertEquals(0,user.getTransactionStore().accountsWithTransactions());
-    user.applyAndSaveTransaction(TransactionCreator.newTransactionWith("FOOD", ok_amount, "", user.getCategoryStore()), acc);
+    user.applyAndSaveTransaction(TransactionCreator.newTransaction("FOOD", ok_amount, "", user.getCategoryStore()), acc);
     assertEquals(1,user.getTransactionStore().accountsWithTransactions());
   }
 
@@ -66,7 +67,7 @@ class UserTests {
   void applyAndSaveTransactionWithTooLargePayout_shouldThrowException() throws SWE_Exception {
     user.addAccount(acc);
     assertThrows(SWE_Exception.class, () -> {
-      user.applyAndSaveTransaction(TransactionCreator.newTransactionWith("FOOD", not_ok_amount, "", user.getCategoryStore()), acc);
+      user.applyAndSaveTransaction(TransactionCreator.newTransaction("FOOD", not_ok_amount, "", user.getCategoryStore()), acc);
     });
   }
 }
