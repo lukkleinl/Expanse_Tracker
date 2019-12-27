@@ -10,17 +10,27 @@ import transactions.Transaction;
 import transactions.grouping.OrganizingRoot;
 import transactions.grouping.TransactionOrganizing;
 
+/**
+ * Groups transactions by their category.
+ *
+ * @author Michael Watholowitsch
+ */
 public class ByCategory extends OrganizingRoot {
 
   private final Set<String> categories;
 
-  public ByCategory(final TransactionOrganizing to) {
-    super(to);
+  /**
+   * Constructor
+   *
+   * @param wrappee the grouping which shall be decorated
+   */
+  public ByCategory(final TransactionOrganizing wrappee) {
+    super(wrappee);
     categories = new TreeSet<>();
   }
 
   @Override
-  public Map<String, CustomContainer<Transaction>> organize() {
+  public void performOrganizing() {
     Map<String, CustomContainer<Transaction>> toDec = root.organize();
     CustomIterator<Transaction> iter;
     String groupedkey = null;
@@ -50,8 +60,6 @@ public class ByCategory extends OrganizingRoot {
         }
       }
     }
-
-    return grouped;
   }
 }
 

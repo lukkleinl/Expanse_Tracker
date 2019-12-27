@@ -10,17 +10,27 @@ import transactions.Transaction;
 import transactions.grouping.OrganizingRoot;
 import transactions.grouping.TransactionOrganizing;
 
+/**
+ * Groups transactions by their creation-year.
+ *
+ * @author Michael Watholowitsch
+ */
 public class Yearly extends OrganizingRoot {
   public static final String mappingborder = "Y";
   private final Set<Integer> mappedyears;
 
-  public Yearly(final TransactionOrganizing to) {
-    super(to);
+  /**
+   * Constructor
+   *
+   * @param wrappee the grouping which shall be decorated
+   */
+  public Yearly(final TransactionOrganizing wrappee) {
+    super(wrappee);
     mappedyears = new TreeSet<>();
   }
 
   @Override
-  public Map<String, CustomContainer<Transaction>> organize() {
+  public void performOrganizing() {
     Map<String, CustomContainer<Transaction>> toDec = root.organize();
     CustomIterator<Transaction> iter;
 
@@ -51,10 +61,6 @@ public class Yearly extends OrganizingRoot {
         }
       }
     }
-
-    this.clearMappings();
-
-    return grouped;
   }
 }
 

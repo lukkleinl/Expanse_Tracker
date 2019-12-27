@@ -1,6 +1,5 @@
 package transactions.grouping;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,27 +26,23 @@ public abstract class OrganizingRoot implements TransactionOrganizing {
     grouped = new TreeMap<>();
   }
 
+  /** Groupers implement this method for their grouping algorithm. */
+  protected abstract void performOrganizing();
+
   /**
-   * Returns the time of the earliest performed transaction.
-   * @param map the performed transactions
-   * @return the time of the earliest performed transaction
+   * Override here to force removing mappings with empty CustomContainers after grouping.
    */
-  protected final ZonedDateTime earliest(final Map<String, CustomContainer<Transaction>> map) {
-    ZonedDateTime earliest = null;
-    for (String key : map.keySet()) {
-      if (earliest == null) {
-        earliest = map.get(key).getIterator().element().getCreationDate();
-      }
-      else if (earliest.isAfter(map.get(key).getIterator().element().getCreationDate())) {
-        earliest = map.get(key).getIterator().element().getCreationDate();
-      }
-    }
-    return earliest;
+  @Override
+  public final Map<String, CustomContainer<Transaction>> organize() {
+    this.performOrganizing();
+    this.clearMappings();
+
+    return grouped;
   }
 
   // modified to fit the problem from "https://stackoverflow.com/a/223927"
-  /** This method removes any keys with an empty customlist as its value. */
-  protected final void clearMappings() {
+  /** This method removes any keys with an empty CustomContainers as its value. */
+  private final void clearMappings() {
     for (Iterator<String> it = grouped.keySet().iterator(); it.hasNext(); ) {
       if (grouped.get(it.next()).size() == 0) {
         it.remove();
