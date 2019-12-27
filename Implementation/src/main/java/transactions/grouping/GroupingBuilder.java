@@ -34,6 +34,7 @@ class GroupingBuilder {
 
   /** Returns the current decoration. */
   public TransactionOrganizing getDecoration() {
+    this.resetOrga();
     return orga;
   }
 
