@@ -1,9 +1,7 @@
 package transactions.grouping.byAccount;
 
-import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import iteration.CustomContainer;
 import transactions.Transaction;
 import transactions.grouping.TransactionOrganizing;
@@ -31,20 +29,8 @@ public class OneAccount implements TransactionOrganizing {
   @Override
   public Map<String, CustomContainer<Transaction>> organize() {
     Map<String, CustomContainer<Transaction>> organized = new HashMap<>();
-    organized.put(Integer.toString(ID),
-        user.getTransactionStore().getTransactions().get(ID));
+    organized.put("AccountID" + ID,user.getTransactionStore().getTransactions().get(ID));
     return organized;
-  }
-
-  @Override
-  public Set<String> getNestedCategories() {
-    return user.getCategories(null);
-  }
-
-  @Override
-  public ZonedDateTime earliest() {
-    return user.getTransactionStore().getTransactions().get(ID).getIterator().element()
-        .getCreationDate();
   }
 }
 

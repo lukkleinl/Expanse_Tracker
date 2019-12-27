@@ -1,7 +1,6 @@
 package transactions.grouping.byAccount;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +24,7 @@ class OneAccountTests {
   private static final ThreadLocalRandom rand = ThreadLocalRandom.current();
   private static final int rounds = 5;
   private static User user;
-  private static Map<Integer,CustomContainer<Transaction>> storedtrans;
+  private static Map<String,CustomContainer<Transaction>> storedtrans;
   private static Map<String,CustomContainer<Transaction>> afterOrganizing;
   private static String[] categories;
 
@@ -48,7 +47,7 @@ class OneAccountTests {
 
       user.applyAndSaveTransaction(trans, acc);
       for (Integer key : user.getTransactionStore().getTransactions().keySet()) {
-        storedtrans.putIfAbsent(key, new CustomList<>());
+        storedtrans.putIfAbsent(Integer.toString(key), new CustomList<>());
       }
       storedtrans.get(keyOfTransaction(trans)).add(trans);
     }
@@ -80,7 +79,7 @@ class OneAccountTests {
     for (String key : afterOrganizing.keySet()) {
       if (mappingsPresent(key)) {
         CustomIterator<Transaction> iter = afterOrganizing.get(key).getIterator();
-        CustomIterator<Transaction> it = storedtrans.get(Integer.valueOf(key)).getIterator();
+        CustomIterator<Transaction> it = storedtrans.get(key).getIterator();
 
         while (iter.hasNext()) {
           assertTrue(iter.next().equals(it.next()));
@@ -119,21 +118,21 @@ class OneAccountTests {
     }
     return acc;
   }
-  private static Integer keyOfTransaction(final Transaction trans) {
+  private static String keyOfTransaction(final Transaction trans) {
     for (Entry<Integer, CustomContainer<Transaction>> entry : user.getTransactionStore().getTransactions().entrySet()) {
       for (CustomIterator<Transaction> it = entry.getValue().getIterator(); it.hasNext(); ) {
         if (it.next().equals(trans))
-          return entry.getKey();
+          return Integer.toString(entry.getKey());
       }
     }
-    return -1;
+    return null;
   }
   private static Transaction randomTransaction(final int i) throws Exception {
     Thread.sleep(10);
     return TransactionCreator.newTransaction(categories[i % rounds], i * 100, "", user.getCategoryStore());
   }
   private static boolean mappingsPresent(final String key) {
-    return (afterOrganizing.get(key) != null) && (afterOrganizing.get(key) != null);
+    return (afterOrganizing.get(key) != null) && (storedtrans.get(key) != null);
   }
 }
 

@@ -1,11 +1,9 @@
 package transactions.grouping.byAccount;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
@@ -68,28 +66,6 @@ public class AllAccounts implements TransactionOrganizing {
         return true;
     }
     return false;
-  }
-
-  @Override
-  public Set<String> getNestedCategories() {
-    return user.getCategories(null);
-  }
-
-  @Override
-  public ZonedDateTime earliest() {
-    Transaction earliest = null;
-    Transaction tmp = null;
-
-    for (Integer i : user.getTransactionStore().getTransactions().keySet()) {
-      tmp = user.getTransactionStore().getTransactions().get(i).getIterator().element();
-
-      if (earliest == null) {
-        earliest = tmp;
-      } else if (earliest.getCreationDate().isAfter(tmp.getCreationDate())) {
-        earliest = tmp;
-      }
-    }
-    return earliest.getCreationDate();
   }
 }
 

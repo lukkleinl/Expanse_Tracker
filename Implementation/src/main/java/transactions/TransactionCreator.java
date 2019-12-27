@@ -20,13 +20,14 @@ public abstract class TransactionCreator {
    * @throws SWE_RuntimeException if the passed category is not related with this user or if either the category or the store was {@code null}
    */
   public static Transaction newTransaction(final String category, final float amount, final String description, final CategoryStore store) {
+
     if (store == null || category == null) throw new SWE_RuntimeException("Could not check if the category is known !");
 
     if (store.categorySupported(category)) {
       String storedcategory = store.keyOfCategory(category);
 
-      if (storedcategory.equalsIgnoreCase(Deposit.getSimpleName())) return new Deposit(null, amount, category, description, null);
-      else if (storedcategory.equalsIgnoreCase(Payout.getSimpleName())) return new Payout(null, amount, category, description, null);
+      if (storedcategory.equalsIgnoreCase(Deposit.getSimpleName())) return new Deposit(null,amount,category,description,null);
+      else if (storedcategory.equalsIgnoreCase(Payout.getSimpleName())) return new Payout(null,amount,category,description,null);
     }
 
     throw new SWE_RuntimeException("Cannot create this transaction, the category is unknown !");
@@ -47,13 +48,14 @@ public abstract class TransactionCreator {
    * @throws SWE_RuntimeException if the passed category is not related with this user or if either the category or the store was {@code null}
    */
   public static Transaction transactionFromDatabaseData(final ZonedDateTime date, final String category, final float amount, final String description, final CategoryStore store, final Integer ID) {
+
     if (store == null || category == null) throw new SWE_RuntimeException("Could not check if the category is known !");
 
     if (store.categorySupported(category)) {
       String storedcategory = store.keyOfCategory(category);
 
-      if (storedcategory.equalsIgnoreCase(Deposit.getSimpleName())) return new Deposit(date, amount, category, description,ID);
-      else if (storedcategory.equalsIgnoreCase(Payout.getSimpleName())) return new Payout(date, amount, category, description,ID);
+      if (storedcategory.equalsIgnoreCase(Deposit.getSimpleName())) return new Deposit(date,amount,category,description,ID);
+      else if (storedcategory.equalsIgnoreCase(Payout.getSimpleName())) return new Payout(date,amount,category,description,ID);
     }
 
     throw new SWE_RuntimeException("Cannot create this transaction, the category is unknown !");

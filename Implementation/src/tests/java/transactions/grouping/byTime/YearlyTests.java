@@ -1,6 +1,8 @@
-package transactions.grouping.byCategory;
+package transactions.grouping.byTime;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +20,12 @@ import transactions.TransactionCreator;
 import transactions.grouping.TransactionOrganizing;
 import transactions.grouping.byAccount.AllAccounts;
 import transactions.grouping.byAccount.OneAccount;
+import transactions.grouping.byCategory.ByCategory;
 import user.User;
 
-class ByCategoryTests {
+class YearlyTests {
   private static final ThreadLocalRandom rand = ThreadLocalRandom.current();
+  private static Integer trans_id = 1;
   private static final int rounds = 5;
   private static User user;
   private static String[] categories;
@@ -34,24 +38,27 @@ class ByCategoryTests {
 
     categories = user.getCategories(null).toArray(new String[0]);
 
-    for (int i = 0; i < (rounds * categories.length); i++) {
-      user.applyAndSaveTransaction(randomTransaction(i), randomAccount());
+    for (int i = 0; i < rounds * categories.length; i++) {
+      for (int j = 0; j < rounds; j++) {
+        user.applyAndSaveTransaction(randomTransaction(i,j), randomAccount());
+      }
     }
   }
 
   @ParameterizedTest
   @MethodSource("decorationExamples")
   void afterOrganizing_transactionsShouldBeInCorrectContainer(final TransactionOrganizing orga) {
-    Map<String, CustomContainer<Transaction>> afterOrganizing = new ByCategory(orga).organize();
+    Map<String, CustomContainer<Transaction>> afterOrganizing = new Yearly(orga).organize();
 
     CustomIterator<Transaction> iter = null;
 
     for (String key : afterOrganizing.keySet()) {
       iter = afterOrganizing.get(key).getIterator();
       while (iter.hasNext()) {
-        assertTrue(key.contains(iter.next().getCategory()));
+        assertTrue(key.contains(Yearly.mappingborder + iter.next().getCreationDate().getYear() + Yearly.mappingborder));
       }
     }
+
   }
 
   /* ------------------------------ Modify this method to add more accounts ------------------------------ */
@@ -66,11 +73,21 @@ class ByCategoryTests {
   private static List<TransactionOrganizing> decorationExamples() {
     List<TransactionOrganizing> sampleData = new ArrayList<>();
     CustomIterator<Account> iter = user.getAccounts().getIterator();
+    boolean first = true;
 
     while (iter.hasNext()) {
-      sampleData.add(new OneAccount(user, iter.next().getAccount_number()));
+      if (first) {
+        sampleData.add(new ByCategory(new OneAccount(user, iter.next().getAccount_number())));
+        first = false;
+      }
+      else {
+        sampleData.add(new OneAccount(user, iter.next().getAccount_number()));
+      }
     }
     sampleData.add(new AllAccounts(user));
+    sampleData.add(new ByCategory(new AllAccounts(user)));
+    sampleData.add(new Yearly(new AllAccounts(user)));
+    sampleData.add(new Yearly(new ByCategory(new AllAccounts(user))));
 
     return sampleData;
   }
@@ -85,10 +102,12 @@ class ByCategoryTests {
     }
     return acc;
   }
-  private static Transaction randomTransaction(final int i) throws Exception {
-    Thread.sleep(10);
-    return TransactionCreator.newTransaction(categories[i % rounds], i * 100, "", user.getCategoryStore());
+  private static Transaction randomTransaction(final int i, final int j) throws Exception {
+    ZonedDateTime time = ZonedDateTime.of(1970+i, ((7*i+j)%12)+1, ((4*j+i)%28)+1, (3*i+j)%24, (5*j+i)%60, 00, 0, ZoneId.of("UTC"));
+    return TransactionCreator.transactionFromDatabaseData(time,categories[i % rounds], i * 100, "", user.getCategoryStore(),trans_id++);
   }
 }
+
+
 
 

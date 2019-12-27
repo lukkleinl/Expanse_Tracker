@@ -1,6 +1,5 @@
 package transactions.grouping.byTime;
 
-import java.time.ZonedDateTime;
 import java.util.Map;
 import iteration.CustomContainer;
 import transactions.Transaction;
@@ -18,9 +17,4 @@ public class Daily extends OrganizingRoot {
     // TODO Auto-generated method stub
     return null;
   }
-
-    @Override
-    public ZonedDateTime earliest() {
-        return null;
-    }
 }

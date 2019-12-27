@@ -1,8 +1,6 @@
 package transactions.grouping;
 
-import java.time.ZonedDateTime;
 import java.util.Map;
-import java.util.Set;
 import iteration.CustomContainer;
 import transactions.Transaction;
 
@@ -18,12 +16,4 @@ public interface TransactionOrganizing {
    * @return the grouped transactions
    */
   Map<String, CustomContainer<Transaction>> organize();
-
-  /* --------- the methods below are needed for implementation of different decorators ---------- */
-
-  /** @return the categories */
-  Set<String> getNestedCategories();
-
-  /** @return the earliest time depending on the transaction and implementation */
-  ZonedDateTime earliest();
 }

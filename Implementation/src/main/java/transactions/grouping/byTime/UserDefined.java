@@ -23,9 +23,4 @@ public class UserDefined extends OrganizingRoot {
     // TODO Auto-generated method stub
     return null;
   }
-
-  @Override
-  public ZonedDateTime earliest() {
-    return null;
-  }
 }

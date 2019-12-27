@@ -1,6 +1,5 @@
 package transactions.grouping.byTime;
 
-import java.time.ZonedDateTime;
 import java.util.Map;
 import iteration.CustomContainer;
 import transactions.Transaction;
@@ -16,11 +15,6 @@ public class Monthly extends OrganizingRoot {
   @Override
   public Map<String, CustomContainer<Transaction>> organize() {
     // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public ZonedDateTime earliest() {
     return null;
   }
 }
