@@ -10,12 +10,14 @@ import transactions.grouping.OrganizingRoot;
 import transactions.grouping.TransactionOrganizing;
 
 /**
- * Collects all transactions which's creation-time is within the specified timeframe but leaves their underlying mapping structure untouched.
+ * Collects all transactions which's creation-time is within the specified timeframe but leaves
+ * their underlying mapping structure untouched.
  *
  * @author Michael Watholowitsch
  */
 public class UserDefined extends OrganizingRoot {
-  public static final String mappingborder = "CUD";
+  public static final String mappingborder = "GUD";
+  private final String mapping;
   private final ZonedDateTime begin;
   private final ZonedDateTime end;
 
@@ -31,6 +33,8 @@ public class UserDefined extends OrganizingRoot {
     super(wrappee);
     this.begin = begin;
     this.end = end;
+    mapping = mappingborder + begin.getYear() + "-" + begin.getMonthValue() + "-" + begin.getDayOfMonth()
+    + "-to-" + end.getYear() + "-" + end.getMonthValue() + "-" + end.getDayOfMonth() + mappingborder;
   }
 
   @Override
@@ -41,18 +45,15 @@ public class UserDefined extends OrganizingRoot {
 
     for (String key : toDec.keySet()) {
       iter = toDec.get(key).getIterator();
-      groupedkey = mappingborder + begin.getYear() + "-" + begin.getMonthValue() + "-" + begin.getDayOfMonth() + "-to-" + end.getYear() + "-" + end.getMonthValue() + "-" + end.getDayOfMonth() + mappingborder + "_" + key;
+      groupedkey = mapping + "_" + key;
       grouped.putIfAbsent(groupedkey, new CustomList<>());
 
-      while (iter.hasNext() && iter.element().getCreationDate().isAfter(begin) && iter.element().getCreationDate().isBefore(end)) {
+      while (iter.hasNext() && iter.element().getCreationDate().isAfter(begin)
+          && iter.element().getCreationDate().isBefore(end)) {
         grouped.get(groupedkey).add(iter.next());
       }
     }
   }
 }
-
-
-
-
 
 
