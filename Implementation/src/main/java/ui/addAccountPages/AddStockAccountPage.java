@@ -18,20 +18,20 @@ public class AddStockAccountPage extends AbstractPage {
   private final static int SHIFT_LEFT = 300;
   private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
-  private JLabel IntroText;
-  private JLabel AccountName;
-  private JLabel Limit;
-  private JLabel BuyDate;
-  private JButton SubmitButton;
-  private JButton BackButton;
+  private JLabel introTextLabel;
+  private JLabel accountNameTextLabel;
+  private JLabel limitTextLabel;
+  private JLabel buydateTextLabel;
+  private JButton submitButton;
+  private JButton backButton;
 
-  private JTextField AccNameText;
-  private JFormattedTextField BuyDateText;
-  private JTextField LimitText;
+  private JTextField accountNameInputField;
+  private JFormattedTextField buyDateInputField;
+  private JTextField limitInputField;
 
-  private String AccName_String = "";
-  private Date BuyDate_Date;
-  private float Limit_Double = 0.00f;
+  private String accountNameInputValue = "";
+  private Date buyDateInputValue;
+  private float limitInputValue = 0.00f;
 
   private volatile boolean submitted;
   private volatile boolean backWanted;
@@ -48,20 +48,20 @@ public class AddStockAccountPage extends AbstractPage {
    * @return accName input from the User or default val.
    */
   public String getAccName() {
-    return AccName_String;
+    return accountNameInputValue;
   }
   /**
    * @return BuyDate input from the User  or default val.
    */
   public Date getBuyDate() {
-    return BuyDate_Date;
+    return buyDateInputValue;
   }
 
   /**
    * @return Limit input from the User  or default val.
    */
   public float getLimit() {
-    return Limit_Double;
+    return limitInputValue;
   }
   /**
    * @return current boolean value of submitted(whether the User submitted or not! )
@@ -83,43 +83,43 @@ public class AddStockAccountPage extends AbstractPage {
     submitted = false;
     backWanted = false;
 
-    IntroText = new JLabel(
+    introTextLabel = new JLabel(
         "Please Enter The relevant Data!" + "                    " + "logged in as:"
             + "<USERNAME>");
-    IntroText.setBounds(300, 10, 800, 50);
-    components.add(IntroText);
+    introTextLabel.setBounds(300, 10, 800, 50);
+    components.add(introTextLabel);
 
-    AccountName = new JLabel("Account Name:");
-    AccountName.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
-    components.add(AccountName);
+    accountNameTextLabel = new JLabel("Account Name:");
+    accountNameTextLabel.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
+    components.add(accountNameTextLabel);
 
-    AccNameText = new JTextField();
-    AccNameText.setBounds(10 + SHIFT_LEFT, 200 + OFFSET_Y, 300, 50);
-    components.add(AccNameText);
+    accountNameInputField = new JTextField();
+    accountNameInputField.setBounds(10 + SHIFT_LEFT, 200 + OFFSET_Y, 300, 50);
+    components.add(accountNameInputField);
 
-    Limit = new JLabel("Limit:");
-    Limit.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
-    components.add(Limit);
+    limitTextLabel = new JLabel("Limit:");
+    limitTextLabel.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
+    components.add(limitTextLabel);
 
-    LimitText = new JTextField("0.00");
-    LimitText.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
-    components.add(LimitText);
+    limitInputField = new JTextField("0.00");
+    limitInputField.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
+    components.add(limitInputField);
 
-    BuyDate = new JLabel("BuyDate:");
-    BuyDate.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
-    components.add(BuyDate);
+    buydateTextLabel = new JLabel("BuyDate:");
+    buydateTextLabel.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    components.add(buydateTextLabel);
 
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-    BuyDateText = new JFormattedTextField(df);
-    BuyDateText.setText("dd/mm/yyyy");
-    BuyDateText.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
-    components.add(BuyDateText);
+    buyDateInputField = new JFormattedTextField(df);
+    buyDateInputField.setText("dd/mm/yyyy");
+    buyDateInputField.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
+    components.add(buyDateInputField);
 
-    SubmitButton = new JButton("SUBMIT");
-    SubmitButton.setBounds(10 + SHIFT_LEFT, 600, 300, 50);
-    components.add(SubmitButton);
+    submitButton = new JButton("SUBMIT");
+    submitButton.setBounds(10 + SHIFT_LEFT, 600, 300, 50);
+    components.add(submitButton);
 
-    SubmitButton.addActionListener(new ActionListener() {
+    submitButton.addActionListener(new ActionListener() {
       @Override
       /**
        * @param e Action event
@@ -127,26 +127,25 @@ public class AddStockAccountPage extends AbstractPage {
        * extracts the Input Values and provides them for getters.
        */
       public void actionPerformed(ActionEvent e) {
-        AccName_String = AccNameText.getText();
-        BuyDate_Date = (Date) BuyDateText.getValue();
-        Limit_Double = Float.valueOf(LimitText.getText());
+        accountNameInputValue = accountNameInputField.getText();
+        buyDateInputValue = (Date) buyDateInputField.getValue();
+        limitInputValue = Float.valueOf(limitInputField.getText());
 
-        //TODO check limit and DATE
+        if (limitInputValue < 0)
+          // throw new IOException("Invalid limit Input!");
+        if(accountNameInputValue.isEmpty())
+          // throw new IOException("Invalid AccountName Input!");
 
-        System.out.println(
-            "Name: " + AccName_String +
-                "\nBuyDate: " + BuyDate_Date +
-                "\nLimit: " + Limit_Double
-        );
+        //TODO check buyDate Stuff?!?!
 
         submitted = true;
       }
     });
 
-    BackButton = new JButton("BACK");
-    BackButton.setBounds(10, 10, 100, 50);
-    components.add(BackButton);
-    BackButton.addActionListener(new ActionListener() {
+    backButton = new JButton("BACK");
+    backButton.setBounds(10, 10, 100, 50);
+    components.add(backButton);
+    backButton.addActionListener(new ActionListener() {
       @Override
       /**
        * @param e Action event
