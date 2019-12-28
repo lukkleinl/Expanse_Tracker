@@ -18,20 +18,20 @@ public class AddCashAccountPage extends AbstractPage {
   private final static int SHIFT_LEFT = 300;
   private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
-  private JLabel IntroText;
-  private JLabel AccountName;
-  private JLabel Limit;
-  private JLabel Currency;
-  private JButton SubmitButton;
-  private JButton BackButton;
+  private JLabel introText;
+  private JLabel accountNameText;
+  private JLabel limitText;
+  private JLabel currencyText;
+  private JButton submitButton;
+  private JButton backButton;
 
-  private JTextField AccNameText;
-  private JTextField CurrencyText;
-  private JTextField LimitText;
+  private JTextField accountNameInputField;
+  private JTextField currencyInputField;
+  private JTextField limitInputField;
 
-  private String AccName_String = "";
-  private String Currency_String = "";
-  private float Limit_Double = 0.00f;
+  private String accountNameInputValue = "";
+  private String currencyInputValue = "";
+  private float limitInputValue = 0.00f;
 
   private volatile boolean submitted;
   private volatile boolean backWanted;
@@ -56,20 +56,18 @@ public class AddCashAccountPage extends AbstractPage {
   /**
    * @return AccName input from the User or default val.
    */
-  public String getAccName() {
-    return AccName_String;
-  }
+  public String getAccountName() { return accountNameInputValue; }
   /**
    * @return Currency input from the User or default val.
    */
   public String getCurrency() {
-    return Currency_String;
+    return currencyInputValue;
   }
   /**
    * @return Limit input from the User or default val.
    */
   public float getLimit() {
-    return Limit_Double;
+    return limitInputValue;
   }
   /**
    * @return current boolean value of submitted(whether the User submitted or not! )
@@ -90,41 +88,41 @@ public class AddCashAccountPage extends AbstractPage {
     submitted = false;
     backWanted = false;
 
-    IntroText = new JLabel(
+    introText = new JLabel(
         "Please Enter The relevant Data!" + "                    " + "logged in as:"
             + "<USERNAME>");
-    IntroText.setBounds(300, 10, 800, 50);
-    components.add(IntroText);
+    introText.setBounds(300, 10, 800, 50);
+    components.add(introText);
 
-    AccountName = new JLabel("Account Name:");
-    AccountName.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
-    components.add(AccountName);
+    accountNameText = new JLabel("Account Name:");
+    accountNameText.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
+    components.add(accountNameText);
 
-    AccNameText = new JTextField();
-    AccNameText.setBounds(10 + SHIFT_LEFT, 200 + OFFSET_Y, 300, 50);
-    components.add(AccNameText);
+    accountNameInputField = new JTextField();
+    accountNameInputField.setBounds(10 + SHIFT_LEFT, 200 + OFFSET_Y, 300, 50);
+    components.add(accountNameInputField);
 
-    Limit = new JLabel("Limit:");
-    Limit.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
-    components.add(Limit);
+    limitText = new JLabel("Limit:");
+    limitText.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
+    components.add(limitText);
 
-    LimitText = new JTextField("0.00");
-    LimitText.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
-    components.add(LimitText);
+    limitInputField = new JTextField("0.00");
+    limitInputField.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
+    components.add(limitInputField);
 
-    Currency = new JLabel("Currency:");
-    Currency.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
-    components.add(Currency);
+    currencyText = new JLabel("Currency:");
+    currencyText.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    components.add(currencyText);
 
-    CurrencyText = new JTextField();
-    CurrencyText.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
-    components.add(CurrencyText);
+    currencyInputField = new JTextField();
+    currencyInputField.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
+    components.add(currencyInputField);
 
-    SubmitButton = new JButton("SUBMIT");
-    SubmitButton.setBounds(10 + SHIFT_LEFT, 600, 300, 50);
-    components.add(SubmitButton);
+    submitButton = new JButton("SUBMIT");
+    submitButton.setBounds(10 + SHIFT_LEFT, 600, 300, 50);
+    components.add(submitButton);
 
-    SubmitButton.addActionListener(new ActionListener() {
+    submitButton.addActionListener(new ActionListener() {
       @Override
       /**
        * @param e Action event
@@ -132,28 +130,29 @@ public class AddCashAccountPage extends AbstractPage {
        * extracts the Input Values and provides them for getters.
        */
       public void actionPerformed(ActionEvent e) {
-        AccName_String = AccNameText.getText();
-        Currency_String = CurrencyText.getText();
-        Limit_Double = Float.valueOf(LimitText.getText());
+        accountNameInputValue = accountNameInputField.getText();
+        currencyInputValue = currencyInputField.getText();
+        limitInputValue = Float.valueOf(limitInputField.getText());
 
-        if (Limit_Double < 0) {
-          //TODO throw Exception or so // check LIMIT
-        }
-            /*
-            System.out.println(
-                    "Name: " + AccName_String +
-                    "\nCurrency: " + Currency_String +
-                    "\nLimit: " + Limit_Double
-            );
-            */
-        submitted = true;
+
+        //TODO HANDLE EXCEPTIONS!
+
+        if (limitInputValue < 0)
+          // throw new IOException("Invalid limit Input!");
+        if(accountNameInputValue.isEmpty())
+          // throw new IOException("Invalid AccountName Input!");
+        if(currencyInputValue.isEmpty())
+          // throw new IOException("Invalid Currency Input!");
+
+
+          submitted = true;
       }
     });
 
-    BackButton = new JButton("BACK");
-    BackButton.setBounds(10, 10, 100, 50);
-    components.add(BackButton);
-    BackButton.addActionListener(new ActionListener() {
+    backButton = new JButton("BACK");
+    backButton.setBounds(10, 10, 100, 50);
+    components.add(backButton);
+    backButton.addActionListener(new ActionListener() {
       @Override
       /**
        * @param e Action event

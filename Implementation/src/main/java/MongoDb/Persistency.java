@@ -8,6 +8,8 @@ public interface Persistency {
   void updateUser(User user);
   void deleteUser(User user);
 
+
+
   /*    maybe in other class
   void insertAccount(User user);
   void updateAccount(User user);

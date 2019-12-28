@@ -116,7 +116,7 @@ public class UserInterface {
               }
               if (add_cashAccountPage.isSubmitted()) { //if submit button got pressed, add new account
                 user.addAccount(
-                    new Cash(add_cashAccountPage.getAccName(), add_cashAccountPage.getLimit(),
+                    new Cash(add_cashAccountPage.getAccountName(), add_cashAccountPage.getLimit(),
                         add_cashAccountPage.getCurrency()));
               } else { //if back button got pressed, go to account type page again
                 accountTypePage.configureFrame(frame);
