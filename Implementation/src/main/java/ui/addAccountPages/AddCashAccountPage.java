@@ -18,10 +18,10 @@ public class AddCashAccountPage extends AbstractPage {
   private final static int SHIFT_LEFT = 300;
   private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
-  private JLabel introText;
-  private JLabel accountNameText;
-  private JLabel limitText;
-  private JLabel currencyText;
+  private JLabel introTextLabel;
+  private JLabel accountNameTextLabel;
+  private JLabel limitTextLabel;
+  private JLabel currencyTextLabel;
   private JButton submitButton;
   private JButton backButton;
 
@@ -88,31 +88,31 @@ public class AddCashAccountPage extends AbstractPage {
     submitted = false;
     backWanted = false;
 
-    introText = new JLabel(
+    introTextLabel = new JLabel(
         "Please Enter The relevant Data!" + "                    " + "logged in as:"
             + "<USERNAME>");
-    introText.setBounds(300, 10, 800, 50);
-    components.add(introText);
+    introTextLabel.setBounds(300, 10, 800, 50);
+    components.add(introTextLabel);
 
-    accountNameText = new JLabel("Account Name:");
-    accountNameText.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
-    components.add(accountNameText);
+    accountNameTextLabel = new JLabel("Account Name:");
+    accountNameTextLabel.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
+    components.add(accountNameTextLabel);
 
     accountNameInputField = new JTextField();
     accountNameInputField.setBounds(10 + SHIFT_LEFT, 200 + OFFSET_Y, 300, 50);
     components.add(accountNameInputField);
 
-    limitText = new JLabel("Limit:");
-    limitText.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
-    components.add(limitText);
+    limitTextLabel = new JLabel("Limit:");
+    limitTextLabel.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
+    components.add(limitTextLabel);
 
     limitInputField = new JTextField("0.00");
     limitInputField.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
     components.add(limitInputField);
 
-    currencyText = new JLabel("Currency:");
-    currencyText.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
-    components.add(currencyText);
+    currencyTextLabel = new JLabel("Currency:");
+    currencyTextLabel.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    components.add(currencyTextLabel);
 
     currencyInputField = new JTextField();
     currencyInputField.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);

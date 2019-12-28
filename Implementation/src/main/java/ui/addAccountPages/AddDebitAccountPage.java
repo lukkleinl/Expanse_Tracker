@@ -15,23 +15,23 @@ public class AddDebitAccountPage extends AbstractPage {
   private final static int SHIFT_LEFT = 300;
   private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
-  private JLabel IntroText;
-  private JLabel AccountName;
-  private JLabel Limit;
-  private JLabel BankName;
-  private JLabel IBAN;
-  private JButton SubmitButton;
-  private JButton BackButton;
+  private JLabel introTextLabel;
+  private JLabel accountNameTextLabel;
+  private JLabel limitTextLabel;
+  private JLabel bankNameTextLabel;
+  private JLabel ibanTextLabel;
+  private JButton submitButton;
+  private JButton backButton;
 
-  private JTextField AccNameText;
-  private JTextField LimitText;
-  private JTextField BankNameText;
-  private JTextField IBANField;
-  private String AccName_String = "";
+  private JTextField accountNameInputField;
+  private JTextField limitInputField;
+  private JTextField bankNameInputField;
+  private JTextField ibanInputField;
 
-  private String BankName_String = "";
-  private String IBAN_STRING = "";
-  private float Limit_Double = 0.00f;
+  private String accountNameInputValue = "";
+  private String bankNameInputValue = "";
+  private String ibanInputValue = "";
+  private float limitInputValue = 0.00f;
 
   private volatile boolean submitted;
   private volatile boolean backWanted;
@@ -47,26 +47,26 @@ public class AddDebitAccountPage extends AbstractPage {
   /**
    * @return AccName input from the User or default val.
    */
-  public String getAccName() {
-    return AccName_String;
+  public String getAccountName() {
+    return accountNameInputValue;
   }
   /**
    * @return IBAN input from the User or default val.
    */
   public String getIBAN() {
-    return IBAN_STRING;
+    return ibanInputValue;
   }
   /**
    * @return Limit input from the User or default val.
    */
   public float getLimit() {
-    return Limit_Double;
+    return limitInputValue;
   }
   /**
    * @return BankName input from the User or default val.
    */
-  public String getBankName_String() {
-    return BankName_String;
+  public String getBankName() {
+    return bankNameInputValue;
   }
   /**
    * @return current boolean value of submitted(whether the User submitted or not! )
@@ -87,49 +87,49 @@ public class AddDebitAccountPage extends AbstractPage {
     submitted = false;
     backWanted = false;
 
-    IntroText = new JLabel(
+    introTextLabel = new JLabel(
         "Please Enter The relevant Data!" + "                    " + "logged in as:"
             + "<USERNAME>");
-    IntroText.setBounds(300, 10, 800, 50);
-    components.add(IntroText);
+    introTextLabel.setBounds(300, 10, 800, 50);
+    components.add(introTextLabel);
 
-    AccountName = new JLabel("Account Name:");
-    AccountName.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
-    components.add(AccountName);
+    accountNameTextLabel = new JLabel("Account Name:");
+    accountNameTextLabel.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
+    components.add(accountNameTextLabel);
 
-    AccNameText = new JTextField();
-    AccNameText.setBounds(10 + SHIFT_LEFT, 200 + OFFSET_Y, 300, 50);
-    components.add(AccNameText);
+    accountNameInputField = new JTextField();
+    accountNameInputField.setBounds(10 + SHIFT_LEFT, 200 + OFFSET_Y, 300, 50);
+    components.add(accountNameInputField);
 
-    Limit = new JLabel("Limit:");
-    Limit.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
-    components.add(Limit);
+    limitTextLabel = new JLabel("Limit:");
+    limitTextLabel.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
+    components.add(limitTextLabel);
 
-    LimitText = new JTextField("0.00");
-    LimitText.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
-    components.add(LimitText);
+    limitInputField = new JTextField("0.00");
+    limitInputField.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
+    components.add(limitInputField);
 
-    IBAN = new JLabel("IBAN:");
-    IBAN.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
-    components.add(IBAN);
+    ibanTextLabel = new JLabel("IBAN:");
+    ibanTextLabel.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    components.add(ibanTextLabel);
 
-    IBANField = new JTextField();
-    IBANField.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
-    components.add(IBANField);
+    ibanInputField = new JTextField();
+    ibanInputField.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
+    components.add(ibanInputField);
 
-    BankName = new JLabel("Bank Name:");
-    BankName.setBounds(10 + SHIFT_LEFT, 500, 300, 50);
-    components.add(BankName);
+    bankNameTextLabel = new JLabel("Bank Name:");
+    bankNameTextLabel.setBounds(10 + SHIFT_LEFT, 500, 300, 50);
+    components.add(bankNameTextLabel);
 
-    BankNameText = new JTextField();
-    BankNameText.setBounds(10 + SHIFT_LEFT, 500 + OFFSET_Y, 300, 50);
-    components.add(BankNameText);
+    bankNameInputField = new JTextField();
+    bankNameInputField.setBounds(10 + SHIFT_LEFT, 500 + OFFSET_Y, 300, 50);
+    components.add(bankNameInputField);
 
-    SubmitButton = new JButton("SUBMIT");
-    SubmitButton.setBounds(10 + SHIFT_LEFT, 650, 300, 50);
-    components.add(SubmitButton);
+    submitButton = new JButton("SUBMIT");
+    submitButton.setBounds(10 + SHIFT_LEFT, 650, 300, 50);
+    components.add(submitButton);
 
-    SubmitButton.addActionListener(new ActionListener() {
+    submitButton.addActionListener(new ActionListener() {
       @Override
       /**
        * @param e Action event
@@ -137,30 +137,33 @@ public class AddDebitAccountPage extends AbstractPage {
        * extracts the Input Values and provides them for getters.
        */
       public void actionPerformed(ActionEvent e) {
-        AccName_String = AccNameText.getText();
-        IBAN_STRING = IBANField.getText();
-        Limit_Double = Float.valueOf(LimitText.getText());
-        BankName_String = BankNameText.getText();
+        accountNameInputValue = accountNameInputField.getText();
+        ibanInputValue = ibanInputField.getText();
+        limitInputValue = Float.valueOf(limitInputField.getText());
+        bankNameInputValue = bankNameInputField.getText();
 
-        //TODO check limit and IBAN
+        //TODO HANDLE EXCEPTIONS!
 
-        System.out.println(
-            "Name: " + AccName_String +
-                "\nIBAN: " + IBAN_STRING +
-                "\nLimit: " + Limit_Double +
-                "\nBankName: " + BankName_String
-        );
+        if (limitInputValue < 0)
+          // throw new IOException("Invalid limit Input!");
+        if(accountNameInputValue.isEmpty())
+          // throw new IOException("Invalid AccountName Input!");
+        if(bankNameInputValue.isEmpty())
+          //throw new IOException("Invalid BankName Input!");
+        if(ibanInputValue.isEmpty())
+          //throw new IOException("Invalid IBAN Input!");
 
-        submitted = true;
+
+          submitted = true;
 
 
       }
     });
 
-    BackButton = new JButton("BACK");
-    BackButton.setBounds(10, 10, 100, 50);
-    components.add(BackButton);
-    BackButton.addActionListener(new ActionListener() {
+    backButton = new JButton("BACK");
+    backButton.setBounds(10, 10, 100, 50);
+    components.add(backButton);
+    backButton.addActionListener(new ActionListener() {
       @Override
       /**
        * @param e Action event

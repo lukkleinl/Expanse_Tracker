@@ -128,8 +128,8 @@ public class UserInterface {
                 //wait until either back button or submit button got pressed
               }
               if (add_debitAccountPage.isSubmitted()) { //if submit button got pressed, add new account
-                user.addAccount(new DebitCard(add_debitAccountPage.getAccName(),
-                    add_debitAccountPage.getBankName_String(), add_debitAccountPage.getLimit(),
+                user.addAccount(new DebitCard(add_debitAccountPage.getAccountName(),
+                    add_debitAccountPage.getBankName(), add_debitAccountPage.getLimit(),
                     add_debitAccountPage.getIBAN()));
               } else { //if back button got pressed, go to account type page again
                 accountTypePage.configureFrame(frame);
@@ -142,9 +142,9 @@ public class UserInterface {
                 //wait until either back button or submit button got pressed
               }
               if (add_creditAccountPage.isSubmitted()) { //if submit button got pressed, add new account
-                user.addAccount(new CreditCard(add_creditAccountPage.getAccName(),
-                    add_creditAccountPage.getBankName_String(), add_creditAccountPage.getLimit(),
-                    add_creditAccountPage.getExpiry()));
+                user.addAccount(new CreditCard(add_creditAccountPage.getAccountName(),
+                    add_creditAccountPage.getBankName(), add_creditAccountPage.getLimit(),
+                    add_creditAccountPage.getExpiryDate()));
               } else { //if back button got pressed, go to account type page again
                 accountTypePage.configureFrame(frame);
               }
