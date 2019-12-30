@@ -6,6 +6,8 @@ import accounts.Account;
 import exceptions.SWE_Exception;
 import iteration.CustomContainer;
 import iteration.CustomList;
+import observing.Database;
+import observing.SWE_Observable;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
@@ -18,7 +20,7 @@ import transactions.strategy.SimplePayout;
 /**
  * Representation of a user.
  */
-public class User {
+public class User extends SWE_Observable {
   private final String firstname;
   private final String lastname;
   private final int userID;
@@ -35,6 +37,7 @@ public class User {
    * @param lastname The users last name.
    * @param password The password for the user
    */
+  @Deprecated
   public User(final int userID, final String firstname, final String lastname,
       final String password) {
     this.userID = userID;
@@ -46,13 +49,43 @@ public class User {
     categories = new CategoryStore();
   }
 
+
+  // VON PAUL  neuer Konstruktor fürs Observer Pattern,
+  // wenn User erstellt wird erwartet er jz die Database und subscribed sich automatisch
+    /**
+     * Creates a new User without any Accounts or Transactions.
+     *
+     * @param userID The ID within the system and needed to log in
+     * @param firstname The users first name.
+     * @param lastname The users last name.
+     * @param password The password for the user.
+     * @param  database The local Database(Observer) that handles Persistency.
+     */
+    public User(final int userID, final String firstname, final String lastname,
+                final String password, Database database) throws Exception {
+        this.userID = userID;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        accounts = new CustomList<>();
+        transactions = new TransactionStore();
+        this.password = password;
+        categories = new CategoryStore();
+
+        this.subscribe(database);
+        updateObservers(this);
+    }
+
+    //</Paul>
+
   /**
    * Adds a new Account to the CustomContainer of this Users Accounts.
    *
    * @param acc the new account
    */
   public void addAccount(final Account acc) {
-    accounts.add(acc);
+
+      accounts.add(acc);
+      updateObservers(this); // VON PAUL fürs observer
   }
 
   /**
@@ -76,6 +109,7 @@ public class User {
 
     strategy.applyBalanceChange();
     transactions.addTransactionUnderKey(account.getAccount_number(), transaction);
+    updateObservers(this); // VON PAUL fürs observer
   }
 
   /**
@@ -93,6 +127,8 @@ public class User {
    */
   public void newTransactionCategory(final TransactionCategoryFunctionality strategy) {
     categories.addTransactionCategory(strategy);
+    updateObservers(this); // VON PAUL fürs observer
+
   }
 
   /**
@@ -103,6 +139,7 @@ public class User {
    */
   public void removeTransactionCategory(final String categoryname) {
     categories.removeCategory(categoryname);
+    updateObservers(this); // VON PAUL fürs observer
   }
 
   /**
