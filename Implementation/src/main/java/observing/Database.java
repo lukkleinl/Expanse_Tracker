@@ -56,11 +56,11 @@ public class Database implements SWE_Observer {
             it.next();
 
             if(it.element().getUserID() == id) {
-                return User
+                return it.element();
             }
         }
 
         return null;
     }
 
-    }
+}
