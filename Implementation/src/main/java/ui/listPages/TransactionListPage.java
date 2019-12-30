@@ -29,16 +29,16 @@ public class TransactionListPage extends AbstractPage {
   private final static int SHIFT_LEFT = 0;
   private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
-  private JLabel IntroText;
-  private String IntroTextMessage;
+  private JLabel introTextLabel;
+  private String introTextMessage;
 
-  private JLabel AccountName;
-  private JLabel Balance;
-  private JLabel Limit;
+  private JLabel accountName_VisualizationLabel;
+  private JLabel balance_VisualizationLabel;
+  private JLabel limit_VisualizationLabel;
 
-  private JLabel CustomLabel2;
-  private JLabel CustomLabel3;
-  private JButton BackButton;
+  private JLabel customDescriptionLabel_1;
+  private JLabel customDescriptionLabel_2;
+  private JButton backButton;
   private JButton newDepositButton;
   private JButton newPayoutButton;
 
@@ -49,7 +49,7 @@ public class TransactionListPage extends AbstractPage {
   private volatile boolean newPayoutWanted;
   private volatile boolean backWanted;
 
-  private final Account acc;
+  private final Account account;
   private final User user;
 
   /**
@@ -58,7 +58,7 @@ public class TransactionListPage extends AbstractPage {
    * @param user User who belongs to that account.
    */
   public TransactionListPage(final Account acc, final User user) {
-    this.acc = acc;
+    this.account = acc;
     this.user = user;
     this.createComponents();
   }
@@ -90,11 +90,11 @@ public class TransactionListPage extends AbstractPage {
 
     components = new ArrayList<>();
 
-    String[] TransactionDescription = {"Type", "Descriptions", "Amount", "Creation-Date",
+    String[] transactionDescriptions = {"Type", "Descriptions", "Amount", "Creation-Date",
     "Category"};
-    CustomContainer<Transaction> transactionlist = user.getTransactionStore().getTransactions().get(acc.getAccount_number());
+    CustomContainer<Transaction> transactionlist = user.getTransactionStore().getTransactions().get(account.getAccount_number());
     int listSize = transactionlist == null ? 0 : transactionlist.size();
-    String[][] TransactionList_VISU = new String[listSize][6];
+    String[][] transactionList_VISU = new String[listSize][6];
 
     if (listSize > 0) {
 
@@ -106,26 +106,26 @@ public class TransactionListPage extends AbstractPage {
         Transaction transtemp = it.next();
 
         if (transtemp instanceof Payout) {
-          TransactionList_VISU[i][0] = "Payout";
-          TransactionList_VISU[i][4] = ((Payout) transtemp).getPayoutCategory()
+          transactionList_VISU[i][0] = "Payout";
+          transactionList_VISU[i][4] = ((Payout) transtemp).getPayoutCategory()
               .toString();
         } else {
-          TransactionList_VISU[i][0] = "Deposit";
-          TransactionList_VISU[i][4] = ((Deposit) transtemp).getCategory()
+          transactionList_VISU[i][0] = "Deposit";
+          transactionList_VISU[i][4] = ((Deposit) transtemp).getCategory()
               .toString();
         }
 
-        TransactionList_VISU[i][1] = transtemp.getDescription();
-        TransactionList_VISU[i][2] = "" + transtemp.getAmount();
-        TransactionList_VISU[i][5] = "" + transtemp.getID();
-        TransactionList_VISU[i++][3] = transtemp.getFormattedCreationDate();
+        transactionList_VISU[i][1] = transtemp.getDescription();
+        transactionList_VISU[i][2] = "" + transtemp.getAmount();
+        transactionList_VISU[i][5] = "" + transtemp.getID();
+        transactionList_VISU[i++][3] = transtemp.getFormattedCreationDate();
 
 
       }
 
     }
 
-    transactionTable = new JTable(TransactionList_VISU, TransactionDescription);
+    transactionTable = new JTable(transactionList_VISU, transactionDescriptions);
 
     //https://stackoverflow.com/questions/9919230/disable-user-edit-in-jtable
     // MAKES THE ELEMENTS IN THE TABLE UNEDITABLE
@@ -135,7 +135,7 @@ public class TransactionListPage extends AbstractPage {
     transactionTable.getSelectionModel().addListSelectionListener(event -> {
 
       int ID_OF_SELECTED_TRANSACTION = Integer
-          .valueOf(TransactionList_VISU[transactionTable.getSelectedRow()][5]);
+          .valueOf(transactionList_VISU[transactionTable.getSelectedRow()][5]);
 
       System.out.println("selected Row Nr:" + transactionTable.getSelectedRow());
     });
@@ -144,58 +144,58 @@ public class TransactionListPage extends AbstractPage {
     scrollPane.setBounds(225, 100, 900, 450);
     components.add(scrollPane);
 
-    IntroTextMessage = "Account-Type: ";
+    introTextMessage = "Account-Type: ";
 
-    IntroText = new JLabel();
-    IntroText.setBounds(300, 10, 800, 50);
+    introTextLabel = new JLabel();
+    introTextLabel.setBounds(300, 10, 800, 50);
 
-    AccountName = new JLabel("Account Name: " + acc.getName());
-    AccountName.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
-    components.add(AccountName);
+    accountName_VisualizationLabel = new JLabel("Account Name: " + account.getName());
+    accountName_VisualizationLabel.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
+    components.add(accountName_VisualizationLabel);
 
-    Balance = new JLabel("Balance: " + acc.getBalance());
-    Balance.setBounds(10 + SHIFT_LEFT, 250, 300, 50);
-    components.add(Balance);
+    balance_VisualizationLabel = new JLabel("Balance: " + account.getBalance());
+    balance_VisualizationLabel.setBounds(10 + SHIFT_LEFT, 250, 300, 50);
+    components.add(balance_VisualizationLabel);
 
-    Limit = new JLabel("Limit: " + acc.getLimit());
-    Limit.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
-    components.add(Limit);
+    limit_VisualizationLabel = new JLabel("Limit: " + account.getLimit());
+    limit_VisualizationLabel.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
+    components.add(limit_VisualizationLabel);
 
-    CustomLabel2 = new JLabel();
-    CustomLabel2.setBounds(10 + SHIFT_LEFT, 350, 300, 50);
+    customDescriptionLabel_1 = new JLabel();
+    customDescriptionLabel_1.setBounds(10 + SHIFT_LEFT, 350, 300, 50);
 
-    CustomLabel3 = new JLabel();
-    CustomLabel3.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    customDescriptionLabel_2 = new JLabel();
+    customDescriptionLabel_2.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
 
-    if (acc instanceof BankAccount) {
-      IntroTextMessage += "BankAccount ";
-      CustomLabel2.setText("Bankname: " + ((BankAccount) acc).getBankName());
-      CustomLabel3.setText("");
-    } else if (acc instanceof Cash) {
-      IntroTextMessage += "CashAccount ";
-      CustomLabel2.setText("Currency: " + ((Cash) acc).getCurrency());
-      CustomLabel3.setText("");
-    } else if (acc instanceof CreditCard) {
-      IntroTextMessage += "CreditCardAccount ";
-      CustomLabel2.setText("Expiry-Date: " + ((CreditCard) acc).getExpiryDate());
-      CustomLabel3.setText("");
-    } else if (acc instanceof DebitCard) {
-      IntroTextMessage += "DebitCardAccount ";
-      CustomLabel2.setText("IBAN: " + ((DebitCard) acc).getIBAN());
-      CustomLabel3.setText("");
+    if (account instanceof BankAccount) {
+      introTextMessage += "BankAccount ";
+      customDescriptionLabel_1.setText("Bankname: " + ((BankAccount) account).getBankName());
+      customDescriptionLabel_2.setText("");
+    } else if (account instanceof Cash) {
+      introTextMessage += "CashAccount ";
+      customDescriptionLabel_1.setText("Currency: " + ((Cash) account).getCurrency());
+      customDescriptionLabel_2.setText("");
+    } else if (account instanceof CreditCard) {
+      introTextMessage += "CreditCardAccount ";
+      customDescriptionLabel_1.setText("Expiry-Date: " + ((CreditCard) account).getExpiryDate());
+      customDescriptionLabel_2.setText("");
+    } else if (account instanceof DebitCard) {
+      introTextMessage += "DebitCardAccount ";
+      customDescriptionLabel_1.setText("IBAN: " + ((DebitCard) account).getIBAN());
+      customDescriptionLabel_2.setText("");
     }
 
-    IntroTextMessage += "  logged in as: " + user.getFirstname() + " " + user.getLastname();
+    introTextMessage += "  logged in as: " + user.getFirstname() + " " + user.getLastname();
 
-    components.add(CustomLabel2);
-    components.add(CustomLabel3);
-    IntroText.setText(IntroTextMessage);
-    components.add(IntroText);
+    components.add(customDescriptionLabel_1);
+    components.add(customDescriptionLabel_2);
+    introTextLabel.setText(introTextMessage);
+    components.add(introTextLabel);
 
-    BackButton = new JButton("BACK");
-    BackButton.setBounds(10, 10, 100, 50);
-    components.add(BackButton);
-    BackButton.addActionListener(e -> backWanted = true);
+    backButton = new JButton("BACK");
+    backButton.setBounds(10, 10, 100, 50);
+    components.add(backButton);
+    backButton.addActionListener(e -> backWanted = true);
 
     newPayoutButton = new JButton("NEW PAYOUT");
     newPayoutButton.setBounds(400, 600, 200, 70);
