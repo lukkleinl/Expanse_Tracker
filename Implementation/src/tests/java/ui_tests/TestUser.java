@@ -1,5 +1,6 @@
 package ui_tests;
 
+import exceptions.SWE_Exception;
 import java.util.Date;
 import accounts.Cash;
 import accounts.CreditCard;
@@ -25,7 +26,7 @@ public class TestUser {
    *
    * @return The test user object.
    */
-  public static User getTestUser() {
+  public static User getTestUser() throws SWE_Exception {
     User user = new User(1234, "Max", "Mustermann", "123");
     Cash cash = new Cash("Wallet", 0, "Euro");
     user.addAccount(cash);
@@ -35,8 +36,8 @@ public class TestUser {
         new CreditCard("MasterCard CreditCard", "Austria", 5000, new Date(2022, 1, 1)));
     user.addAccount(new DebitCard("Giro Account", "Bank Austria", 1000, "AT121200001203250544"));
     user.addAccount(new Stocks("Amazon Stocks", new Date(2013, 2, 5), 0));
-    Transaction trans1 = TransactionCreator.newTransactionWith("SALARY",10350.35f,"Test",user.getCategoryStore());
-    user.handleTransaction(trans1, cash);
+    Transaction trans1 = TransactionCreator.newTransaction("SALARY",10350.35f,"Test",user.getCategoryStore());
+    user.applyAndSaveTransaction(trans1, cash);
     return user;
   }
 }

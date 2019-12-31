@@ -1,8 +1,7 @@
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import accounts.Account;
 import accounts.Cash;
 import accounts.DebitCard;
+import java.time.ZonedDateTime;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
@@ -10,7 +9,6 @@ import transactions.TransactionCreator;
 import transactions.categories.CategoryStore;
 import transactions.categories.DepositCategory;
 import transactions.categories.PayoutCategory;
-import transactions.grouping.byAccount.AllAccounts;
 import user.User;
 
 public class NonJUnitTesting {
@@ -33,22 +31,20 @@ public class NonJUnitTesting {
 
       final int rounds = 5;
 
-      user.applyAndSaveTransaction(TransactionCreator.newTransactionWith(
-          ZonedDateTime.of(2017, 12, 14, 7, 18, 47, 91, ZoneId.of("UTC")), categories[0], 7, "",
-          user.getCategoryStore(), 2000), cash);
+      ZonedDateTime date=null;
 
-      user.applyAndSaveTransaction(TransactionCreator.newTransactionWith(
-          ZonedDateTime.of(2014, 12, 14, 7, 18, 47, 91, ZoneId.of("UTC")), categories[0], 7, "",
-          user.getCategoryStore(), 2000), debit);
+      user.applyAndSaveTransaction(TransactionCreator.newTransaction("cash", 7, "", user.getCategoryStore()), cash);
+
+      user.applyAndSaveTransaction(TransactionCreator.newTransaction("debit", 7, "",user.getCategoryStore() ), debit);
 
       for (int i = 0; i < (rounds * categories.length); i++) {
-        Transaction transcash = TransactionCreator.newTransactionWith(categories[i % rounds],
+        Transaction transcash = TransactionCreator.newTransaction(categories[i % rounds],
             i * 100, "", user.getCategoryStore());
         user.applyAndSaveTransaction(transcash, cash);
 
         Thread.sleep(10);
 
-        Transaction transdebit = TransactionCreator.newTransactionWith(
+        Transaction transdebit = TransactionCreator.newTransaction(
             categories[categories.length - 1 - (i % rounds)], i * 200, "", user.getCategoryStore());
         user.applyAndSaveTransaction(transdebit, debit);
 
@@ -61,11 +57,11 @@ public class NonJUnitTesting {
       e.printStackTrace();
     }
 
-    System.out.println(new AllAccounts(user).earliest());
+    //System.out.println(new AllAccounts(user).earliest());
   }
 
   private static void timeTesting() {
-    Transaction t = TransactionCreator.newTransactionWith("FOOD", 50, "McD", new CategoryStore());
+    Transaction t = TransactionCreator.newTransaction("FOOD", 50, "McD", new CategoryStore());
     System.out.println("Stored Creation Date: " + t.getCreationDate());
     System.out.println("Stored Creation Date after formatting: " + t.getFormattedCreationDate());
     System.out.println("Is Deposit: " + (t instanceof Deposit));

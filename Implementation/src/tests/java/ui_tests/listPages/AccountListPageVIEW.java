@@ -1,6 +1,7 @@
 package ui_tests.listPages;
 
 import accounts.Account;
+import exceptions.SWE_Exception;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import javax.swing.JFrame;
@@ -9,7 +10,7 @@ import ui_tests.TestUser;
 import user.User;
 
 public class AccountListPageVIEW {
-  public static void main(String args[]){
+  public static void main(String args[]) throws SWE_Exception {
     JFrame frame = new JFrame();
     frame.setLayout(null);
     frame.setResizable(false);

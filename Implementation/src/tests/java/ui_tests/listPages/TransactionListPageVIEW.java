@@ -18,14 +18,14 @@ public class TransactionListPageVIEW {
     for (int i = 0; i < 100; i++) {
       if (i < 50) {
         try {
-          Transaction deposit = TransactionCreator.newTransactionWith("SALARY", i % 3 + 1000, "desc" + i, testUser.getCategoryStore());
-          testUser.handleTransaction(deposit, testbankacc);
+          Transaction deposit = TransactionCreator.newTransaction("SALARY", i % 3 + 1000, "desc" + i, testUser.getCategoryStore());
+          testUser.applyAndSaveTransaction(deposit, testbankacc);
         } catch (Exception e) {
         }
       } else {
         try {
-          Transaction payout = TransactionCreator.newTransactionWith("FOOD", i % 3 + 1000, "dec" + i, testUser.getCategoryStore());
-          testUser.handleTransaction(payout, testbankacc);
+          Transaction payout = TransactionCreator.newTransaction("FOOD", i % 3 + 1000, "dec" + i, testUser.getCategoryStore());
+          testUser.applyAndSaveTransaction(payout, testbankacc);
         } catch (Exception e) {
         }
       }
