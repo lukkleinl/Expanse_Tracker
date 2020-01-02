@@ -16,14 +16,14 @@ import user.User;
 
 public class AddDepositPage extends AbstractPage{
 
-  private JLabel introText;
+  private JLabel introTextLabel;
   private JLabel amountInputText;
   private JTextField amountInputField;
   private JLabel descriptionInputText;
   private JTextField descriptionInputField;
   private JLabel categoryInputText;
   private JComboBox categoryInputBox;
-  private Object[] payoutCategorys; /* = {"SALARY","DIVIDEND"}; */
+  private Object[] depositCategorys; /* = {"SALARY","DIVIDEND"}; */
   private String categoryInputValue;
   private String descriptionInputValue ="";
   private float amountInputValue = 1.0f;
@@ -79,7 +79,7 @@ public class AddDepositPage extends AbstractPage{
   public AddDepositPage(User user)
   {
     this.user = user;
-    payoutCategorys = this.user.getCategories(new DepositCategory()).toArray();
+    depositCategorys = this.user.getCategories(new DepositCategory()).toArray();
     this.createComponents();
   }
 
@@ -91,43 +91,56 @@ public class AddDepositPage extends AbstractPage{
     backWanted = false;
     refreshWanted = false;
 
-    categoryInputText = new JLabel("Payout Category:");
-    categoryInputText.setBounds(100, 50, 300, 50);
+    introTextLabel = new JLabel("Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
+    introTextLabel.setBounds(200, 10, 1000, 50);
+    introTextLabel.setFont(HEADER_FONT);
+    components.add(introTextLabel);
+
+    categoryInputText = new JLabel("Deposit Category:");
+    categoryInputText.setBounds(300, 150, 300, 50);
+    categoryInputText.setFont(LABEL_FONT);
     components.add(categoryInputText);
 
-    categoryInputBox = new JComboBox(payoutCategorys);
-    categoryInputBox.setBounds(100, 100, 300, 50);
+    categoryInputBox = new JComboBox(depositCategorys);
+    categoryInputBox.setBounds(600, 150, 300, 50);
+    categoryInputBox.setFont(TEXTFIELD_FONT);
     components.add(categoryInputBox);
 
-    newCategoryOptionPaneButton = new JButton("Create Custom Deposit-Category");
-    newCategoryOptionPaneButton.setBounds(450,100,300,50);
+    newCategoryOptionPaneButton = new JButton("Create Category");
+    newCategoryOptionPaneButton.setBounds(600,250,300,50);
+    newCategoryOptionPaneButton.setFont(BUTTON_FONT);
     components.add(newCategoryOptionPaneButton);
 
     amountInputText = new JLabel("Amount:");
-    amountInputText.setBounds(100, 150, 300, 50);
+    amountInputText.setBounds(300, 350, 300, 50);
+    amountInputText.setFont(LABEL_FONT);
     components.add(amountInputText);
 
     amountInputField = new JTextField("");
-    amountInputField.setBounds(100, 200, 300, 50);
+    amountInputField.setBounds(600, 350, 300, 50);
+    amountInputField.setFont(TEXTFIELD_FONT);
     components.add(amountInputField);
 
     descriptionInputText = new JLabel("Description:");
-    descriptionInputText.setBounds(100, 250, 300, 50);
+    descriptionInputText.setBounds(300, 450, 300, 50);
+    descriptionInputText.setFont(LABEL_FONT);
     components.add(descriptionInputText);
 
-    descriptionInputField = new JTextField("");
-    descriptionInputField.setBounds(100, 300, 300, 50);
+    descriptionInputField = new JTextField();
+    descriptionInputField.setBounds(600, 450, 300, 50);
+    descriptionInputField.setFont(TEXTFIELD_FONT);
     components.add(descriptionInputField);
 
-    submitButton = new JButton("Deposit");
-    submitButton.setBounds(100, 500, 300, 50);
+    submitButton = new JButton("DEPOSIT");
+    submitButton.setBounds(450, 600, 300, 50);
+    submitButton.setFont(BUTTON_FONT);
     components.add(submitButton);
 
     newCategoryOptionPaneButton.addActionListener(actionEvent -> {
-      String categoryName = JOptionPane.showInputDialog("Enter Name of New Category!");
+      String categoryName = JOptionPane.showInputDialog("Enter name of new category!");
       System.out.println(categoryName);
       user.newTransactionCategory(new DepositCategory(categoryName));
-      payoutCategorys = user.getCategories(new DepositCategory()).toArray();
+      depositCategorys = user.getCategories(new DepositCategory()).toArray();
       refreshWanted = true;
     });
 
@@ -149,12 +162,6 @@ public class AddDepositPage extends AbstractPage{
     backButton.setBounds(10, 10, 100, 50);
     components.add(backButton);
     backButton.addActionListener(e -> backWanted = true);
-
-  }
-
-  public void handleExceptions(Exception e){
-
-      String str = JOptionPane.showInputDialog("Hallo!");
 
   }
 

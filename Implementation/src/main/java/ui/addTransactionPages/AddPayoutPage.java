@@ -16,7 +16,7 @@ import user.User;
 
 public class AddPayoutPage extends AbstractPage {
 
-  private JLabel introText;
+  private JLabel introTextLabel;
   private JLabel amountInputText;
   private JTextField amountInputField;
   private JLabel descriptionInputText;
@@ -93,42 +93,53 @@ public class AddPayoutPage extends AbstractPage {
     backWanted = false;
     refreshWanted = false;
 
-    categoryInputText = new JLabel("Payout Category:");
-    categoryInputText.setBounds(100, 50, 300, 50);
+    introTextLabel = new JLabel("Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
+    introTextLabel.setBounds(200, 10, 1000, 50);
+    introTextLabel.setFont(HEADER_FONT);
+    components.add(introTextLabel);
+
+    categoryInputText = new JLabel("Payout category:");
+    categoryInputText.setBounds(300, 150, 300, 50);
+    categoryInputText.setFont(LABEL_FONT);
     components.add(categoryInputText);
 
-    newCategoryOptionPaneButton = new JButton("Create Custom Payout-Category");
-    newCategoryOptionPaneButton.setBounds(450,100,300,50);
-    components.add(newCategoryOptionPaneButton);
-
-
-    // TODO - take categories of user instead
     categoryInputBox = new JComboBox(payoutCategorys);
-    categoryInputBox.setBounds(100, 100, 300, 50);
+    categoryInputBox.setBounds(600, 150, 300, 50);
+    categoryInputBox.setFont(TEXTFIELD_FONT);
     components.add(categoryInputBox);
 
+    newCategoryOptionPaneButton = new JButton("Create category");
+    newCategoryOptionPaneButton.setBounds(600,250,300,50);
+    newCategoryOptionPaneButton.setFont(BUTTON_FONT);
+    components.add(newCategoryOptionPaneButton);
+
     amountInputText = new JLabel("Amount:");
-    amountInputText.setBounds(100, 150, 300, 50);
+    amountInputText.setBounds(300, 350, 300, 50);
+    amountInputText.setFont(LABEL_FONT);
     components.add(amountInputText);
 
-    amountInputField = new JTextField("");
-    amountInputField.setBounds(100, 200, 300, 50);
+    amountInputField = new JTextField();
+    amountInputField.setBounds(600, 350, 300, 50);
+    amountInputField.setFont(TEXTFIELD_FONT);
     components.add(amountInputField);
 
     descriptionInputText = new JLabel("Description:");
-    descriptionInputText.setBounds(100, 250, 300, 50);
+    descriptionInputText.setBounds(300, 450, 300, 50);
+    descriptionInputText.setFont(LABEL_FONT);
     components.add(descriptionInputText);
 
-    descriptionInputField = new JTextField("");
-    descriptionInputField.setBounds(100, 300, 300, 50);
+    descriptionInputField = new JTextField();
+    descriptionInputField.setBounds(600, 450, 300, 50);
+    descriptionInputField.setFont(TEXTFIELD_FONT);
     components.add(descriptionInputField);
 
-    submitButton = new JButton("Payout");
-    submitButton.setBounds(100, 500, 300, 50);
+    submitButton = new JButton("PAYOUT");
+    submitButton.setBounds(450, 600, 300, 50);
+    submitButton.setFont(BUTTON_FONT);
     components.add(submitButton);
 
     newCategoryOptionPaneButton.addActionListener(actionEvent -> {
-        String categoryName = JOptionPane.showInputDialog("Enter Name of New Category!");
+        String categoryName = JOptionPane.showInputDialog("Enter name of new category!");
         System.out.println(categoryName);
         user.newTransactionCategory(new PayoutCategory(categoryName));
         payoutCategorys = user.getCategories(new PayoutCategory()).toArray();
