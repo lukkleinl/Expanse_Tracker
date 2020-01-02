@@ -1,6 +1,5 @@
 package ui.addTransactionPages;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -19,7 +18,7 @@ public class AddPayoutPage extends AbstractPage {
 
   private JLabel introText;
   private JLabel amountInputText;
-  private JTextField amuntInputField;
+  private JTextField amountInputField;
   private JLabel descriptionInputText;
   private JTextField descriptionInputField;
   private JLabel categoryInputText;
@@ -112,9 +111,9 @@ public class AddPayoutPage extends AbstractPage {
     amountInputText.setBounds(100, 150, 300, 50);
     components.add(amountInputText);
 
-    amuntInputField = new JTextField("");
-    amuntInputField.setBounds(100, 200, 300, 50);
-    components.add(amuntInputField);
+    amountInputField = new JTextField("");
+    amountInputField.setBounds(100, 200, 300, 50);
+    components.add(amountInputField);
 
     descriptionInputText = new JLabel("Description:");
     descriptionInputText.setBounds(100, 250, 300, 50);
@@ -137,18 +136,14 @@ public class AddPayoutPage extends AbstractPage {
     });
 
     submitButton.addActionListener(actionEvent -> {
-      descriptionInputValue = descriptionInputField.getText();
-      amountInputValue = Float.valueOf(amuntInputField.getText());
-      categoryInputValue = (String) categoryInputBox.getSelectedItem();
+        amountInputValue = (amountInputField.getText().isEmpty()) ? 1.0f : Float.valueOf(amountInputField.getText());
+        descriptionInputValue = descriptionInputField.getText();
+        categoryInputValue = (String) categoryInputBox.getSelectedItem();
 
-        if(descriptionInputValue.isEmpty())
-          //TODO handle Exception that is thrown @ALL
-          // throw new IOException("Invalid Description Input, supply Description please!");
-          System.out.println("quick fix!");
-
-          //TODO check more Invalid Inputs?
-
-      submitted = true;
+        if(descriptionInputValue.isEmpty() || amountInputValue<=0){
+            JOptionPane.showMessageDialog(null, "Invalid Input!");
+        }else
+            submitted = true;
     });
 
 

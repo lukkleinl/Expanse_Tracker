@@ -25,8 +25,8 @@ public class AddDepositPage extends AbstractPage{
   private JComboBox categoryInputBox;
   private Object[] payoutCategorys; /* = {"SALARY","DIVIDEND"}; */
   private String categoryInputValue;
-  private String descriptionInputValue;
-  private float amountInputValue;
+  private String descriptionInputValue ="";
+  private float amountInputValue = 1.0f;
   private User user;
   private JButton newCategoryOptionPaneButton;
 
@@ -132,23 +132,16 @@ public class AddDepositPage extends AbstractPage{
     });
 
       submitButton.addActionListener( actionEvent -> {
+
+        amountInputValue = (amountInputField.getText().isEmpty()) ? 1.0f : Float.valueOf(amountInputField.getText());
         descriptionInputValue = descriptionInputField.getText();
-        amountInputValue = Float.valueOf(amountInputField.getText());
         categoryInputValue = (String) categoryInputBox.getSelectedItem();
 
-        if (amountInputValue <= 0)
-          //TODO handle Exception that is thrown @ALL
-          // throw new IOException("Invalid Amount Input!");
-          System.out.println("quick fix!");
 
-        if (descriptionInputValue.isEmpty())
-          //TODO handle Exception that is thrown @ALL
-          //throw new IOException("Invalid Description Input, supply Description please!");
-            System.out.println("quick fix!");
-
-        //TODO check more Invalid Inputs?
-
-        submitted = true;
+              if (amountInputValue <= 0 || descriptionInputValue.isEmpty()) {
+                  JOptionPane.showMessageDialog(null, "Invalid Input!");
+              }else
+                  submitted = true;
       });
 
 
@@ -156,6 +149,12 @@ public class AddDepositPage extends AbstractPage{
     backButton.setBounds(10, 10, 100, 50);
     components.add(backButton);
     backButton.addActionListener(e -> backWanted = true);
+
+  }
+
+  public void handleExceptions(Exception e){
+
+      String str = JOptionPane.showInputDialog("Hallo!");
 
   }
 
