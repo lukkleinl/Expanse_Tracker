@@ -1,5 +1,6 @@
 package ui.addTransactionPages;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -54,7 +55,8 @@ public class AddPayoutPage extends AbstractPage {
   /**
    * @return Amount Input from User or Default value.
    */
-  public float getAmount() {
+  public float getAmount() throws Exception
+  {
     return amountInputValue;
   }
   /**
@@ -78,14 +80,14 @@ public class AddPayoutPage extends AbstractPage {
    * Creates a new AddPayoutPage, which will load all needed components to a list.
    */
   // In Final Version might take a User object to display additional User information.
-  public AddPayoutPage(User user) throws Exception {
+  public AddPayoutPage(User user){
     this.user = user;
     payoutCategorys = user.getCategories(new PayoutCategory()).toArray();
     this.createComponents();
   }
 
   @Override
-  protected void createComponents() throws Exception {
+  protected void createComponents() {
 
     components = new ArrayList<>();
     submitted = false;
@@ -139,11 +141,6 @@ public class AddPayoutPage extends AbstractPage {
       amountInputValue = Float.valueOf(amuntInputField.getText());
       categoryInputValue = (String) categoryInputBox.getSelectedItem();
 
-      if(amountInputValue<=0)
-        //TODO handle Exception that is thrown @ALL
-        // throw new IOException("Invalid Amount Input!");
-        System.out.println("quick fix!");
-
         if(descriptionInputValue.isEmpty())
           //TODO handle Exception that is thrown @ALL
           // throw new IOException("Invalid Description Input, supply Description please!");
@@ -161,6 +158,11 @@ public class AddPayoutPage extends AbstractPage {
     backButton.addActionListener(e -> backWanted = true);
 
   }
+
+  public void checkValues() throws Exception{
+    throw new Exception();
+  }
+
 
   @Override
   protected void resetTitle(final JFrame frame) {

@@ -76,5 +76,5 @@ public abstract class AbstractPage {
 
   protected abstract void resetTitle(JFrame frame);
 
-  protected abstract void createComponents() throws Exception;
+  protected abstract void createComponents();
 }

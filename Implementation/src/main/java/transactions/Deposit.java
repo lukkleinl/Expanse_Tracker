@@ -18,7 +18,7 @@ public class Deposit extends Transaction {
    * @param ID the ID of this transaction.
    */
   Deposit(final ZonedDateTime date, final float amount, final String depositCategory,
-      final String description, final Integer ID) {
+    final String description, final Integer ID) {
     super(date, amount, description, ID);
     this.depositCategory = depositCategory;
   }

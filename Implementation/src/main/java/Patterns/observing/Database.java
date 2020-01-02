@@ -1,14 +1,9 @@
-package observing;
+package Patterns.observing;
 
-import MongoDb.MongoDB;
 import MongoDb.ReadOperation;
-import MongoDb.Read_Operation;
 import MongoDb.WriteOperation;
-import accounts.Account;
-import exceptions.SWE_Exception;
 import iteration.CustomIterator;
 import iteration.CustomList;
-import transactions.Transaction;
 import user.User;
 
 public class Database implements SWE_Observer {

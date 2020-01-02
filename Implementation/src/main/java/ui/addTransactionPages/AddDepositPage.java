@@ -76,7 +76,7 @@ public class AddDepositPage extends AbstractPage{
    * Creates a new AddDepositPage, which will load all needed components to a list.
    */
   // In Final Version might take a User object to display additional User information.
-  public AddDepositPage(User user) throws Exception
+  public AddDepositPage(User user)
   {
     this.user = user;
     payoutCategorys = this.user.getCategories(new DepositCategory()).toArray();
@@ -84,7 +84,7 @@ public class AddDepositPage extends AbstractPage{
   }
 
   @Override
-  protected void createComponents() throws Exception {
+  protected void createComponents(){
 
     components = new ArrayList<>();
     submitted = false;
@@ -131,26 +131,25 @@ public class AddDepositPage extends AbstractPage{
       refreshWanted = true;
     });
 
-    submitButton.addActionListener(actionEvent -> {
-      descriptionInputValue = descriptionInputField.getText();
-      amountInputValue = Float.valueOf(amountInputField.getText());
-      categoryInputValue = (String) categoryInputBox.getSelectedItem();
+      submitButton.addActionListener( actionEvent -> {
+        descriptionInputValue = descriptionInputField.getText();
+        amountInputValue = Float.valueOf(amountInputField.getText());
+        categoryInputValue = (String) categoryInputBox.getSelectedItem();
 
-      if(amountInputValue<=0)
-        //TODO handle Exception that is thrown @ALL
-       // throw new IOException("Invalid Amount Input!");
-        System.out.println("quick fix!");
+        if (amountInputValue <= 0)
+          //TODO handle Exception that is thrown @ALL
+          // throw new IOException("Invalid Amount Input!");
+          System.out.println("quick fix!");
 
-      if(descriptionInputValue.isEmpty())
-        //TODO handle Exception that is thrown @ALL
-       //  throw new IOException("Invalid Description Input, supply Description please!");
-        System.out.println("quick fix!");
-
+        if (descriptionInputValue.isEmpty())
+          //TODO handle Exception that is thrown @ALL
+          //throw new IOException("Invalid Description Input, supply Description please!");
+            System.out.println("quick fix!");
 
         //TODO check more Invalid Inputs?
 
-      submitted = true;
-    });
+        submitted = true;
+      });
 
 
     backButton = new JButton("BACK");

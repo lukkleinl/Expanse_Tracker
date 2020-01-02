@@ -222,7 +222,7 @@ public class UserInterface {
                                     // of the user
                 try {
                   Transaction deposit =
-                      TransactionCreator.newTransaction(
+                          TransactionCreator.newTransaction(
                           addDepositPage.getCategory(),
                           addDepositPage.getAmount(),
                           addDepositPage.getDescription(),

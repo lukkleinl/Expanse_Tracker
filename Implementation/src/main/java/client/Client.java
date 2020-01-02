@@ -1,7 +1,6 @@
 package client;
 
-import exceptions.SWE_Exception;
-import observing.Database;
+import Patterns.observing.Database;
 import ui.main.UserInterface;
 import user.User;
 

@@ -1,4 +1,4 @@
-package observing;
+package Patterns.observing;
 /**
  * DIY Observer Pattern - defines the Observer.
  * @author Paul Kraft
