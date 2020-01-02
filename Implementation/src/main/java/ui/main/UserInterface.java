@@ -181,40 +181,62 @@ public class UserInterface {
 
           if (transactionListPage.isNewPayoutWanted()) { //if new pay out button got pressed, open page to add new pay out
             addPayoutPage.configureFrame(frame);
-            while (!addPayoutPage.isSubmitted() && !addPayoutPage.isBackWanted() && !addPayoutPage.isRefreshWanted()) {
-              //wait until either back button or submit button got pressed
-            }
-
-            if (addPayoutPage.isSubmitted()) { //if submit button got pressed, add new payout to account of the user
-              try {
-                Transaction payout = TransactionCreator.newTransaction(addPayoutPage.getCategory(), addPayoutPage.getAmount(), addPayoutPage.getDescription(), user.getCategoryStore());
-                user.applyAndSaveTransaction(payout,accountListPage.getSelectedAccount());
-                //user.handleTransaction(payout, accountListPage.getSelectedAccount());
-              } catch (Exception e) {
-                System.out.println("ERR:" + e.getMessage()); //TODO BETTER
+            while (!addPayoutPage.isSubmitted() && !addPayoutPage.isBackWanted()) {
+              while (!addPayoutPage.isSubmitted()
+                  && !addPayoutPage.isBackWanted()
+                  && !addPayoutPage.isRefreshWanted()) {
+                // wait until either back button or submit button got pressed
               }
-            } else if (addPayoutPage.isBackWanted()) {
-              transactionListPage.configureFrame(frame); // open transaction list page of the account again
-            } else { //refresh add payout page.
-              addPayoutPage.configureFrame(frame);
+
+              if (addPayoutPage
+                  .isSubmitted()) { // if submit button got pressed, add new payout to account of
+                                    // the user
+                try {
+                  Transaction payout =
+                      TransactionCreator.newTransaction(
+                          addPayoutPage.getCategory(),
+                          addPayoutPage.getAmount(),
+                          addPayoutPage.getDescription(),
+                          user.getCategoryStore());
+                  user.applyAndSaveTransaction(payout, accountListPage.getSelectedAccount());
+                  // user.handleTransaction(payout, accountListPage.getSelectedAccount());
+                } catch (Exception e) {
+                  System.out.println("ERR:" + e.getMessage()); // TODO BETTER
+                }
+              } else if (addPayoutPage.isBackWanted()) {
+                transactionListPage.configureFrame(
+                    frame); // open transaction list page of the account again
+              } else { // refresh add payout page.
+                addPayoutPage.configureFrame(frame);
+              }
             }
           } else if (transactionListPage.isNewDepositWanted()) { //if new deposit button got pressed, open page to add new deposit
             addDepositPage.configureFrame(frame);
-            while (!addDepositPage.isSubmitted() && !addDepositPage.isBackWanted() && !addDepositPage.isRefreshWanted()) {
-              //wait until either back button or submit button got pressed
-            }
-
-            if (addDepositPage.isSubmitted()) { //if submit button got pressed, add new deposit page to account of the user
-              try {
-                Transaction deposit = TransactionCreator.newTransaction(addDepositPage.getCategory(), addDepositPage.getAmount(), addDepositPage.getDescription(), user.getCategoryStore());
-                user.applyAndSaveTransaction(deposit, accountListPage.getSelectedAccount());
-              } catch (Exception e) {
-                System.out.println("ERR:" + e.getMessage()); //TODO BETTER
+            while (!addDepositPage.isSubmitted() && !addDepositPage.isBackWanted()) {
+              while (!addDepositPage.isSubmitted() && !addDepositPage.isBackWanted() && !addDepositPage.isRefreshWanted()) {
+                // wait until either back button or submit button got pressed
               }
-            } else if (addDepositPage.isBackWanted()) {
-              transactionListPage.configureFrame(frame); // open transaction list page of the account again
-            } else {
-              addDepositPage.configureFrame(frame);
+
+              if (addDepositPage
+                  .isSubmitted()) { // if submit button got pressed, add new deposit page to account
+                                    // of the user
+                try {
+                  Transaction deposit =
+                      TransactionCreator.newTransaction(
+                          addDepositPage.getCategory(),
+                          addDepositPage.getAmount(),
+                          addDepositPage.getDescription(),
+                          user.getCategoryStore());
+                  user.applyAndSaveTransaction(deposit, accountListPage.getSelectedAccount());
+                } catch (Exception e) {
+                  System.out.println("ERR:" + e.getMessage()); // TODO BETTER
+                }
+              } else if (addDepositPage.isBackWanted()) {
+                transactionListPage.configureFrame(
+                    frame); // open transaction list page of the account again
+              } else {
+                addDepositPage.configureFrame(frame);
+              }
             }
           } else { //if back button of transaction list page got pressed, open account list page again
             accountListPage.configureFrame(frame);
