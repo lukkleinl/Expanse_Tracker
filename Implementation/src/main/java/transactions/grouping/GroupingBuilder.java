@@ -27,92 +27,88 @@ public class GroupingBuilder {
   public GroupingBuilder() {}
 
   public Map<String, CustomContainer<Transaction>> organize() {
-    if (orga == null)
+    if (this.orga == null)
       return new HashMap<>();
-    return orga.organize();
+    return this.orga.organize();
   }
 
   /** Returns the current decoration. */
   public TransactionOrganizing getDecoration() {
     this.resetOrga();
-    return orga;
+    return this.orga;
   }
 
   /**
    * Returns the current decoration and sets the current decoration to its root (e.g. for the call
-   * {@code new GroupingBuilder().allAccs(...).category().yearly().getDecorationAndResetToRoot();} the root
-   * would be the same AllAccounts(...) instance as the .allAccs(...) call)
+   * {@code new GroupingBuilder().allAccs(...).category().yearly().getDecorationAndResetToRoot();}
+   * the root would be the same AllAccounts(...) instance as the .allAccs(...) call)
    */
   public TransactionOrganizing getDecorationAndResetToRoot() {
     this.resetOrga();
-    reset = true;
-    return orga;
+    this.reset = true;
+    return this.orga;
   }
 
   /* ------------------------------ Bases ------------------------------ */
   public GroupingBuilder allAccs(final User user) {
-    orga = new AllAccounts(user);
-    root = orga;
+    this.orga = new AllAccounts(user);
+    this.root = this.orga;
     return this;
   }
 
   public GroupingBuilder oneAcc(final User user, final Integer accountID) {
-    orga = new OneAccount(user, accountID);
-    root = orga;
+    this.orga = new OneAccount(user, accountID);
+    this.root = this.orga;
     return this;
   }
 
   /* ------------------------------ Nesters ------------------------------ */
   public GroupingBuilder category() {
-    if (orga != null) {
+    if (this.orga != null) {
       this.resetOrga();
-      orga = new ByCategory(orga);
+      this.orga = new ByCategory(this.orga);
     }
     return this;
   }
 
   public GroupingBuilder daily() {
-    if (orga != null) {
+    if (this.orga != null) {
       this.resetOrga();
-      orga = new Daily(orga);
+      this.orga = new Daily(this.orga);
     }
     return this;
   }
 
   public GroupingBuilder monthly() {
-    if (orga != null) {
+    if (this.orga != null) {
       this.resetOrga();
-      orga = new Monthly(orga);
+      this.orga = new Monthly(this.orga);
     }
     return this;
   }
 
   public GroupingBuilder yearly() {
-    if (orga != null) {
+    if (this.orga != null) {
       this.resetOrga();
-      orga = new Yearly(orga);
+      this.orga = new Yearly(this.orga);
     }
     return this;
   }
 
   public GroupingBuilder userdefined(final ZonedDateTime begin, final ZonedDateTime end) {
-    if (orga != null) {
+    if (this.orga != null) {
       this.resetOrga();
-      orga = new UserDefined(orga,begin,end);
+      this.orga = new UserDefined(this.orga, begin, end);
     }
     return this;
   }
 
   private void resetOrga() {
-    if (reset) {
-      orga = root;
-      reset = false;
+    if (this.reset) {
+      this.orga = this.root;
+      this.reset = false;
     }
   }
 }
-
-
-
-
 
 

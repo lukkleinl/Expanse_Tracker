@@ -21,9 +21,9 @@ public abstract class OrganizingRoot implements TransactionOrganizing {
   protected final List<CustomIterator<Transaction>> iterators;
 
   public OrganizingRoot(final TransactionOrganizing wrappee) {
-    root = wrappee;
-    iterators = new ArrayList<>();
-    grouped = new TreeMap<>();
+    this.root = wrappee;
+    this.iterators = new ArrayList<>();
+    this.grouped = new TreeMap<>();
   }
 
   /** Groupers implement this method for their grouping algorithm. */
@@ -37,14 +37,14 @@ public abstract class OrganizingRoot implements TransactionOrganizing {
     this.performOrganizing();
     this.clearMappings();
 
-    return grouped;
+    return this.grouped;
   }
 
   // modified to fit the problem from "https://stackoverflow.com/a/223927"
   /** This method removes any keys with an empty CustomContainers as its value. */
   private final void clearMappings() {
-    for (Iterator<String> it = grouped.keySet().iterator(); it.hasNext(); ) {
-      if (grouped.get(it.next()).size() == 0) {
+    for (Iterator<String> it = this.grouped.keySet().iterator(); it.hasNext();) {
+      if (this.grouped.get(it.next()).size() == 0) {
         it.remove();
       }
     }
@@ -53,13 +53,12 @@ public abstract class OrganizingRoot implements TransactionOrganizing {
   /** @return {@code true} if there is an iterator that still has elements left to process */
   @SuppressWarnings("rawtypes")
   protected boolean notDone() {
-    for (CustomIterator iter : iterators) {
+    for (CustomIterator iter : this.iterators) {
       if (iter.hasNext())
         return true;
     }
     return false;
   }
 }
-
 
 
