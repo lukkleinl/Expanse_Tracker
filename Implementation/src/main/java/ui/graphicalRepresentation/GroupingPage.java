@@ -99,11 +99,8 @@ public class GroupingPage extends AbstractPage {
                 for (CustomIterator<Transaction> it = organized.get(key).getIterator(); it.hasNext(); it
                         .next()) {
 
-                    if (it.element() instanceof Payout) {
-                        transactionList_VISU[i][0] = "Payout";
-                    } else if (it.element() instanceof Deposit) {
-                        transactionList_VISU[i][0] = "Deposit";
-                    }
+                   transactionList_VISU[i][0]=
+                           this.user.getCategoryStore().keyOfCategory(it.element().getCategory());
 
                     transactionList_VISU[i][1] = it.element().getDescription();
                     transactionList_VISU[i][2] = "" + it.element().getAmount();
