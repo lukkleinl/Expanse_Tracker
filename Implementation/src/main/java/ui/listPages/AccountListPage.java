@@ -125,29 +125,6 @@ public class AccountListPage extends AbstractPage {
   }
 
   /**
-   * This method updates the given JFrame with every components, e.g. buttons and tables, and also sets indicators to default.
-   *
-   * @param frame The JFrame, which components will be updated
-   */
-  /*
-  public void configureFrame(JFrame frame) {
-    createComponents();
-
-    //frame.setVisible(false);
-    frame.setTitle("Account Types");
-    frame.getContentPane().removeAll();
-    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-    for (JComponent comp : components) {
-      frame.add(comp);
-    }
-
-    frame.revalidate();
-    frame.repaint();
-    //frame.setVisible(true);
-  }
-*/
-  /**
    * This method creates all components, such as buttons and text fields, and adds it to a list.
    * It also sets every indicator variables to default and updates the account list of the user.
    */
@@ -167,6 +144,7 @@ public class AccountListPage extends AbstractPage {
     //NEW ACCOUNT BUTTON
     newAccountButton = new JButton("CREATE NEW ACCOUNT");
     newAccountButton.setBounds(400, 600, 400, 50);
+    newAccountButton.setFont(BUTTON_FONT);
     newAccountButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -177,6 +155,7 @@ public class AccountListPage extends AbstractPage {
     //TABLE
     Object[] columnNames = {"Nr.", "Account Type", "Account Name", "Balance"};
     accountTable = new JTable(getAccounts(user), columnNames);
+    accountTable.setFont(TEXTFIELD_FONT);
     accountTable.setRowHeight(70);
     accountTable.setDefaultEditor(Object.class, null);
 

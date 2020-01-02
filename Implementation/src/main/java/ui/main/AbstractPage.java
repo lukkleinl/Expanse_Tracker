@@ -17,7 +17,7 @@ public abstract class AbstractPage {
   protected final static int FRAME_HEIGHT = 800;
   protected final static Font LABEL_FONT = new Font("Serif", Font.BOLD, 25);
   protected final static Font TEXTFIELD_FONT = new Font("Serif", Font.PLAIN, 20);
-  protected final static Font HEADER_FONT = new Font("Serif", Font.BOLD,15);
+  protected final static Font HEADER_FONT = new Font("Serif", Font.BOLD,19);
   protected final static Font BUTTON_FONT = new Font("Serif", Font.BOLD, 20);
 
   /**

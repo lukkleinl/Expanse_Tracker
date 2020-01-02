@@ -1,6 +1,8 @@
 package ui.listPages;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
@@ -8,11 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import accounts.Account;
-import accounts.BankAccount;
-import accounts.Cash;
-import accounts.CreditCard;
-import accounts.DebitCard;
+import javax.swing.table.DefaultTableCellRenderer;
+
+import accounts.*;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import transactions.Deposit;
@@ -38,6 +38,12 @@ public class TransactionListPage extends AbstractPage {
   private JLabel accountName_VisualizationLabel;
   private JLabel balance_VisualizationLabel;
   private JLabel limit_VisualizationLabel;
+
+  private JLabel accountNameHeader;
+  private JLabel balanceHeader;
+  private JLabel limitHeader;
+  private JLabel customDescriptionHeader_1;
+  private JLabel customDescriptionHeader_2;
 
   private JLabel customDescriptionLabel_1;
   private JLabel customDescriptionLabel_2;
@@ -127,6 +133,16 @@ public class TransactionListPage extends AbstractPage {
     }
 
     transactionTable = new JTable(transactionList_VISU, transactionDescriptions);
+    transactionTable.setFont(TEXTFIELD_FONT);
+    transactionTable.setRowHeight(70);
+
+
+    DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+    tableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+    for (int i = 0; i < 5; ++i) {
+      transactionTable.getColumnModel().getColumn(i).setCellRenderer(tableCellRenderer);
+    }
 
     //https://stackoverflow.com/questions/9919230/disable-user-edit-in-jtable
     // MAKES THE ELEMENTS IN THE TABLE UNEDITABLE
@@ -145,48 +161,87 @@ public class TransactionListPage extends AbstractPage {
     scrollPane.setBounds(225, 100, 900, 450);
     components.add(scrollPane);
 
-    introTextMessage = "Account-Type: ";
+    introTextMessage = "Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".          Account Type: ";
 
-    introTextLabel = new JLabel();
-    introTextLabel.setBounds(300, 10, 800, 50);
 
-    accountName_VisualizationLabel = new JLabel("Account Name: " + account.getName());
-    accountName_VisualizationLabel.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
+    introTextLabel = new JLabel(introTextMessage);
+    introTextLabel.setBounds(225, 10, 1000, 50);
+    introTextLabel.setFont(HEADER_FONT);
+    components.add(introTextLabel);
+
+    accountNameHeader = new JLabel("Account Name:");
+    accountNameHeader.setBounds(10,100,300,50);
+    accountNameHeader.setFont(new Font("Serif",Font.BOLD,19));
+    components.add(accountNameHeader);
+
+    accountName_VisualizationLabel = new JLabel(account.getName());
+    accountName_VisualizationLabel.setBounds(10, 130, 210, 50);
+    accountName_VisualizationLabel.setFont(new Font("Serif", Font.PLAIN, 18));
     components.add(accountName_VisualizationLabel);
 
-    balance_VisualizationLabel = new JLabel("Balance: " + account.getBalance());
-    balance_VisualizationLabel.setBounds(10 + SHIFT_LEFT, 250, 300, 50);
+    balanceHeader = new JLabel("Balance:");
+    balanceHeader.setBounds(10,200,300,50);
+    balanceHeader.setFont(new Font("Serif",Font.BOLD,19));
+    components.add(balanceHeader);
+
+    balance_VisualizationLabel = new JLabel(Double.toString(account.getBalance()));
+    balance_VisualizationLabel.setBounds(10, 230, 300, 50);
+    balance_VisualizationLabel.setFont(new Font("Serif", Font.PLAIN, 18));
     components.add(balance_VisualizationLabel);
 
-    limit_VisualizationLabel = new JLabel("Limit: " + account.getLimit());
-    limit_VisualizationLabel.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
+    limitHeader = new JLabel("Limit:");
+    limitHeader.setBounds(10,300,300,50);
+    limitHeader.setFont((new Font("Serif", Font.BOLD, 19)));
+    components.add(limitHeader);
+
+    limit_VisualizationLabel = new JLabel(Float.toString(account.getLimit()));
+    limit_VisualizationLabel.setBounds(10, 330, 300, 50);
+    limit_VisualizationLabel.setFont(new Font("Serif", Font.PLAIN, 18));
     components.add(limit_VisualizationLabel);
 
+    customDescriptionHeader_1 = new JLabel();
+    customDescriptionHeader_1.setBounds(10,400,300,50);
+    customDescriptionHeader_1.setFont(new Font("Serif", Font.BOLD, 19));
+    components.add(customDescriptionHeader_1);
+
     customDescriptionLabel_1 = new JLabel();
-    customDescriptionLabel_1.setBounds(10 + SHIFT_LEFT, 350, 300, 50);
+    customDescriptionLabel_1.setBounds(10, 430, 300, 50);
+    customDescriptionLabel_1.setFont(new Font("Serif", Font.PLAIN, 18));
+
+    customDescriptionHeader_2 = new JLabel();
+    customDescriptionHeader_2.setBounds(10,500, 300,50);
+    customDescriptionHeader_2.setFont(new Font("Serif", Font.BOLD, 19));
+    components.add(customDescriptionHeader_2);
 
     customDescriptionLabel_2 = new JLabel();
-    customDescriptionLabel_2.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    customDescriptionLabel_2.setBounds(10, 530, 300, 50);
+    customDescriptionLabel_2.setFont(new Font("Serif", Font.PLAIN, 18));
 
-    if (account instanceof BankAccount) {
-      introTextMessage += "BankAccount ";
-      customDescriptionLabel_1.setText("Bankname: " + ((BankAccount) account).getBankName());
+    if (account instanceof Stocks) {
+      introTextMessage += "Stocks ";
+      customDescriptionHeader_1.setText("Buy date:");
+      Date buyDate = ((Stocks) account).getBuyDate();
+      customDescriptionLabel_1.setText(buyDate.getDay()-1+"."+buyDate.getMonth()+"."+buyDate.getYear());
+      customDescriptionHeader_2.setText("");
       customDescriptionLabel_2.setText("");
     } else if (account instanceof Cash) {
-      introTextMessage += "CashAccount ";
-      customDescriptionLabel_1.setText("Currency: " + ((Cash) account).getCurrency());
+      introTextMessage += "Cash Account ";
+      customDescriptionHeader_1.setText("Currency:");
+      customDescriptionLabel_1.setText(((Cash) account).getCurrency());
       customDescriptionLabel_2.setText("");
     } else if (account instanceof CreditCard) {
-      introTextMessage += "CreditCardAccount ";
-      customDescriptionLabel_1.setText("Expiry-Date: " + ((CreditCard) account).getExpiryDate());
+      introTextMessage += "CreditCard Account ";
+      customDescriptionHeader_1.setText("Expiry date:");
+      Date expireDate = ((CreditCard) account).getExpiryDate();
+      customDescriptionLabel_1.setText(expireDate.getDay()-1+"."+expireDate.getMonth()+"."+expireDate.getYear());
       customDescriptionLabel_2.setText("");
     } else if (account instanceof DebitCard) {
       introTextMessage += "DebitCardAccount ";
-      customDescriptionLabel_1.setText("IBAN: " + ((DebitCard) account).getIBAN());
+      customDescriptionHeader_1.setText("IBAN:");
+      customDescriptionLabel_1.setText(((DebitCard) account).getIBAN());
+      customDescriptionLabel_1.setFont(new Font("Serif",Font.BOLD,15));
       customDescriptionLabel_2.setText("");
     }
-
-    introTextMessage += "  logged in as: " + user.getFirstname() + " " + user.getLastname();
 
     components.add(customDescriptionLabel_1);
     components.add(customDescriptionLabel_2);
@@ -195,16 +250,19 @@ public class TransactionListPage extends AbstractPage {
 
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
+    backButton.setFont(BUTTON_FONT);
     components.add(backButton);
     backButton.addActionListener(e -> backWanted = true);
 
     newPayoutButton = new JButton("NEW PAYOUT");
     newPayoutButton.setBounds(400, 600, 200, 70);
+    newPayoutButton.setFont(BUTTON_FONT);
     newPayoutButton.addActionListener(e -> newPayoutWanted = true);
     components.add(newPayoutButton);
 
     newDepositButton = new JButton("NEW DEPOST");
     newDepositButton.setBounds(700, 600, 200, 70);
+    newDepositButton.setFont(BUTTON_FONT);
     newDepositButton.addActionListener(e -> newDepositWanted = true);
     components.add(newDepositButton);
   }

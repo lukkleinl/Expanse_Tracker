@@ -21,6 +21,7 @@ import user.User;
 public class AccountTypePage extends AbstractPage {
 
   private JLabel welcomeMessage;
+  private JLabel introTextLabel;
   private JButton creditCardButton;
   private JButton debitCardButton;
   private JButton cashButton;
@@ -37,8 +38,8 @@ public class AccountTypePage extends AbstractPage {
    * Creates a new AccountTypePage, which will load all needed components to a list.
    */
   public AccountTypePage(User user) {
-    createComponents();
     this.user = user;
+    createComponents();
   }
 
   /**
@@ -67,16 +68,21 @@ public class AccountTypePage extends AbstractPage {
     pageWanted = AccountTypes.NONE;
     components = new ArrayList<>();
 
+    introTextLabel = new JLabel("Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
+    introTextLabel.setBounds(200, 10, 1000, 50);
+    introTextLabel.setFont(HEADER_FONT);
+    components.add(introTextLabel);
+
     //WELCOME MESSAGE
     welcomeMessage = new JLabel();
     welcomeMessage.setText("Select the type of account you want to add!");
     welcomeMessage.setFont(new Font("Serif", Font.BOLD, 28));
-    welcomeMessage.setBounds(350, 50, 1000, 50);
+    welcomeMessage.setBounds(250, 100, 1000, 50);
 
     //CREDITCARD BUTTON
     creditCardButton = new JButton("CREDIT CARD ACCOUNTS");
-    creditCardButton.setBounds(200, 150, 350, 200);
-    creditCardButton.setFont(new Font("Serif", Font.PLAIN, 22));
+    creditCardButton.setBounds(200, 200, 350, 200);
+    creditCardButton.setFont(BUTTON_FONT);
     creditCardButton.setBackground(new Color(255, 184, 77));
     creditCardButton.addActionListener(new ActionListener() {
       @Override
@@ -87,9 +93,9 @@ public class AccountTypePage extends AbstractPage {
 
     //DEBITCARD BUTTON
     debitCardButton = new JButton("DEBIT CARD ACCOUNTS");
-    debitCardButton.setBounds(650, 150, 350, 200);
-    debitCardButton.setFont(new Font("Serif", Font.PLAIN, 22));
+    debitCardButton.setBounds(650, 200, 350, 200);
     debitCardButton.setBackground(new Color(255, 184, 77));
+    debitCardButton.setFont(BUTTON_FONT);
     debitCardButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -99,8 +105,8 @@ public class AccountTypePage extends AbstractPage {
 
     //CASH BUTTON
     cashButton = new JButton("CASH ACCOUNTS");
-    cashButton.setBounds(200, 450, 350, 200);
-    cashButton.setFont(new Font("Serif", Font.PLAIN, 22));
+    cashButton.setBounds(200, 500, 350, 200);
+    cashButton.setFont(BUTTON_FONT);
     cashButton.setBackground(new Color(255, 184, 77));
     cashButton.addActionListener(new ActionListener() {
       @Override
@@ -111,8 +117,8 @@ public class AccountTypePage extends AbstractPage {
 
     //STOCK BUTTON
     stockButton = new JButton("STOCK ACCOUNTS");
-    stockButton.setBounds(650, 450, 350, 200);
-    stockButton.setFont(new Font("Serif", Font.PLAIN, 22));
+    stockButton.setBounds(650, 500, 350, 200);
+    stockButton.setFont(BUTTON_FONT);
     stockButton.setBackground(new Color(255, 184, 77));
     stockButton.addActionListener(new ActionListener() {
       @Override

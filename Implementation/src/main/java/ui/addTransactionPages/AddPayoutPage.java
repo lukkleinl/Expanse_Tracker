@@ -160,6 +160,7 @@ public class AddPayoutPage extends AbstractPage {
 
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
+    backButton.setFont(BUTTON_FONT);
     components.add(backButton);
     backButton.addActionListener(e -> backWanted = true);
 

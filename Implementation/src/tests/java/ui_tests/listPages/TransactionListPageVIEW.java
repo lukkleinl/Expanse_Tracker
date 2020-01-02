@@ -2,17 +2,22 @@ package ui_tests.listPages;
 
 import javax.swing.JFrame;
 import accounts.BankAccount;
+import accounts.CreditCard;
+import accounts.DebitCard;
+import accounts.Stocks;
 import transactions.Transaction;
 import transactions.TransactionCreator;
 import ui.listPages.TransactionListPage;
 import user.User;
+
+import java.util.Date;
 
 public class TransactionListPageVIEW {
   public static void main(final String args[]) {
 
     //TEST DATA
 
-    BankAccount testbankacc = new BankAccount("pauls acc", "BAWAG", 1000);
+    Stocks testbankacc = new Stocks("pauls acc", new Date(2021, 1, 5), 1000);
     User testUser = new User(1, "paul", "kraft", "qwerty");
 
     for (int i = 0; i < 100; i++) {
