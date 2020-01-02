@@ -163,11 +163,12 @@ public class AddCreditAccountPage extends AbstractPage {
         limitInputValue = Float.valueOf(limitInputField.getText());
         bankNameInputValue = bankNameInputField.getText();
 
-        //TODO HANDLE EXCEPTIONS!
+
 
       //https://www.javatpoint.com/java-get-current-date
       //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
+        /*
         if (limitInputValue < 0)
           // throw new IOException("Invalid limit Input!");
         if(accountNameInputValue.isEmpty())
@@ -176,7 +177,7 @@ public class AddCreditAccountPage extends AbstractPage {
           //throw new IOException("Invalid BankName Input!");
 
         //TODO check Expiry Stuff?!?!
-
+        */
         submitted = true;
 
       }

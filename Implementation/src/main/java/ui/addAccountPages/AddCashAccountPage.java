@@ -128,32 +128,38 @@ public class AddCashAccountPage extends AbstractPage {
     submitButton.setFont(BUTTON_FONT);
     components.add(submitButton);
 
-    submitButton.addActionListener(new ActionListener() {
-      @Override
-      /**
-       * @param e Action event
-       * sets Submitted to true
-       * extracts the Input Values and provides them for getters.
-       */
-      public void actionPerformed(ActionEvent e) {
-        accountNameInputValue = accountNameInputField.getText();
-        currencyInputValue = currencyInputField.getText();
-        limitInputValue = Float.valueOf(limitInputField.getText());
+    submitButton.addActionListener(
+        new ActionListener() {
+          @Override
+          /**
+           * @param e Action event sets Submitted to true extracts the Input Values and provides
+           *     them for getters.
+           */
+          public void actionPerformed(ActionEvent e) {
+            accountNameInputValue = accountNameInputField.getText();
+            currencyInputValue = currencyInputField.getText();
+            limitInputValue = (limitInputField.getText().isEmpty()) ? 0 : Float.valueOf(limitInputField.getText());
 
-
-        //TODO HANDLE EXCEPTIONS!
-
-        if (limitInputValue < 0)
-          // throw new IOException("Invalid limit Input!");
-        if(accountNameInputValue.isEmpty())
-          // throw new IOException("Invalid AccountName Input!");
-        if(currencyInputValue.isEmpty())
-          // throw new IOException("Invalid Currency Input!");
-
-
-          submitted = true;
-      }
-    });
+            if (limitInputValue < 0) {
+              JOptionPane.showMessageDialog(
+                  null, "Limit must be higher than 0", "Limit Error", JOptionPane.WARNING_MESSAGE);
+            } else if (accountNameInputValue.isEmpty()) {
+              JOptionPane.showMessageDialog(
+                  null,
+                  "You must insert an account name!",
+                  "Account Name Error",
+                  JOptionPane.WARNING_MESSAGE);
+            } else if (currencyInputValue.isEmpty()) {
+              JOptionPane.showMessageDialog(
+                  null,
+                  "You must insert a currency!",
+                  "Currency Error",
+                  JOptionPane.WARNING_MESSAGE);
+            } else {
+              submitted = true;
+            }
+          }
+        });
 
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);

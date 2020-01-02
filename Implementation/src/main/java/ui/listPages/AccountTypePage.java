@@ -66,6 +66,7 @@ public class AccountTypePage extends AbstractPage {
   @Override
   protected void createComponents() {
     pageWanted = AccountTypes.NONE;
+    backWanted = false;
     components = new ArrayList<>();
 
     introTextLabel = new JLabel("Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");

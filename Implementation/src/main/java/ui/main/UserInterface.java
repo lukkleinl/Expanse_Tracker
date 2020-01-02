@@ -167,6 +167,7 @@ public class UserInterface {
                 }
                 break;
             }
+            accountListPage.configureFrame(frame);
           } else { //if back button at account type page got pressed, go back to main page
             accountListPage.configureFrame(frame);
           }
