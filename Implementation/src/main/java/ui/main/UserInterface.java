@@ -188,6 +188,7 @@ public class UserInterface {
             if (addPayoutPage.isSubmitted()) { //if submit button got pressed, add new payout to account of the user
               try {
                 Transaction payout = TransactionCreator.newTransaction(addPayoutPage.getCategory(), addPayoutPage.getAmount(), addPayoutPage.getDescription(), user.getCategoryStore());
+                user.applyAndSaveTransaction(payout,accountListPage.getSelectedAccount());
                 //user.handleTransaction(payout, accountListPage.getSelectedAccount());
               } catch (Exception e) {
                 System.out.println("ERR:" + e.getMessage()); //TODO BETTER
@@ -205,8 +206,8 @@ public class UserInterface {
 
             if (addDepositPage.isSubmitted()) { //if submit button got pressed, add new deposit page to account of the user
               try {
-                Transaction deposit = TransactionCreator.newTransaction(addPayoutPage.getCategory(), addPayoutPage.getAmount(), addPayoutPage.getDescription(), user.getCategoryStore());
-                //user.handleTransaction(deposit, accountListPage.getSelectedAccount());
+                Transaction deposit = TransactionCreator.newTransaction(addDepositPage.getCategory(), addDepositPage.getAmount(), addDepositPage.getDescription(), user.getCategoryStore());
+                user.applyAndSaveTransaction(deposit, accountListPage.getSelectedAccount());
               } catch (Exception e) {
                 System.out.println("ERR:" + e.getMessage()); //TODO BETTER
               }
