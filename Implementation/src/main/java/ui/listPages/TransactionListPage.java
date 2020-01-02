@@ -1,6 +1,8 @@
 package ui.listPages;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,6 +18,7 @@ import iteration.CustomIterator;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
+import transactions.grouping.GroupingBuilder;
 import ui.main.AbstractPage;
 import user.User;
 
@@ -97,9 +100,7 @@ public class TransactionListPage extends AbstractPage {
     String[][] transactionList_VISU = new String[listSize][6];
 
     if (listSize > 0) {
-
       CustomIterator<Transaction> it = transactionlist.getIterator();
-
       int i = 0;
 
       while (it.hasNext()) {

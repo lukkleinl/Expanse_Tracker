@@ -245,7 +245,8 @@ public class UserInterface {
       }
   }catch (Exception e){
     //TODO
-    System.out.println("NOT IMPLEMENTED IN USER INTERFACE CATCHED EXCEPTION IN ADD____PAGE");
+      e.printStackTrace();
+    System.out.println("Message; " + e.getMessage());
   }
 
   }

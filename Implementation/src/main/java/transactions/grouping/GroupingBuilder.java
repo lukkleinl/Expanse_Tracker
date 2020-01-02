@@ -19,12 +19,12 @@ import user.User;
  *
  * @author Michael Watholowitsch
  */
-class GroupingBuilder {
+public class GroupingBuilder {
   private TransactionOrganizing root = null;
   private TransactionOrganizing orga = null;
   private boolean reset = false;
 
-  GroupingBuilder() {}
+  public GroupingBuilder() {}
 
   public Map<String, CustomContainer<Transaction>> organize() {
     if (orga == null)
