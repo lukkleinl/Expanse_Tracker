@@ -46,7 +46,8 @@ public class User extends SWE_Observable {
     accounts = new CustomList<>();
     transactions = new TransactionStore();
     this.password = password;
-    categories = new CategoryStore();
+    this.categories = new CategoryStore().withDefaultCategories();
+
   }
 
 
