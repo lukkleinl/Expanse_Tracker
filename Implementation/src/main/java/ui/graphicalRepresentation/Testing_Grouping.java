@@ -16,7 +16,7 @@ public class Testing_Grouping {
         User user = TestUser.getTestUser();
 
         Map<String, CustomContainer<Transaction>> orga =
-                new GroupingBuilder().allAccs(user).daily().category().organize();
+                new GroupingBuilder().allAccs(user).daily().organize();
 
 
         System.out.println("Map size"+orga.size()+" Entry set:"+orga.entrySet().size());
