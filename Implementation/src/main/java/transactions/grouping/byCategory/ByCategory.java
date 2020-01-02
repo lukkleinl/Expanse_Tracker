@@ -1,8 +1,6 @@
 package transactions.grouping.byCategory;
 
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
@@ -17,8 +15,6 @@ import transactions.grouping.TransactionOrganizing;
  */
 public class ByCategory extends OrganizingRoot {
 
-  private final Set<String> categories;
-
   /**
    * Constructor
    *
@@ -26,38 +22,30 @@ public class ByCategory extends OrganizingRoot {
    */
   public ByCategory(final TransactionOrganizing wrappee) {
     super(wrappee);
-    categories = new TreeSet<>();
   }
 
   @Override
   public void performOrganizing() {
-    Map<String, CustomContainer<Transaction>> toDec = root.organize();
-    CustomIterator<Transaction> iter;
-    String groupedkey = null;
+    Map<String, CustomContainer<Transaction>> toDec = this.root.organize();
 
     // get all categories
     for (String key : toDec.keySet()) {
-      iter = toDec.get(key).getIterator();
-
-      while (iter.hasNext()) {
-        groupedkey = iter.next().getCategory();
-        if (!categories.contains(groupedkey)) {
-          categories.add(groupedkey);
+      for (CustomIterator<Transaction> iter = toDec.get(key).getIterator(); iter.hasNext(); iter
+          .next()) {
+        if (!this.grouped.keySet().contains(iter.element().getCategory())) {
+          this.grouped.put(key + "_" + iter.element().getCategory(), new CustomList<>());
         }
       }
     }
 
     // grouping starts here
     for (String key : toDec.keySet()) {
-      iter = toDec.get(key).getIterator();
-
-      for (String category : categories) {
-        groupedkey = key + "_" + category;
-        grouped.putIfAbsent(groupedkey, new CustomList<>());
-
-        while (iter.hasNext() && category.equalsIgnoreCase(iter.element().getCategory())) {
-          grouped.get(groupedkey).add(iter.next());
-        }
+      for (String category : this.grouped.keySet()) {
+        for (CustomIterator<Transaction> iter = toDec.get(key).getIterator(); iter.hasNext(); iter
+            .next())
+          if (category.contains(iter.element().getCategory())) {
+            this.grouped.get(category).add(iter.element());
+          }
       }
     }
   }
