@@ -41,8 +41,8 @@ public class AddCashAccountPage extends AbstractPage {
    */
   // In Final Version might take a User object to display additional User information.
   public AddCashAccountPage(User user) {
-    createComponents();
     this.user = user;
+    createComponents();
   }
 
   /**
@@ -88,43 +88,44 @@ public class AddCashAccountPage extends AbstractPage {
     submitted = false;
     backWanted = false;
 
-    introTextLabel = new JLabel("Enter the needed information.");
-    introTextLabel.setBounds(100, 100, 1000, 50);
+    introTextLabel = new JLabel("Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
+    introTextLabel.setBounds(200, 10, 1000, 50);
     introTextLabel.setFont(HEADER_FONT);
     components.add(introTextLabel);
 
     accountNameTextLabel = new JLabel("Account Name:");
-    accountNameTextLabel.setBounds(300, 200, 300, 50);
+    accountNameTextLabel.setBounds(300, 250, 300, 50);
     accountNameTextLabel.setFont(LABEL_FONT);
     components.add(accountNameTextLabel);
 
     accountNameInputField = new JTextField();
-    accountNameInputField.setBounds(600, 200, 300, 50);
+    accountNameInputField.setBounds(600, 250, 300, 50);
     accountNameInputField.setFont(TEXTFIELD_FONT);
     components.add(accountNameInputField);
 
     limitTextLabel = new JLabel("Limit:");
-    limitTextLabel.setBounds(300, 300, 300, 50);
+    limitTextLabel.setBounds(300, 350, 300, 50);
     limitTextLabel.setFont(LABEL_FONT);
     components.add(limitTextLabel);
 
     limitInputField = new JTextField("0.00");
-    limitInputField.setBounds(600, 300, 300, 50);
+    limitInputField.setBounds(600, 350, 300, 50);
     limitInputField.setFont(TEXTFIELD_FONT);
     components.add(limitInputField);
 
     currencyTextLabel = new JLabel("Currency:");
-    currencyTextLabel.setBounds(300, 400, 300, 50);
+    currencyTextLabel.setBounds(300, 450, 300, 50);
     currencyTextLabel.setFont(LABEL_FONT);
     components.add(currencyTextLabel);
 
     currencyInputField = new JTextField();
-    currencyInputField.setBounds(600, 400, 300, 50);
+    currencyInputField.setBounds(600, 450, 300, 50);
     currencyInputField.setFont(TEXTFIELD_FONT);
     components.add(currencyInputField);
 
     submitButton = new JButton("SUBMIT");
-    submitButton.setBounds(450, 550, 300, 50);
+    submitButton.setBounds(450, 600, 300, 50);
+    submitButton.setFont(BUTTON_FONT);
     components.add(submitButton);
 
     submitButton.addActionListener(new ActionListener() {
@@ -156,6 +157,7 @@ public class AddCashAccountPage extends AbstractPage {
 
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
+    backButton.setFont(BUTTON_FONT);
     components.add(backButton);
     backButton.addActionListener(new ActionListener() {
       @Override

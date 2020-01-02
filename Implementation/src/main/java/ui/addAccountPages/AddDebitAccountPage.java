@@ -44,8 +44,8 @@ public class AddDebitAccountPage extends AbstractPage {
    */
   // In Final Version might take a User object to display additional User information.
   public AddDebitAccountPage(User user) {
-    createComponents();
     this.user = user;
+    createComponents();
   }
 
   /**
@@ -91,46 +91,53 @@ public class AddDebitAccountPage extends AbstractPage {
     submitted = false;
     backWanted = false;
 
-    introTextLabel = new JLabel(
-        "Please Enter The relevant Data!" + "                    " + "logged in as:"
-            + "<USERNAME>");
-    introTextLabel.setBounds(300, 10, 800, 50);
+    introTextLabel = new JLabel("Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
+    introTextLabel.setBounds(200, 10, 1000, 50);
+    introTextLabel.setFont(HEADER_FONT);
     components.add(introTextLabel);
 
     accountNameTextLabel = new JLabel("Account Name:");
-    accountNameTextLabel.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
+    accountNameTextLabel.setBounds(300, 150, 300, 50);
+    accountNameTextLabel.setFont(LABEL_FONT);
     components.add(accountNameTextLabel);
 
     accountNameInputField = new JTextField();
-    accountNameInputField.setBounds(10 + SHIFT_LEFT, 200 + OFFSET_Y, 300, 50);
+    accountNameInputField.setBounds(600, 150, 300, 50);
+    accountNameInputField.setFont(TEXTFIELD_FONT);
     components.add(accountNameInputField);
 
     limitTextLabel = new JLabel("Limit:");
-    limitTextLabel.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
+    limitTextLabel.setBounds(300, 250, 300, 50);
+    limitTextLabel.setFont(LABEL_FONT);
     components.add(limitTextLabel);
 
     limitInputField = new JTextField("0.00");
-    limitInputField.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
+    limitInputField.setBounds(600, 250, 300, 50);
+    limitInputField.setFont(TEXTFIELD_FONT);
     components.add(limitInputField);
 
     ibanTextLabel = new JLabel("IBAN:");
-    ibanTextLabel.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    ibanTextLabel.setBounds(300, 350, 300, 50);
+    ibanTextLabel.setFont(LABEL_FONT);
     components.add(ibanTextLabel);
 
     ibanInputField = new JTextField();
-    ibanInputField.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
+    ibanInputField.setBounds(600, 350, 300, 50);
     components.add(ibanInputField);
 
     bankNameTextLabel = new JLabel("Bank Name:");
-    bankNameTextLabel.setBounds(10 + SHIFT_LEFT, 500, 300, 50);
+    bankNameTextLabel.setBounds(300, 450, 300, 50);
+    bankNameTextLabel.setFont(LABEL_FONT);
     components.add(bankNameTextLabel);
 
     bankNameInputField = new JTextField();
-    bankNameInputField.setBounds(10 + SHIFT_LEFT, 500 + OFFSET_Y, 300, 50);
+    bankNameInputField.setBounds(600, 450, 300, 50);
+    bankNameInputField.setFont(TEXTFIELD_FONT);
     components.add(bankNameInputField);
 
     submitButton = new JButton("SUBMIT");
-    submitButton.setBounds(10 + SHIFT_LEFT, 650, 300, 50);
+    submitButton.setBounds(450, 600, 300, 50);
+    submitButton.setFont(BUTTON_FONT);
     components.add(submitButton);
 
     submitButton.addActionListener(new ActionListener() {
@@ -166,6 +173,7 @@ public class AddDebitAccountPage extends AbstractPage {
 
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
+    backButton.setFont(BUTTON_FONT);
     components.add(backButton);
     backButton.addActionListener(new ActionListener() {
       @Override
