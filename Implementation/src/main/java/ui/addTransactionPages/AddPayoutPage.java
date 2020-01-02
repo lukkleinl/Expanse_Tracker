@@ -78,14 +78,14 @@ public class AddPayoutPage extends AbstractPage {
    * Creates a new AddPayoutPage, which will load all needed components to a list.
    */
   // In Final Version might take a User object to display additional User information.
-  public AddPayoutPage(User user) {
+  public AddPayoutPage(User user) throws Exception {
     this.user = user;
     payoutCategorys = user.getCategories(new PayoutCategory()).toArray();
     this.createComponents();
   }
 
   @Override
-  protected void createComponents() {
+  protected void createComponents() throws Exception {
 
     components = new ArrayList<>();
     submitted = false;
@@ -142,11 +142,12 @@ public class AddPayoutPage extends AbstractPage {
       if(amountInputValue<=0)
         //TODO handle Exception that is thrown @ALL
         // throw new IOException("Invalid Amount Input!");
+        System.out.println("quick fix!");
 
         if(descriptionInputValue.isEmpty())
           //TODO handle Exception that is thrown @ALL
           // throw new IOException("Invalid Description Input, supply Description please!");
-
+          System.out.println("quick fix!");
 
           //TODO check more Invalid Inputs?
 

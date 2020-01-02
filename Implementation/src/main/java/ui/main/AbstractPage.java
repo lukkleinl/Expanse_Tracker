@@ -20,14 +20,22 @@ public abstract class AbstractPage {
    *
    * @param frame The JFrame, which components will be updated
    */
-  public final void configureFrame(JFrame frame) {
+  public final void configureFrame(JFrame frame){
 
     frame.getContentPane().removeAll();
     frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
     resetTitle(frame);
 
-    createComponents();
+
+    try {
+      createComponents();
+    }catch (Exception e){
+      System.out.println("Fehler erkannt, noch kein Error Handling vorhanden:"+e.getMessage());
+    }
+
+
+
     for (JComponent comp : components) {
       frame.add(comp);
     }
@@ -50,7 +58,14 @@ public abstract class AbstractPage {
 
     resetTitle(frame);
 
-    createComponents();
+
+    try {
+      createComponents();
+    }catch (Exception e){
+      System.out.println("Fehler erkannt, noch kein Error Handling vorhanden:"+e.getMessage());
+    }
+
+
     for (JComponent comp : components) {
       frame.add(comp);
     }
@@ -61,5 +76,5 @@ public abstract class AbstractPage {
 
   protected abstract void resetTitle(JFrame frame);
 
-  protected abstract void createComponents();
+  protected abstract void createComponents() throws Exception;
 }

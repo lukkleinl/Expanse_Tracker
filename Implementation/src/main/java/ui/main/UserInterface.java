@@ -22,6 +22,8 @@ import ui.login.LoginPage;
 import ui.login.RegistrationPage;
 import user.User;
 
+import static ui.listPages.AccountTypes.CASH;
+
 /**
  * This class is contains the whole procedure of the GUI.
  *
@@ -84,139 +86,144 @@ public class UserInterface {
 
     //DEFINITION OF ALL PAGES
 
-    AccountListPage accountListPage = new AccountListPage(user);
-    AccountTypePage accountTypePage = new AccountTypePage();
-    AddCashAccountPage add_cashAccountPage = new AddCashAccountPage();
-    AddDebitAccountPage add_debitAccountPage = new AddDebitAccountPage();
-    AddStockAccountPage add_stockAccountPage = new AddStockAccountPage();
-    AddCreditAccountPage add_creditAccountPage = new AddCreditAccountPage();
-    AddDepositPage addDepositPage = new AddDepositPage(user);
-    AddPayoutPage addPayoutPage = new AddPayoutPage(user);
-    TransactionListPage transactionListPage;
+    try {
+      AccountListPage accountListPage = new AccountListPage(user);
+      AccountTypePage accountTypePage = new AccountTypePage();
+      AddCashAccountPage add_cashAccountPage = new AddCashAccountPage();
+      AddDebitAccountPage add_debitAccountPage = new AddDebitAccountPage();
+      AddStockAccountPage add_stockAccountPage = new AddStockAccountPage();
+      AddCreditAccountPage add_creditAccountPage = new AddCreditAccountPage();
+      AddDepositPage addDepositPage = new AddDepositPage(user);
+      AddPayoutPage addPayoutPage = new AddPayoutPage(user);
+      TransactionListPage transactionListPage;
 
-    //END DEFINITION OF PAGES
 
-    accountListPage.configureFrame(frame); //open main page
+      //END DEFINITION OF PAGES
 
-    while (true) { //interface is open, until close button (X on top right) gets pressed
+      accountListPage.configureFrame(frame); //open main page
 
-      if (accountListPage.isNewAccountWanted()) { //if new account button gets pressed, open new account type page
-        accountTypePage.configureFrame(frame);
+      while (true) { //interface is open, until close button (X on top right) gets pressed
 
-        while (accountTypePage.getPageWanted() == AccountTypes.NONE && !accountTypePage.isBackWanted()) {
-          //wait until either back button got pressed, or account type got selected
-        }
+        if (accountListPage.isNewAccountWanted()) { //if new account button gets pressed, open new account type page
+          accountTypePage.configureFrame(frame);
 
-        if (!accountTypePage.isBackWanted()) { //if account type got selected (instead of back button pressed)
-          switch (accountTypePage.getPageWanted()) { //check, which account type got selected
-            case CASH:
-              add_cashAccountPage.configureFrame(frame); //open page to add cash account
-              while (!add_cashAccountPage.isSubmitted() && !add_cashAccountPage.isBackWanted()) {
-                //wait until either back button or submit button got pressed
-              }
-              if (add_cashAccountPage.isSubmitted()) { //if submit button got pressed, add new account
-                user.addAccount(
-                    new Cash(add_cashAccountPage.getAccountName(), add_cashAccountPage.getLimit(),
-                        add_cashAccountPage.getCurrency()));
-              } else { //if back button got pressed, go to account type page again
-                accountTypePage.configureFrame(frame);
-              }
-              break;
-            case DEBIT:
-              add_debitAccountPage.configureFrame(frame); //open page to add debit account
-              while (!add_debitAccountPage.isSubmitted() && !add_debitAccountPage.isBackWanted()) {
-                //wait until either back button or submit button got pressed
-              }
-              if (add_debitAccountPage.isSubmitted()) { //if submit button got pressed, add new account
-                user.addAccount(new DebitCard(add_debitAccountPage.getAccountName(),
-                    add_debitAccountPage.getBankName(), add_debitAccountPage.getLimit(),
-                    add_debitAccountPage.getIBAN()));
-              } else { //if back button got pressed, go to account type page again
-                accountTypePage.configureFrame(frame);
-              }
-              break;
-            case CREDIT:
-              add_creditAccountPage.configureFrame(frame); //open page to add credit account
-              while (!add_creditAccountPage.isSubmitted() && !add_creditAccountPage
-                  .isBackWanted()) {
-                //wait until either back button or submit button got pressed
-              }
-              if (add_creditAccountPage.isSubmitted()) { //if submit button got pressed, add new account
-                user.addAccount(new CreditCard(add_creditAccountPage.getAccountName(),
-                    add_creditAccountPage.getBankName(), add_creditAccountPage.getLimit(),
-                    add_creditAccountPage.getExpiryDate()));
-              } else { //if back button got pressed, go to account type page again
-                accountTypePage.configureFrame(frame);
-              }
-              break;
-            case STOCKS:
-              add_stockAccountPage.configureFrame(frame); //open page to add stock account
-              while (!add_stockAccountPage.isSubmitted() && !add_stockAccountPage.isBackWanted()) {
-                //wait until either back button or submit button got pressed
-              }
-              if (add_stockAccountPage.isSubmitted()) { //if submit button got pressed, add new account
-                user.addAccount(
-                    new Stocks(add_stockAccountPage.getAccName(), add_stockAccountPage.getBuyDate(),
-                        add_stockAccountPage.getLimit()));
-              } else { //if back button got pressed, go to account type page again
-                accountTypePage.configureFrame(frame);
-              }
-              break;
-          }
-        } else { //if back button at account type page got pressed, go back to main page
-          accountListPage.configureFrame(frame);
-        }
-      } else if (accountListPage.getSelectedAccount() != null) { //if an account in the list got selected, open transaction list page of selected account
-        transactionListPage = new TransactionListPage(accountListPage.getSelectedAccount(), user);
-        transactionListPage.configureFrame(frame);
-
-        while (!transactionListPage.isNewDepositWanted() && !transactionListPage.isNewPayoutWanted()
-            && !transactionListPage.isBackWanted()) {
-          //wait until either back, add payout or add deposit button got pressed
-        }
-
-        if (transactionListPage.isNewPayoutWanted()) { //if new pay out button got pressed, open page to add new pay out
-          addPayoutPage.configureFrame(frame);
-          while (!addPayoutPage.isSubmitted() && !addPayoutPage.isBackWanted() && !addPayoutPage.isRefreshWanted()) {
-            //wait until either back button or submit button got pressed
+          while (accountTypePage.getPageWanted() == AccountTypes.NONE && !accountTypePage.isBackWanted()) {
+            //wait until either back button got pressed, or account type got selected
           }
 
-          if (addPayoutPage.isSubmitted()) { //if submit button got pressed, add new payout to account of the user
-            try {
-              Transaction payout = TransactionCreator.newTransaction(addPayoutPage.getCategory(), addPayoutPage.getAmount(),addPayoutPage.getDescription(), user.getCategoryStore());
-              //user.handleTransaction(payout, accountListPage.getSelectedAccount());
-            } catch (Exception e) {
-              System.out.println("ERR:" + e.getMessage()); //TODO BETTER
+          if (!accountTypePage.isBackWanted()) { //if account type got selected (instead of back button pressed)
+            switch (accountTypePage.getPageWanted()) { //check, which account type got selected
+              case CASH:
+                add_cashAccountPage.configureFrame(frame); //open page to add cash account
+                while (!add_cashAccountPage.isSubmitted() && !add_cashAccountPage.isBackWanted()) {
+                  //wait until either back button or submit button got pressed
+                }
+                if (add_cashAccountPage.isSubmitted()) { //if submit button got pressed, add new account
+                  user.addAccount(
+                          new Cash(add_cashAccountPage.getAccountName(), add_cashAccountPage.getLimit(),
+                                  add_cashAccountPage.getCurrency()));
+                } else { //if back button got pressed, go to account type page again
+                  accountTypePage.configureFrame(frame);
+                }
+                break;
+              case DEBIT:
+                add_debitAccountPage.configureFrame(frame); //open page to add debit account
+                while (!add_debitAccountPage.isSubmitted() && !add_debitAccountPage.isBackWanted()) {
+                  //wait until either back button or submit button got pressed
+                }
+                if (add_debitAccountPage.isSubmitted()) { //if submit button got pressed, add new account
+                  user.addAccount(new DebitCard(add_debitAccountPage.getAccountName(),
+                          add_debitAccountPage.getBankName(), add_debitAccountPage.getLimit(),
+                          add_debitAccountPage.getIBAN()));
+                } else { //if back button got pressed, go to account type page again
+                  accountTypePage.configureFrame(frame);
+                }
+                break;
+              case CREDIT:
+                add_creditAccountPage.configureFrame(frame); //open page to add credit account
+                while (!add_creditAccountPage.isSubmitted() && !add_creditAccountPage
+                        .isBackWanted()) {
+                  //wait until either back button or submit button got pressed
+                }
+                if (add_creditAccountPage.isSubmitted()) { //if submit button got pressed, add new account
+                  user.addAccount(new CreditCard(add_creditAccountPage.getAccountName(),
+                          add_creditAccountPage.getBankName(), add_creditAccountPage.getLimit(),
+                          add_creditAccountPage.getExpiryDate()));
+                } else { //if back button got pressed, go to account type page again
+                  accountTypePage.configureFrame(frame);
+                }
+                break;
+              case STOCKS:
+                add_stockAccountPage.configureFrame(frame); //open page to add stock account
+                while (!add_stockAccountPage.isSubmitted() && !add_stockAccountPage.isBackWanted()) {
+                  //wait until either back button or submit button got pressed
+                }
+                if (add_stockAccountPage.isSubmitted()) { //if submit button got pressed, add new account
+                  user.addAccount(
+                          new Stocks(add_stockAccountPage.getAccName(), add_stockAccountPage.getBuyDate(),
+                                  add_stockAccountPage.getLimit()));
+                } else { //if back button got pressed, go to account type page again
+                  accountTypePage.configureFrame(frame);
+                }
+                break;
             }
-          } else if (addPayoutPage.isBackWanted()) {
-            transactionListPage.configureFrame(frame); // open transaction list page of the account again
-          } else { //refresh add payout page.
+          } else { //if back button at account type page got pressed, go back to main page
+            accountListPage.configureFrame(frame);
+          }
+        } else if (accountListPage.getSelectedAccount() != null) { //if an account in the list got selected, open transaction list page of selected account
+          transactionListPage = new TransactionListPage(accountListPage.getSelectedAccount(), user);
+          transactionListPage.configureFrame(frame);
+
+          while (!transactionListPage.isNewDepositWanted() && !transactionListPage.isNewPayoutWanted()
+                  && !transactionListPage.isBackWanted()) {
+            //wait until either back, add payout or add deposit button got pressed
+          }
+
+          if (transactionListPage.isNewPayoutWanted()) { //if new pay out button got pressed, open page to add new pay out
             addPayoutPage.configureFrame(frame);
-          }
-        } else if (transactionListPage.isNewDepositWanted()) { //if new deposit button got pressed, open page to add new deposit
-          addDepositPage.configureFrame(frame);
-          while (!addDepositPage.isSubmitted() && !addDepositPage.isBackWanted() && !addDepositPage.isRefreshWanted()) {
-            //wait until either back button or submit button got pressed
-          }
-
-          if (addDepositPage.isSubmitted()) { //if submit button got pressed, add new deposit page to account of the user
-            try {
-              Transaction deposit = TransactionCreator.newTransaction(addPayoutPage.getCategory(), addPayoutPage.getAmount(),addPayoutPage.getDescription(), user.getCategoryStore());
-              //user.handleTransaction(deposit, accountListPage.getSelectedAccount());
-            } catch (Exception e) {
-              System.out.println("ERR:" + e.getMessage()); //TODO BETTER
+            while (!addPayoutPage.isSubmitted() && !addPayoutPage.isBackWanted() && !addPayoutPage.isRefreshWanted()) {
+              //wait until either back button or submit button got pressed
             }
-          } else if (addDepositPage.isBackWanted()) {
-            transactionListPage.configureFrame(frame); // open transaction list page of the account again
-          } else {
+
+            if (addPayoutPage.isSubmitted()) { //if submit button got pressed, add new payout to account of the user
+              try {
+                Transaction payout = TransactionCreator.newTransaction(addPayoutPage.getCategory(), addPayoutPage.getAmount(), addPayoutPage.getDescription(), user.getCategoryStore());
+                //user.handleTransaction(payout, accountListPage.getSelectedAccount());
+              } catch (Exception e) {
+                System.out.println("ERR:" + e.getMessage()); //TODO BETTER
+              }
+            } else if (addPayoutPage.isBackWanted()) {
+              transactionListPage.configureFrame(frame); // open transaction list page of the account again
+            } else { //refresh add payout page.
+              addPayoutPage.configureFrame(frame);
+            }
+          } else if (transactionListPage.isNewDepositWanted()) { //if new deposit button got pressed, open page to add new deposit
             addDepositPage.configureFrame(frame);
+            while (!addDepositPage.isSubmitted() && !addDepositPage.isBackWanted() && !addDepositPage.isRefreshWanted()) {
+              //wait until either back button or submit button got pressed
+            }
+
+            if (addDepositPage.isSubmitted()) { //if submit button got pressed, add new deposit page to account of the user
+              try {
+                Transaction deposit = TransactionCreator.newTransaction(addPayoutPage.getCategory(), addPayoutPage.getAmount(), addPayoutPage.getDescription(), user.getCategoryStore());
+                //user.handleTransaction(deposit, accountListPage.getSelectedAccount());
+              } catch (Exception e) {
+                System.out.println("ERR:" + e.getMessage()); //TODO BETTER
+              }
+            } else if (addDepositPage.isBackWanted()) {
+              transactionListPage.configureFrame(frame); // open transaction list page of the account again
+            } else {
+              addDepositPage.configureFrame(frame);
+            }
+          } else { //if back button of transaction list page got pressed, open account list page again
+            accountListPage.configureFrame(frame);
           }
-        } else { //if back button of transaction list page got pressed, open account list page again
-          accountListPage.configureFrame(frame);
         }
       }
-    }
-
+  }catch (Exception e){
+    //TODO
+    System.out.println("NOT IMPLEMENTED IN USER INTERFACE CATCHED EXCEPTION IN ADD____PAGE");
+  }
 
   }
 }
