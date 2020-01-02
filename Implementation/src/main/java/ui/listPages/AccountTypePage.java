@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import ui.main.AbstractPage;
+import user.User;
 
 
 /**
@@ -30,11 +31,14 @@ public class AccountTypePage extends AbstractPage {
 
   private volatile boolean backWanted;
 
+  private User user;
+
   /**
    * Creates a new AccountTypePage, which will load all needed components to a list.
    */
-  public AccountTypePage() {
+  public AccountTypePage(User user) {
     createComponents();
+    this.user = user;
   }
 
   /**

@@ -12,11 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import ui.main.AbstractPage;
+import user.User;
 
 public class AddCashAccountPage extends AbstractPage {
-
-  private final static int SHIFT_LEFT = 300;
-  private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
   private JLabel introTextLabel;
   private JLabel accountNameTextLabel;
@@ -36,13 +34,15 @@ public class AddCashAccountPage extends AbstractPage {
   private volatile boolean submitted;
   private volatile boolean backWanted;
 
+  private User user;
   /**
    * Creates a new AddCashAccountPage, which will load all needed components to a list.
    * By Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired through getters.
    */
   // In Final Version might take a User object to display additional User information.
-  public AddCashAccountPage() {
+  public AddCashAccountPage(User user) {
     createComponents();
+    this.user = user;
   }
 
   /**
@@ -88,38 +88,43 @@ public class AddCashAccountPage extends AbstractPage {
     submitted = false;
     backWanted = false;
 
-    introTextLabel = new JLabel(
-        "Please Enter The relevant Data!" + "                    " + "logged in as:"
-            + "<USERNAME>");
-    introTextLabel.setBounds(300, 10, 800, 50);
+    introTextLabel = new JLabel("Enter the needed information.");
+    introTextLabel.setBounds(100, 100, 1000, 50);
+    introTextLabel.setFont(HEADER_FONT);
     components.add(introTextLabel);
 
     accountNameTextLabel = new JLabel("Account Name:");
-    accountNameTextLabel.setBounds(10 + SHIFT_LEFT, 200, 300, 50);
+    accountNameTextLabel.setBounds(300, 200, 300, 50);
+    accountNameTextLabel.setFont(LABEL_FONT);
     components.add(accountNameTextLabel);
 
     accountNameInputField = new JTextField();
-    accountNameInputField.setBounds(10 + SHIFT_LEFT, 200 + OFFSET_Y, 300, 50);
+    accountNameInputField.setBounds(600, 200, 300, 50);
+    accountNameInputField.setFont(TEXTFIELD_FONT);
     components.add(accountNameInputField);
 
     limitTextLabel = new JLabel("Limit:");
-    limitTextLabel.setBounds(10 + SHIFT_LEFT, 300, 300, 50);
+    limitTextLabel.setBounds(300, 300, 300, 50);
+    limitTextLabel.setFont(LABEL_FONT);
     components.add(limitTextLabel);
 
     limitInputField = new JTextField("0.00");
-    limitInputField.setBounds(10 + SHIFT_LEFT, 300 + OFFSET_Y, 300, 50);
+    limitInputField.setBounds(600, 300, 300, 50);
+    limitInputField.setFont(TEXTFIELD_FONT);
     components.add(limitInputField);
 
     currencyTextLabel = new JLabel("Currency:");
-    currencyTextLabel.setBounds(10 + SHIFT_LEFT, 400, 300, 50);
+    currencyTextLabel.setBounds(300, 400, 300, 50);
+    currencyTextLabel.setFont(LABEL_FONT);
     components.add(currencyTextLabel);
 
     currencyInputField = new JTextField();
-    currencyInputField.setBounds(10 + SHIFT_LEFT, 400 + OFFSET_Y, 300, 50);
+    currencyInputField.setBounds(600, 400, 300, 50);
+    currencyInputField.setFont(TEXTFIELD_FONT);
     components.add(currencyInputField);
 
     submitButton = new JButton("SUBMIT");
-    submitButton.setBounds(10 + SHIFT_LEFT, 600, 300, 50);
+    submitButton.setBounds(450, 550, 300, 50);
     components.add(submitButton);
 
     submitButton.addActionListener(new ActionListener() {

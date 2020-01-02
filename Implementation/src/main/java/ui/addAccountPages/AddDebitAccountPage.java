@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import ui.main.AbstractPage;
+import user.User;
 
 public class AddDebitAccountPage extends AbstractPage {
 
@@ -35,13 +36,16 @@ public class AddDebitAccountPage extends AbstractPage {
 
   private volatile boolean submitted;
   private volatile boolean backWanted;
+
+  private User user;
   /**
    * Creates a new AddDebitAccountPage, which will load all needed components to a list.
    * By Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired through getters.
    */
   // In Final Version might take a User object to display additional User information.
-  public AddDebitAccountPage() {
+  public AddDebitAccountPage(User user) {
     createComponents();
+    this.user = user;
   }
 
   /**

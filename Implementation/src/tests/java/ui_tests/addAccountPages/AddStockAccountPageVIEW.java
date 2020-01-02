@@ -2,6 +2,7 @@ package ui_tests.addAccountPages;
 
 import javax.swing.JFrame;
 import ui.addAccountPages.AddStockAccountPage;
+import ui_tests.TestUser;
 
 public class AddStockAccountPageVIEW {
   public static void main(String args[]) {
@@ -11,7 +12,7 @@ public class AddStockAccountPageVIEW {
     frame.setResizable(false);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
-    AddStockAccountPage addp = new AddStockAccountPage();
+    AddStockAccountPage addp = new AddStockAccountPage(TestUser.getTestUser());
     addp.configureFrame(frame);
 
   }

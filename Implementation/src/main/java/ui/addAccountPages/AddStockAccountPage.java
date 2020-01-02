@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import ui.main.AbstractPage;
+import user.User;
 
 public class AddStockAccountPage extends AbstractPage {
 
@@ -36,12 +37,15 @@ public class AddStockAccountPage extends AbstractPage {
   private volatile boolean submitted;
   private volatile boolean backWanted;
 
+  private User user;
+
   /**
    * Creates a new AddStockAccountPage, which will load all needed components to a list.
    */
   // In Final Version might take a User object to display additional User information.
-  public AddStockAccountPage() {
+  public AddStockAccountPage(User user) {
     createComponents();
+    this.user = user;
   }
 
   /**

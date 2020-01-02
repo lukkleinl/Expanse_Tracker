@@ -88,11 +88,11 @@ public class UserInterface {
 
     try {
       AccountListPage accountListPage = new AccountListPage(user);
-      AccountTypePage accountTypePage = new AccountTypePage();
-      AddCashAccountPage add_cashAccountPage = new AddCashAccountPage();
-      AddDebitAccountPage add_debitAccountPage = new AddDebitAccountPage();
-      AddStockAccountPage add_stockAccountPage = new AddStockAccountPage();
-      AddCreditAccountPage add_creditAccountPage = new AddCreditAccountPage();
+      AccountTypePage accountTypePage = new AccountTypePage(user);
+      AddCashAccountPage add_cashAccountPage = new AddCashAccountPage(user);
+      AddDebitAccountPage add_debitAccountPage = new AddDebitAccountPage(user);
+      AddStockAccountPage add_stockAccountPage = new AddStockAccountPage(user);
+      AddCreditAccountPage add_creditAccountPage = new AddCreditAccountPage(user);
       AddDepositPage addDepositPage = new AddDepositPage(user);
       AddPayoutPage addPayoutPage = new AddPayoutPage(user);
       TransactionListPage transactionListPage;

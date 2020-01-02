@@ -2,6 +2,7 @@ package ui_tests.addAccountPages;
 
 import javax.swing.JFrame;
 import ui.addAccountPages.AddCashAccountPage;
+import ui_tests.TestUser;
 
 public class AddCashAccountPageVIEW {
   public static void main(String args[]) {
@@ -11,7 +12,7 @@ public class AddCashAccountPageVIEW {
     frame.setResizable(false);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
-    AddCashAccountPage addp = new AddCashAccountPage();
+    AddCashAccountPage addp = new AddCashAccountPage(TestUser.getTestUser());
     addp.configureFrame(frame);
 
   }
