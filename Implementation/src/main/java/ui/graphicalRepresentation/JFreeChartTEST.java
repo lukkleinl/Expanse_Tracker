@@ -32,7 +32,7 @@ public class JFreeChartTEST {
         // Population in 2005
         dataset.addValue(10, "USA", "2005");
         dataset.addValue(15, "India", "2005");
-        dataset.addValue(20, "China", "2005");
+        dataset.addValue(-20, "China", "2005");
 
         // Population in 2010
         dataset.addValue(15, "USA", "2010");
@@ -49,8 +49,14 @@ public class JFreeChartTEST {
                 "Population in Million",
                 dataset
         );
+
+
+
         ChartFrame frame = new ChartFrame("Test Bar Chart",chart);
-        frame.setSize(450,500);
+
+
+
+        frame.setSize(1000,500);
         frame.setVisible(true);
     }
 
