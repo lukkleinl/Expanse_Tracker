@@ -1,5 +1,13 @@
 package ui.graphicalRepresentation;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Map;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import transactions.Deposit;
@@ -10,17 +18,12 @@ import ui.TestUser;
 import ui.main.AbstractPage;
 import user.User;
 
-import javax.swing.*;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Map;
-
 public class GroupingPage extends AbstractPage {
 
 
     private ZonedDateTime begin;
     private ZonedDateTime end;
-    private GroupingTypes groupingType;
+    private final GroupingTypes groupingType;
     User user;
     private JLabel introTextLabel;
     private JButton backButton;
@@ -33,19 +36,20 @@ public class GroupingPage extends AbstractPage {
 
     String introText = "Grouped by - ";
 
-    public GroupingPage(User user, GroupingTypes groupingType) {
+    public GroupingPage(final User user, final GroupingTypes groupingType) {
         this.groupingType = groupingType;
         this.user = user;
     }
 
-    public GroupingPage(User user, GroupingTypes groupingType, ZonedDateTime begin, ZonedDateTime end) {
+    public GroupingPage(final User user, final GroupingTypes groupingType, final ZonedDateTime begin,
+                        final ZonedDateTime end) {
         this.begin = begin;
         this.end = end;
         this.groupingType = groupingType;
         this.user = user;
     }
 
-    public GroupingPage(User user, ZonedDateTime begin, ZonedDateTime end) {
+    public GroupingPage(final User user, final ZonedDateTime begin, final ZonedDateTime end) {
         this.begin = begin;
         this.end = end;
         this.groupingType = GroupingTypes.USER_DEFINED;
@@ -54,115 +58,106 @@ public class GroupingPage extends AbstractPage {
 
 
     @Override
-    protected void resetTitle(JFrame frame) {
+    protected void resetTitle(final JFrame frame) {
         frame.setTitle("Grouping - Page");
     }
 
     @Override
     protected void createComponents() {
+        this.components = new ArrayList<>();
+        GroupingBuilder orga = new GroupingBuilder().allAccs(this.user).category();
 
-        components = new ArrayList<>();
-
-        Map<String, CustomContainer<Transaction>> orga = new GroupingBuilder().allAccs(user).organize();
-
-        switch (groupingType){
-
+        switch (this.groupingType) {
             case DAILY:
-                introText += "Daily!";
-                orga = new GroupingBuilder().allAccs(user).daily()  .organize(); // TODO ? wie groupe ich hier?
+                this.introText += "Daily!";
+                orga = orga.daily();
                 break;
             case MONTHLY:
-                introText += "Monthly!";
-                orga = new GroupingBuilder().allAccs(user).monthly().organize(); //TODO  ? wie groupe ich hier?
+                this.introText += "Monthly!";
+                orga = orga.monthly();
                 break;
             case YEARLY:
-                introText += "Yearly!";
-                orga = new GroupingBuilder().allAccs(user).yearly().organize(); //TODO ? wie groupe ich hier?
+                this.introText += "Yearly!";
+                orga = orga.yearly();
                 break;
             case USER_DEFINED:
-                introText += "User Defined:" + begin.toString() +" - " +end.toString();
-                orga = new GroupingBuilder().allAccs(user).userdefined(begin,end).organize(); //TODO ? wie groupe ich hier?
-
+                this.introText += "User Defined:" + this.begin.toString() + " - " + this.end.toString();
+                orga = orga.userdefined(this.begin, this.end);
         }
 
+        Map<String, CustomContainer<Transaction>> organized = orga.organize();
 
-        String[] transactionDescriptions = {"Type", "Descriptions", "Amount", "Creation-Date",
-                "Category"};
+        int rows = 0;
+        for (String key : organized.keySet()) {
+            rows += organized.get(key).size();
+        }
+        if (rows > 0) {
+            String[][] transactionList_VISU = new String[rows][6];
+            int i = 0;
 
-        for(String key : orga.keySet()) {
+            for (String key : organized.keySet()) {
+                for (CustomIterator<Transaction> it = organized.get(key).getIterator(); it.hasNext(); it
+                        .next()) {
 
-            CustomContainer<Transaction> transactionlist = orga.get(key);
-            int listSize = transactionlist == null ? 0 : transactionlist.size();
-            String[][] transactionList_VISU = new String[listSize][6];
-
-            if (listSize > 0) {
-                CustomIterator<Transaction> it = transactionlist.getIterator();
-                int i = 0;
-
-                while (it.hasNext()) {
-                    Transaction transtemp = it.next();
-
-                    if (transtemp instanceof Payout) {
+                    if (it.element() instanceof Payout) {
                         transactionList_VISU[i][0] = "Payout";
-                        transactionList_VISU[i][4] = ((Payout) transtemp).getPayoutCategory()
-                                .toString();
-                    } else {
+                    } else if (it.element() instanceof Deposit) {
                         transactionList_VISU[i][0] = "Deposit";
-                        transactionList_VISU[i][4] = ((Deposit) transtemp).getCategory()
-                                .toString();
                     }
 
-                    transactionList_VISU[i][1] = transtemp.getDescription();
-                    transactionList_VISU[i][2] = "" + transtemp.getAmount();
-                    transactionList_VISU[i][5] = "" + transtemp.getID();
-                    transactionList_VISU[i++][3] = transtemp.getFormattedCreationDate();
-
-
+                    transactionList_VISU[i][1] = it.element().getDescription();
+                    transactionList_VISU[i][2] = "" + it.element().getAmount();
+                    transactionList_VISU[i][3] = it.element().getFormattedCreationDate();
+                    transactionList_VISU[i][4] = it.element().getCategory();
+                    transactionList_VISU[i][5] = "" + it.element().getID();
+                    i++;
                 }
-
             }
-            transactionTable = new JTable(transactionList_VISU, transactionDescriptions);
 
-            //https://stackoverflow.com/questions/9919230/disable-user-edit-in-jtable
-            // MAKES THE ELEMENTS IN THE TABLE UNEDITABLE
-            transactionTable.setDefaultEditor(Object.class, null);
-
-
-            scrollPane = new JScrollPane(transactionTable);
-            scrollPane.setBounds(225, 200, 900, 450);
-            components.add(scrollPane);
-
-            introTextLabel = new JLabel(introText);
-            // 1200 X 800
-            introTextLabel.setBounds(400, 100, 200, 50);
-            components.add(introTextLabel);
-
-            backButton = new JButton("BACK");
-            backButton.setBounds(10, 10, 100, 50);
-            components.add(backButton);
-
-            backButton.addActionListener(e -> backWanted = true);
-
-
-            showGraphicalButton = new JButton("Show Graphical Representation!");
-            showGraphicalButton.setBounds(400, 700, 300, 50);
-            components.add(showGraphicalButton);
-
-            showGraphicalButton.addActionListener(e -> graphicalWanted = true);
-
-
+            String[] transactionDescriptions =
+                    {"Type", "Descriptions", "Amount", "Creation-Date", "Category"};
+            this.transactionTable = new JTable(transactionList_VISU, transactionDescriptions);
         }
+
+        // https://stackoverflow.com/questions/9919230/disable-user-edit-in-jtable
+        // MAKES THE ELEMENTS IN THE TABLE UNEDITABLE
+        this.transactionTable.setDefaultEditor(Object.class, null);
+
+
+        this.scrollPane = new JScrollPane(this.transactionTable);
+        this.scrollPane.setBounds(225, 200, 900, 450);
+        this.components.add(this.scrollPane);
+
+        this.introTextLabel = new JLabel(this.introText);
+        // 1200 X 800
+        this.introTextLabel.setBounds(400, 100, 200, 50);
+        this.components.add(this.introTextLabel);
+
+        this.backButton = new JButton("BACK");
+        this.backButton.setBounds(10, 10, 100, 50);
+        this.components.add(this.backButton);
+
+        this.backButton.addActionListener(e -> this.backWanted = true);
+
+
+        this.showGraphicalButton = new JButton("Show Graphical Representation!");
+        this.showGraphicalButton.setBounds(400, 700, 300, 50);
+        this.components.add(this.showGraphicalButton);
+
+        this.showGraphicalButton.addActionListener(e -> this.graphicalWanted = true);
     }
 
 
-    public static void main(String args[]){
+    public static void main(final String args[]) {
         JFrame frame = new JFrame();
         frame.setLayout(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         User user = TestUser.getTestUser();
-        GroupingPage page = new GroupingPage(user,GroupingTypes.DAILY);
+        GroupingPage page = new GroupingPage(user, GroupingTypes.DAILY);
         page.configureFrame(frame);
     }
 }
+
+
