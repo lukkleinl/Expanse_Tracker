@@ -12,11 +12,9 @@ import javax.swing.border.LineBorder;
 
 import ui.main.AbstractPage;
 
-
 /**
- * This page will be the start page, when the application is started.
- * The user can input his user id and password.
- * There is also a button, which will direct the user to a registration page.
+ * This page will be the start page, when the application is started. The user can input his user id
+ * and password. There is also a button, which will direct the user to a registration page.
  *
  * @author Patrick Gmasz
  */
@@ -36,10 +34,7 @@ public class LoginPage extends AbstractPage {
   private volatile boolean registrationWanted;
   private volatile boolean loginWanted;
 
-
-  /**
-   * Creates a new LoginPage, which will load all needed components in a list.
-   */
+  /** Creates a new LoginPage, which will load all needed components in a list. */
   public LoginPage() {
     createComponents();
   }
@@ -53,7 +48,6 @@ public class LoginPage extends AbstractPage {
     return user;
   }
 
-
   /**
    * Returns the input, which is in the password textfield.
    *
@@ -64,8 +58,8 @@ public class LoginPage extends AbstractPage {
   }
 
   /**
-   * The page has a button, which the user can press if he wants to register a new user account.
-   * If the button gets pressed, a boolean flag will be set to true.
+   * The page has a button, which the user can press if he wants to register a new user account. If
+   * the button gets pressed, a boolean flag will be set to true.
    *
    * @return The boolean flag, which will be true, if the user pressed the register button.
    */
@@ -74,8 +68,8 @@ public class LoginPage extends AbstractPage {
   }
 
   /**
-   * The page has a button, which the user can press of he wants to log in.
-   * If the button gets pressed, a boolean flag will be set to true.
+   * The page has a button, which the user can press of he wants to log in. If the button gets
+   * pressed, a boolean flag will be set to true.
    *
    * @return The boolean flag, which will be true, if the user pressed the login button:
    */
@@ -84,8 +78,8 @@ public class LoginPage extends AbstractPage {
   }
 
   /**
-   * This method creates all components, such as buttons and text fields, and adds it to a list.
-   * It also sets every indicator variables to default.
+   * This method creates all components, such as buttons and text fields, and adds it to a list. It
+   * also sets every indicator variables to default.
    */
   @Override
   protected void createComponents() {
@@ -97,56 +91,58 @@ public class LoginPage extends AbstractPage {
 
     message = new JLabel();
     message.setText("Expense Tracker");
-    message.setFont(new Font("Serif",Font.BOLD,50));
-    message.setBounds(360,100,500,70);
+    message.setFont(new Font("Serif", Font.BOLD, 50));
+    message.setBounds(360, 100, 500, 70);
 
-    //USER_LABEL
+    // USER_LABEL
     userLabel = new JLabel();
     userLabel.setText("User:");
     userLabel.setFont(LABEL_FONT);
     userLabel.setBounds(300, 300, 300, 50);
 
-    //USER_TEXTFIELD
+    // USER_TEXTFIELD
     userTextField = new JTextField();
     userTextField.setFont(TEXTFIELD_FONT);
     userTextField.setBounds(600, 300, 300, 50);
 
-    //PASSWORD_LABEL
+    // PASSWORD_LABEL
     passwordLabel = new JLabel();
     passwordLabel.setText("Password:");
     passwordLabel.setFont(LABEL_FONT);
     passwordLabel.setBounds(300, 400, 300, 50);
 
-    //PASSWORD_TEXTFIELD
+    // PASSWORD_TEXTFIELD
     passwordTextField = new JTextField();
     passwordTextField.setFont(TEXTFIELD_FONT);
     passwordTextField.setBounds(600, 400, 300, 50);
 
-    //SUBMIT_BUTTON
+    // SUBMIT_BUTTON
     submitButton = new JButton("Submit");
     submitButton.setBounds(650, 500, 250, 50);
     submitButton.setFont(BUTTON_FONT);
-    submitButton.setBorder(new LineBorder(Color.BLACK,2));
-    submitButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        user = userTextField.getText();
-        password = passwordTextField.getText();
-        loginWanted = true;
-      }
-    });
+    submitButton.setBorder(new LineBorder(Color.BLACK, 2));
+    submitButton.addActionListener(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            user = userTextField.getText();
+            password = passwordTextField.getText();
+            loginWanted = true;
+          }
+        });
 
-    //REGISTER_BUTTON
+    // REGISTER_BUTTON
     registerButton = new JButton("Register");
     registerButton.setBounds(300, 500, 250, 50);
     registerButton.setFont(BUTTON_FONT);
-    registerButton.setBorder(new LineBorder(Color.BLACK,2));
-    registerButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        registrationWanted = true;
-      }
-    });
+    registerButton.setBorder(new LineBorder(Color.BLACK, 2));
+    registerButton.addActionListener(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            registrationWanted = true;
+          }
+        });
 
     components = new ArrayList<>();
     components.add(userLabel);
@@ -156,7 +152,6 @@ public class LoginPage extends AbstractPage {
     components.add(submitButton);
     components.add(registerButton);
     components.add(message);
-
   }
 
   @Override

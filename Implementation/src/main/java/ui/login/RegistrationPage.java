@@ -10,9 +10,8 @@ import javax.swing.border.LineBorder;
 import ui.main.AbstractPage;
 
 /**
- *
- * This page is an input page, where someone can register a new user account.
- * It consists of a user-, password-, retype password-, first name- and last name textfield and a submit button.
+ * This page is an input page, where someone can register a new user account. It consists of a
+ * user-, password-, retype password-, first name- and last name textfield and a submit button.
  *
  * @author Patrick Gmasz
  */
@@ -32,8 +31,8 @@ public class RegistrationPage extends AbstractPage {
   private JTextField firstnameTextField;
   private JTextField lastnameTextField;
 
-  private final static int FRAME_WIDTH = 410;
-  private final static int FRAME_HEIGHT = 530;
+  private static final int FRAME_WIDTH = 410;
+  private static final int FRAME_HEIGHT = 530;
 
   private String user;
   private String password;
@@ -42,10 +41,7 @@ public class RegistrationPage extends AbstractPage {
   private boolean registrationComplete;
   private boolean backWanted;
 
-
-  /**
-   * Creates a new RegistrationPage, which will load all needed components to a list.
-   */
+  /** Creates a new RegistrationPage, which will load all needed components to a list. */
   public RegistrationPage() {
     createComponents();
   }
@@ -107,10 +103,12 @@ public class RegistrationPage extends AbstractPage {
   }
 
   /**
-   * The page has a submit button, which the user can press to submit the inputs needed for registering a new user account.
-   * If the inputs where correct, a boolean flag will be set to true.
+   * The page has a submit button, which the user can press to submit the inputs needed for
+   * registering a new user account. If the inputs where correct, a boolean flag will be set to
+   * true.
    *
-   * @return The boolean flag, which will be true, if the user pressed the submit button and inputs where correct.
+   * @return The boolean flag, which will be true, if the user pressed the submit button and inputs
+   *     where correct.
    */
   public boolean isRegistrationComplete() {
     try {
@@ -137,8 +135,8 @@ public class RegistrationPage extends AbstractPage {
   }
 
   /**
-   * This method creates all components, such as buttons and text fields, and adds it to a list.
-   * It also sets every indicator variables to default.
+   * This method creates all components, such as buttons and text fields, and adds it to a list. It
+   * also sets every indicator variables to default.
    */
   @Override
   protected void createComponents() {
@@ -151,105 +149,116 @@ public class RegistrationPage extends AbstractPage {
     registrationComplete = false;
     backWanted = false;
 
-    //INFO_LABEL
+    // INFO_LABEL
     infoLabel = new JLabel();
     infoLabel.setFont(LABEL_FONT);
     infoLabel.setBounds(430, 670, 350, 50);
 
-    //USER_LABEL
+    // USER_LABEL
     userLabel = new JLabel();
     userLabel.setText("User ID:");
     userLabel.setFont(LABEL_FONT);
     userLabel.setBounds(300, 100, 300, 50);
 
-    //USER_TEXTFIELD
+    // USER_TEXTFIELD
     userTextField = new JTextField();
     userTextField.setFont(TEXTFIELD_FONT);
     userTextField.setBounds(600, 100, 300, 50);
 
-    //PASSWORD_LABEL
+    // PASSWORD_LABEL
     passwordLabel = new JLabel();
     passwordLabel.setText("Password:");
     passwordLabel.setFont(LABEL_FONT);
     passwordLabel.setBounds(300, 200, 300, 50);
 
-    //PASSWORD_TEXTFIELD
+    // PASSWORD_TEXTFIELD
     passwordTextField = new JTextField();
     passwordTextField.setFont(TEXTFIELD_FONT);
     passwordTextField.setBounds(600, 200, 300, 50);
 
-    //PASSWORD2_LABEL
+    // PASSWORD2_LABEL
     password2Label = new JLabel();
     password2Label.setText("Retype Password:");
     password2Label.setFont(LABEL_FONT);
     password2Label.setBounds(300, 300, 300, 50);
 
-    //PASSWORD2_TEXTFIELD
+    // PASSWORD2_TEXTFIELD
     password2TextField = new JTextField();
     password2TextField.setFont(TEXTFIELD_FONT);
     password2TextField.setBounds(600, 300, 300, 50);
 
-    //FIRSTNAME_LABEL
+    // FIRSTNAME_LABEL
     firstnameLabel = new JLabel();
     firstnameLabel.setText("Firstname:");
     firstnameLabel.setFont(LABEL_FONT);
     firstnameLabel.setBounds(300, 400, 300, 50);
 
-    //FIRSTNAME_TEXTFIELD
+    // FIRSTNAME_TEXTFIELD
     firstnameTextField = new JTextField();
     firstnameTextField.setFont(TEXTFIELD_FONT);
     firstnameTextField.setBounds(600, 400, 300, 50);
 
-    //LASTNAME_TEXTFIELD
+    // LASTNAME_TEXTFIELD
     lastnameLabel = new JLabel();
     lastnameLabel.setText("Lastname:");
     lastnameLabel.setFont(LABEL_FONT);
     lastnameLabel.setBounds(300, 500, 300, 50);
 
-    //LASTNAME_TEXTFIELD
+    // LASTNAME_TEXTFIELD
     lastnameTextField = new JTextField();
     lastnameTextField.setFont(TEXTFIELD_FONT);
     lastnameTextField.setBounds(600, 500, 300, 50);
 
-    //REGISTER_BUTTON
+    // REGISTER_BUTTON
     registerButton = new JButton("Submit");
     registerButton.setBounds(450, 600, 300, 50);
     registerButton.setFont(BUTTON_FONT);
-    registerButton.setBorder(new LineBorder(Color.BLACK,2));
-    registerButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        if (!userTextField.getText().equals("") && !passwordTextField.getText().equals("")
-            && !password2TextField.getText().equals("") && !firstnameTextField.getText().equals("")
-            && !lastnameTextField.getText().equals("")) {
-          if (passwordTextField.getText().equals(password2TextField.getText())) {
-            user = userTextField.getText();
-            password = passwordTextField.getText();
-            firstname = firstnameTextField.getText();
-            lastname = lastnameTextField.getText();
-            infoLabel.setText("User added successfully!");
-            registrationComplete = true;
-          } else {
-            JOptionPane.showMessageDialog(
-                    null, "The passwords must match!", "Password Error", JOptionPane.WARNING_MESSAGE);
+    registerButton.setBorder(new LineBorder(Color.BLACK, 2));
+    registerButton.addActionListener(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            if (!userTextField.getText().equals("")
+                && !passwordTextField.getText().equals("")
+                && !password2TextField.getText().equals("")
+                && !firstnameTextField.getText().equals("")
+                && !lastnameTextField.getText().equals("")) {
+              if (passwordTextField.getText().equals(password2TextField.getText())) {
+                user = userTextField.getText();
+                password = passwordTextField.getText();
+                firstname = firstnameTextField.getText();
+                lastname = lastnameTextField.getText();
+                infoLabel.setText("User added successfully!");
+                registrationComplete = true;
+              } else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "The passwords must match!",
+                    "Password Error",
+                    JOptionPane.WARNING_MESSAGE);
+              }
+            } else {
+              JOptionPane.showMessageDialog(
+                  null,
+                  "No empty fields are allowed!",
+                  "Empty Fields Error",
+                  JOptionPane.WARNING_MESSAGE);
+            }
           }
-        } else {
-          JOptionPane.showMessageDialog(
-                  null, "No empty fields are allowed!", "Empty Fields Error", JOptionPane.WARNING_MESSAGE);        }
-      }
-    });
+        });
 
-    //BACK_BUTTON
+    // BACK_BUTTON
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
-    backButton.setBorder(new LineBorder(Color.BLACK,2));
-    backButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        backWanted = true;
-      }
-    });
+    backButton.setBorder(new LineBorder(Color.BLACK, 2));
+    backButton.addActionListener(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            backWanted = true;
+          }
+        });
 
     components.add(userLabel);
     components.add(userTextField);
@@ -264,7 +273,6 @@ public class RegistrationPage extends AbstractPage {
     components.add(lastnameLabel);
     components.add(lastnameTextField);
     components.add(backButton);
-
   }
 
   @Override

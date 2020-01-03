@@ -1,12 +1,12 @@
 package ui.addAccountPages;
 
-
 /**
- * This Page collects all necessary data needed to create a new 'Cash'-Account. Implements the Interface 'InterfacePage'
- * By Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired through getters.
+ * This Page collects all necessary data needed to create a new 'Cash'-Account. Implements the
+ * Interface 'InterfacePage' By Pressing Submit(JButton) the Page saves the Values entered into the
+ * JTextField's, who then can be aquired through getters.
+ *
  * @author Paul Kraft
  */
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -41,8 +41,9 @@ public class AddCashAccountPage extends AbstractPage {
 
   private User user;
   /**
-   * Creates a new AddCashAccountPage, which will load all needed components to a list.
-   * By Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired through getters.
+   * Creates a new AddCashAccountPage, which will load all needed components to a list. By Pressing
+   * Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be
+   * aquired through getters.
    */
   // In Final Version might take a User object to display additional User information.
   public AddCashAccountPage(User user) {
@@ -51,38 +52,30 @@ public class AddCashAccountPage extends AbstractPage {
   }
 
   /**
-   * Configures the JFrame, adds all the components(resets the values of the JTextFields to hard coded default).
-   * Names the Frame to 'Add Cash Account'.
-   * Sets the Size of the Frame. (Default is 1200 by 800).
-   * calls revalidate() and repaint() on the Frame.
+   * Configures the JFrame, adds all the components(resets the values of the JTextFields to hard
+   * coded default). Names the Frame to 'Add Cash Account'. Sets the Size of the Frame. (Default is
+   * 1200 by 800). calls revalidate() and repaint() on the Frame.
+   *
    * @param frame The JFrame, which components will be updated
    */
 
-  /**
-   * @return AccName input from the User or default val.
-   */
-  public String getAccountName() { return accountNameInputValue; }
-  /**
-   * @return Currency input from the User or default val.
-   */
+  /** @return AccName input from the User or default val. */
+  public String getAccountName() {
+    return accountNameInputValue;
+  }
+  /** @return Currency input from the User or default val. */
   public String getCurrency() {
     return currencyInputValue;
   }
-  /**
-   * @return Limit input from the User or default val.
-   */
+  /** @return Limit input from the User or default val. */
   public float getLimit() {
     return limitInputValue;
   }
-  /**
-   * @return current boolean value of submitted(whether the User submitted or not! )
-   */
+  /** @return current boolean value of submitted(whether the User submitted or not! ) */
   public boolean isSubmitted() {
     return submitted;
   }
-  /**
-   * @return current boolean value of backWanted( whether the User wants to go back or not! )
-   */
+  /** @return current boolean value of backWanted( whether the User wants to go back or not! ) */
   public boolean isBackWanted() {
     return backWanted;
   }
@@ -93,7 +86,9 @@ public class AddCashAccountPage extends AbstractPage {
     submitted = false;
     backWanted = false;
 
-    introTextLabel = new JLabel("Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
+    introTextLabel =
+        new JLabel(
+            "Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
     introTextLabel.setBounds(200, 10, 1000, 50);
     introTextLabel.setFont(HEADER_FONT);
     components.add(introTextLabel);
@@ -130,7 +125,7 @@ public class AddCashAccountPage extends AbstractPage {
 
     submitButton = new JButton("SUBMIT");
     submitButton.setBounds(450, 600, 300, 50);
-    submitButton.setBorder(new LineBorder(Color.BLACK,2));
+    submitButton.setBorder(new LineBorder(Color.BLACK, 2));
     submitButton.setFont(BUTTON_FONT);
     components.add(submitButton);
 
@@ -144,7 +139,10 @@ public class AddCashAccountPage extends AbstractPage {
           public void actionPerformed(ActionEvent e) {
             accountNameInputValue = accountNameInputField.getText();
             currencyInputValue = currencyInputField.getText();
-            limitInputValue = (limitInputField.getText().isEmpty()) ? 0 : Float.valueOf(limitInputField.getText());
+            limitInputValue =
+                (limitInputField.getText().isEmpty())
+                    ? 0
+                    : Float.valueOf(limitInputField.getText());
 
             if (limitInputValue < 0) {
               JOptionPane.showMessageDialog(
@@ -170,19 +168,16 @@ public class AddCashAccountPage extends AbstractPage {
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
-    backButton.setBorder(new LineBorder(Color.BLACK,2));
+    backButton.setBorder(new LineBorder(Color.BLACK, 2));
     components.add(backButton);
-    backButton.addActionListener(new ActionListener() {
-      @Override
-      /**
-       * @param e Action event
-       * sets BackWanted to true
-       */
-      public void actionPerformed(ActionEvent e) {
-        backWanted = true;
-      }
-    });
-
+    backButton.addActionListener(
+        new ActionListener() {
+          @Override
+          /** @param e Action event sets BackWanted to true */
+          public void actionPerformed(ActionEvent e) {
+            backWanted = true;
+          }
+        });
   }
 
   @Override

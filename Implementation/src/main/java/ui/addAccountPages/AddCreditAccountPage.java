@@ -1,7 +1,9 @@
 package ui.addAccountPages;
 /**
- * This Page collects all necessary data needed to create a new 'CreditCard'-Account.
- * By Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired through getters.
+ * This Page collects all necessary data needed to create a new 'CreditCard'-Account. By Pressing
+ * Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired
+ * through getters.
+ *
  * @author Paul Kraft
  */
 import javax.swing.*;
@@ -23,8 +25,9 @@ import user.User;
 
 public class AddCreditAccountPage extends AbstractPage {
 
-  private final static int SHIFT_LEFT = 300;
-  private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
+  private static final int SHIFT_LEFT = 300;
+  private static final int OFFSET_Y =
+      50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
   private JLabel introTextLabel;
   private JLabel accountNameTextLabel;
@@ -50,8 +53,9 @@ public class AddCreditAccountPage extends AbstractPage {
   private User user;
 
   /**
-   * Creates a new AddCreditAccountPage, which will load all needed components to a list.
-   * By Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired through getters.
+   * Creates a new AddCreditAccountPage, which will load all needed components to a list. By
+   * Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can
+   * be aquired through getters.
    */
   // In Final Version might take a User object to display additional User information.
   public AddCreditAccountPage(User user) {
@@ -59,39 +63,27 @@ public class AddCreditAccountPage extends AbstractPage {
     createComponents();
   }
 
-  /**
-   * @return accName input from the User or default val.
-   */
+  /** @return accName input from the User or default val. */
   public String getAccountName() {
     return accountNameInputValue;
   }
-  /**
-   * @return Expiy Date input from the User or default val.
-   */
+  /** @return Expiy Date input from the User or default val. */
   public Date getExpiryDate() {
     return expiryDateInputValue;
   }
-  /**
-   * @return Limit input from the User or default val.
-   */
+  /** @return Limit input from the User or default val. */
   public float getLimit() {
     return limitInputValue;
   }
-  /**
-   * @return BankName input from the User or default val.
-   */
+  /** @return BankName input from the User or default val. */
   public String getBankName() {
     return bankNameInputValue;
   }
-  /**
-   * @return current boolean value of submitted(whether the User submitted or not! )
-   */
+  /** @return current boolean value of submitted(whether the User submitted or not! ) */
   public boolean isSubmitted() {
     return submitted;
   }
-  /**
-   * @return current boolean value of backWanted( whether the User wants to go back or not! )
-   */
+  /** @return current boolean value of backWanted( whether the User wants to go back or not! ) */
   public boolean isBackWanted() {
     return backWanted;
   }
@@ -102,7 +94,9 @@ public class AddCreditAccountPage extends AbstractPage {
     submitted = false;
     backWanted = false;
 
-    introTextLabel = new JLabel("Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
+    introTextLabel =
+        new JLabel(
+            "Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
     introTextLabel.setBounds(200, 10, 1000, 50);
     introTextLabel.setFont(HEADER_FONT);
     components.add(introTextLabel);
@@ -151,67 +145,66 @@ public class AddCreditAccountPage extends AbstractPage {
 
     submitButton = new JButton("SUBMIT");
     submitButton.setBounds(450, 600, 300, 50);
-    submitButton.setBorder(new LineBorder(Color.BLACK,2));
+    submitButton.setBorder(new LineBorder(Color.BLACK, 2));
     submitButton.setFont(BUTTON_FONT);
     components.add(submitButton);
 
-    submitButton.addActionListener(new ActionListener() {
-      @Override
-      /**
-       * @param e Action event
-       * sets Submitted to true
-       * extracts the Input Values and provides them for getters.
-       */
-      public void actionPerformed(ActionEvent e) {
-        accountNameInputValue = accountNameInputField.getText();
-        expiryDateInputValue = (Date) expiryDateInputField.getValue();
-        limitInputValue = (limitInputField.getText().isEmpty()) ? 0 : Float.valueOf(limitInputField.getText());
-        bankNameInputValue = bankNameInputField.getText();
+    submitButton.addActionListener(
+        new ActionListener() {
+          @Override
+          /**
+           * @param e Action event sets Submitted to true extracts the Input Values and provides
+           *     them for getters.
+           */
+          public void actionPerformed(ActionEvent e) {
+            accountNameInputValue = accountNameInputField.getText();
+            expiryDateInputValue = (Date) expiryDateInputField.getValue();
+            limitInputValue =
+                (limitInputField.getText().isEmpty())
+                    ? 0
+                    : Float.valueOf(limitInputField.getText());
+            bankNameInputValue = bankNameInputField.getText();
 
-        if (limitInputValue < 0) {
-          JOptionPane.showMessageDialog(
+            if (limitInputValue < 0) {
+              JOptionPane.showMessageDialog(
                   null, "Limit must be higher than 0", "Limit Error", JOptionPane.WARNING_MESSAGE);
-        } else if(accountNameInputValue.isEmpty()) {
-          JOptionPane.showMessageDialog(
+            } else if (accountNameInputValue.isEmpty()) {
+              JOptionPane.showMessageDialog(
                   null,
                   "You must insert an account name!",
                   "Account Name Error",
                   JOptionPane.WARNING_MESSAGE);
-        } else if(bankNameInputValue.isEmpty()) {
-          JOptionPane.showMessageDialog(
+            } else if (bankNameInputValue.isEmpty()) {
+              JOptionPane.showMessageDialog(
                   null,
                   "You must insert a bank name!",
                   "Bank Name Error",
                   JOptionPane.WARNING_MESSAGE);
-        } else if(expiryDateInputValue == null) {
-          JOptionPane.showMessageDialog(
+            } else if (expiryDateInputValue == null) {
+              JOptionPane.showMessageDialog(
                   null,
                   "You must insert a legit date with format dd/mm/yyyy!",
                   "Date Error",
                   JOptionPane.WARNING_MESSAGE);
-        } else {
-          submitted = true;
-        }
-      }
-    });
+            } else {
+              submitted = true;
+            }
+          }
+        });
 
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
-    backButton.setBorder(new LineBorder(Color.BLACK,2));
+    backButton.setBorder(new LineBorder(Color.BLACK, 2));
     backButton.setFont(BUTTON_FONT);
     components.add(backButton);
-    backButton.addActionListener(new ActionListener() {
-      @Override
-      /**
-       * @param e Action event
-       * sets BackWanted to true
-       */
-      public void actionPerformed(ActionEvent e) {
-        backWanted = true;
-      }
-    });
-
-
+    backButton.addActionListener(
+        new ActionListener() {
+          @Override
+          /** @param e Action event sets BackWanted to true */
+          public void actionPerformed(ActionEvent e) {
+            backWanted = true;
+          }
+        });
   }
 
   @Override
@@ -223,6 +216,11 @@ public class AddCreditAccountPage extends AbstractPage {
     accountNameInputField.setText(account.getName());
     limitInputField.setText(Double.toString(account.getLimit()));
     bankNameInputField.setText(account.getBankName());
-    expiryDateInputField.setText(account.getExpiryDate().getDay()+"/"+account.getExpiryDate().getMonth()+"/"+account.getExpiryDate().getYear());
+    expiryDateInputField.setText(
+        account.getExpiryDate().getDay()
+            + "/"
+            + account.getExpiryDate().getMonth()
+            + "/"
+            + account.getExpiryDate().getYear());
   }
 }

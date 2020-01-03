@@ -1,7 +1,9 @@
 package ui.addAccountPages;
 /**
- * This Page collects all necessary data needed to create a new 'Stocks'-Account.
- * By Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired through getters.
+ * This Page collects all necessary data needed to create a new 'Stocks'-Account. By Pressing
+ * Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired
+ * through getters.
+ *
  * @author Paul Kraft
  */
 import javax.swing.*;
@@ -20,8 +22,9 @@ import user.User;
 
 public class AddStockAccountPage extends AbstractPage {
 
-  private final static int SHIFT_LEFT = 300;
-  private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
+  private static final int SHIFT_LEFT = 300;
+  private static final int OFFSET_Y =
+      50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
   private JLabel introTextLabel;
   private JLabel accountNameTextLabel;
@@ -43,44 +46,32 @@ public class AddStockAccountPage extends AbstractPage {
 
   private User user;
 
-  /**
-   * Creates a new AddStockAccountPage, which will load all needed components to a list.
-   */
+  /** Creates a new AddStockAccountPage, which will load all needed components to a list. */
   // In Final Version might take a User object to display additional User information.
   public AddStockAccountPage(User user) {
     this.user = user;
     createComponents();
   }
 
-  /**
-   * @return accName input from the User or default val.
-   */
+  /** @return accName input from the User or default val. */
   public String getAccName() {
     return accountNameInputValue;
   }
-  /**
-   * @return BuyDate input from the User  or default val.
-   */
+  /** @return BuyDate input from the User or default val. */
   public Date getBuyDate() {
     return buyDateInputValue;
   }
 
-  /**
-   * @return Limit input from the User  or default val.
-   */
+  /** @return Limit input from the User or default val. */
   public float getLimit() {
     return limitInputValue;
   }
-  /**
-   * @return current boolean value of submitted(whether the User submitted or not! )
-   */
+  /** @return current boolean value of submitted(whether the User submitted or not! ) */
   public boolean isSubmitted() {
     return submitted;
   }
 
-  /**
-   * @return current boolean value of backWanted( whether the User wants to go back or not! )
-   */
+  /** @return current boolean value of backWanted( whether the User wants to go back or not! ) */
   public boolean isBackWanted() {
     return backWanted;
   }
@@ -91,7 +82,9 @@ public class AddStockAccountPage extends AbstractPage {
     submitted = false;
     backWanted = false;
 
-    introTextLabel = new JLabel("Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
+    introTextLabel =
+        new JLabel(
+            "Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
     introTextLabel.setBounds(200, 10, 1000, 50);
     introTextLabel.setFont(HEADER_FONT);
     components.add(introTextLabel);
@@ -131,51 +124,49 @@ public class AddStockAccountPage extends AbstractPage {
     submitButton = new JButton("SUBMIT");
     submitButton.setBounds(450, 600, 300, 50);
     submitButton.setFont(BUTTON_FONT);
-    submitButton.setBorder(new LineBorder(Color.BLACK,2));
+    submitButton.setBorder(new LineBorder(Color.BLACK, 2));
     components.add(submitButton);
 
-    submitButton.addActionListener(new ActionListener() {
-      @Override
-      /**
-       * @param e Action event
-       * sets Submitted to true
-       * extracts the Input Values and provides them for getters.
-       */
-      public void actionPerformed(ActionEvent e) {
-        accountNameInputValue = accountNameInputField.getText();
-        buyDateInputValue = (Date) buyDateInputField.getValue();
-        limitInputValue = Float.valueOf(limitInputField.getText());
+    submitButton.addActionListener(
+        new ActionListener() {
+          @Override
+          /**
+           * @param e Action event sets Submitted to true extracts the Input Values and provides
+           *     them for getters.
+           */
+          public void actionPerformed(ActionEvent e) {
+            accountNameInputValue = accountNameInputField.getText();
+            buyDateInputValue = (Date) buyDateInputField.getValue();
+            limitInputValue = Float.valueOf(limitInputField.getText());
 
-        if (limitInputValue < 0) {
-          JOptionPane.showMessageDialog(
+            if (limitInputValue < 0) {
+              JOptionPane.showMessageDialog(
                   null, "Limit must be higher than 0", "Limit Error", JOptionPane.WARNING_MESSAGE);
-        } else if(accountNameInputValue.isEmpty()) {
-          JOptionPane.showMessageDialog(
+            } else if (accountNameInputValue.isEmpty()) {
+              JOptionPane.showMessageDialog(
                   null,
                   "You must insert a legit date with format dd/mm/yyyy!",
                   "Date Error",
                   JOptionPane.WARNING_MESSAGE);
-        } else {
-          submitted = true;
-        }
-      }
-    });
+            } else {
+              submitted = true;
+            }
+          }
+        });
 
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
-    backButton.setBorder(new LineBorder(Color.BLACK,2));
+    backButton.setBorder(new LineBorder(Color.BLACK, 2));
     components.add(backButton);
-    backButton.addActionListener(new ActionListener() {
-      @Override
-      /**
-       * @param e Action event
-       * sets BackWanted to true
-       */
-      public void actionPerformed(ActionEvent e) {
-        backWanted = true;
-      }
-    });
+    backButton.addActionListener(
+        new ActionListener() {
+          @Override
+          /** @param e Action event sets BackWanted to true */
+          public void actionPerformed(ActionEvent e) {
+            backWanted = true;
+          }
+        });
   }
 
   @Override
@@ -185,7 +176,12 @@ public class AddStockAccountPage extends AbstractPage {
 
   public void updateFields(Stocks account) {
     accountNameInputField.setText(account.getName());
-    buyDateInputField.setText(account.getBuyDate().getDay()+"/"+account.getBuyDate().getMonth()+"/"+account.getBuyDate().getYear());
+    buyDateInputField.setText(
+        account.getBuyDate().getDay()
+            + "/"
+            + account.getBuyDate().getMonth()
+            + "/"
+            + account.getBuyDate().getYear());
     limitInputField.setText(Float.toString(account.getLimit()));
   }
 }
