@@ -21,7 +21,11 @@ public class Testing_Grouping {
         try {
 
             GraphicalRepresentation_Bar bar = new GraphicalRepresentation_Bar(user);
-            bar.draw(bar.getYearly(2020));
+            bar.draw("2020","01","03");
+
+            GraphicalRepresentation_Pie pie = new GraphicalRepresentation_Pie(user);
+            pie.draw("2020","01","03");
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -7,30 +7,26 @@ import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
-import org.junit.experimental.categories.Categories;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
-import transactions.categories.DepositCategory;
 import transactions.categories.PayoutCategory;
 import transactions.grouping.GroupingBuilder;
 import user.User;
 
+import javax.swing.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class GraphicalRepresentation_Bar {
+public class GraphicalRepresentation_Pie {
 
     User user;
-   CustomContainer<Transaction> listOfTransactions;
+    CustomContainer<Transaction> listOfTransactions;
 
-    public GraphicalRepresentation_Bar(User user) {
+    public GraphicalRepresentation_Pie(User user) {
         this.user = user;
-        this.listOfTransactions = listOfTransactions;
     }
-
 
 
     public void draw(String year)throws Exception{
@@ -46,69 +42,82 @@ public class GraphicalRepresentation_Bar {
     }
 
 
-    private void draw(CustomContainer<Transaction> listOfTransactions,String dateOfInterest) {
+    private void draw(CustomContainer<Transaction> listOfTransactions, String dateOfInterest) {
 
         this.listOfTransactions = listOfTransactions;
 
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        DefaultPieDataset dataset_Payout = new DefaultPieDataset();
+        DefaultPieDataset dataset_Deposit = new DefaultPieDataset();
+
 
         Set<String> payoutCategorys = user.getCategories(new PayoutCategory());
 
-        Map<String,Float> combinedTransactionValuesOfCategorys = new HashMap<>();
+        Map<String, Float> combinedTransactionValuesOfCategorys = new HashMap<>();
 
 
-        for(CustomIterator it = listOfTransactions.getIterator();it.hasNext();it.next()) {
+        for (CustomIterator it = listOfTransactions.getIterator(); it.hasNext(); it.next()) {
 
 
+            if (it.element() instanceof Payout) {
 
-            if(it.element() instanceof Payout){
+                String category = ((Payout) it.element()).getCategory();
 
-                String category = ((Payout)it.element()).getCategory();
-
-               if(combinedTransactionValuesOfCategorys.containsKey(category)){
+                if (combinedTransactionValuesOfCategorys.containsKey(category)) {
                     combinedTransactionValuesOfCategorys.put(category,
-                 combinedTransactionValuesOfCategorys.get(category) + ((Payout) it.element()).getAmount());
-                }
-                else
-                   combinedTransactionValuesOfCategorys.put(category,((Payout) it.element()).getAmount());
+                            combinedTransactionValuesOfCategorys.get(category) + ((Payout) it.element()).getAmount());
+                } else
+                    combinedTransactionValuesOfCategorys.put(category, ((Payout) it.element()).getAmount());
 
-            }
+            } else {
 
-            else {
+                String category = ((Deposit) it.element()).getCategory();
 
-                String category = ((Deposit)it.element()).getCategory();
-
-                if(combinedTransactionValuesOfCategorys.containsKey(category)){
+                if (combinedTransactionValuesOfCategorys.containsKey(category)) {
                     combinedTransactionValuesOfCategorys.put(category,
                             combinedTransactionValuesOfCategorys.get(category) + ((Deposit) it.element()).getAmount());
-                }
-                else
-                    combinedTransactionValuesOfCategorys.put(category,((Deposit) it.element()).getAmount());
+                } else
+                    combinedTransactionValuesOfCategorys.put(category, ((Deposit) it.element()).getAmount());
 
 
             }
-
-            for(String category : combinedTransactionValuesOfCategorys.keySet()) {
-                dataset.addValue(combinedTransactionValuesOfCategorys.get(category),category,(payoutCategorys.contains(category)) ? "Payout" : "Deposit");
-            }
-
         }
 
-        JFreeChart chart = ChartFactory.createBarChart("Bar Chart Summary - "+dateOfInterest,
-                "Money",
-                "Payout/Deposit",
-                dataset
-        );
+            for (String category : combinedTransactionValuesOfCategorys.keySet()) {
+
+                if (payoutCategorys.contains(category))
+                    dataset_Payout.setValue(category, combinedTransactionValuesOfCategorys.get(category));
+                else
+                    dataset_Deposit.setValue(category, combinedTransactionValuesOfCategorys.get(category));
+            }
+
+
+        JPanel panel_deposit = new JPanel();
+        JPanel panel_payout = new JPanel();
 
 
 
-        ChartFrame frame = new ChartFrame("Bar Chart",chart);
-        frame.setSize(1000,500);
-        frame.setVisible(true);
 
+        JFreeChart chart_deposit = ChartFactory.createPieChart("Deposits - "+dateOfInterest, dataset_Deposit);
+        JFreeChart chart_payout = ChartFactory.createPieChart("Payouts - "+dateOfInterest, dataset_Payout);
+
+        ChartFrame chartFrame_deposit = new ChartFrame("Pie Chart Deposit",chart_deposit);
+        ChartFrame chartFrame_payout = new ChartFrame("Pie Chart Payout",chart_payout);
+
+        //panel_deposit.add(chartFrame_deposit);
+        //panel_deposit.add(chartFrame_payout);
+
+        //panel_deposit.setSize(500,500);
+        //panel_deposit.setVisible(true);
+
+
+        chartFrame_payout.setSize(450,500);
+        chartFrame_payout.setVisible(true);
+
+        chartFrame_deposit.setSize(450,500);
+        chartFrame_deposit.setVisible(true);
 
     }
-
     // needs Month as '01' .. '02' ..
     public  CustomContainer<Transaction> getMonthly(String year, String month) throws Exception{
 
@@ -165,5 +174,4 @@ public class GraphicalRepresentation_Bar {
 
         throw new NoSuchFieldException("Given Date not present");
     }
-
 }
