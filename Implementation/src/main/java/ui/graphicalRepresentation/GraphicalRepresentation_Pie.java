@@ -15,6 +15,7 @@ import transactions.grouping.GroupingBuilder;
 import user.User;
 
 import javax.swing.*;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -171,6 +172,15 @@ public class GraphicalRepresentation_Pie {
             if (key.contains("D"+year+"-"+month+"-"+day+"D_"))
                 return orga.get(key);
         }
+
+        throw new NoSuchFieldException("Given Date not present");
+    }
+
+    public CustomContainer<Transaction> getCustom(ZonedDateTime begin, ZonedDateTime end) throws Exception{
+        Map<String, CustomContainer<Transaction>> orga =
+                new GroupingBuilder().allAccs(user).userdefined(begin,end).organize();
+        for(String key : orga.keySet())
+            return orga.get(key);
 
         throw new NoSuchFieldException("Given Date not present");
     }

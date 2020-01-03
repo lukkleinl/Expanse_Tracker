@@ -34,9 +34,9 @@ public class GroupingPage extends AbstractPage {
         this.end = end;
     }
 
-    private ZonedDateTime begin;
+    private ZonedDateTime begin = ZonedDateTime.now(ZoneId.of("UTC")).minusHours(1);
     private ZonedDateTime end;
-    private  GroupingTypes groupingType;
+    private  GroupingTypes groupingType = GroupingTypes.MONTHLY;
     User user;
     private JLabel introTextLabel;
     private JButton backButton;
@@ -56,22 +56,17 @@ public class GroupingPage extends AbstractPage {
     private volatile boolean graphicalWanted;
 
 
-
-
-
-
     String introText = "Grouped by - ";
 
     public GroupingPage(final User user){
         this.user = user;
-        groupingType = GroupingTypes.MONTHLY;
+
     }
 
     //ONLY FOR TESTING
     public GroupingPage(User user, JFrame frame){
         this.user = user;
         this.TESTING_frame = frame;
-        groupingType = GroupingTypes.MONTHLY;
     }
     //
 
@@ -82,25 +77,31 @@ public class GroupingPage extends AbstractPage {
 
     @Override
     protected void createComponents() {
+        System.out.println(begin +"   xxx   "+end);
+
+
         this.components = new ArrayList<>();
         GroupingBuilder orga = new GroupingBuilder().allAccs(this.user).category();
-
         switch (this.groupingType) {
             case DAILY:
-                orga = orga.daily();
+                orga = orga.daily().userdefined(begin,begin.plusDays(1));
                 break;
             case MONTHLY:
-                orga = orga.monthly();
+                orga = orga.monthly().userdefined(begin,begin.plusMonths(1));
                 break;
             case YEARLY:
-                orga = orga.yearly();
+                orga = orga.yearly().userdefined(begin,begin.plusYears(1));
                 break;
             case USER_DEFINED:
                 //this.introText += "User Defined:" + this.begin.toString() + " - " + this.end.toString();
                 orga = orga.userdefined(this.begin, this.end);
+                break;
         }
 
         Map<String, CustomContainer<Transaction>> organized = orga.organize();
+
+        String[] transactionDescriptions =
+                {"Type", "Descriptions", "Amount", "Creation-Date", "Category"};
 
         int rows = 0;
         for (String key : organized.keySet()) {
@@ -126,10 +127,10 @@ public class GroupingPage extends AbstractPage {
                 }
             }
 
-            String[] transactionDescriptions =
-                    {"Type", "Descriptions", "Amount", "Creation-Date", "Category"};
             this.transactionTable = new JTable(transactionList_VISU, transactionDescriptions);
-        }
+        }else
+            transactionTable = new JTable(new String[0][0],transactionDescriptions);
+
 
         // https://stackoverflow.com/questions/9919230/disable-user-edit-in-jtable
         // MAKES THE ELEMENTS IN THE TABLE UNEDITABLE
@@ -161,7 +162,48 @@ public class GroupingPage extends AbstractPage {
         this.selectDateButton.setBounds(400,100,300,50);
         this.components.add(selectDateButton);
 
-        this.showGraphicalButton.addActionListener(e -> this.graphicalWanted = true);
+        this.showGraphicalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ev) {
+                GraphicalRepresentation_Bar bar = new GraphicalRepresentation_Bar(user);
+                switch (selectedGrouping){
+                    case 0:
+                        try {
+                            bar.draw(selectedDate.substring(0, 4), selectedDate.substring(5, 7), selectedDate.substring(8, 10));
+                        }catch (Exception e) {
+                            JOptionPane.showMessageDialog(
+                                    null, "Invalid Date", "Date Error", JOptionPane.WARNING_MESSAGE);
+                        }
+                        break;
+                    case 1:
+                        try {
+                            bar.draw(selectedDate.substring(0, 4), selectedDate.substring(5, 7));
+                        }catch (Exception e) {
+                            JOptionPane.showMessageDialog(
+                                    null, "Invalid Date", "Date Error", JOptionPane.WARNING_MESSAGE);
+                        }
+                        break;
+                    case 2:
+                        try {
+                            bar.draw(selectedDate.substring(0, 4));
+                        }catch (Exception e) {
+                            JOptionPane.showMessageDialog(
+                                    null, "Invalid Date", "Date Error", JOptionPane.WARNING_MESSAGE);
+                        }
+                        break;
+                    case 3:
+                        try {
+                        bar.draw(begin,end);
+                    }catch (Exception e) {
+                        JOptionPane.showMessageDialog(
+                                null, "Invalid Date", "Amount Error", JOptionPane.WARNING_MESSAGE);
+                    }
+
+                }
+
+            }
+        });
+
         this.selectDateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -179,33 +221,44 @@ public class GroupingPage extends AbstractPage {
                   switch (selectedGrouping){
                       case 0:
                           selectedDate = JOptionPane.showInputDialog("Specify Year, Month and Day for Summary","YYYY/MM/DD");
+                          setBegin(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC")));
+                          setEnd(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC")));
+
                           groupingType = GroupingTypes.DAILY;
+                          //TODO CHECK TIME PROPERLY
+                          ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC"));
                           introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
                           break;
                       case 1:
                           selectedDate = JOptionPane.showInputDialog("Specify Year and Month for Summary","YYYY/MM");
                           groupingType = GroupingTypes.MONTHLY;
+                          //TODO CHECK TIME PROPERLY
+                          ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),01,0, 0, 0, 0, ZoneId.of("UTC"));
                           introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
                           break;
                       case 2:
                           selectedDate = JOptionPane.showInputDialog("Specify Year for Summary","YYYY");
+                          //TODO CHECK TIME PROPERLY
+                          ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),01,01,0, 0, 0, 0, ZoneId.of("UTC"));
                           groupingType = GroupingTypes.YEARLY;
                           introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
                           break;
                       case 3:
                           selectedDate = JOptionPane.showInputDialog("Specify Year, Month and Day Start for Summary","YYYY/MM/DD");
-                          setBegin(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,3)),Integer.valueOf(selectedDate.substring(5,6)),Integer.valueOf(selectedDate.substring(8,9)),0, 0, 0, 0, ZoneId.of("UTC")));
+                          //TODO CHECK TIME PROPERLY
+                          setBegin(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC")));
                           selectedDateEnd = JOptionPane.showInputDialog("Specify Year, Month and Day End for Summary","YYYY/MM/DD");
-                          setEnd(ZonedDateTime.of(Integer.valueOf(selectedDateEnd.substring(0,3)),Integer.valueOf(selectedDateEnd.substring(5,6)),Integer.valueOf(selectedDateEnd.substring(8,9)),0, 0, 0, 0, ZoneId.of("UTC")));
+                          setEnd(ZonedDateTime.of(Integer.valueOf(selectedDateEnd.substring(0,4)),Integer.valueOf(selectedDateEnd.substring(5,7)),Integer.valueOf(selectedDateEnd.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC")));
                           groupingType = GroupingTypes.USER_DEFINED;
                           introText = "Grouped by - "+groupingType.toString() +"   Start:"+ selectedDate +" End:"+ selectedDateEnd;
                           break;
                   }
 
                   refreshWanted = true;
-                  if(TESTING_boolean && refreshWanted)
+                  if(TESTING_boolean && refreshWanted) {
                       configureFrame(TESTING_frame);
-
+                      System.out.println("is testing");
+                  }
             }
         });
     }

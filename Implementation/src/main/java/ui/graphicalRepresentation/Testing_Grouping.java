@@ -7,16 +7,31 @@ import transactions.grouping.GroupingBuilder;
 import ui.TestUser;
 import user.User;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Map;
 
 public class Testing_Grouping {
 
     public static void main(String[] args) {
 
+        String selectedDate = "2020/01/03";
+        String selectedDate_e = "2020/01/03";
+
+        /*
+        System.out.println("Substr 0,4" + s.substring(0,4));
+        System.out.println("Substr 5,6" + s.substring(5,7));
+        System.out.println("Substr 8,9" + s.substring(8,10));
+*/
+
+
         User user = TestUser.getTestUser();
 
         Map<String, CustomContainer<Transaction>> orga =
-                new GroupingBuilder().allAccs(user).daily().organize();
+                new GroupingBuilder().allAccs(user).category().daily().userdefined(
+                ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC")),
+                ZonedDateTime.of(Integer.valueOf(selectedDate_e.substring(0,4)),Integer.valueOf(selectedDate_e.substring(5,7)),Integer.valueOf(selectedDate_e.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC"))
+                ).organize();
 
         try {
 

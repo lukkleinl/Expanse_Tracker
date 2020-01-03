@@ -16,6 +16,7 @@ import transactions.categories.PayoutCategory;
 import transactions.grouping.GroupingBuilder;
 import user.User;
 
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,10 @@ public class GraphicalRepresentation_Bar {
 
     public void draw(String year, String month, String day) throws Exception{
         draw(getDaily(year,month,day),year+"/"+month+"/"+day);
+    }
+
+    public void draw(ZonedDateTime begin,ZonedDateTime end) throws Exception{
+        draw(getCustom(begin,end),begin.toString()+" - "+end.toString());
     }
 
 
@@ -162,6 +167,15 @@ public class GraphicalRepresentation_Bar {
             if (key.contains("D"+year+"-"+month+"-"+day+"D_"))
                 return orga.get(key);
         }
+
+        throw new NoSuchFieldException("Given Date not present");
+    }
+
+    public CustomContainer<Transaction> getCustom(ZonedDateTime begin, ZonedDateTime end) throws Exception{
+        Map<String, CustomContainer<Transaction>> orga =
+                new GroupingBuilder().allAccs(user).userdefined(begin,end).organize();
+        for(String key : orga.keySet())
+            return orga.get(key);
 
         throw new NoSuchFieldException("Given Date not present");
     }
