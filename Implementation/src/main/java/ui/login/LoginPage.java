@@ -1,5 +1,6 @@
 package ui.login;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -7,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+
 import ui.main.AbstractPage;
 
 
@@ -111,6 +114,8 @@ public class LoginPage extends AbstractPage {
     //SUBMIT_BUTTON
     submitButton = new JButton("Submit");
     submitButton.setBounds(210, 150, 150, 40);
+    submitButton.setFont(BUTTON_FONT);
+    submitButton.setBorder(new LineBorder(Color.BLACK,2));
     submitButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -123,6 +128,8 @@ public class LoginPage extends AbstractPage {
     //REGISTER_BUTTON
     registerButton = new JButton("Register");
     registerButton.setBounds(30, 150, 150, 40);
+    registerButton.setFont(BUTTON_FONT);
+    registerButton.setBorder(new LineBorder(Color.BLACK,2));
     registerButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {

@@ -5,6 +5,8 @@ package ui.addAccountPages;
  * @author Paul Kraft
  */
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -147,6 +149,7 @@ public class AddCreditAccountPage extends AbstractPage {
 
     submitButton = new JButton("SUBMIT");
     submitButton.setBounds(450, 600, 300, 50);
+    submitButton.setBorder(new LineBorder(Color.BLACK,2));
     submitButton.setFont(BUTTON_FONT);
     components.add(submitButton);
 
@@ -192,6 +195,7 @@ public class AddCreditAccountPage extends AbstractPage {
 
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
+    backButton.setBorder(new LineBorder(Color.BLACK,2));
     backButton.setFont(BUTTON_FONT);
     components.add(backButton);
     backButton.addActionListener(new ActionListener() {

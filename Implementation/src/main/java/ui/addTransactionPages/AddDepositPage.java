@@ -1,8 +1,10 @@
 package ui.addTransactionPages;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import transactions.categories.DepositCategory;
 import ui.main.AbstractPage;
@@ -134,6 +136,7 @@ public class AddDepositPage extends AbstractPage{
     submitButton = new JButton("DEPOSIT");
     submitButton.setBounds(450, 600, 300, 50);
     submitButton.setFont(BUTTON_FONT);
+    submitButton.setBorder(new LineBorder(Color.BLACK,2));
     components.add(submitButton);
 
     newCategoryOptionPaneButton.addActionListener(actionEvent -> {
@@ -164,6 +167,7 @@ public class AddDepositPage extends AbstractPage{
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
+    backButton.setBorder(new LineBorder(Color.BLACK,2));
     components.add(backButton);
     backButton.addActionListener(e -> backWanted = true);
 

@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import accounts.*;
@@ -251,18 +252,21 @@ public class TransactionListPage extends AbstractPage {
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
+    backButton.setBorder(new LineBorder(Color.BLACK,2));
     components.add(backButton);
     backButton.addActionListener(e -> backWanted = true);
 
     newPayoutButton = new JButton("NEW PAYOUT");
     newPayoutButton.setBounds(400, 600, 200, 70);
     newPayoutButton.setFont(BUTTON_FONT);
+    newPayoutButton.setBorder(new LineBorder(Color.BLACK,2));
     newPayoutButton.addActionListener(e -> newPayoutWanted = true);
     components.add(newPayoutButton);
 
     newDepositButton = new JButton("NEW DEPOST");
     newDepositButton.setBounds(700, 600, 200, 70);
     newDepositButton.setFont(BUTTON_FONT);
+    newDepositButton.setBorder(new LineBorder(Color.BLACK,2));
     newDepositButton.addActionListener(e -> newDepositWanted = true);
     components.add(newDepositButton);
   }

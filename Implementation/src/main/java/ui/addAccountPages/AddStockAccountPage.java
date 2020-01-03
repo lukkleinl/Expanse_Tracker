@@ -5,6 +5,8 @@ package ui.addAccountPages;
  * @author Paul Kraft
  */
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -127,6 +129,7 @@ public class AddStockAccountPage extends AbstractPage {
     submitButton = new JButton("SUBMIT");
     submitButton.setBounds(450, 600, 300, 50);
     submitButton.setFont(BUTTON_FONT);
+    submitButton.setBorder(new LineBorder(Color.BLACK,2));
     components.add(submitButton);
 
     submitButton.addActionListener(new ActionListener() {
@@ -159,6 +162,7 @@ public class AddStockAccountPage extends AbstractPage {
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
+    backButton.setBorder(new LineBorder(Color.BLACK,2));
     components.add(backButton);
     backButton.addActionListener(new ActionListener() {
       @Override

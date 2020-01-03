@@ -1,7 +1,9 @@
 package ui.addTransactionPages;
 
+import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import transactions.categories.PayoutCategory;
 import ui.main.AbstractPage;
@@ -135,6 +137,7 @@ public class AddPayoutPage extends AbstractPage {
 
     submitButton = new JButton("PAYOUT");
     submitButton.setBounds(450, 600, 300, 50);
+    submitButton.setBorder(new LineBorder(Color.BLACK,2));
     submitButton.setFont(BUTTON_FONT);
     components.add(submitButton);
 
@@ -166,6 +169,7 @@ public class AddPayoutPage extends AbstractPage {
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
+    backButton.setBorder(new LineBorder(Color.BLACK,2));
     components.add(backButton);
     backButton.addActionListener(e -> backWanted = true);
 

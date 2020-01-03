@@ -3,6 +3,7 @@ package ui.listPages;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -84,6 +85,7 @@ public class AccountTypePage extends AbstractPage {
     creditCardButton = new JButton("CREDIT CARD ACCOUNTS");
     creditCardButton.setBounds(200, 200, 350, 200);
     creditCardButton.setFont(BUTTON_FONT);
+    creditCardButton.setBorder(new LineBorder(Color.BLACK,3));
     creditCardButton.setBackground(new Color(255, 184, 77));
     creditCardButton.addActionListener(new ActionListener() {
       @Override
@@ -96,6 +98,7 @@ public class AccountTypePage extends AbstractPage {
     debitCardButton = new JButton("DEBIT CARD ACCOUNTS");
     debitCardButton.setBounds(650, 200, 350, 200);
     debitCardButton.setBackground(new Color(255, 184, 77));
+    debitCardButton.setBorder(new LineBorder(Color.BLACK,3));
     debitCardButton.setFont(BUTTON_FONT);
     debitCardButton.addActionListener(new ActionListener() {
       @Override
@@ -108,6 +111,7 @@ public class AccountTypePage extends AbstractPage {
     cashButton = new JButton("CASH ACCOUNTS");
     cashButton.setBounds(200, 500, 350, 200);
     cashButton.setFont(BUTTON_FONT);
+    cashButton.setBorder(new LineBorder(Color.BLACK,3));
     cashButton.setBackground(new Color(255, 184, 77));
     cashButton.addActionListener(new ActionListener() {
       @Override
@@ -120,6 +124,7 @@ public class AccountTypePage extends AbstractPage {
     stockButton = new JButton("STOCK ACCOUNTS");
     stockButton.setBounds(650, 500, 350, 200);
     stockButton.setFont(BUTTON_FONT);
+    stockButton.setBorder(new LineBorder(Color.BLACK,3));
     stockButton.setBackground(new Color(255, 184, 77));
     stockButton.addActionListener(new ActionListener() {
       @Override
@@ -131,6 +136,7 @@ public class AccountTypePage extends AbstractPage {
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
+    backButton.setBorder(new LineBorder(Color.BLACK,2));
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {

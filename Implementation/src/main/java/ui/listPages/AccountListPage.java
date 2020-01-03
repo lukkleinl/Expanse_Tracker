@@ -7,8 +7,8 @@ import accounts.DebitCard;
 import accounts.Stocks;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
-import java.awt.Font;
-import java.awt.Point;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import ui.main.AbstractPage;
 import user.User;
@@ -144,6 +145,7 @@ public class AccountListPage extends AbstractPage {
     //NEW ACCOUNT BUTTON
     newAccountButton = new JButton("CREATE NEW ACCOUNT");
     newAccountButton.setBounds(400, 600, 400, 50);
+    newAccountButton.setBorder(new LineBorder(Color.BLACK,2));
     newAccountButton.setFont(BUTTON_FONT);
     newAccountButton.addActionListener(new ActionListener() {
       @Override
