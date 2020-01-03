@@ -11,26 +11,34 @@ import java.util.Map;
 
 public class Testing_Grouping {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         User user = TestUser.getTestUser();
 
         Map<String, CustomContainer<Transaction>> orga =
-                new GroupingBuilder().allAccs(user).monthly().organize();
+                new GroupingBuilder().allAccs(user).daily().organize();
+
+        try {
+
+            GraphicalRepresentation_Bar bar = new GraphicalRepresentation_Bar(user);
+            bar.draw(bar.getYearly(2020));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+            System.out.println("Map size" + orga.size() + " Entry set:" + orga.entrySet().size());
 
 
-        System.out.println("Map size"+orga.size()+" Entry set:"+orga.entrySet().size());
+            for (String key : orga.keySet()) {
 
+                System.out.println(key);
+                for (CustomIterator<Transaction> it = orga.get(key).getIterator(); it.hasNext(); ((CustomIterator) it).next()) {
+                    System.out.println(it.element());
+                }
 
-        for(String key : orga.keySet()){
-
-            System.out.println(key);
-            for(CustomIterator<Transaction> it = orga.get(key).getIterator(); it.hasNext();((CustomIterator) it).next()){
-                System.out.println(it.element());
             }
+
 
         }
 
-
-    }
 }
