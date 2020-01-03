@@ -40,7 +40,8 @@ public class GroupingPage extends AbstractPage {
     User user;
     private JLabel introTextLabel;
     private JButton backButton;
-    private JButton showGraphicalButton;
+    private JButton showBarGraphicalButton;
+    private JButton showPieGraphicalButton;
     private JButton selectDateButton;
     private JTable transactionTable;
     private JScrollPane scrollPane;
@@ -77,7 +78,8 @@ public class GroupingPage extends AbstractPage {
 
     @Override
     protected void createComponents() {
-        System.out.println(begin +"   xxx   "+end);
+
+        refreshWanted = false;
 
 
         this.components = new ArrayList<>();
@@ -153,16 +155,20 @@ public class GroupingPage extends AbstractPage {
         this.backButton.addActionListener(e -> this.backWanted = true);
 
 
-        this.showGraphicalButton = new JButton("Show Graphical Representation!");
-        this.showGraphicalButton.setBounds(400, 700, 300, 50);
-        this.components.add(this.showGraphicalButton);
+        this.showBarGraphicalButton = new JButton("Show Graphical Bar-Representation!");
+        this.showBarGraphicalButton.setBounds(400, 700, 300, 50);
+        this.components.add(this.showBarGraphicalButton);
+
+        this.showPieGraphicalButton = new JButton("Show Graphical Pie-Representations!");
+        this.showPieGraphicalButton.setBounds(10, 700, 300, 50);
+        this.components.add(showPieGraphicalButton);
 
 
         this.selectDateButton = new JButton("Select Date");
         this.selectDateButton.setBounds(400,100,300,50);
         this.components.add(selectDateButton);
 
-        this.showGraphicalButton.addActionListener(new ActionListener() {
+        this.showBarGraphicalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ev) {
                 GraphicalRepresentation_Bar bar = new GraphicalRepresentation_Bar(user);
@@ -204,6 +210,49 @@ public class GroupingPage extends AbstractPage {
             }
         });
 
+        this.showPieGraphicalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ev) {
+                GraphicalRepresentation_Pie pie = new GraphicalRepresentation_Pie(user);
+                switch (selectedGrouping){
+                    case 0:
+                        try {
+                            pie.draw(selectedDate.substring(0, 4), selectedDate.substring(5, 7), selectedDate.substring(8, 10));
+                        }catch (Exception e) {
+                            JOptionPane.showMessageDialog(
+                                    null, "Invalid Date", "Date Error", JOptionPane.WARNING_MESSAGE);
+                        }
+                        break;
+                    case 1:
+                        try {
+                            pie.draw(selectedDate.substring(0, 4), selectedDate.substring(5, 7));
+                        }catch (Exception e) {
+                            JOptionPane.showMessageDialog(
+                                    null, "Invalid Date", "Date Error", JOptionPane.WARNING_MESSAGE);
+                        }
+                        break;
+                    case 2:
+                        try {
+                            pie.draw(selectedDate.substring(0, 4));
+                        }catch (Exception e) {
+                            JOptionPane.showMessageDialog(
+                                    null, "Invalid Date", "Date Error", JOptionPane.WARNING_MESSAGE);
+                        }
+                        break;
+                    case 3:
+                        try {
+                            pie.draw(begin,end);
+                        }catch (Exception e) {
+                            JOptionPane.showMessageDialog(
+                                    null, "Invalid Date", "Amount Error", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                }
+
+            }
+        });
+
+
         this.selectDateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -222,24 +271,22 @@ public class GroupingPage extends AbstractPage {
                       case 0:
                           selectedDate = JOptionPane.showInputDialog("Specify Year, Month and Day for Summary","YYYY/MM/DD");
                           setBegin(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC")));
-                          setEnd(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC")));
-
                           groupingType = GroupingTypes.DAILY;
                           //TODO CHECK TIME PROPERLY
-                          ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC"));
+                          //ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC"));
                           introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
                           break;
                       case 1:
                           selectedDate = JOptionPane.showInputDialog("Specify Year and Month for Summary","YYYY/MM");
                           groupingType = GroupingTypes.MONTHLY;
                           //TODO CHECK TIME PROPERLY
-                          ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),01,0, 0, 0, 0, ZoneId.of("UTC"));
+                          setBegin(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),01,0, 0, 0, 0, ZoneId.of("UTC")));
                           introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
                           break;
                       case 2:
                           selectedDate = JOptionPane.showInputDialog("Specify Year for Summary","YYYY");
                           //TODO CHECK TIME PROPERLY
-                          ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),01,01,0, 0, 0, 0, ZoneId.of("UTC"));
+                          setBegin(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),01,01,0, 0, 0, 0, ZoneId.of("UTC")));
                           groupingType = GroupingTypes.YEARLY;
                           introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
                           break;

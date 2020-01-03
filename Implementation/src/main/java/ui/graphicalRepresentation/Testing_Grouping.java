@@ -30,7 +30,7 @@ public class Testing_Grouping {
         Map<String, CustomContainer<Transaction>> orga =
                 new GroupingBuilder().allAccs(user).category().daily().userdefined(
                 ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC")),
-                ZonedDateTime.of(Integer.valueOf(selectedDate_e.substring(0,4)),Integer.valueOf(selectedDate_e.substring(5,7)),Integer.valueOf(selectedDate_e.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC"))
+                ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC")).plusHours(24)
                 ).organize();
 
         try {
