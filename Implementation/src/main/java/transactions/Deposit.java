@@ -6,7 +6,7 @@ import java.time.ZonedDateTime;
  * Class Deposit, which is a transaction and extends the class Transaction.
  */
 public class Deposit extends Transaction {
-  private final String depositCategory;
+  private String depositCategory;
 
   /**
    * Creates a new Deposit object.
@@ -21,6 +21,12 @@ public class Deposit extends Transaction {
     final String description, final Integer ID) {
     super(date, amount, description, ID);
     this.depositCategory = depositCategory;
+  }
+
+  public void updateDeposit(final ZonedDateTime date, final float amount, final String payoutCategory,
+                           final String description) {
+    super.updateTransaction(date,amount,description);
+    this.depositCategory = payoutCategory;
   }
 
   @Override
