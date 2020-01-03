@@ -26,7 +26,7 @@ public class GroupingPage extends AbstractPage {
 
     //ONLY FOR TESTING
     private JFrame TESTING_frame;
-    private final boolean TESTING_boolean = true;
+    private final boolean TESTING_boolean = false;
     //
 
     public void setBegin(ZonedDateTime begin) {
@@ -40,9 +40,10 @@ public class GroupingPage extends AbstractPage {
     private ZonedDateTime begin = ZonedDateTime.now(ZoneId.of("UTC")).minusHours(1);
     private ZonedDateTime end;
     private  GroupingTypes groupingType = GroupingTypes.MONTHLY;
-    User user;
+    private User user;
     private JLabel groupedByHeader;
     private JLabel groupedByLabel;
+    private JLabel introTextLabel;
     private JButton backButton;
     private JButton showBarGraphicalButton;
     private JButton showPieGraphicalButton;
@@ -56,25 +57,29 @@ public class GroupingPage extends AbstractPage {
     int selectedGrouping = 0;
     private String selectedDate ="";
     private String selectedDateEnd ="";
+    private String groupedByMessage = "";
 
     private volatile boolean backWanted;
-    private volatile boolean graphicalWanted;
+    //private volatile boolean graphicalWanted;
 
     public GroupingPage(final User user){
         this.user = user;
-
     }
 
     //ONLY FOR TESTING
     public GroupingPage(User user, JFrame frame){
         this.user = user;
         this.TESTING_frame = frame;
-        groupedByLabel = new JLabel();
-        groupedByLabel.setBounds(150,100,500,50);
-        groupedByLabel.setFont(new Font("Serif", Font.PLAIN, 18));
-        components.add(groupedByLabel);
     }
     //
+
+    public boolean isBackWanted() {
+        return this.backWanted;
+    }
+
+    public boolean isRefreshWanted() {
+        return this.refreshWanted;
+    }
 
     @Override
     protected void resetTitle(final JFrame frame) {
@@ -85,6 +90,8 @@ public class GroupingPage extends AbstractPage {
     protected void createComponents() {
 
         refreshWanted = false;
+        backWanted = false;
+        //graphicalWanted = false;
 
         this.components = new ArrayList<>();
         GroupingBuilder orga = new GroupingBuilder().allAccs(this.user).category();
@@ -152,13 +159,20 @@ public class GroupingPage extends AbstractPage {
         scrollPane.setBounds(150, 150, 900, 450);
         this.components.add(this.scrollPane);
 
+        introTextLabel = new JLabel("Currently logged in as: " + user.getFirstname() + " " + user.getLastname());
+        introTextLabel.setBounds(225, 10, 1000, 50);
+        introTextLabel.setFont(HEADER_FONT);
+        components.add(introTextLabel);
 
         this.groupedByHeader = new JLabel("Grouped by:");
-        this.groupedByHeader.setBounds(150, 50, 500, 50);
+        this.groupedByHeader.setBounds(150, 70, 500, 50);
         groupedByHeader.setFont(new Font("Serif",Font.BOLD,19));
         this.components.add(this.groupedByHeader);
 
-
+        groupedByLabel = new JLabel(groupedByMessage);
+        groupedByLabel.setBounds(150,100,500,50);
+        groupedByLabel.setFont(new Font("Serif", Font.PLAIN, 18));
+        components.add(groupedByLabel);
 
         this.backButton = new JButton("BACK");
         this.backButton.setBounds(10, 10, 100, 50);
@@ -295,21 +309,21 @@ public class GroupingPage extends AbstractPage {
                           groupingType = GroupingTypes.DAILY;
                           //TODO CHECK TIME PROPERLY
                           //ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC"));
-                          groupedByLabel.setText(groupingType.toString() +"   "+ selectedDate);
+                          groupedByMessage = groupingType.toString() +"- "+ selectedDate;
                           break;
                       case 1:
                           selectedDate = JOptionPane.showInputDialog("Specify Year and Month for Summary","YYYY/MM");
                           groupingType = GroupingTypes.MONTHLY;
                           //TODO CHECK TIME PROPERLY
                           setBegin(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),01,0, 0, 0, 0, ZoneId.of("UTC")));
-                          groupedByLabel.setText(groupingType.toString() +"   "+ selectedDate);
+                          groupedByMessage = groupingType.toString() +"- "+ selectedDate;
                           break;
                       case 2:
                           selectedDate = JOptionPane.showInputDialog("Specify Year for Summary","YYYY");
                           //TODO CHECK TIME PROPERLY
                           setBegin(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),01,01,0, 0, 0, 0, ZoneId.of("UTC")));
                           groupingType = GroupingTypes.YEARLY;
-                          groupedByLabel.setText(groupingType.toString() +"   "+ selectedDate);
+                          groupedByMessage = groupingType.toString() +"- "+ selectedDate;
                           break;
                       case 3:
                           selectedDate = JOptionPane.showInputDialog("Specify Year, Month and Day Start for Summary","YYYY/MM/DD");
@@ -318,7 +332,7 @@ public class GroupingPage extends AbstractPage {
                           selectedDateEnd = JOptionPane.showInputDialog("Specify Year, Month and Day End for Summary","YYYY/MM/DD");
                           setEnd(ZonedDateTime.of(Integer.valueOf(selectedDateEnd.substring(0,4)),Integer.valueOf(selectedDateEnd.substring(5,7)),Integer.valueOf(selectedDateEnd.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC")));
                           groupingType = GroupingTypes.USER_DEFINED;
-                          groupedByLabel.setText(groupingType.toString() +"   Start:"+ selectedDate +" End:"+ selectedDateEnd);
+                          groupedByMessage = groupingType.toString() +"- Start: "+ selectedDate +" End: "+ selectedDateEnd;
                           break;
                   }
 

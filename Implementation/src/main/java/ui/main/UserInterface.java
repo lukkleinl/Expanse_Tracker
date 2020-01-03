@@ -16,6 +16,7 @@ import ui.addAccountPages.AddDebitAccountPage;
 import ui.addAccountPages.AddStockAccountPage;
 import ui.addTransactionPages.AddDepositPage;
 import ui.addTransactionPages.AddPayoutPage;
+import ui.graphicalRepresentation.GroupingPage;
 import ui.listPages.AccountListPage;
 import ui.listPages.AccountTypePage;
 import ui.listPages.AccountTypes;
@@ -97,6 +98,7 @@ public class UserInterface {
       AddDepositPage addDepositPage = new AddDepositPage(user);
       AddPayoutPage addPayoutPage = new AddPayoutPage(user);
       TransactionListPage transactionListPage;
+    GroupingPage groupingPage = new GroupingPage(user);
 
 
       //END DEFINITION OF PAGES
@@ -363,6 +365,15 @@ public class UserInterface {
           user.deleteAccount(accountListPage.getSelectedAccountToDeleteOrUpdate());
           accountListPage.configureFrame(frame);
         } else {
+          groupingPage.configureFrame(frame);
+          while(!groupingPage.isBackWanted() && !groupingPage.isRefreshWanted()) {}
+
+          if(groupingPage.isRefreshWanted()) {
+            groupingPage.configureFrame(frame);
+          }
+          else {
+            accountListPage.configureFrame(frame);
+          }
           //TODO: open summary
         }
       }

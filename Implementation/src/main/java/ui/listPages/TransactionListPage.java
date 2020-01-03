@@ -31,9 +31,6 @@ import user.User;
 
 public class TransactionListPage extends AbstractPage {
 
-  private final static int SHIFT_LEFT = 0;
-  private final static int OFFSET_Y = 50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
-
   private JLabel introTextLabel;
   private String introTextMessage;
 
