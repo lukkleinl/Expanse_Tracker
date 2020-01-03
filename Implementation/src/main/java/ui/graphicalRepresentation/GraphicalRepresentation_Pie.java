@@ -41,6 +41,9 @@ public class GraphicalRepresentation_Pie {
     public void draw(String year, String month, String day) throws Exception{
         draw(getDaily(year,month,day),year+"/"+month+"/"+day);
     }
+    public void draw(ZonedDateTime begin,ZonedDateTime end) throws Exception{
+        draw(getCustom(begin,end),begin.toString()+" - "+end.toString());
+    }
 
 
     private void draw(CustomContainer<Transaction> listOfTransactions, String dateOfInterest) {
