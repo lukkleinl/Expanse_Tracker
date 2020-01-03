@@ -6,7 +6,7 @@ import java.time.ZonedDateTime;
  * Class Payout, which is a transaction and extends the class Transaction.
  */
 public class Payout extends Transaction {
-  private final String payoutCategory;
+  private String payoutCategory;
 
   /**
    * Creates a new Payout object.
@@ -20,6 +20,12 @@ public class Payout extends Transaction {
   Payout(final ZonedDateTime date, final float amount, final String payoutCategory,
       final String description, final Integer ID) {
     super(date, amount, description, ID);
+    this.payoutCategory = payoutCategory;
+  }
+
+  public void updatePayout(final ZonedDateTime date, final float amount, final String payoutCategory,
+                           final String description) {
+    super.updateTransaction(date,amount,description);
     this.payoutCategory = payoutCategory;
   }
 

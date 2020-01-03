@@ -10,9 +10,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public abstract class Transaction {
   private static AtomicInteger nextId = new AtomicInteger();
-  private final String description;
-  private final float amount;
-  private final ZonedDateTime creationDate;
+  private String description;
+  private float amount;
+  private ZonedDateTime creationDate;
   private final Integer ID;
 
   /**
@@ -99,6 +99,12 @@ public abstract class Transaction {
   public String toString() {
     return " ID=" + this.getID() + ", Creation=" + this.getFormattedCreationDate() + ", Amount="
         + this.getAmount() + ", Description=" + this.getDescription();
+  }
+
+  public void updateTransaction(final ZonedDateTime date, final float amount, final String description) {
+    this.creationDate = date;
+    this.amount = amount;
+    this.description = description;
   }
 }
 
