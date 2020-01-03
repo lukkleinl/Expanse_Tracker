@@ -141,14 +141,18 @@ public class AddStockAccountPage extends AbstractPage {
         buyDateInputValue = (Date) buyDateInputField.getValue();
         limitInputValue = Float.valueOf(limitInputField.getText());
 
-        if (limitInputValue < 0)
-          // throw new IOException("Invalid limit Input!");
-        if(accountNameInputValue.isEmpty())
-          // throw new IOException("Invalid AccountName Input!");
-
-        //TODO check buyDate Stuff?!?!
-
-        submitted = true;
+        if (limitInputValue < 0) {
+          JOptionPane.showMessageDialog(
+                  null, "Limit must be higher than 0", "Limit Error", JOptionPane.WARNING_MESSAGE);
+        } else if(accountNameInputValue.isEmpty()) {
+          JOptionPane.showMessageDialog(
+                  null,
+                  "You must insert a legit date with format dd/mm/yyyy!",
+                  "Date Error",
+                  JOptionPane.WARNING_MESSAGE);
+        } else {
+          submitted = true;
+        }
       }
     });
 

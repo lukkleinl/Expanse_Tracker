@@ -130,6 +130,7 @@ public class AccountTypePage extends AbstractPage {
 
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
+    backButton.setFont(BUTTON_FONT);
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {

@@ -140,36 +140,48 @@ public class AddDebitAccountPage extends AbstractPage {
     submitButton.setFont(BUTTON_FONT);
     components.add(submitButton);
 
-    submitButton.addActionListener(new ActionListener() {
-      @Override
-      /**
-       * @param e Action event
-       * sets Submitted to true
-       * extracts the Input Values and provides them for getters.
-       */
-      public void actionPerformed(ActionEvent e) {
-        accountNameInputValue = accountNameInputField.getText();
-        ibanInputValue = ibanInputField.getText();
-        limitInputValue = Float.valueOf(limitInputField.getText());
-        bankNameInputValue = bankNameInputField.getText();
+    submitButton.addActionListener(
+        new ActionListener() {
+          @Override
+          /**
+           * @param e Action event sets Submitted to true extracts the Input Values and provides
+           *     them for getters.
+           */
+          public void actionPerformed(ActionEvent e) {
+            accountNameInputValue = accountNameInputField.getText();
+            ibanInputValue = ibanInputField.getText();
+            limitInputValue =
+                (limitInputField.getText().isEmpty())
+                    ? 0
+                    : Float.valueOf(limitInputField.getText());
+            bankNameInputValue = bankNameInputField.getText();
 
-        //TODO HANDLE EXCEPTIONS!
-
-        if (limitInputValue < 0)
-          // throw new IOException("Invalid limit Input!");
-        if(accountNameInputValue.isEmpty())
-          // throw new IOException("Invalid AccountName Input!");
-        if(bankNameInputValue.isEmpty())
-          //throw new IOException("Invalid BankName Input!");
-        if(ibanInputValue.isEmpty())
-          //throw new IOException("Invalid IBAN Input!");
-
-
-          submitted = true;
-
-
-      }
-    });
+            if (limitInputValue < 0) {
+              JOptionPane.showMessageDialog(
+                  null, "Limit must be higher than 0", "Limit Error", JOptionPane.WARNING_MESSAGE);
+            } else if (accountNameInputValue.isEmpty()) {
+              JOptionPane.showMessageDialog(
+                  null,
+                  "You must insert an account name!",
+                  "Account Name Error",
+                  JOptionPane.WARNING_MESSAGE);
+            } else if (bankNameInputValue.isEmpty()) {
+              JOptionPane.showMessageDialog(
+                  null,
+                  "You must insert an account name!",
+                  "Account Name Error",
+                  JOptionPane.WARNING_MESSAGE);
+            } else if (ibanInputValue.isEmpty()) {
+              JOptionPane.showMessageDialog(
+                      null,
+                      "You must insert an IBAN!",
+                      "IBAN Error",
+                      JOptionPane.WARNING_MESSAGE);
+            } else {
+              submitted = true;
+            }
+          }
+        });
 
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);

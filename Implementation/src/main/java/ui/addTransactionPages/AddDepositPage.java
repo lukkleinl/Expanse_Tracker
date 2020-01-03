@@ -153,7 +153,7 @@ public class AddDepositPage extends AbstractPage{
 
               if (amountInputValue <= 0 || descriptionInputValue.isEmpty()) {
                   JOptionPane.showMessageDialog(null, "Invalid Input!");
-              }else
+              } else
                   submitted = true;
       });
 

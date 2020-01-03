@@ -160,26 +160,33 @@ public class AddCreditAccountPage extends AbstractPage {
       public void actionPerformed(ActionEvent e) {
         accountNameInputValue = accountNameInputField.getText();
         expiryDateInputValue = (Date) expiryDateInputField.getValue();
-        limitInputValue = Float.valueOf(limitInputField.getText());
+        limitInputValue = (limitInputField.getText().isEmpty()) ? 0 : Float.valueOf(limitInputField.getText());
         bankNameInputValue = bankNameInputField.getText();
 
-
-
-      //https://www.javatpoint.com/java-get-current-date
-      //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-
-        /*
-        if (limitInputValue < 0)
-          // throw new IOException("Invalid limit Input!");
-        if(accountNameInputValue.isEmpty())
-          // throw new IOException("Invalid AccountName Input!");
-        if(bankNameInputValue.isEmpty())
-          //throw new IOException("Invalid BankName Input!");
-
-        //TODO check Expiry Stuff?!?!
-        */
-        submitted = true;
-
+        if (limitInputValue < 0) {
+          JOptionPane.showMessageDialog(
+                  null, "Limit must be higher than 0", "Limit Error", JOptionPane.WARNING_MESSAGE);
+        } else if(accountNameInputValue.isEmpty()) {
+          JOptionPane.showMessageDialog(
+                  null,
+                  "You must insert an account name!",
+                  "Account Name Error",
+                  JOptionPane.WARNING_MESSAGE);
+        } else if(bankNameInputValue.isEmpty()) {
+          JOptionPane.showMessageDialog(
+                  null,
+                  "You must insert a bank name!",
+                  "Bank Name Error",
+                  JOptionPane.WARNING_MESSAGE);
+        } else if(expiryDateInputValue == null) {
+          JOptionPane.showMessageDialog(
+                  null,
+                  "You must insert a legit date with format dd/mm/yyyy!",
+                  "Date Error",
+                  JOptionPane.WARNING_MESSAGE);
+        } else {
+          submitted = true;
+        }
       }
     });
 
