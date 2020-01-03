@@ -89,8 +89,15 @@ public class User extends SWE_Observable {
       updateObservers(this); // VON PAUL fürs observer
   }
 
-  public void updateAccount(final Account acc) {
-    accounts.update(acc);
+  public void updateAccount(final Account oldAcc, final Account newAcc) {
+    newAcc.updateAccountNumberAndBalance(oldAcc.getAccount_number(),oldAcc.getBalance());
+    accounts.update(newAcc);
+    updateObservers(this);
+  }
+
+  public void deleteAccount(final Account acc) {
+    accounts.delete(acc);
+    updateObservers(this);
   }
 
   /**

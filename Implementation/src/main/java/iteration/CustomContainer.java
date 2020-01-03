@@ -28,4 +28,8 @@ public interface CustomContainer<T> {
    * @return {@code true} if the {@code obj} is already stored, else {@code false}
    */
   boolean contains(T obj);
+
+  void update(T element);
+
+  void delete(T element);
 }

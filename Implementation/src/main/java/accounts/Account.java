@@ -5,7 +5,7 @@ import exceptions.SWE_Exception;
 
 /** @author Patrick Gmasz */
 public abstract class Account {
-  private final int account_number;
+  private int account_number;
   private final String name;
   private float balance;
   private final float limit;
@@ -84,6 +84,12 @@ public abstract class Account {
     if (!(obj instanceof Account))
       return false;
     return account_number == ((Account) obj).account_number;
+  }
+
+  public void updateAccountNumberAndBalance(int account_number, float balance) {
+    nextId.decrementAndGet();
+    this.account_number = account_number;
+    this.balance = balance;
   }
 }
 

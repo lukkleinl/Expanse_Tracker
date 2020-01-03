@@ -181,6 +181,7 @@ public class AccountListPage extends AbstractPage {
 
     components = new ArrayList<>();
     selectedAccount = null;
+    selectedAccountToDeleteOrUpdate = null;
     newAccountWanted = false;
     deleteWanted = false;
     updateWanted = false;

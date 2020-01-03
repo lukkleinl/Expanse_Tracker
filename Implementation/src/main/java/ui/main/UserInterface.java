@@ -254,7 +254,8 @@ public class UserInterface {
               //wait until either back button or submit button got pressed
             }
             if (add_cashAccountPage.isSubmitted()) { //if submit button got pressed, update account
-              //TODO: update account
+              Cash account = new Cash(add_cashAccountPage.getAccountName(), add_cashAccountPage.getLimit(), add_cashAccountPage.getCurrency());
+              user.updateAccount(accountListPage.getSelectedAccountToDeleteOrUpdate(),account);
             } else { //if back button got pressed, go to account type page again
               accountListPage.configureFrame(frame);
             }
@@ -267,7 +268,10 @@ public class UserInterface {
               //wait until either back button or submit button got pressed
             }
             if (add_creditAccountPage.isSubmitted()) { //if submit button got pressed, update account
-              //TODO: update account
+              CreditCard account = new CreditCard(add_creditAccountPage.getAccountName(),
+                      add_creditAccountPage.getBankName(), add_creditAccountPage.getLimit(),
+                      add_creditAccountPage.getExpiryDate());
+              user.updateAccount(accountListPage.getSelectedAccountToDeleteOrUpdate(),account);
             } else { //if back button got pressed, go to account list page again
               accountListPage.configureFrame(frame);
             }
@@ -279,7 +283,10 @@ public class UserInterface {
               //wait until either back button or submit button got pressed
             }
             if (add_debitAccountPage.isSubmitted()) { //if submit button got pressed, add new account
-              //TODO: update account
+              DebitCard account = new DebitCard(add_debitAccountPage.getAccountName(),
+                      add_debitAccountPage.getBankName(), add_debitAccountPage.getLimit(),
+                      add_debitAccountPage.getIBAN());
+              user.updateAccount(accountListPage.getSelectedAccountToDeleteOrUpdate(),account);
             } else { //if back button got pressed, go to account type page again
               accountListPage.configureFrame(frame);
             }
@@ -291,7 +298,9 @@ public class UserInterface {
               //wait until either back button or submit button got pressed
             }
             if (add_stockAccountPage.isSubmitted()) { //if submit button got pressed, add new account
-              //TODO: update account
+              Stocks account = new Stocks(add_stockAccountPage.getAccName(), add_stockAccountPage.getBuyDate(),
+                      add_stockAccountPage.getLimit());
+              user.updateAccount(accountListPage.getSelectedAccountToDeleteOrUpdate(),account);
             } else { //if back button got pressed, go to account type page again
               accountListPage.configureFrame(frame);
             }
@@ -301,6 +310,7 @@ public class UserInterface {
         } else {
           //TODO: open summary
         }
+        accountListPage.configureFrame(frame);
       }
   }catch (Exception e){
     //TODO

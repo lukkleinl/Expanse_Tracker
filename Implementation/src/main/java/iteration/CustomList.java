@@ -36,6 +36,20 @@ public class CustomList<T> implements CustomContainer<T> {
   }
 
   @Override
+  public void update(final T element) {
+    for(int i = 0; i < this.list.size(); ++i) {
+      if(this.list.get(i).equals(element)) {
+        this.list.set(i, element);
+      }
+    }
+  }
+
+  @Override
+  public void delete(final T element) {
+    this.list.remove(element);
+  }
+
+  @Override
   public boolean contains(final T obj) {
     return this.list.contains(obj);
   }
