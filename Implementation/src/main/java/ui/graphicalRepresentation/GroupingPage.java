@@ -1,71 +1,79 @@
 package ui.graphicalRepresentation;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
+
 import iteration.CustomContainer;
 import iteration.CustomIterator;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-import transactions.Deposit;
-import transactions.Payout;
 import transactions.Transaction;
 import transactions.grouping.GroupingBuilder;
 import ui.TestUser;
 import ui.main.AbstractPage;
 import user.User;
 
+import static javax.swing.JOptionPane.DEFAULT_OPTION;
+
 public class GroupingPage extends AbstractPage {
 
+    //ONLY FOR TESTING
+    private JFrame TESTING_frame;
+    private final boolean TESTING_boolean = true;
+    //
+
+    public void setBegin(ZonedDateTime begin) {
+        this.begin = begin;
+    }
+
+    public void setEnd(ZonedDateTime end) {
+        this.end = end;
+    }
 
     private ZonedDateTime begin;
     private ZonedDateTime end;
-    private final GroupingTypes groupingType;
+    private  GroupingTypes groupingType;
     User user;
     private JLabel introTextLabel;
     private JButton backButton;
     private JButton showGraphicalButton;
+    private JButton selectDateButton;
     private JTable transactionTable;
     private JScrollPane scrollPane;
+
+    private volatile boolean refreshWanted = false;
+
+    String[] options = getNames(GroupingTypes.class);
+    int selectedGrouping = 0;
+    private String selectedDate ="";
+    private String selectedDateEnd ="";
 
     private volatile boolean backWanted;
     private volatile boolean graphicalWanted;
 
-    private UtilDateModel model = new UtilDateModel();
-    private JDatePanelImpl datePanel = new JDatePanelImpl(model);
-    private JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
+
 
 
 
 
     String introText = "Grouped by - ";
 
-    public GroupingPage(final User user, final GroupingTypes groupingType) {
-        this.groupingType = groupingType;
+    public GroupingPage(final User user){
         this.user = user;
+        groupingType = GroupingTypes.MONTHLY;
     }
 
-    public GroupingPage(final User user, final GroupingTypes groupingType, final ZonedDateTime begin,
-                        final ZonedDateTime end) {
-        this.begin = begin;
-        this.end = end;
-        this.groupingType = groupingType;
+    //ONLY FOR TESTING
+    public GroupingPage(User user, JFrame frame){
         this.user = user;
+        this.TESTING_frame = frame;
+        groupingType = GroupingTypes.MONTHLY;
     }
-
-    public GroupingPage(final User user, final ZonedDateTime begin, final ZonedDateTime end) {
-        this.begin = begin;
-        this.end = end;
-        this.groupingType = GroupingTypes.USER_DEFINED;
-        this.user = user;
-    }
-
+    //
 
     @Override
     protected void resetTitle(final JFrame frame) {
@@ -79,19 +87,16 @@ public class GroupingPage extends AbstractPage {
 
         switch (this.groupingType) {
             case DAILY:
-                this.introText += "Daily!";
                 orga = orga.daily();
                 break;
             case MONTHLY:
-                this.introText += "Monthly!";
                 orga = orga.monthly();
                 break;
             case YEARLY:
-                this.introText += "Yearly!";
                 orga = orga.yearly();
                 break;
             case USER_DEFINED:
-                this.introText += "User Defined:" + this.begin.toString() + " - " + this.end.toString();
+                //this.introText += "User Defined:" + this.begin.toString() + " - " + this.end.toString();
                 orga = orga.userdefined(this.begin, this.end);
         }
 
@@ -137,7 +142,7 @@ public class GroupingPage extends AbstractPage {
 
         this.introTextLabel = new JLabel(this.introText);
         // 1200 X 800
-        this.introTextLabel.setBounds(400, 100, 200, 50);
+        this.introTextLabel.setBounds(100, 50, 500, 50);
         this.components.add(this.introTextLabel);
 
         this.backButton = new JButton("BACK");
@@ -151,7 +156,58 @@ public class GroupingPage extends AbstractPage {
         this.showGraphicalButton.setBounds(400, 700, 300, 50);
         this.components.add(this.showGraphicalButton);
 
+
+        this.selectDateButton = new JButton("Select Date");
+        this.selectDateButton.setBounds(400,100,300,50);
+        this.components.add(selectDateButton);
+
         this.showGraphicalButton.addActionListener(e -> this.graphicalWanted = true);
+        this.selectDateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                  selectedGrouping = JOptionPane.showOptionDialog(
+                          null,
+                          "What grouping do you want?",
+                          "Grouping-Chooser",
+                          DEFAULT_OPTION,
+                          JOptionPane.PLAIN_MESSAGE,
+                          null,
+                          options,
+                          options[0]);
+
+                  switch (selectedGrouping){
+                      case 0:
+                          selectedDate = JOptionPane.showInputDialog("Specify Year, Month and Day for Summary","YYYY/MM/DD");
+                          groupingType = GroupingTypes.DAILY;
+                          introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
+                          break;
+                      case 1:
+                          selectedDate = JOptionPane.showInputDialog("Specify Year and Month for Summary","YYYY/MM");
+                          groupingType = GroupingTypes.MONTHLY;
+                          introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
+                          break;
+                      case 2:
+                          selectedDate = JOptionPane.showInputDialog("Specify Year for Summary","YYYY");
+                          groupingType = GroupingTypes.YEARLY;
+                          introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
+                          break;
+                      case 3:
+                          selectedDate = JOptionPane.showInputDialog("Specify Year, Month and Day Start for Summary","YYYY/MM/DD");
+                          setBegin(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,3)),Integer.valueOf(selectedDate.substring(5,6)),Integer.valueOf(selectedDate.substring(8,9)),0, 0, 0, 0, ZoneId.of("UTC")));
+                          selectedDateEnd = JOptionPane.showInputDialog("Specify Year, Month and Day End for Summary","YYYY/MM/DD");
+                          setEnd(ZonedDateTime.of(Integer.valueOf(selectedDateEnd.substring(0,3)),Integer.valueOf(selectedDateEnd.substring(5,6)),Integer.valueOf(selectedDateEnd.substring(8,9)),0, 0, 0, 0, ZoneId.of("UTC")));
+                          groupingType = GroupingTypes.USER_DEFINED;
+                          introText = "Grouped by - "+groupingType.toString() +"   Start:"+ selectedDate +" End:"+ selectedDateEnd;
+                          break;
+                  }
+
+                  refreshWanted = true;
+                  if(TESTING_boolean && refreshWanted)
+                      configureFrame(TESTING_frame);
+
+            }
+        });
     }
 
 
@@ -162,8 +218,13 @@ public class GroupingPage extends AbstractPage {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         User user = TestUser.getTestUser();
-        GroupingPage page = new GroupingPage(user, GroupingTypes.DAILY);
+        GroupingPage page = new GroupingPage(user,frame);
         page.configureFrame(frame);
+    }
+
+    //https://stackoverflow.com/questions/13783295/getting-all-names-in-an-enum-as-a-string
+    public static String[] getNames(Class<? extends Enum<?>> e) {
+        return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
 }
 
