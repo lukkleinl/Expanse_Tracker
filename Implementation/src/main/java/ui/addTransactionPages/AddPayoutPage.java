@@ -147,14 +147,19 @@ public class AddPayoutPage extends AbstractPage {
     });
 
     submitButton.addActionListener(actionEvent -> {
-        amountInputValue = (amountInputField.getText().isEmpty()) ? 1.0f : Float.valueOf(amountInputField.getText());
+        amountInputValue = (amountInputField.getText().isEmpty()) ? 0 : Float.valueOf(amountInputField.getText());
         descriptionInputValue = descriptionInputField.getText();
         categoryInputValue = (String) categoryInputBox.getSelectedItem();
 
-        if(descriptionInputValue.isEmpty() || amountInputValue<=0){
-            JOptionPane.showMessageDialog(null, "Invalid Input!");
-        }else
-            submitted = true;
+      if (amountInputValue <= 0) {
+        JOptionPane.showMessageDialog(
+                null, "Amount must be higher than 0", "Amount Error", JOptionPane.WARNING_MESSAGE);
+      } else if(descriptionInputValue.isEmpty()) {
+        JOptionPane.showMessageDialog(
+                null, "You must insert a description", "Description Error", JOptionPane.WARNING_MESSAGE);
+      } else {
+        submitted = true;
+      }
     });
 
 
@@ -165,11 +170,6 @@ public class AddPayoutPage extends AbstractPage {
     backButton.addActionListener(e -> backWanted = true);
 
   }
-
-  public void checkValues() throws Exception{
-    throw new Exception();
-  }
-
 
   @Override
   protected void resetTitle(final JFrame frame) {

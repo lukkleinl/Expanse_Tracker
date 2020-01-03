@@ -144,19 +144,22 @@ public class AddDepositPage extends AbstractPage{
       refreshWanted = true;
     });
 
-      submitButton.addActionListener( actionEvent -> {
+    submitButton.addActionListener(
+        actionEvent -> {
+          amountInputValue = (amountInputField.getText().isEmpty()) ? 0 : Float.valueOf(amountInputField.getText());
+          descriptionInputValue = descriptionInputField.getText();
+          categoryInputValue = (String) categoryInputBox.getSelectedItem();
 
-        amountInputValue = (amountInputField.getText().isEmpty()) ? 1.0f : Float.valueOf(amountInputField.getText());
-        descriptionInputValue = descriptionInputField.getText();
-        categoryInputValue = (String) categoryInputBox.getSelectedItem();
-
-
-              if (amountInputValue <= 0 || descriptionInputValue.isEmpty()) {
-                  JOptionPane.showMessageDialog(null, "Invalid Input!");
-              } else
-                  submitted = true;
-      });
-
+          if (amountInputValue <= 0) {
+            JOptionPane.showMessageDialog(
+                    null, "Amount must be higher than 0", "Amount Error", JOptionPane.WARNING_MESSAGE);
+          } else if(descriptionInputValue.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    null, "You must insert a description", "Description Error", JOptionPane.WARNING_MESSAGE);
+          } else {
+            submitted = true;
+          }
+        });
 
     backButton = new JButton("BACK");
     backButton.setBounds(10, 10, 100, 50);
