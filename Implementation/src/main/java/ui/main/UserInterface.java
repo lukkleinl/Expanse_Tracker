@@ -257,21 +257,10 @@ public class UserInterface {
                   // wait until either back button or submit button got pressed
                 }
 
-                if (addPayoutPage
-                        .isSubmitted()) { // if submit button got pressed, add new payout to account of
-                  // the user
-                  try {
-                    Transaction payout =
-                            TransactionCreator.newTransaction(
-                                    addPayoutPage.getCategory(),
-                                    addPayoutPage.getAmount(),
-                                    addPayoutPage.getDescription(),
-                                    user.getCategoryStore());
-                    user.applyAndSaveTransaction(payout, accountListPage.getSelectedAccount());
-                    // user.handleTransaction(payout, accountListPage.getSelectedAccount());
-                  } catch (Exception e) {
-                    System.out.println("ERR:" + e.getMessage()); // TODO BETTER
-                  }
+                if (addPayoutPage.isSubmitted()) { // if submit button got pressed, add new payout to account of
+                  Payout transaction = (Payout) transactionListPage.getSelectedTransactionToDeleteOrUpdate();
+                  transaction.updatePayout(transaction.getCreationDate(),addPayoutPage.getAmount(),addPayoutPage.getCategory(),addPayoutPage.getDescription());
+                  user.updateTransaction(accountListPage.getSelectedAccount().getAccount_number(), transaction);
                 } else if (addPayoutPage.isBackWanted()) {
                   transactionListPage.configureFrame(
                           frame); // open transaction list page of the account again
@@ -290,18 +279,10 @@ public class UserInterface {
 
                 if (addDepositPage
                         .isSubmitted()) { // if submit button got pressed, add new deposit page to account
-                  // of the user
-                  try {
-                    Transaction deposit =
-                            TransactionCreator.newTransaction(
-                                    addDepositPage.getCategory(),
-                                    addDepositPage.getAmount(),
-                                    addDepositPage.getDescription(),
-                                    user.getCategoryStore());
-                    user.applyAndSaveTransaction(deposit, accountListPage.getSelectedAccount());
-                  } catch (Exception e) {
-                    System.out.println("ERR:" + e.getMessage()); // TODO BETTER
-                  }
+                  Deposit transaction = (Deposit) transactionListPage.getSelectedTransactionToDeleteOrUpdate();
+                  transaction.updateDeposit(transaction.getCreationDate(),addDepositPage.getAmount(),addDepositPage.getCategory(),addDepositPage.getDescription());
+                  user.updateTransaction(accountListPage.getSelectedAccount().getAccount_number(), transaction);
+                  System.out.println("HERE");
                 } else if (addDepositPage.isBackWanted()) {
                   transactionListPage.configureFrame(
                           frame); // open transaction list page of the account again
@@ -325,6 +306,7 @@ public class UserInterface {
             if (add_cashAccountPage.isSubmitted()) { //if submit button got pressed, update account
               Cash account = new Cash(add_cashAccountPage.getAccountName(), add_cashAccountPage.getLimit(), add_cashAccountPage.getCurrency());
               user.updateAccount(accountListPage.getSelectedAccountToDeleteOrUpdate(),account);
+              accountListPage.configureFrame(frame);
             } else { //if back button got pressed, go to account type page again
               accountListPage.configureFrame(frame);
             }
@@ -341,6 +323,7 @@ public class UserInterface {
                       add_creditAccountPage.getBankName(), add_creditAccountPage.getLimit(),
                       add_creditAccountPage.getExpiryDate());
               user.updateAccount(accountListPage.getSelectedAccountToDeleteOrUpdate(),account);
+              accountListPage.configureFrame(frame);
             } else { //if back button got pressed, go to account list page again
               accountListPage.configureFrame(frame);
             }
@@ -356,6 +339,7 @@ public class UserInterface {
                       add_debitAccountPage.getBankName(), add_debitAccountPage.getLimit(),
                       add_debitAccountPage.getIBAN());
               user.updateAccount(accountListPage.getSelectedAccountToDeleteOrUpdate(),account);
+              accountListPage.configureFrame(frame);
             } else { //if back button got pressed, go to account type page again
               accountListPage.configureFrame(frame);
             }
@@ -370,16 +354,17 @@ public class UserInterface {
               Stocks account = new Stocks(add_stockAccountPage.getAccName(), add_stockAccountPage.getBuyDate(),
                       add_stockAccountPage.getLimit());
               user.updateAccount(accountListPage.getSelectedAccountToDeleteOrUpdate(),account);
+              accountListPage.configureFrame(frame);
             } else { //if back button got pressed, go to account type page again
               accountListPage.configureFrame(frame);
             }
           }
         } else if(accountListPage.isDeleteWanted()) {
           user.deleteAccount(accountListPage.getSelectedAccountToDeleteOrUpdate());
+          accountListPage.configureFrame(frame);
         } else {
           //TODO: open summary
         }
-        //accountListPage.configureFrame(frame);
       }
   }
 }

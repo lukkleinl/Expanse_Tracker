@@ -58,7 +58,7 @@ public class AddPayoutPage extends AbstractPage {
   /**
    * @return Amount Input from User or Default value.
    */
-  public float getAmount() throws Exception
+  public float getAmount()
   {
     return amountInputValue;
   }
@@ -137,7 +137,7 @@ public class AddPayoutPage extends AbstractPage {
     descriptionInputField.setFont(TEXTFIELD_FONT);
     components.add(descriptionInputField);
 
-    submitButton = new JButton("PAYOUT");
+    submitButton = new JButton("SUBMIT");
     submitButton.setBounds(450, 600, 300, 50);
     submitButton.setBorder(new LineBorder(Color.BLACK,2));
     submitButton.setFont(BUTTON_FONT);

@@ -94,6 +94,7 @@ public class AddDepositPage extends AbstractPage{
     backWanted = false;
     refreshWanted = false;
 
+
     introTextLabel = new JLabel("Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
     introTextLabel.setBounds(200, 10, 1000, 50);
     introTextLabel.setFont(HEADER_FONT);
@@ -134,7 +135,7 @@ public class AddDepositPage extends AbstractPage{
     descriptionInputField.setFont(TEXTFIELD_FONT);
     components.add(descriptionInputField);
 
-    submitButton = new JButton("DEPOSIT");
+    submitButton = new JButton("SUBMIT");
     submitButton.setBounds(450, 600, 300, 50);
     submitButton.setFont(BUTTON_FONT);
     submitButton.setBorder(new LineBorder(Color.BLACK,2));
