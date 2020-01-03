@@ -3,6 +3,8 @@ package ui.listPages;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import transactions.Payout;
 import transactions.Transaction;
 import transactions.grouping.GroupingBuilder;
 import ui.main.AbstractPage;
+import user.TransactionStore;
 import user.User;
 
 /**
@@ -108,10 +111,10 @@ public class TransactionListPage extends AbstractPage {
 
     components = new ArrayList<>();
 
-    String[] transactionDescriptions = {"Type", "Category", "Description", "Creation-Date","Amount"};
+    Object[] transactionDescriptions = {"ID","Type", "Category", "Description", "Creation-Date","Amount"};
     CustomContainer<Transaction> transactionlist = user.getTransactionStore().getTransactions().get(account.getAccount_number());
     int listSize = transactionlist == null ? 0 : transactionlist.size();
-    String[][] transactionList_VISU = new String[listSize][6];
+    Object[][] transactionList_VISU = new Object[listSize][6];
 
     if (listSize > 0) {
       CustomIterator<Transaction> it = transactionlist.getIterator();
@@ -121,19 +124,19 @@ public class TransactionListPage extends AbstractPage {
         Transaction transtemp = it.next();
 
         if (transtemp instanceof Payout) {
-          transactionList_VISU[i][0] = "Payout";
-          transactionList_VISU[i][1] = ((Payout) transtemp).getPayoutCategory()
+          transactionList_VISU[i][1] = "Payout";
+          transactionList_VISU[i][2] = ((Payout) transtemp).getPayoutCategory()
               .toString();
         } else {
-          transactionList_VISU[i][0] = "Deposit";
-          transactionList_VISU[i][1] = ((Deposit) transtemp).getCategory()
+          transactionList_VISU[i][1] = "Deposit";
+          transactionList_VISU[i][2] = ((Deposit) transtemp).getCategory()
               .toString();
         }
 
-        transactionList_VISU[i][2] = transtemp.getDescription();
-        transactionList_VISU[i][4] = "" + transtemp.getAmount();
-        transactionList_VISU[i][5] = Integer.toString(transtemp.getID());
-        transactionList_VISU[i++][3] = transtemp.getFormattedCreationDate();
+        transactionList_VISU[i][3] = transtemp.getDescription();
+        transactionList_VISU[i][5] = transtemp.getAmount();
+        transactionList_VISU[i][0] = transtemp.getID();
+        transactionList_VISU[i++][4] = transtemp.getFormattedCreationDate();
       }
 
     }
@@ -146,7 +149,7 @@ public class TransactionListPage extends AbstractPage {
     DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
     tableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 6; ++i) {
       transactionTable.getColumnModel().getColumn(i).setCellRenderer(tableCellRenderer);
     }
 
@@ -154,13 +157,28 @@ public class TransactionListPage extends AbstractPage {
     // MAKES THE ELEMENTS IN THE TABLE UNEDITABLE
     transactionTable.setDefaultEditor(Object.class, null);
 
-    //https://stackoverflow.com/questions/10128064/jtable-selected-row-click-event
-    transactionTable.getSelectionModel().addListSelectionListener(event -> {
-      /*
-      int ID_OF_SELECTED_TRANSACTION = Integer
-          .valueOf(transactionList_VISU[transactionTable.getSelectedRow()][5]);
+    //TABLE MOUSE LISTENER
+    transactionTable.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mousePressed(MouseEvent mouseEvent) {
+        JTable table = (JTable) mouseEvent.getSource();
+        Point point = mouseEvent.getPoint();
+        int row = table.rowAtPoint(point);
+        if (mouseEvent.getClickCount() == 1 && table.getSelectedRow() != -1) {
+          TransactionStore transactionStore = user.getTransactionStore();
 
-      System.out.println("selected Row Nr:" + transactionTable.getSelectedRow());*/
+          CustomIterator<Transaction> iterator = transactionStore.getTransactions().get(account.getAccount_number()).getIterator();
+
+          while (iterator.hasNext()) {
+            Transaction trans = iterator.next();
+            if (trans.getID() == (Integer) transactionTable.getValueAt(row, 0)) {
+              System.out.println(trans.getID());
+              selectedTransactionToDeleteOrUpdate = trans;
+              break;
+            }
+          }
+        }
+      }
     });
 
     scrollPane = new JScrollPane(transactionTable);

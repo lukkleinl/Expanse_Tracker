@@ -37,6 +37,16 @@ public class TransactionStore {
     }
     return false;
   }
+
+  public void updateTransaction(int accountID, Transaction transaction) {
+    CustomContainer<Transaction> transactionContainer = this.transactions.get(accountID);
+    transactionContainer.update(transaction);
+  }
+
+  public void deleteTransaction(int accountID, Transaction transaction) {
+    CustomContainer<Transaction> transactionContainer = this.transactions.get(accountID);
+    transactionContainer.delete(transaction);
+  }
 }
 
 

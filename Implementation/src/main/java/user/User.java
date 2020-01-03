@@ -124,6 +124,15 @@ public class User extends SWE_Observable {
     updateObservers(this); // VON PAUL fürs observer
   }
 
+  public void updateTransaction(final int accountID, final Transaction transaction)  {
+    transactions.updateTransaction(accountID,transaction);
+  }
+
+
+  public void deleteTransaction(final int accountID, final Transaction transaction) {
+    transactions.deleteTransaction(accountID,transaction);
+  }
+
   /**
    * @param strategy the strategy which determines what kind of categories are retrieved
    * @return a {@linkplain Set} of categories
