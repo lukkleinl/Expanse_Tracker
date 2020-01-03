@@ -86,7 +86,6 @@ public class UserInterface {
 
     //DEFINITION OF ALL PAGES
 
-    try {
       AccountListPage accountListPage = new AccountListPage(user);
       AccountTypePage accountTypePage = new AccountTypePage(user);
       AddCashAccountPage add_cashAccountPage = new AddCashAccountPage(user);
@@ -312,12 +311,6 @@ public class UserInterface {
         }
         accountListPage.configureFrame(frame);
       }
-  }catch (Exception e){
-    //TODO
-      e.printStackTrace();
-    System.out.println("Message; " + e.getMessage());
-  }
-
   }
 }
 

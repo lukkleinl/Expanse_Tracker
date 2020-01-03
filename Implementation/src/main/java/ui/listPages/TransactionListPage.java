@@ -1,15 +1,13 @@
 package ui.listPages;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -51,6 +49,8 @@ public class TransactionListPage extends AbstractPage {
   private JButton backButton;
   private JButton newDepositButton;
   private JButton newPayoutButton;
+  private JButton deleteButton;
+  private JButton updateButton;
 
   private JTable transactionTable;
   private JScrollPane scrollPane;
@@ -58,6 +58,10 @@ public class TransactionListPage extends AbstractPage {
   private volatile boolean newDepositWanted;
   private volatile boolean newPayoutWanted;
   private volatile boolean backWanted;
+  private volatile boolean deleteWanted;
+  private volatile boolean updateWanted;
+
+  private Transaction selectedTransactionToDeleteOrUpdate;
 
   private final Account account;
   private final User user;
@@ -97,6 +101,10 @@ public class TransactionListPage extends AbstractPage {
     newDepositWanted = false;
     newPayoutWanted = false;
     backWanted = false;
+    deleteWanted = false;
+    updateWanted = false;
+
+    selectedTransactionToDeleteOrUpdate = null;
 
     components = new ArrayList<>();
 
@@ -156,10 +164,10 @@ public class TransactionListPage extends AbstractPage {
     });
 
     scrollPane = new JScrollPane(transactionTable);
-    scrollPane.setBounds(225, 100, 900, 450);
+    scrollPane.setBounds(225, 150, 900, 450);
     components.add(scrollPane);
 
-    introTextMessage = "Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".          Account Type: ";
+    introTextMessage = "Currently logged in as: " + user.getFirstname() + " " + user.getLastname();
 
 
     introTextLabel = new JLabel(introTextMessage);
@@ -206,7 +214,7 @@ public class TransactionListPage extends AbstractPage {
     customDescriptionLabel_1.setBounds(10, 430, 300, 50);
     customDescriptionLabel_1.setFont(new Font("Serif", Font.PLAIN, 18));
 
-    customDescriptionHeader_2 = new JLabel();
+    customDescriptionHeader_2 = new JLabel("Account Type:");
     customDescriptionHeader_2.setBounds(10,500, 300,50);
     customDescriptionHeader_2.setFont(new Font("Serif", Font.BOLD, 19));
     components.add(customDescriptionHeader_2);
@@ -216,29 +224,24 @@ public class TransactionListPage extends AbstractPage {
     customDescriptionLabel_2.setFont(new Font("Serif", Font.PLAIN, 18));
 
     if (account instanceof Stocks) {
-      introTextMessage += "Stocks ";
       customDescriptionHeader_1.setText("Buy date:");
       Date buyDate = ((Stocks) account).getBuyDate();
       customDescriptionLabel_1.setText(buyDate.getDay()-1+"."+buyDate.getMonth()+"."+buyDate.getYear());
-      customDescriptionHeader_2.setText("");
-      customDescriptionLabel_2.setText("");
+      customDescriptionLabel_2.setText("Stocks");
     } else if (account instanceof Cash) {
-      introTextMessage += "Cash Account ";
       customDescriptionHeader_1.setText("Currency:");
       customDescriptionLabel_1.setText(((Cash) account).getCurrency());
-      customDescriptionLabel_2.setText("");
+      customDescriptionLabel_2.setText("Cash");
     } else if (account instanceof CreditCard) {
-      introTextMessage += "CreditCard Account ";
       customDescriptionHeader_1.setText("Expiry date:");
       Date expireDate = ((CreditCard) account).getExpiryDate();
       customDescriptionLabel_1.setText(expireDate.getDay()-1+"."+expireDate.getMonth()+"."+expireDate.getYear());
-      customDescriptionLabel_2.setText("");
+      customDescriptionLabel_2.setText("Credit Card");
     } else if (account instanceof DebitCard) {
-      introTextMessage += "DebitCardAccount ";
       customDescriptionHeader_1.setText("IBAN:");
       customDescriptionLabel_1.setText(((DebitCard) account).getIBAN());
       customDescriptionLabel_1.setFont(new Font("Serif",Font.BOLD,15));
-      customDescriptionLabel_2.setText("");
+      customDescriptionLabel_2.setText("Debit Card");
     }
 
     components.add(customDescriptionLabel_1);
@@ -254,18 +257,69 @@ public class TransactionListPage extends AbstractPage {
     backButton.addActionListener(e -> backWanted = true);
 
     newPayoutButton = new JButton("NEW PAYOUT");
-    newPayoutButton.setBounds(400, 600, 200, 70);
+    newPayoutButton.setBounds(400, 650, 200, 70);
     newPayoutButton.setFont(BUTTON_FONT);
     newPayoutButton.setBorder(new LineBorder(Color.BLACK,2));
     newPayoutButton.addActionListener(e -> newPayoutWanted = true);
     components.add(newPayoutButton);
 
     newDepositButton = new JButton("NEW DEPOST");
-    newDepositButton.setBounds(700, 600, 200, 70);
+    newDepositButton.setBounds(700, 650, 200, 70);
     newDepositButton.setFont(BUTTON_FONT);
     newDepositButton.setBorder(new LineBorder(Color.BLACK,2));
     newDepositButton.addActionListener(e -> newDepositWanted = true);
     components.add(newDepositButton);
+
+    deleteButton = new JButton("DELETE");
+    deleteButton.setBounds(975, 50, 150, 50);
+    deleteButton.setFont(BUTTON_FONT);
+    deleteButton.setBorder(new LineBorder(Color.BLACK,2));
+    deleteButton.addActionListener(
+            new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                if (selectedTransactionToDeleteOrUpdate == null) {
+                  JOptionPane.showMessageDialog(
+                          null,
+                          "You need to select an account!",
+                          "Account Selection Error",
+                          JOptionPane.WARNING_MESSAGE);
+                } else {
+                  int input =
+                          JOptionPane.showConfirmDialog(
+                                  null,
+                                  "Are you sure you want to delete " + selectedTransactionToDeleteOrUpdate.getDescription() + "?",
+                                  "Confirm",
+                                  JOptionPane.YES_NO_OPTION);
+                  if (input == 0) {
+                    deleteWanted = true;
+                  }
+                }
+              }
+            });
+    components.add(deleteButton);
+
+    //UPDATE BUTTON
+    updateButton = new JButton("UPDATE");
+    updateButton.setBounds(750,50,150,50);
+    updateButton.setFont(BUTTON_FONT);
+    updateButton.setBorder(new LineBorder(Color.BLACK,2));
+    updateButton.addActionListener(
+            new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                if (selectedTransactionToDeleteOrUpdate == null) {
+                  JOptionPane.showMessageDialog(
+                          null,
+                          "You need to select an account!",
+                          "Account Selection Error",
+                          JOptionPane.WARNING_MESSAGE);
+                } else {
+                  updateWanted = true;
+                }
+              }
+            });
+    components.add(updateButton);
   }
 
   @Override
