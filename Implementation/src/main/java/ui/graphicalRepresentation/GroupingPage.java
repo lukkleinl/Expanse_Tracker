@@ -10,6 +10,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
@@ -33,6 +36,13 @@ public class GroupingPage extends AbstractPage {
 
     private volatile boolean backWanted;
     private volatile boolean graphicalWanted;
+
+    private UtilDateModel model = new UtilDateModel();
+    private JDatePanelImpl datePanel = new JDatePanelImpl(model);
+    private JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
+
+
+
 
     String introText = "Grouped by - ";
 
