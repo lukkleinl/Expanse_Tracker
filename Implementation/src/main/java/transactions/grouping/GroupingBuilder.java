@@ -118,8 +118,11 @@ public class GroupingBuilder {
 
     for (String key : transactions.keySet()) {
       sb.append("\n" + key + "\n");
-      for (CustomIterator it = transactions.get(key).getIterator(); it.hasNext(); it.next()) {
-        sb.append(it.element() + "\n");
+      for (CustomIterator<Transaction> it = transactions.get(key).getIterator(); it.hasNext(); it
+          .next()) {
+        sb.append("Creation: " + it.element().getFormattedCreationDate() + ", ");
+        sb.append("ID=" + it.element().getID() + ", ");
+        sb.append("Category=" + it.element().getCategory() + "\n");
       }
     }
     return sb.toString();

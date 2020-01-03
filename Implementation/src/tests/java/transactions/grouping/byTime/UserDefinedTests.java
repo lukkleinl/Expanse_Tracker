@@ -1,11 +1,8 @@
 package transactions.grouping.byTime;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import java.time.Month;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,25 +10,24 @@ import iteration.CustomContainer;
 import iteration.CustomIterator;
 import transactions.Transaction;
 import transactions.grouping.GroupingTestUser;
+import transactions.grouping.GroupingTestUser.ChronologicTimes;
 import transactions.grouping.TransactionOrganizing;
 import user.User;
 
 class UserDefinedTests {
-  private static final ThreadLocalRandom rand = ThreadLocalRandom.current();
-  private static final int rounds = 5;
+  private static final int accounts = 2;
+  private static final int transactions = 1000;
   private static User user;
   private ZonedDateTime begin;
   private ZonedDateTime end;
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
-    user = GroupingTestUser.newTestUser();
+    user = GroupingTestUser.newTestUserWith(accounts);
 
-    for (int i = 0; i < (rounds * user.getCategories(null).toArray().length); i++) {
-      for (int j = 0; j < rounds; j++) {
-        user.applyAndSaveTransaction(GroupingTestUser.transactionWithTimeByIandJ(i, j),
-            GroupingTestUser.randomAccount());
-      }
+    for (int i = 0; i < transactions; i++) {
+      user.applyAndSaveTransaction(GroupingTestUser.newTransaction(i),
+          GroupingTestUser.randomAccount());
     }
   }
 
@@ -54,15 +50,9 @@ class UserDefinedTests {
 
   // Helper method
   private void timeCreation() {
-    ZonedDateTime now = ZonedDateTime.now();
-    Month month = Month.of(rand.nextInt(1, 13));
-    int borderyear = 1970 + ((now.getYear() - 1970) / rand.nextInt(2, now.getYear() - 1970));
-
-    this.begin = ZonedDateTime.of(rand.nextInt(1970, borderyear), month.getValue(),
-        rand.nextInt(1, month.maxLength()), 0, 0, 0, 0, ZoneId.of("UTC"));
-
-    this.end = ZonedDateTime.of(rand.nextInt(borderyear, now.getYear()), month.getValue(),
-        rand.nextInt(1, month.maxLength()), 23, 59, 59, 0, ZoneId.of("UTC"));
+    GroupingTestUser.ChronologicTimes times = new ChronologicTimes();
+    this.begin = times.begin();
+    this.end = times.end();
   }
 
   private String keyCreation(final Transaction trans) {

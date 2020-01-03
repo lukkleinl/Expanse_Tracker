@@ -1,6 +1,7 @@
 package transactions.grouping.byAccount;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,19 +14,20 @@ import transactions.grouping.GroupingTestUser;
 import user.User;
 
 class AllAccountsTests {
-  private static final int rounds = 5;
+  private static final int accounts = 2;
+  private static final int transactions = 1000;
   private static User user;
   private static CustomContainer<Transaction> storedtrans;
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
-    user = GroupingTestUser.newTestUser();
+    user = GroupingTestUser.newTestUserWith(accounts);
 
     storedtrans = new CustomList<>();
     Transaction trans = null;
     Account acc = null;
 
-    for (int i = 0; i < rounds * user.getCategories(null).toArray().length; i++) {
+    for (int i = 0; i < transactions; i++) {
       acc = GroupingTestUser.randomAccount();
       trans = GroupingTestUser.newTransaction(i);
 
@@ -60,9 +62,5 @@ class AllAccountsTests {
     }
   }
 }
-
-
-
-
 
 

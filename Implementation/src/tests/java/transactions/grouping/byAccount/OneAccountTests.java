@@ -1,6 +1,7 @@
 package transactions.grouping.byAccount;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,21 +17,22 @@ import transactions.grouping.GroupingTestUser;
 import user.User;
 
 class OneAccountTests {
-  private static final int rounds = 5;
+  private static final int accounts = 2;
+  private static final int transactions = 1000;
   private static User user;
-  private static Map<String,CustomContainer<Transaction>> storedtrans;
+  private static Map<String, CustomContainer<Transaction>> storedtrans;
   private static Map<String, CustomContainer<Transaction>> afterOrganizing;
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
-    user = GroupingTestUser.newTestUser();
+    user = GroupingTestUser.newTestUserWith(accounts);
 
     storedtrans = new HashMap<>();
     afterOrganizing = new HashMap<>();
     Transaction trans = null;
     Account acc = null;
 
-    for (int i = 0; i < (rounds * user.getCategories(null).toArray().length); i++) {
+    for (int i = 0; i < transactions; i++) {
       acc = GroupingTestUser.randomAccount();
       trans = GroupingTestUser.newTransaction(i);
 
@@ -76,24 +78,24 @@ class OneAccountTests {
     }
   }
 
-  /* ------------------------------ Helper Methods to keep tests shorter ------------------------------ */
+  /*
+   * ------------------------------ Helper Methods to keep tests shorter
+   * ------------------------------
+   */
   private static String keyOfTransaction(final Transaction trans) {
-    for (Entry<Integer, CustomContainer<Transaction>> entry : user.getTransactionStore().getTransactions().entrySet()) {
-      for (CustomIterator<Transaction> it = entry.getValue().getIterator(); it.hasNext(); ) {
+    for (Entry<Integer, CustomContainer<Transaction>> entry : user.getTransactionStore()
+        .getTransactions().entrySet()) {
+      for (CustomIterator<Transaction> it = entry.getValue().getIterator(); it.hasNext();) {
         if (it.next().equals(trans))
           return Integer.toString(entry.getKey());
       }
     }
     return null;
   }
+
   private static boolean mappingsPresent(final String key) {
     return (afterOrganizing.get(key) != null) && (storedtrans.get(key) != null);
   }
 }
-
-
-
-
-
 
 

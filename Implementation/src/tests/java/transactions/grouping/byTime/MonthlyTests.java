@@ -13,18 +13,17 @@ import transactions.grouping.TransactionOrganizing;
 import user.User;
 
 class MonthlyTests {
-  private static final int rounds = 5;
+  private static final int accounts = 2;
+  private static final int transactions = 1000;
   private static User user;
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
-    user = GroupingTestUser.newTestUser();
+    user = GroupingTestUser.newTestUserWith(accounts);
 
-    for (int i = 0; i < (rounds * user.getCategories(null).toArray().length); i++) {
-      for (int j = 0; j < rounds; j++) {
-        user.applyAndSaveTransaction(GroupingTestUser.transactionWithTimeByIandJ(i, j),
-            GroupingTestUser.randomAccount());
-      }
+    for (int i = 0; i < transactions; i++) {
+      user.applyAndSaveTransaction(GroupingTestUser.newTransaction(i),
+          GroupingTestUser.randomAccount());
     }
   }
 
