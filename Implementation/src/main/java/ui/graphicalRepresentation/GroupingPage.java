@@ -1,5 +1,6 @@
 package ui.graphicalRepresentation;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.ZoneId;
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import iteration.CustomContainer;
 import iteration.CustomIterator;
@@ -38,7 +41,8 @@ public class GroupingPage extends AbstractPage {
     private ZonedDateTime end;
     private  GroupingTypes groupingType = GroupingTypes.MONTHLY;
     User user;
-    private JLabel introTextLabel;
+    private JLabel groupedByHeader;
+    private JLabel groupedByLabel;
     private JButton backButton;
     private JButton showBarGraphicalButton;
     private JButton showPieGraphicalButton;
@@ -56,9 +60,6 @@ public class GroupingPage extends AbstractPage {
     private volatile boolean backWanted;
     private volatile boolean graphicalWanted;
 
-
-    String introText = "Grouped by - ";
-
     public GroupingPage(final User user){
         this.user = user;
 
@@ -68,6 +69,10 @@ public class GroupingPage extends AbstractPage {
     public GroupingPage(User user, JFrame frame){
         this.user = user;
         this.TESTING_frame = frame;
+        groupedByLabel = new JLabel();
+        groupedByLabel.setBounds(150,100,500,50);
+        groupedByLabel.setFont(new Font("Serif", Font.PLAIN, 18));
+        components.add(groupedByLabel);
     }
     //
 
@@ -80,7 +85,6 @@ public class GroupingPage extends AbstractPage {
     protected void createComponents() {
 
         refreshWanted = false;
-
 
         this.components = new ArrayList<>();
         GroupingBuilder orga = new GroupingBuilder().allAccs(this.user).category();
@@ -130,42 +134,59 @@ public class GroupingPage extends AbstractPage {
             }
 
             this.transactionTable = new JTable(transactionList_VISU, transactionDescriptions);
-        }else
-            transactionTable = new JTable(new String[0][0],transactionDescriptions);
+    } else {
+      transactionTable = new JTable(new String[0][0], transactionDescriptions);
+            }
 
+        DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+        tableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        transactionTable.setRowHeight(70);
+        transactionTable.setFont(TEXTFIELD_FONT);
+        for (int i = 0; i < 5; ++i) {
+            transactionTable.getColumnModel().getColumn(i).setCellRenderer(tableCellRenderer);
+        }
 
-        // https://stackoverflow.com/questions/9919230/disable-user-edit-in-jtable
-        // MAKES THE ELEMENTS IN THE TABLE UNEDITABLE
         this.transactionTable.setDefaultEditor(Object.class, null);
 
-
         this.scrollPane = new JScrollPane(this.transactionTable);
-        this.scrollPane.setBounds(225, 200, 900, 450);
+        scrollPane.setBounds(150, 150, 900, 450);
         this.components.add(this.scrollPane);
 
-        this.introTextLabel = new JLabel(this.introText);
-        // 1200 X 800
-        this.introTextLabel.setBounds(100, 50, 500, 50);
-        this.components.add(this.introTextLabel);
+
+        this.groupedByHeader = new JLabel("Grouped by:");
+        this.groupedByHeader.setBounds(150, 50, 500, 50);
+        groupedByHeader.setFont(new Font("Serif",Font.BOLD,19));
+        this.components.add(this.groupedByHeader);
+
+
 
         this.backButton = new JButton("BACK");
         this.backButton.setBounds(10, 10, 100, 50);
+        backButton.setFont(BUTTON_FONT);
+        backButton.setBorder(new LineBorder(Color.BLACK,2));
         this.components.add(this.backButton);
 
         this.backButton.addActionListener(e -> this.backWanted = true);
 
 
-        this.showBarGraphicalButton = new JButton("Show Graphical Bar-Representation!");
-        this.showBarGraphicalButton.setBounds(400, 700, 300, 50);
+        this.showBarGraphicalButton = new JButton("SHOW BAR CHART");
+        showBarGraphicalButton.setFont(BUTTON_FONT);
+        showBarGraphicalButton.setBorder(new LineBorder(Color.BLACK,2));
+        this.showBarGraphicalButton.setBounds(150, 650, 300, 50);
+
         this.components.add(this.showBarGraphicalButton);
 
-        this.showPieGraphicalButton = new JButton("Show Graphical Pie-Representations!");
-        this.showPieGraphicalButton.setBounds(10, 700, 300, 50);
+        this.showPieGraphicalButton = new JButton("SHOW PIE CHART");
+        showPieGraphicalButton.setFont(BUTTON_FONT);
+        showPieGraphicalButton.setBorder(new LineBorder(Color.BLACK,2));
+        this.showPieGraphicalButton.setBounds(750, 650, 300, 50);
         this.components.add(showPieGraphicalButton);
 
 
-        this.selectDateButton = new JButton("Select Date");
-        this.selectDateButton.setBounds(400,100,300,50);
+        this.selectDateButton = new JButton("SELECT DATE");
+        this.selectDateButton.setBounds(850, 50, 200, 50);
+        selectDateButton.setFont(BUTTON_FONT);
+        selectDateButton.setBorder(new LineBorder(Color.BLACK,2));
         this.components.add(selectDateButton);
 
         this.showBarGraphicalButton.addActionListener(new ActionListener() {
@@ -274,21 +295,21 @@ public class GroupingPage extends AbstractPage {
                           groupingType = GroupingTypes.DAILY;
                           //TODO CHECK TIME PROPERLY
                           //ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC"));
-                          introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
+                          groupedByLabel.setText(groupingType.toString() +"   "+ selectedDate);
                           break;
                       case 1:
                           selectedDate = JOptionPane.showInputDialog("Specify Year and Month for Summary","YYYY/MM");
                           groupingType = GroupingTypes.MONTHLY;
                           //TODO CHECK TIME PROPERLY
                           setBegin(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),01,0, 0, 0, 0, ZoneId.of("UTC")));
-                          introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
+                          groupedByLabel.setText(groupingType.toString() +"   "+ selectedDate);
                           break;
                       case 2:
                           selectedDate = JOptionPane.showInputDialog("Specify Year for Summary","YYYY");
                           //TODO CHECK TIME PROPERLY
                           setBegin(ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),01,01,0, 0, 0, 0, ZoneId.of("UTC")));
                           groupingType = GroupingTypes.YEARLY;
-                          introText = "Grouped by - "+groupingType.toString() +"   "+ selectedDate;
+                          groupedByLabel.setText(groupingType.toString() +"   "+ selectedDate);
                           break;
                       case 3:
                           selectedDate = JOptionPane.showInputDialog("Specify Year, Month and Day Start for Summary","YYYY/MM/DD");
@@ -297,7 +318,7 @@ public class GroupingPage extends AbstractPage {
                           selectedDateEnd = JOptionPane.showInputDialog("Specify Year, Month and Day End for Summary","YYYY/MM/DD");
                           setEnd(ZonedDateTime.of(Integer.valueOf(selectedDateEnd.substring(0,4)),Integer.valueOf(selectedDateEnd.substring(5,7)),Integer.valueOf(selectedDateEnd.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC")));
                           groupingType = GroupingTypes.USER_DEFINED;
-                          introText = "Grouped by - "+groupingType.toString() +"   Start:"+ selectedDate +" End:"+ selectedDateEnd;
+                          groupedByLabel.setText(groupingType.toString() +"   Start:"+ selectedDate +" End:"+ selectedDateEnd);
                           break;
                   }
 
