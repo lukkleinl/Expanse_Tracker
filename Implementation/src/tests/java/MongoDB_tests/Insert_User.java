@@ -1,53 +1,56 @@
 package MongoDB_tests;
 
-import MongoDb.MongoDB;
-import accounts.Cash;
-import accounts.Stocks;
+import MongoDb.WriteOperation;
+import accounts.Account;
 import iteration.CustomContainer;
-import java.util.Date;
+import iteration.CustomIterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import transactions.Transaction;
+import transactions.grouping.GroupingTestUser;
+import user.TransactionStore;
 import user.User;
 
 public class Insert_User {
-  private User user;
+
+  private static final int accounts = 2;
+  private static final int transactions = 1000;
+  private static User user;
 
 
   public static void main(final String[] args) {
 
-    Date date=new Date();
-    String depositcategory="SALARY";
-    String payoutcategory="FOOD";
-    MongoDB mongo=new MongoDB();
-    User user=new User(12,"lukas","kleinl", "1234");
-    Cash cash = new Cash("Cash",0,"Euro");
-    Stocks stock = new Stocks("Stock",date,0);
-    user.addAccount(cash);
-    user.addAccount(stock);
+    user = GroupingTestUser.newTestUserWith(accounts);
 
-    // user.deposit(cat,100,"Auszahlun",stock);
-    // user.deposit(cat,100,"Auszahlung",stock);
-    //user.deposit(cat,100,"Auszahlun",cash);
-    //user.deposit(cat,1000,"einzahl",cash);
-    // try {
-    //user.payOut(pay, 100, "Auszahlun", cash);
-    //} catch (LimitException e) {
-    //System.out.println(e.getMessage());
-  }
-  Map<Integer, CustomContainer<Transaction>> map;
-  //map=user.getTransactions();
-  /*
-    CustomIterator<Account> abc=user.getAccounts().getIterator();
-    while(abc.hasNext())
-    {
+    WriteOperation mongo = new WriteOperation();
+
+    try {
+      for (int i = 0; i < transactions; i++) {
+        user.applyAndSaveTransaction(GroupingTestUser.newTransaction(i),
+            GroupingTestUser.randomAccount());
+      }
+    } catch (Exception e) {
+      System.out.println("Fehler beim Hinzufügen der Transaktionen");
+    }
+
+    Map<Integer, CustomContainer<Transaction>> map;
+    TransactionStore trans = user.getTransactionStore();
+    map = trans.getTransactions();
+
+    CustomIterator<Account> abc = user.getAccounts().getIterator();
+    while (abc.hasNext()) {
       System.out.println(abc.next().getBalance());
     }
+    System.out.println("get balance vorbei");
     for (Entry e : map.entrySet()) {
-      System.out.println(e.getKey());
+      //System.out.println(e.getKey());
+      //System.out.println(e.getValue());
     }
-    System.out.println(map.size());
 
+
+    //System.out.println(map.size());
 
     mongo.insertUser(user);
-   */
+  }
+
 }
