@@ -100,8 +100,7 @@ public class TransactionListPage extends AbstractPage {
 
     components = new ArrayList<>();
 
-    String[] transactionDescriptions = {"Type", "Descriptions", "Amount", "Creation-Date",
-    "Category"};
+    String[] transactionDescriptions = {"Type", "Category", "Description", "Creation-Date","Amount"};
     CustomContainer<Transaction> transactionlist = user.getTransactionStore().getTransactions().get(account.getAccount_number());
     int listSize = transactionlist == null ? 0 : transactionlist.size();
     String[][] transactionList_VISU = new String[listSize][6];
@@ -115,20 +114,18 @@ public class TransactionListPage extends AbstractPage {
 
         if (transtemp instanceof Payout) {
           transactionList_VISU[i][0] = "Payout";
-          transactionList_VISU[i][4] = ((Payout) transtemp).getPayoutCategory()
+          transactionList_VISU[i][1] = ((Payout) transtemp).getPayoutCategory()
               .toString();
         } else {
           transactionList_VISU[i][0] = "Deposit";
-          transactionList_VISU[i][4] = ((Deposit) transtemp).getCategory()
+          transactionList_VISU[i][1] = ((Deposit) transtemp).getCategory()
               .toString();
         }
 
-        transactionList_VISU[i][1] = transtemp.getDescription();
-        transactionList_VISU[i][2] = "" + transtemp.getAmount();
-        transactionList_VISU[i][5] = "" + transtemp.getID();
+        transactionList_VISU[i][2] = transtemp.getDescription();
+        transactionList_VISU[i][4] = "" + transtemp.getAmount();
+        transactionList_VISU[i][5] = Integer.toString(transtemp.getID());
         transactionList_VISU[i++][3] = transtemp.getFormattedCreationDate();
-
-
       }
 
     }
@@ -151,11 +148,11 @@ public class TransactionListPage extends AbstractPage {
 
     //https://stackoverflow.com/questions/10128064/jtable-selected-row-click-event
     transactionTable.getSelectionModel().addListSelectionListener(event -> {
-
+      /*
       int ID_OF_SELECTED_TRANSACTION = Integer
           .valueOf(transactionList_VISU[transactionTable.getSelectedRow()][5]);
 
-      System.out.println("selected Row Nr:" + transactionTable.getSelectedRow());
+      System.out.println("selected Row Nr:" + transactionTable.getSelectedRow());*/
     });
 
     scrollPane = new JScrollPane(transactionTable);

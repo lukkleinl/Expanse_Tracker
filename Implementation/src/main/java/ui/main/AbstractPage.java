@@ -33,42 +33,8 @@ public abstract class AbstractPage {
     resetTitle(frame);
 
 
-    try {
-      createComponents();
-    }catch (Exception e){
-      System.out.println("Fehler erkannt, noch kein Error Handling vorhanden:"+e.getMessage());
-    }
+    createComponents();
 
-
-
-    for (JComponent comp : components) {
-      frame.add(comp);
-    }
-
-    frame.revalidate();
-    frame.repaint();
-  }
-
-  /**
-   * This is  method updates the given JFrame with all of the components and also sets the frame height and width with given parameters.
-   *
-   * @param frame The JFrame, which components will be updated
-   * @param width The width of the JFrame
-   * @param height The height of the JFrame
-   */
-  public final void configureFrame(JFrame frame, int width, int height) {
-
-    frame.getContentPane().removeAll();
-    frame.setSize(width, height);
-
-    resetTitle(frame);
-
-
-    try {
-      createComponents();
-    }catch (Exception e){
-      System.out.println("Fehler erkannt, noch kein Error Handling vorhanden:"+e.getMessage());
-    }
 
 
     for (JComponent comp : components) {

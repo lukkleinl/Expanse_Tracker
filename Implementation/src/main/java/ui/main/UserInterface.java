@@ -48,7 +48,7 @@ public class UserInterface {
     LoginPage loginPage = new LoginPage();
     RegistrationPage registrationPage = new RegistrationPage();
 
-    loginPage.configureFrame(frame, 410, 280); //starts frame with login page
+    loginPage.configureFrame(frame); //starts frame with login page
 
     boolean foundUser = false;
     while (!foundUser) { //lets the login page opened until someone logged in successfully
@@ -59,13 +59,13 @@ public class UserInterface {
           user = TestUser.getTestUser();
           foundUser = true;
         } else {
-          loginPage.configureFrame(frame, 410, 280);
+          loginPage.configureFrame(frame);
           //TODO: display error message
         }
       } else if (loginPage.isRegistrationWanted()) { //check if registration button got pressed, if yes, open registration page
 
         //OPEN REGISTRATION PAGE COMPONENTS
-        registrationPage.configureFrame(frame,410,530);
+        registrationPage.configureFrame(frame);
 
         while (!registrationPage.isRegistrationComplete() && !registrationPage.isBackWanted())
         {
@@ -80,7 +80,7 @@ public class UserInterface {
           //TODO: save userdata here
         }
         //OPEN LOGIN PAGE COMPONENTS AGAIN
-        loginPage.configureFrame(frame, 410, 280); //after registration is complete or back button got pressed, open login page again
+        loginPage.configureFrame(frame); //after registration is complete or back button got pressed, open login page again
       }
     }
 

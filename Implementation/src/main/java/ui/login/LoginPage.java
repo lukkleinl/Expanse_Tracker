@@ -29,6 +29,8 @@ public class LoginPage extends AbstractPage {
   private JButton submitButton;
   private JButton registerButton;
 
+  private JLabel message;
+
   private String user;
   private String password;
   private volatile boolean registrationWanted;
@@ -93,27 +95,36 @@ public class LoginPage extends AbstractPage {
     registrationWanted = false;
     loginWanted = false;
 
+    message = new JLabel();
+    message.setText("Expense Tracker");
+    message.setFont(new Font("Serif",Font.BOLD,50));
+    message.setBounds(360,100,500,70);
+
     //USER_LABEL
     userLabel = new JLabel();
     userLabel.setText("User:");
-    userLabel.setBounds(30, 40, 100, 30);
+    userLabel.setFont(LABEL_FONT);
+    userLabel.setBounds(300, 300, 300, 50);
 
     //USER_TEXTFIELD
     userTextField = new JTextField();
-    userTextField.setBounds(130, 40, 150, 30);
+    userTextField.setFont(TEXTFIELD_FONT);
+    userTextField.setBounds(600, 300, 300, 50);
 
     //PASSWORD_LABEL
     passwordLabel = new JLabel();
     passwordLabel.setText("Password:");
-    passwordLabel.setBounds(30, 90, 100, 30);
+    passwordLabel.setFont(LABEL_FONT);
+    passwordLabel.setBounds(300, 400, 300, 50);
 
     //PASSWORD_TEXTFIELD
     passwordTextField = new JTextField();
-    passwordTextField.setBounds(130, 90, 150, 30);
+    passwordTextField.setFont(TEXTFIELD_FONT);
+    passwordTextField.setBounds(600, 400, 300, 50);
 
     //SUBMIT_BUTTON
     submitButton = new JButton("Submit");
-    submitButton.setBounds(210, 150, 150, 40);
+    submitButton.setBounds(300, 500, 250, 50);
     submitButton.setFont(BUTTON_FONT);
     submitButton.setBorder(new LineBorder(Color.BLACK,2));
     submitButton.addActionListener(new ActionListener() {
@@ -127,7 +138,7 @@ public class LoginPage extends AbstractPage {
 
     //REGISTER_BUTTON
     registerButton = new JButton("Register");
-    registerButton.setBounds(30, 150, 150, 40);
+    registerButton.setBounds(650, 500, 250, 50);
     registerButton.setFont(BUTTON_FONT);
     registerButton.setBorder(new LineBorder(Color.BLACK,2));
     registerButton.addActionListener(new ActionListener() {
@@ -144,6 +155,8 @@ public class LoginPage extends AbstractPage {
     components.add(passwordTextField);
     components.add(submitButton);
     components.add(registerButton);
+    components.add(message);
+
   }
 
   @Override
