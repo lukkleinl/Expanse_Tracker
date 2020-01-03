@@ -104,6 +104,10 @@ public class UserInterface {
 
       while (true) { //interface is open, until close button (X on top right) gets pressed
 
+        while(!accountListPage.isDeleteWanted() && !accountListPage.isUpdateWanted() && !accountListPage.isNewAccountWanted() && !accountListPage.isSummaryWanted() && (accountListPage.getSelectedAccount()==null)) {
+
+        }
+
         if (accountListPage.isNewAccountWanted()) { //if new account button gets pressed, open new account type page
           accountTypePage.configureFrame(frame);
 
@@ -242,6 +246,60 @@ public class UserInterface {
           } else { //if back button of transaction list page got pressed, open account list page again
             accountListPage.configureFrame(frame);
           }
+        } else if(accountListPage.isUpdateWanted()) {
+          if(accountListPage.getSelectedAccountToDeleteOrUpdate() instanceof Cash) {
+            add_cashAccountPage.configureFrame(frame);
+            add_cashAccountPage.updateFields((Cash) accountListPage.getSelectedAccountToDeleteOrUpdate());
+            while (!add_cashAccountPage.isSubmitted() && !add_cashAccountPage.isBackWanted()) {
+              //wait until either back button or submit button got pressed
+            }
+            if (add_cashAccountPage.isSubmitted()) { //if submit button got pressed, update account
+              //TODO: update account
+            } else { //if back button got pressed, go to account type page again
+              accountListPage.configureFrame(frame);
+            }
+          }
+          else if(accountListPage.getSelectedAccountToDeleteOrUpdate() instanceof CreditCard) {
+            add_creditAccountPage.configureFrame(frame);
+            add_creditAccountPage.updateFields((CreditCard) accountListPage.getSelectedAccountToDeleteOrUpdate());
+            while (!add_creditAccountPage.isSubmitted() && !add_creditAccountPage
+                    .isBackWanted()) {
+              //wait until either back button or submit button got pressed
+            }
+            if (add_creditAccountPage.isSubmitted()) { //if submit button got pressed, update account
+              //TODO: update account
+            } else { //if back button got pressed, go to account list page again
+              accountListPage.configureFrame(frame);
+            }
+          }
+          else if(accountListPage.getSelectedAccountToDeleteOrUpdate() instanceof DebitCard) {
+            add_debitAccountPage.configureFrame(frame); //open page to add debit account
+            add_debitAccountPage.updateFields((DebitCard) accountListPage.getSelectedAccountToDeleteOrUpdate());
+            while (!add_debitAccountPage.isSubmitted() && !add_debitAccountPage.isBackWanted()) {
+              //wait until either back button or submit button got pressed
+            }
+            if (add_debitAccountPage.isSubmitted()) { //if submit button got pressed, add new account
+              //TODO: update account
+            } else { //if back button got pressed, go to account type page again
+              accountListPage.configureFrame(frame);
+            }
+          }
+          else {
+            add_stockAccountPage.configureFrame(frame); //open page to add stock account
+            add_stockAccountPage.updateFields((Stocks) accountListPage.getSelectedAccountToDeleteOrUpdate());
+            while (!add_stockAccountPage.isSubmitted() && !add_stockAccountPage.isBackWanted()) {
+              //wait until either back button or submit button got pressed
+            }
+            if (add_stockAccountPage.isSubmitted()) { //if submit button got pressed, add new account
+              //TODO: update account
+            } else { //if back button got pressed, go to account type page again
+              accountListPage.configureFrame(frame);
+            }
+          }
+        } else if(accountListPage.isDeleteWanted()) {
+
+        } else {
+          //TODO: open summary
         }
       }
   }catch (Exception e){

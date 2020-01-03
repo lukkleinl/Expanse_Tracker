@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+
+import accounts.CreditCard;
 import ui.main.AbstractPage;
 import user.User;
 
@@ -215,5 +217,12 @@ public class AddCreditAccountPage extends AbstractPage {
   @Override
   protected void resetTitle(JFrame frame) {
     frame.setTitle("Add Credit Card Account");
+  }
+
+  public void updateFields(CreditCard account) {
+    accountNameInputField.setText(account.getName());
+    limitInputField.setText(Double.toString(account.getLimit()));
+    bankNameInputField.setText(account.getBankName());
+    expiryDateInputField.setText(account.getExpiryDate().getDay()+"/"+account.getExpiryDate().getMonth()+"/"+account.getExpiryDate().getYear());
   }
 }

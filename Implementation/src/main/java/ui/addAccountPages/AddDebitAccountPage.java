@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import accounts.DebitCard;
 import ui.main.AbstractPage;
 import user.User;
 
@@ -208,5 +210,12 @@ public class AddDebitAccountPage extends AbstractPage {
   @Override
   protected void resetTitle(JFrame frame) {
     frame.setTitle("Add Debit Card Account");
+  }
+
+  public void updateFields(DebitCard account) {
+    accountNameInputField.setText(account.getName());
+    limitInputField.setText(Float.toString(account.getLimit()));
+    bankNameInputField.setText(account.getBankName());
+    ibanInputField.setText(account.getIBAN());
   }
 }

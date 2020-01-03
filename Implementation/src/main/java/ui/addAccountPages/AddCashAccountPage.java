@@ -13,6 +13,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import accounts.Account;
+import accounts.Cash;
 import ui.main.AbstractPage;
 import user.User;
 
@@ -185,5 +188,11 @@ public class AddCashAccountPage extends AbstractPage {
   @Override
   protected void resetTitle(JFrame frame) {
     frame.setTitle("Add Cash Account");
+  }
+
+  public void updateFields(Cash account) {
+    accountNameInputField.setText(account.getName());
+    limitInputField.setText(Double.toString(account.getLimit()));
+    currencyInputField.setText(account.getCurrency());
   }
 }

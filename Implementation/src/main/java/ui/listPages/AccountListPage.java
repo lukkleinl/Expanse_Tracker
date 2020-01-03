@@ -186,7 +186,6 @@ public class AccountListPage extends AbstractPage {
     updateWanted = false;
     summaryWanted = false;
 
-
     //WELCOME MESSAGE
     welcomeMessage = new JLabel();
     welcomeMessage.setText("Welcome, " + user.getFirstname() + " " + user.getLastname() + "!");
@@ -239,7 +238,7 @@ public class AccountListPage extends AbstractPage {
     updateButton.setBounds(700,50,150,50);
     updateButton.setFont(BUTTON_FONT);
     updateButton.setBorder(new LineBorder(Color.BLACK,2));
-    deleteButton.addActionListener(
+    updateButton.addActionListener(
             new ActionListener() {
               @Override
               public void actionPerformed(ActionEvent e) {

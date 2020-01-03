@@ -124,7 +124,7 @@ public class LoginPage extends AbstractPage {
 
     //SUBMIT_BUTTON
     submitButton = new JButton("Submit");
-    submitButton.setBounds(300, 500, 250, 50);
+    submitButton.setBounds(650, 500, 250, 50);
     submitButton.setFont(BUTTON_FONT);
     submitButton.setBorder(new LineBorder(Color.BLACK,2));
     submitButton.addActionListener(new ActionListener() {
@@ -138,7 +138,7 @@ public class LoginPage extends AbstractPage {
 
     //REGISTER_BUTTON
     registerButton = new JButton("Register");
-    registerButton.setBounds(650, 500, 250, 50);
+    registerButton.setBounds(300, 500, 250, 50);
     registerButton.setFont(BUTTON_FONT);
     registerButton.setBorder(new LineBorder(Color.BLACK,2));
     registerButton.addActionListener(new ActionListener() {

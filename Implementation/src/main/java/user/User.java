@@ -89,6 +89,10 @@ public class User extends SWE_Observable {
       updateObservers(this); // VON PAUL fürs observer
   }
 
+  public void updateAccount(final Account acc) {
+    accounts.update(acc);
+  }
+
   /**
    * Performs either a Deposit or a Payout
    *
