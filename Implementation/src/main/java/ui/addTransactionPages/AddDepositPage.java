@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import transactions.Deposit;
 import transactions.categories.DepositCategory;
 import ui.main.AbstractPage;
 import user.User;
@@ -176,5 +177,10 @@ public class AddDepositPage extends AbstractPage{
   @Override
   protected void resetTitle(final JFrame frame) {
     frame.setTitle("Add Deposit - Page");
+  }
+
+  public void updateFields(Deposit transaction) {
+    amountInputField.setText(Float.toString(transaction.getAmount()));
+    descriptionInputField.setText(transaction.getDescription());
   }
 }

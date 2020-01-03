@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import transactions.Deposit;
+import transactions.Payout;
 import transactions.categories.PayoutCategory;
 import ui.main.AbstractPage;
 import user.User;
@@ -178,5 +180,10 @@ public class AddPayoutPage extends AbstractPage {
   @Override
   protected void resetTitle(final JFrame frame) {
     frame.setTitle("Add Payout - Page");
+  }
+
+  public void updateFields(Payout transaction) {
+    amountInputField.setText(Float.toString(transaction.getAmount()));
+    descriptionInputField.setText(transaction.getDescription());
   }
 }

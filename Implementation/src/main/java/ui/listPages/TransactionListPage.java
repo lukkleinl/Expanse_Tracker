@@ -99,6 +99,24 @@ public class TransactionListPage extends AbstractPage {
     return backWanted;
   }
 
+  /**
+   * @return current boolean value of deleteWanted
+   */
+  public boolean isDeleteWanted() {
+    return deleteWanted;
+  }
+
+  /**
+   * @return current boolean value of updateWanted
+   */
+  public boolean isUpdateWanted() {
+    return updateWanted;
+  }
+
+  public Transaction getSelectedTransactionToDeleteOrUpdate() {
+    return this.selectedTransactionToDeleteOrUpdate;
+  }
+
   @Override
   protected void createComponents() {
     newDepositWanted = false;
