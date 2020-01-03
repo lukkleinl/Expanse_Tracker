@@ -26,7 +26,7 @@ public class AllAccounts implements TransactionOrganizing {
    */
   public AllAccounts(final User user) {
     this.user = user;
-    iterators = new ArrayList<>();
+    this.iterators = new ArrayList<>();
   }
 
   @Override
@@ -35,33 +35,33 @@ public class AllAccounts implements TransactionOrganizing {
     CustomContainer<Transaction> orgacont = new CustomList<>();
     CustomIterator<Transaction> current = null;
 
-    for (Integer key : user.getTransactionStore().getTransactions().keySet()) {
+    for (Integer key : this.user.getTransactionStore().getTransactions().keySet()) {
       CustomIterator<Transaction> iter =
-          user.getTransactionStore().getTransactions().get(key).getIterator();
-      iterators.add(iter);
+          this.user.getTransactionStore().getTransactions().get(key).getIterator();
+      this.iterators.add(iter);
     }
 
     while (this.notDone()) {
-      for (int i = 0; i < iterators.size(); i++) {
-        if (current == null && iterators.get(i).hasNext()) {
-          current = iterators.get(i);
-        }
-        else if (iterators.get(i).hasNext() && current.element().getCreationDate().isAfter(iterators.get(i).element().getCreationDate())) {
-          current = iterators.get(i);
+      for (int i = 0; i < this.iterators.size(); i++) {
+        if ((current == null) && this.iterators.get(i).hasNext()) {
+          current = this.iterators.get(i);
+        } else if (this.iterators.get(i).hasNext() && current.element().getCreationDate()
+            .isAfter(this.iterators.get(i).element().getCreationDate())) {
+          current = this.iterators.get(i);
         }
       }
       orgacont.add(current.next());
       current = null;
     }
 
-    organized.put("AllAccounts", orgacont);
+    organized.put("", orgacont);
     return organized;
   }
 
   /** @return {@code true} if at least one iterator has elements left, else {@code false} */
   @SuppressWarnings("rawtypes")
   private boolean notDone() {
-    for (CustomIterator iter : iterators) {
+    for (CustomIterator iter : this.iterators) {
       if (iter.hasNext())
         return true;
     }

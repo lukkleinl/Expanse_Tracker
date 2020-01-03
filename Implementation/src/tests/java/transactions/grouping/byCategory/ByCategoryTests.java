@@ -1,6 +1,6 @@
 package transactions.grouping.byCategory;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +21,8 @@ class ByCategoryTests {
     user = GroupingTestUser.newTestUser();
 
     for (int i = 0; i < (rounds * user.getCategories(null).toArray().length); i++) {
-      user.applyAndSaveTransaction(GroupingTestUser.newTransaction(i), GroupingTestUser.randomAccount());
+      user.applyAndSaveTransaction(GroupingTestUser.newTransaction(i),
+          GroupingTestUser.randomAccount());
     }
   }
 
@@ -31,7 +32,8 @@ class ByCategoryTests {
     Map<String, CustomContainer<Transaction>> afterOrganizing = new ByCategory(orga).organize();
 
     for (String key : afterOrganizing.keySet()) {
-      for (CustomIterator<Transaction> iter = afterOrganizing.get(key).getIterator(); iter.hasNext(); ) {
+      for (CustomIterator<Transaction> iter = afterOrganizing.get(key).getIterator(); iter
+          .hasNext();) {
         assertTrue(key.contains(iter.next().getCategory()));
       }
     }

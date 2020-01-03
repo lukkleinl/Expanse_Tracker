@@ -1,8 +1,6 @@
 package transactions.grouping.byTime;
 
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
@@ -17,7 +15,6 @@ import transactions.grouping.TransactionOrganizing;
  */
 public class Yearly extends OrganizingRoot {
   public static final String mappingborder = "Y";
-  private final Set<Integer> mappedyears;
 
   /**
    * Constructor
@@ -26,41 +23,33 @@ public class Yearly extends OrganizingRoot {
    */
   public Yearly(final TransactionOrganizing wrappee) {
     super(wrappee);
-    mappedyears = new TreeSet<>();
   }
 
   @Override
-  public void performOrganizing() {
-    Map<String, CustomContainer<Transaction>> toDec = root.organize();
-    CustomIterator<Transaction> iter;
+  protected void performOrganizing() {
+    Map<String, CustomContainer<Transaction>> toDec = this.root.organize();
+    String newKey = "";
 
-    // get the years
-    for (String key : toDec.keySet()) {
-      Integer year;
-      iter = toDec.get(key).getIterator();
+    for (String oldKey : toDec.keySet()) {
+      for (CustomIterator<Transaction> iter = toDec.get(oldKey).getIterator(); iter.hasNext(); iter
+          .next()) {
+        newKey = keyCreation(iter.element(), oldKey);
+        this.grouped.putIfAbsent(newKey, new CustomList<>());
 
-      while (iter.hasNext()) {
-        year = iter.next().getCreationDate().getYear();
-        if (!mappedyears.contains(year)) {
-          mappedyears.add(year);
+        if (!this.grouped.get(newKey).contains(iter.element())) {
+          this.grouped.get(newKey).add(iter.element());
         }
       }
     }
+  }
 
-    // grouping starts here
-    String groupedkey = null;
-    for (String key : toDec.keySet()) {
-      iter = toDec.get(key).getIterator();
-
-      for (Integer year : mappedyears) {
-        groupedkey = mappingborder + year + mappingborder + "_" + key;
-        grouped.putIfAbsent(groupedkey, new CustomList<>());
-
-        while (iter.hasNext() && year.equals(iter.element().getCreationDate().getYear())) {
-          grouped.get(groupedkey).add(iter.next());
-        }
-      }
-    }
+  private String keyCreation(final Transaction trans, final String oldKey) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(mappingborder);
+    sb.append(trans.getCreationDate().getYear());
+    sb.append(mappingborder);
+    sb.append("_" + oldKey);
+    return sb.toString();
   }
 }
 

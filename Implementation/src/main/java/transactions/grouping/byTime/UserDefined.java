@@ -16,8 +16,7 @@ import transactions.grouping.TransactionOrganizing;
  * @author Michael Watholowitsch
  */
 public class UserDefined extends OrganizingRoot {
-  public static final String mappingborder = "GUD";
-  private final String mapping;
+  public static final String mappingborder = "U";
   private final ZonedDateTime begin;
   private final ZonedDateTime end;
 
@@ -33,26 +32,56 @@ public class UserDefined extends OrganizingRoot {
     super(wrappee);
     this.begin = begin;
     this.end = end;
-    mapping = mappingborder + begin.getYear() + "-" + begin.getMonthValue() + "-" + begin.getDayOfMonth()
-    + "-to-" + end.getYear() + "-" + end.getMonthValue() + "-" + end.getDayOfMonth() + mappingborder;
   }
 
   @Override
-  public void performOrganizing() {
-    Map<String, CustomContainer<Transaction>> toDec = root.organize();
-    CustomIterator<Transaction> iter;
-    String groupedkey = null;
+  protected void performOrganizing() {
+    Map<String, CustomContainer<Transaction>> toDec = this.root.organize();
+    String newKey = "";
 
-    for (String key : toDec.keySet()) {
-      iter = toDec.get(key).getIterator();
-      groupedkey = mapping + "_" + key;
-      grouped.putIfAbsent(groupedkey, new CustomList<>());
+    for (String oldKey : toDec.keySet()) {
+      for (CustomIterator<Transaction> iter = toDec.get(oldKey).getIterator(); iter.hasNext(); iter
+          .next()) {
+        newKey = keyCreation(iter.element(), oldKey);
+        this.grouped.putIfAbsent(newKey, new CustomList<>());
 
-      while (iter.hasNext() && iter.element().getCreationDate().isAfter(begin)
-          && iter.element().getCreationDate().isBefore(end)) {
-        grouped.get(groupedkey).add(iter.next());
+        if (!this.grouped.get(newKey).contains(iter.element()) && withinTimeFrame(iter)) {
+          this.grouped.get(newKey).add(iter.element());
+        }
       }
     }
+  }
+
+  private boolean withinTimeFrame(final CustomIterator<Transaction> iter) {
+    return iter.element().getCreationDate().isAfter(this.begin)
+        && iter.element().getCreationDate().isBefore(this.end);
+  }
+
+  private String keyCreation(final Transaction trans, final String oldKey) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(mappingborder);
+    sb.append(this.begin.getYear() + "-");
+    if (this.begin.getMonthValue() < 10) {
+      sb.append("0");
+    }
+    sb.append(this.begin.getMonthValue() + "-");
+    if (this.begin.getDayOfMonth() < 10) {
+      sb.append("0");
+    }
+    sb.append(this.begin.getDayOfMonth());
+    sb.append("-to-");
+    sb.append(this.end.getYear() + "-");
+    if (this.end.getMonthValue() < 10) {
+      sb.append("0");
+    }
+    sb.append(this.end.getMonthValue() + "-");
+    if (this.end.getDayOfMonth() < 10) {
+      sb.append("0");
+    }
+    sb.append(this.end.getDayOfMonth());
+    sb.append(mappingborder);
+    sb.append("_" + oldKey);
+    return sb.toString();
   }
 }
 

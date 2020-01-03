@@ -8,24 +8,24 @@ package iteration;
  * @author Michael Watholowitsch
  */
 public interface CustomContainer<T> {
-  /**
-   * Creates and returns a {@linkplain CustomIterator} for this {@code CustomContainer}.
-   *
-   * @return A {@linkplain CustomIterator} for this {@code CustomContainer}.
-   */
-  public CustomIterator<T> getIterator();
-  
+  /** Creates and returns a {@linkplain CustomIterator} for this {@code CustomContainer}. */
+  CustomIterator<T> getIterator();
+
   /**
    * Adds a new element in this {@code CustomContainer}.
    * 
    * @param element the new element
    */
-  public void add(T element);
-  
+  void add(T element);
+
+  /** Returns the number of elements in this {@code CustomContainer}. */
+  int size();
+
   /**
-   * Returns the number of elements in this {@code CustomContainer}.
-   *   
-   * @return the number of elements in this {@code CustomContainer}
+   * Checks if the passed {@code T} is stored in this {@code CustomContainer}
+   * 
+   * @param obj the passed {@code T}
+   * @return {@code true} if the {@code obj} is already stored, else {@code false}
    */
-  public int size();
+  boolean contains(T obj);
 }

@@ -1,8 +1,6 @@
 package transactions.grouping.byTime;
 
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
@@ -17,7 +15,6 @@ import transactions.grouping.TransactionOrganizing;
  */
 public class Daily extends OrganizingRoot {
   public static final String mappingborder = "D";
-  private final Set<Integer> mappeddays;
 
   /**
    * Constructor
@@ -26,40 +23,42 @@ public class Daily extends OrganizingRoot {
    */
   public Daily(final TransactionOrganizing wrappee) {
     super(wrappee);
-    mappeddays = new TreeSet<>();
   }
 
   @Override
-  public void performOrganizing() {
-    Map<String, CustomContainer<Transaction>> toDec = root.organize();
-    CustomIterator<Transaction> iter;
+  protected void performOrganizing() {
+    Map<String, CustomContainer<Transaction>> toDec = this.root.organize();
+    String newKey = "";
 
-    // get the days
-    for (String key : toDec.keySet()) {
-      Integer day;
-      iter = toDec.get(key).getIterator();
+    for (String oldKey : toDec.keySet()) {
+      for (CustomIterator<Transaction> iter = toDec.get(oldKey).getIterator(); iter.hasNext(); iter
+          .next()) {
+        newKey = keyCreation(iter.element(), oldKey);
+        this.grouped.putIfAbsent(newKey, new CustomList<>());
 
-      while (iter.hasNext()) {
-        day = iter.next().getCreationDate().getDayOfMonth();
-        if (!mappeddays.contains(day)) {
-          mappeddays.add(day);
-        }
-      }
-    }
-
-    // grouping starts here
-    String groupedkey = null;
-    for (String key : toDec.keySet()) {
-      iter = toDec.get(key).getIterator();
-
-      for (Integer day : mappeddays) {
-        groupedkey = mappingborder + day + mappingborder + "_" + key;
-        grouped.putIfAbsent(groupedkey, new CustomList<>());
-
-        while (iter.hasNext() && day.equals(iter.element().getCreationDate().getDayOfMonth())) {
-          grouped.get(groupedkey).add(iter.next());
+        if (!this.grouped.get(newKey).contains(iter.element())) {
+          this.grouped.get(newKey).add(iter.element());
         }
       }
     }
   }
+
+  private String keyCreation(final Transaction trans, final String oldKey) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(mappingborder);
+    sb.append(trans.getCreationDate().getYear() + "-");
+    if (trans.getCreationDate().getMonthValue() < 10) {
+      sb.append("0");
+    }
+    sb.append(trans.getCreationDate().getMonthValue() + "-");
+    if (trans.getCreationDate().getDayOfMonth() < 10) {
+      sb.append("0");
+    }
+    sb.append(trans.getCreationDate().getDayOfMonth());
+    sb.append(mappingborder);
+    sb.append("_" + oldKey);
+    return sb.toString();
+  }
 }
+
+

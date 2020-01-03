@@ -25,40 +25,42 @@ public class CustomList<T> implements CustomContainer<T> {
     this.list = new ArrayList<>(list);
   }
 
-  /**
-   * Adds a new element in this {@code CustomList}.
-   *
-   * @param element the new element
-   */
   @Override
   public void add(final T element) {
     this.list.add(element);
   }
 
-  /**
-   * Returns the number of elements in this {@code CustomList}.
-   *
-   * @return the number of elements in this {@code CustomList}
-   */
   @Override
   public int size() {
     return this.list.size();
   }
 
+  @Override
+  public boolean contains(final T obj) {
+    return this.list.contains(obj);
+  }
+
   /**
    * Returns a {@linkplain CustomIterator} pointing to the first element in the {@code CustomList}.
-   *
-   * @return A {@code CustomIterator} for this CustomList.
    */
   @Override
   public CustomIterator<T> getIterator() {
     return new CustomListIterator<>();
   }
 
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    for (CustomIterator<T> it = this.getIterator(); it.hasNext();) {
+      sb.append("\n" + it.next());
+    }
+    return sb.toString();
+  }
+
   /**
    * The Iterator working on instances of CustomList. By default, this Iterator always points at the
-   * first element of the CustomList. Implemented as a private nested class inside the
-   * CustomList since this Iterator directly belongs to the CustomList.
+   * first element of the CustomList. Implemented as a private nested class inside the CustomList
+   * since this Iterator directly belongs to the CustomList.
    */
   @SuppressWarnings({"unchecked", "hiding"})
   private class CustomListIterator<T> implements CustomIterator<T> {
@@ -73,7 +75,8 @@ public class CustomList<T> implements CustomContainer<T> {
 
     @Override
     public T next() throws SWE_RuntimeException {
-      if (!this.hasNext()) throw new SWE_RuntimeException("This iterator has already processed all elements !");
+      if (!this.hasNext())
+        throw new SWE_RuntimeException("This iterator has already processed all elements !");
       T elem = (T) CustomList.this.list.get(this.position);
       this.position++;
       return elem;
@@ -81,9 +84,12 @@ public class CustomList<T> implements CustomContainer<T> {
 
     @Override
     public T element() throws SWE_RuntimeException {
-      if (!this.hasNext()) throw new SWE_RuntimeException("This iterator has already processed all elements !");
+      if (!this.hasNext())
+        throw new SWE_RuntimeException("This iterator has already processed all elements !");
       T elem = (T) CustomList.this.list.get(this.position);
       return elem;
     }
   }
 }
+
+

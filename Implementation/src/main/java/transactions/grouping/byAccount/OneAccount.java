@@ -23,13 +23,13 @@ public class OneAccount implements TransactionOrganizing {
    */
   public OneAccount(final User user, final Integer accountID) {
     this.user = user;
-    ID = accountID;
+    this.ID = accountID;
   }
 
   @Override
   public Map<String, CustomContainer<Transaction>> organize() {
     Map<String, CustomContainer<Transaction>> organized = new HashMap<>();
-    organized.put("AccountID" + ID,user.getTransactionStore().getTransactions().get(ID));
+    organized.put("", this.user.getTransactionStore().getTransactions().get(this.ID));
     return organized;
   }
 }

@@ -22,8 +22,8 @@ public abstract class OrganizingRoot implements TransactionOrganizing {
 
   public OrganizingRoot(final TransactionOrganizing wrappee) {
     this.root = wrappee;
-    this.iterators = new ArrayList<>();
     this.grouped = new TreeMap<>();
+    this.iterators = new ArrayList<>();
   }
 
   /** Groupers implement this method for their grouping algorithm. */
@@ -48,16 +48,6 @@ public abstract class OrganizingRoot implements TransactionOrganizing {
         it.remove();
       }
     }
-  }
-
-  /** @return {@code true} if there is an iterator that still has elements left to process */
-  @SuppressWarnings("rawtypes")
-  protected boolean notDone() {
-    for (CustomIterator iter : this.iterators) {
-      if (iter.hasNext())
-        return true;
-    }
-    return false;
   }
 }
 

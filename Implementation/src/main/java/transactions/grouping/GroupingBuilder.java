@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import iteration.CustomContainer;
+import iteration.CustomIterator;
 import transactions.Transaction;
 import transactions.grouping.byAccount.AllAccounts;
 import transactions.grouping.byAccount.OneAccount;
@@ -108,6 +109,20 @@ public class GroupingBuilder {
       this.orga = this.root;
       this.reset = false;
     }
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    Map<String, CustomContainer<Transaction>> transactions = this.orga.organize();
+
+    for (String key : transactions.keySet()) {
+      sb.append("\n" + key + "\n");
+      for (CustomIterator it = transactions.get(key).getIterator(); it.hasNext(); it.next()) {
+        sb.append(it.element() + "\n");
+      }
+    }
+    return sb.toString();
   }
 }
 

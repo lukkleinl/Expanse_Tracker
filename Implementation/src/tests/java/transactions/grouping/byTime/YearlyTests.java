@@ -1,6 +1,6 @@
 package transactions.grouping.byTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,9 +20,10 @@ class YearlyTests {
   static void setUpBeforeClass() throws Exception {
     user = GroupingTestUser.newTestUser();
 
-    for (int i = 0; i < rounds * user.getCategories(null).toArray().length; i++) {
+    for (int i = 0; i < (rounds * user.getCategories(null).toArray().length); i++) {
       for (int j = 0; j < rounds; j++) {
-        user.applyAndSaveTransaction(GroupingTestUser.transactionWithTimeByIandJ(i,j), GroupingTestUser.randomAccount());
+        user.applyAndSaveTransaction(GroupingTestUser.transactionWithTimeByIandJ(i, j),
+            GroupingTestUser.randomAccount());
       }
     }
   }
@@ -33,13 +34,20 @@ class YearlyTests {
     Map<String, CustomContainer<Transaction>> afterOrganizing = new Yearly(orga).organize();
 
     for (String key : afterOrganizing.keySet()) {
-      for (CustomIterator<Transaction> iter = afterOrganizing.get(key).getIterator(); iter.hasNext(); iter.next()) {
-        assertTrue(key.contains(Yearly.mappingborder + iter.element().getCreationDate().getYear() + Yearly.mappingborder));
+      for (CustomIterator<Transaction> iter = afterOrganizing.get(key).getIterator(); iter
+          .hasNext(); iter.next()) {
+        assertTrue(key.contains(keyCreation(iter.element())));
       }
     }
   }
+
+  private String keyCreation(final Transaction trans) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(Yearly.mappingborder);
+    sb.append(trans.getCreationDate().getYear());
+    sb.append(Yearly.mappingborder);
+    return sb.toString();
+  }
 }
-
-
 
 

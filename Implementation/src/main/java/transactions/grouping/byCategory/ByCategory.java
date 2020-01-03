@@ -25,29 +25,25 @@ public class ByCategory extends OrganizingRoot {
   }
 
   @Override
-  public void performOrganizing() {
+  protected void performOrganizing() {
     Map<String, CustomContainer<Transaction>> toDec = this.root.organize();
+    String newKey = "";
 
-    // get all categories
-    for (String key : toDec.keySet()) {
-      for (CustomIterator<Transaction> iter = toDec.get(key).getIterator(); iter.hasNext(); iter
+    for (String oldKey : toDec.keySet()) {
+      for (CustomIterator<Transaction> iter = toDec.get(oldKey).getIterator(); iter.hasNext(); iter
           .next()) {
-        if (!this.grouped.keySet().contains(iter.element().getCategory())) {
-          this.grouped.put(key + "_" + iter.element().getCategory(), new CustomList<>());
+        newKey = keyCreation(iter.element(), oldKey);
+        this.grouped.putIfAbsent(newKey, new CustomList<>());
+
+        if (!this.grouped.get(newKey).contains(iter.element())) {
+          this.grouped.get(newKey).add(iter.element());
         }
       }
     }
+  }
 
-    // grouping starts here
-    for (String key : toDec.keySet()) {
-      for (String category : this.grouped.keySet()) {
-        for (CustomIterator<Transaction> iter = toDec.get(key).getIterator(); iter.hasNext(); iter
-            .next())
-          if (category.contains(iter.element().getCategory())) {
-            this.grouped.get(category).add(iter.element());
-          }
-      }
-    }
+  private String keyCreation(final Transaction trans, final String oldKey) {
+    return oldKey + "_" + trans.getCategory();
   }
 }
 
