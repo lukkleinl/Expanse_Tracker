@@ -268,7 +268,7 @@ public class AccountListPage extends AbstractPage {
     });
 
     //TABLE
-    Object[] columnNames = {"Nr.", "Account Type", "Account Name", "Balance"};
+    Object[] columnNames = {"Account ID", "Account Type", "Account Name", "Balance"};
     accountTable = new JTable(getAccounts(user), columnNames);
     accountTable.setFont(TEXTFIELD_FONT);
     accountTable.setRowHeight(70);

@@ -306,7 +306,7 @@ public class UserInterface {
             }
           }
         } else if(accountListPage.isDeleteWanted()) {
-
+          user.deleteAccount(accountListPage.getSelectedAccountToDeleteOrUpdate());
         } else {
           //TODO: open summary
         }
