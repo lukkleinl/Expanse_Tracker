@@ -14,11 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import ui.main.AbstractPage;
@@ -35,11 +31,18 @@ public class AccountListPage extends AbstractPage {
   private JTable accountTable;
   private JScrollPane accountTablePane;
   private JButton newAccountButton;
+  private JButton deleteButton;
+  private JButton updateButton;
+  private JButton summaryButton;
 
   private User user;
 
   private Account selectedAccount;
+  private Account selectedAccountToDeleteOrUpdate;
   private volatile boolean newAccountWanted;
+  private volatile boolean deleteWanted;
+  private volatile boolean updateWanted;
+  private volatile boolean summaryWanted;
 
   /**
    * Creates a new AccountListPage, which will load all needed components to a list.
@@ -115,6 +118,16 @@ public class AccountListPage extends AbstractPage {
   }
 
   /**
+   * If the user singe-clicks on a account in the table, an indicator variable will be set to clicked account.
+   * This method returns the account, which the user wants to delete or update.
+   *
+   * @return The account object, which the user wants to open.
+   */
+  public Account getSelectedAccountToDeleteOrUpdate() {
+    return selectedAccountToDeleteOrUpdate;
+  }
+
+  /**
    * The page has a button, which the user can press if he wants to add a new account.
    * Pressing the button will set a boolean flag, that the button was pressed.
    * This method returns the boolean, it will be true, if the user wants to create a new account.
@@ -123,6 +136,40 @@ public class AccountListPage extends AbstractPage {
    */
   public boolean isNewAccountWanted() {
     return newAccountWanted;
+  }
+
+
+  /**
+   * The page has a button, which the user can press if he wants to delete an account.
+   * Pressing the button will set a boolean flag, that the button was pressed.
+   * This method returns the boolean, it will be true, if the user wants to delete an account.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the delete button.
+   */
+  public boolean isDeleteWanted() {
+    return deleteWanted;
+  }
+
+  /**
+   * The page has a button, which the user can press if he wants to update an account.
+   * Pressing the button will set a boolean flag, that the button was pressed.
+   * This method returns the boolean, it will be true, if the user wants to update an account.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the update button.
+   */
+  public boolean isUpdateWanted() {
+    return updateWanted;
+  }
+
+  /**
+   * The page has a button, which the user can press if he wants to view a summary of all accounts.
+   * Pressing the button will set a boolean flag, that the button was pressed.
+   * This method returns the boolean, it will be true, if the user wants to view the summary.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the create-new-account button.
+   */
+  public boolean isSummaryWanted() {
+    return summaryWanted;
   }
 
   /**
@@ -135,6 +182,10 @@ public class AccountListPage extends AbstractPage {
     components = new ArrayList<>();
     selectedAccount = null;
     newAccountWanted = false;
+    deleteWanted = false;
+    updateWanted = false;
+    summaryWanted = false;
+
 
     //WELCOME MESSAGE
     welcomeMessage = new JLabel();
@@ -144,13 +195,75 @@ public class AccountListPage extends AbstractPage {
 
     //NEW ACCOUNT BUTTON
     newAccountButton = new JButton("CREATE NEW ACCOUNT");
-    newAccountButton.setBounds(400, 600, 400, 50);
+    newAccountButton.setBounds(100, 600, 400, 50);
     newAccountButton.setBorder(new LineBorder(Color.BLACK,2));
     newAccountButton.setFont(BUTTON_FONT);
     newAccountButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         newAccountWanted = true;
+      }
+    });
+
+    //DELETE BUTTON
+    deleteButton = new JButton("DELETE");
+    deleteButton.setBounds(925, 50, 150, 50);
+    deleteButton.setFont(BUTTON_FONT);
+    deleteButton.setBorder(new LineBorder(Color.BLACK,2));
+    deleteButton.addActionListener(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            if (selectedAccountToDeleteOrUpdate == null) {
+              JOptionPane.showMessageDialog(
+                  null,
+                  "You need to select an account!",
+                  "Account Selection Error",
+                  JOptionPane.WARNING_MESSAGE);
+            } else {
+              int input =
+                  JOptionPane.showConfirmDialog(
+                      null,
+                      "Are you sure you want to delete " + selectedAccountToDeleteOrUpdate.getName() + "?",
+                      "Confirm",
+                      JOptionPane.YES_NO_OPTION);
+              if (input == 0) {
+                deleteWanted = true;
+              }
+            }
+          }
+        });
+
+    //UPDATE BUTTON
+    updateButton = new JButton("UPDATE");
+    updateButton.setBounds(700,50,150,50);
+    updateButton.setFont(BUTTON_FONT);
+    updateButton.setBorder(new LineBorder(Color.BLACK,2));
+    deleteButton.addActionListener(
+            new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                if (selectedAccountToDeleteOrUpdate == null) {
+                  JOptionPane.showMessageDialog(
+                          null,
+                          "You need to select an account!",
+                          "Account Selection Error",
+                          JOptionPane.WARNING_MESSAGE);
+                } else {
+                    updateWanted = true;
+                }
+              }
+            });
+
+    //SUMMARY BUTTON
+    summaryButton = new JButton("SUMMARY OF ALL ACCOUNTS");
+    summaryButton.setBounds(675,600,400,50);
+    summaryButton.setFont(BUTTON_FONT);
+    summaryButton.setBorder(new LineBorder(Color.BLACK, 2));
+    summaryButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        summaryWanted = true;
       }
     });
 
@@ -184,7 +297,19 @@ public class AccountListPage extends AbstractPage {
             Account acc = iterator.next();
             if (acc.getAccount_number() == (Integer) accountTable.getValueAt(row, 0)) {
               selectedAccount = acc;
-              System.out.println(acc.getAccount_number() + " selected");
+              break;
+            }
+          }
+        }
+        if (mouseEvent.getClickCount() == 1 && table.getSelectedRow() != -1) {
+          CustomContainer<Account> accountList = user.getAccounts();
+
+          CustomIterator<Account> iterator = accountList.getIterator();
+
+          while (iterator.hasNext()) {
+            Account acc = iterator.next();
+            if (acc.getAccount_number() == (Integer) accountTable.getValueAt(row, 0)) {
+              selectedAccountToDeleteOrUpdate = acc;
               break;
             }
           }
@@ -200,6 +325,9 @@ public class AccountListPage extends AbstractPage {
     components.add(welcomeMessage);
     components.add(accountTablePane);
     components.add(newAccountButton);
+    components.add(deleteButton);
+    components.add(updateButton);
+    components.add(summaryButton);
   }
 
   @Override
