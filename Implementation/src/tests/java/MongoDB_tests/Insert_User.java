@@ -4,6 +4,10 @@ import MongoDb.WriteOperation;
 import accounts.Account;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Map.Entry;
 import transactions.Transaction;
@@ -14,11 +18,18 @@ import user.User;
 public class Insert_User {
 
   private static final int accounts = 2;
-  private static final int transactions = 1000;
+  private static final int transactions = 10;
   private static User user;
 
 
   public static void main(final String[] args) {
+
+    LocalDateTime localDateTime = LocalDateTime.now();
+    ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.of("UTC"));
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    String formattedString = zonedDateTime.format(formatter);
+    System.out.println(formattedString);
 
     user = GroupingTestUser.newTestUserWith(accounts);
 
@@ -50,7 +61,19 @@ public class Insert_User {
 
     //System.out.println(map.size());
 
-    mongo.insertUser(user);
+
+    mongo.deleteUser(user);
+
+
+    try
+    {
+      mongo.insertUser(user);
+      System.out.println("erfolgreich");
+    }
+    catch (Exception e)
+    {
+      System.out.println("fehler beim einfügen");
+    }
   }
 
 }

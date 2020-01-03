@@ -28,6 +28,10 @@ public class CreditCard extends BankAccount {
    */
   public Date getExpiryDate() {
     return expiryDate;
+
+   /* DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    String formattedString = expiryDate.format(formatter);
+    return formattedString;*/
   }
 
   @Override

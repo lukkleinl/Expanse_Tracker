@@ -5,6 +5,7 @@ import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -176,6 +177,11 @@ public class WriteOperation implements Persistency {
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void deleteUser(User user)
+    {
+        BasicDBObject document = new BasicDBObject();
+        document.put("_id", user.getUserID());
+        collection = database.getCollection("User");
+        collection.deleteOne(document);
     }
 }
