@@ -9,7 +9,7 @@ public interface Write_Operation {
   void insertUser(User user);
   void insertTransaction(User user,Account acc, Transaction trans);
   void updateUser(User user);
-  void updateTransaction(User user, Transaction trans);
+  void updateTransaction(Transaction trans);
   void deleteTransaction(User user, int trans_id);
   void deleteUser(User user);
   void clearDatabase();

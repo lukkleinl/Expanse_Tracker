@@ -57,7 +57,6 @@ public class WriteOperation implements Write_Operation {
     {
         Document doc=null;
 
-
         if(trans.toString().contains("PAYOUT"))
         {
             Payout payout = (Payout) trans;
@@ -210,53 +209,77 @@ public class WriteOperation implements Write_Operation {
     public void insertTransaction(User user, Account acc,Transaction trans)
     {
         Document doc=null;
-
-
-        if(trans.toString().contains("PAYOUT"))
-        {
-            Payout payout = (Payout) trans;
-            doc = new Document("_id", payout.getID())
-                .append("Date", payout.getCreationDate().toString())
-                .append("amount", payout.getAmount())
-                .append("category", payout.getPayoutCategory())
-                .append("Account_Number", acc.getAccount_number())
-                .append("Description", payout.getDescription())
-                .append("User_ID",user.getUserID());
-
-            collection = database.getCollection("Transactions");
-            collection.insertOne(doc);
-        }
-        else if(trans.toString().contains("DEPOSIT"))
-        {
-
-            Deposit deposit = (Deposit) trans;
-            doc = new Document("_id", deposit.getID())
-                .append("Date", deposit.getCreationDate().toString())
-                .append("amount", deposit.getAmount())
-                .append("category", deposit.getCategory())
-                .append("Account_Number", acc.getAccount_number())
-                .append("Description", deposit.getDescription())
-                .append("User_ID",user.getUserID());
-
-            collection = database.getCollection("Transactions");
-            collection.insertOne(doc);
-        }
-        else
-            throw new SWE_RuntimeException("Unknown transaction");
-
+        doc = new Document("_id", trans.getID())
+            .append("Date", trans.getCreationDate().toString())
+            .append("amount", trans.getAmount())
+            .append("category", trans.getCategory())
+            .append("Account_Number", acc.getAccount_number())
+            .append("Description", trans.getDescription())
+            .append("User_ID",user.getUserID());
 
     }
 
 
     @Override
-    public void updateTransaction(User user,Transaction trans)
+    public void updateTransaction(Transaction trans)
     {
+        collection = database.getCollection("Transactions");
 
+        Document query = new Document();
+        query.append("_id",trans.getID());
+        Document setData = new Document();
+        setData.append("Date", trans.getCreationDate().toString())
+            .append("amount", trans.getAmount())
+            .append("category", trans.getCategory())
+            .append("Description", trans.getDescription());
+        Document update = new Document();
+        update.append("$set", setData);
+        collection.updateOne(query, update);
     }
     @Override
     public void updateUser(User user)
     {
+        collection = database.getCollection("User");
 
+        CustomContainer<Account>  accounts =user.getAccounts();
+        List<Document> accounts_array = new ArrayList<>();
+        CustomIterator<Account> iter=accounts.getIterator();
+        Map<Integer, CustomContainer<Transaction>> Transactions =user.getTransactionStore().getTransactions();
+        Iterator<String> payout = user.getCategoryStore().getCategories(new PayoutCategory()).iterator();
+        Iterator<String> deposit = user.getCategoryStore().getCategories(new DepositCategory()).iterator();
+        List<Document> deposit_array = new ArrayList<>();
+        List<Document> payout_array = new ArrayList<>();
+
+
+        while (deposit.hasNext())
+        {
+            Document doc=Categories(deposit.next());
+            deposit_array.add(doc);
+        }
+        while (payout.hasNext())
+        {
+            Document doc=Categories(payout.next());
+            payout_array.add(doc);
+        }
+        while (iter.hasNext())
+        {
+            Document doc=this.Account(iter.next());
+            accounts_array.add(doc);
+        }
+
+        Document query = new Document();
+        query.append("_id",user.getUserID());
+        Document setData = new Document();
+        setData.append("Date", user.getFirstname())
+            .append("amount", user.getLastname())
+            .append("category", user.getPassword())
+            .append("Accounts", accounts_array)
+            .append("Payout Categories",payout_array)
+            .append("Deposit Category",deposit_array);
+
+        Document update = new Document();
+        update.append("$set", setData);
+        collection.updateOne(query, update);
     }
 
     @Override
