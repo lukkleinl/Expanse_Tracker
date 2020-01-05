@@ -14,15 +14,4 @@ public interface Write_Operation {
   void deleteUser(User user);
   void clearDatabase();
 
-
-
-  /*    maybe in other class
-  void insertAccount(User user);
-  void updateAccount(User user);
-  void deleteAccount(User user);
-
-  void insertTransaction(User user);
-  void updateTransaction(User user);
-  void deleteTransaction(User user);*/
-
 }

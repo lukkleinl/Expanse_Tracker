@@ -15,6 +15,7 @@ import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -22,6 +23,8 @@ import org.bson.Document;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
+import transactions.categories.DepositCategory;
+import transactions.categories.PayoutCategory;
 import user.User;
 
 public class WriteOperation implements Write_Operation {
@@ -135,6 +138,15 @@ public class WriteOperation implements Write_Operation {
         throw new SWE_RuntimeException("Unknown account type");
     }
 
+
+    private Document Categories(String category)
+    {
+        Document doc=null;
+        doc = new Document("_id",category);
+
+        return doc;
+    }
+
     /**
      * inserts the user into the DB
      *
@@ -148,8 +160,26 @@ public class WriteOperation implements Write_Operation {
         List<Document> accounts_array = new ArrayList<>();
         CustomIterator<Account> iter=accounts.getIterator();
         Map<Integer, CustomContainer<Transaction>> Transactions =user.getTransactionStore().getTransactions();
+        Iterator<String> payout = user.getCategoryStore().getCategories(new PayoutCategory()).iterator();
+        Iterator<String> deposit = user.getCategoryStore().getCategories(new DepositCategory()).iterator();
+        List<Document> deposit_array = new ArrayList<>();
+        List<Document> payout_array = new ArrayList<>();
 
-        while (iter.hasNext()) {
+
+        while (deposit.hasNext())
+        {
+            Document doc=Categories(deposit.next());
+            deposit_array.add(doc);
+        }
+
+        while (payout.hasNext())
+        {
+            Document doc=Categories(payout.next());
+            payout_array.add(doc);
+        }
+
+        while (iter.hasNext())
+        {
             Document doc=this.Account(iter.next());
             accounts_array.add(doc);
         }
@@ -167,7 +197,9 @@ public class WriteOperation implements Write_Operation {
         Document dep = new Document("_id", user.getUserID())
             .append("First Name",user.getFirstname())
             .append("Last Name", user.getLastname())
-            .append("Accounts", accounts_array);
+            .append("Accounts", accounts_array)
+            .append("Payout Categories",payout_array)
+            .append("Deposit Category",deposit_array);
 
         collection = database.getCollection("User");
         collection.insertOne(dep);
@@ -177,7 +209,40 @@ public class WriteOperation implements Write_Operation {
     @Override
     public void insertTransaction(User user, Account acc,Transaction trans)
     {
+        Document doc=null;
 
+
+        if(trans.toString().contains("PAYOUT"))
+        {
+            Payout payout = (Payout) trans;
+            doc = new Document("_id", payout.getID())
+                .append("Date", payout.getCreationDate().toString())
+                .append("amount", payout.getAmount())
+                .append("category", payout.getPayoutCategory())
+                .append("Account_Number", acc.getAccount_number())
+                .append("Description", payout.getDescription())
+                .append("User_ID",user.getUserID());
+
+            collection = database.getCollection("Transactions");
+            collection.insertOne(doc);
+        }
+        else if(trans.toString().contains("DEPOSIT"))
+        {
+
+            Deposit deposit = (Deposit) trans;
+            doc = new Document("_id", deposit.getID())
+                .append("Date", deposit.getCreationDate().toString())
+                .append("amount", deposit.getAmount())
+                .append("category", deposit.getCategory())
+                .append("Account_Number", acc.getAccount_number())
+                .append("Description", deposit.getDescription())
+                .append("User_ID",user.getUserID());
+
+            collection = database.getCollection("Transactions");
+            collection.insertOne(doc);
+        }
+        else
+            throw new SWE_RuntimeException("Unknown transaction");
 
 
     }
