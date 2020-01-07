@@ -128,6 +128,7 @@ public class Write_operation_test {
       System.out.println("fehler beim einfügen");
     }
 
+
     user.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
 
     mongo.updateUser(user);
