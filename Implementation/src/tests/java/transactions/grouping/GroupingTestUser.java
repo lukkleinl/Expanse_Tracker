@@ -30,7 +30,7 @@ public class GroupingTestUser {
   private static final ChronologicTimes times = new ChronologicTimes();
 
   public static User newTestUserWith(final int accounts) {
-    user = new User(1234, "firstname", "lastname", "password");
+    user = new User("1234", "firstname", "lastname", "password");
     user.getCategoryStore().withDefaultCategories();
 
     int newAcc = accounts >= 4 ? 4 : accounts;

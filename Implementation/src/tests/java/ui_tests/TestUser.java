@@ -1,11 +1,10 @@
 package ui_tests;
 
-import exceptions.SWE_Exception;
-import java.util.Date;
 import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
+import java.util.Date;
 import transactions.Transaction;
 import transactions.TransactionCreator;
 import user.User;
@@ -27,7 +26,7 @@ public class TestUser {
    * @return The test user object.
    */
   public static User getTestUser() {
-    User user = new User(1234, "Max", "Mustermann", "123");
+    User user = new User("1234", "Max", "Mustermann", "123");
     Cash cash = new Cash("Wallet", 0, "Euro");
     user.addAccount(cash);
     user.addAccount(

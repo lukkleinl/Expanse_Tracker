@@ -38,7 +38,7 @@ public class Write_operation_test {
     WriteOperation mongo = new WriteOperation();
 
 
-      user2 = new User(12, "firstname", "lastname", "password");
+      user2 = new User("12", "firstname", "lastname", "password");
       user2.getCategoryStore().withDefaultCategories();
       user2.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
     user2.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
@@ -50,13 +50,13 @@ public class Write_operation_test {
   System.out.println(user2.getAccounts().size());
 
 
-    user3= new User(1, "firstname", "lastname", "password");
+    user3= new User("1", "firstname", "lastname", "password");
     user3.getCategoryStore().withDefaultCategories();
     user3.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
     user3.addAccount(new DebitCard("Giro Account", "Bank Austria", Integer.MIN_VALUE,
         "AT121200001203250544"));
 
-    user= new User(3, "firstname", "lastname", "password");
+    user= new User("3", "firstname", "lastname", "password");
     user.getCategoryStore().withDefaultCategories();
 
     System.out.println(user3.getAccounts().size());

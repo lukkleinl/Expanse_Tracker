@@ -6,7 +6,7 @@ import user.User;
 
 public class AddPayoutPageVIEW {
   public static void main(String args[]){
-    User testUser = new User(1, "paul", "kraft", "qwerty");
+    User testUser = new User("1", "paul", "kraft", "qwerty");
     JFrame frame = new JFrame();
     frame.setLayout(null);
     frame.setResizable(false);

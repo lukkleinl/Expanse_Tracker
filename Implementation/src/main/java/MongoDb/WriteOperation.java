@@ -53,7 +53,7 @@ public class WriteOperation implements Write_Operation {
      * @throws SWE_RuntimeException if the object type is neither a deposit nor a payout
      */
 
-    private void getTrans(final Object trans,final int key,final int user_ID)
+    private void getTrans(final Object trans,final int key,final String user_ID)
     {
         Document doc=null;
 

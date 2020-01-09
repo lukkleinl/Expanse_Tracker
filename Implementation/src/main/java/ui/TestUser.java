@@ -12,7 +12,7 @@ import user.User;
 public class TestUser {
 
   public static User getTestUser() {
-    User user = new User(1234, "Max", "Mustermann", "123");
+    User user = new User("1234", "Max", "Mustermann", "123");
     Cash cash = new Cash("Wallet", 0, "Euro");
     user.addAccount(cash);
     user.addAccount(new CreditCard("Visa Creditcard", "Bank Austria", 1500, new Date(2021, 1, 1)));

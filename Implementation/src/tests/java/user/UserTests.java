@@ -30,7 +30,7 @@ class UserTests {
 
   @BeforeEach
   void setUp() throws Exception {
-    user = new User(1234,"FirstName","Lastname","password");
+    user = new User("1234","FirstName","Lastname","password");
     user.getCategoryStore().withDefaultCategories();
   }
 

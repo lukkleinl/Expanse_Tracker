@@ -25,7 +25,8 @@ public class Database implements SWE_Observer {
     }
 
     @Override
-    public void update(Object obj) {
+    public void update(Object obj)
+    {
 
         //TODO Define for specific changes, to just update Transactions etc..
 
@@ -44,7 +45,7 @@ public class Database implements SWE_Observer {
         listOfUsers.add((User)obj);
     }
 
-    public User getUser(int id){
+    public User getUser(String id){
         CustomIterator<User> it = listOfUsers.getIterator();
 
         while (it.hasNext()){

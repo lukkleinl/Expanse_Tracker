@@ -23,7 +23,7 @@ import transactions.strategy.SimplePayout;
 public class User extends SWE_Observable {
   private final String firstname;
   private final String lastname;
-  private final int userID;
+  private final String userID;
   private final String password;
   private final CustomContainer<Account> accounts;
   private final TransactionStore transactions;
@@ -38,7 +38,7 @@ public class User extends SWE_Observable {
    * @param password The password for the user
    */
   @Deprecated
-  public User(final int userID, final String firstname, final String lastname,
+  public User(final String userID, final String firstname, final String lastname,
       final String password) {
     this.userID = userID;
     this.firstname = firstname;
@@ -62,7 +62,7 @@ public class User extends SWE_Observable {
      * @param password The password for the user.
      * @param  database The local Database(Observer) that handles Persistency.
      */
-    public User(final int userID, final String firstname, final String lastname,
+    public User(final String userID, final String firstname, final String lastname,
                 final String password, Database database) throws Exception {
         this.userID = userID;
         this.firstname = firstname;
@@ -199,7 +199,7 @@ public class User extends SWE_Observable {
    *
    * @return the userID
    */
-  public int getUserID() {
+  public String getUserID() {
     return userID;
   }
 

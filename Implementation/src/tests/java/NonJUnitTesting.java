@@ -18,7 +18,7 @@ public class NonJUnitTesting {
   }
 
   private static void yearly() {
-    User user = new User(1234, "firstname", "lastname", "password");
+    User user = new User("1234", "firstname", "lastname", "password");
     user.getCategoryStore().withDefaultCategories();
     Account cash = new Cash("Wallet", Integer.MIN_VALUE, "Euro");
     Account debit =

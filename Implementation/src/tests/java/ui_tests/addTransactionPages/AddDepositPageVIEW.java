@@ -1,14 +1,12 @@
 package ui_tests.addTransactionPages;
 
 import javax.swing.JFrame;
-
-import ui.TestUser;
 import ui.addTransactionPages.AddDepositPage;
 import user.User;
 
 public class AddDepositPageVIEW {
   public static void main(String args[]){
-    User testUser = new User(1, "paul", "kraft", "qwerty");
+    User testUser = new User("1", "paul", "kraft", "qwerty");
     JFrame frame = new JFrame();
     frame.setLayout(null);
     frame.setResizable(false);
