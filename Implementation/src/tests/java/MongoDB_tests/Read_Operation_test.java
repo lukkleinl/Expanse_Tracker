@@ -127,5 +127,7 @@ public class Read_Operation_test {
     }
     write.insertUser(user5);
 
+    User a=read.getUsers(user.getUserID());
+
   }
 }

@@ -20,8 +20,6 @@ import java.util.Map.Entry;
 import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import transactions.Deposit;
-import transactions.Payout;
 import transactions.Transaction;
 import transactions.TransactionCreator;
 import transactions.categories.CategoryStore;
@@ -129,19 +127,7 @@ public class ReadOperation implements Read_Operation
         while (iterator.hasNext())
         {
           Transaction trans=(Transaction) iterator.next();
-          if(user.categorySupported(trans.getCategory()))
-          {
-            user.getTransactionStore().addTransactionUnderKey(account_number,trans);
-          }
-          else
-          {
-            if(trans instanceof Payout)
-                user.getCategoryStore().addTransactionCategory(new PayoutCategory(trans.getCategory()));
-            else if(trans instanceof Deposit)
-                user.getCategoryStore().addTransactionCategory(new DepositCategory(trans.getCategory()));
-            else
-              assert true : "Shouldnt reach this argument";
-          }
+          user.getTransactionStore().addTransactionUnderKey(account_number,trans);
         }
       }
       user_list.add(user);
@@ -231,8 +217,19 @@ public class ReadOperation implements Read_Operation
       JSONObject json = new JSONObject(cursor.next().toJson());
       ZonedDateTime date = ZonedDateTime.parse(json.getString("Date"));
 
+
+      if(user.categorySupported(json.getString("category_name")))
+      {
+        if(json.getString("category").equals("PAYOUT"))
+          user.getCategoryStore().addTransactionCategory(new PayoutCategory(json.getString("category_name")));
+        else if(json.getString("category").equals("DEPOSIT"))
+          user.getCategoryStore().addTransactionCategory(new DepositCategory(json.getString("category_name")));
+        else
+          assert true : "Shouldnt reach this argument";
+      }
+
       Transaction trans = TransactionCreator.transactionFromDatabaseData(date, json.getString("category_name"), json.getFloat("amount"),
-          json.getString("Description"), category_store, json.getInt("_id"));
+          json.getString("Description"), user.getCategoryStore(), json.getInt("_id"));
 
       CustomIterator<Account> account_iterator=user.getAccounts().getIterator();
       while (account_iterator.hasNext())
