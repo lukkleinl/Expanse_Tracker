@@ -7,8 +7,8 @@ import user.User;
 
 public interface Read_Operation {
 
-  User getUsers();
-  CustomList<User> getUsers(String ID);
+  CustomList<User> getUsers();
+  User getUsers(String ID);
   CustomList<Transaction> getTransactions();
   CustomList<Account> getAccounts();
 

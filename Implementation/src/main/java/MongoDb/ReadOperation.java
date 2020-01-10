@@ -74,13 +74,13 @@ public class ReadOperation implements Read_Operation
   }
 
   @Override
-  public User getUsers()
+  public CustomList<User> getUsers()
   {
     collection = database.getCollection("User");
     MongoCursor<Document> cursor=collection.find().cursor();
+    CustomList<User> user_list=new CustomList<>();
     User user=null;
 
-    CustomList<User> UserList=new CustomList<>();
     while (cursor.hasNext())
     {
       JSONObject json=new JSONObject(cursor.next().toJson());
@@ -130,7 +130,86 @@ public class ReadOperation implements Read_Operation
           {
             try
             {
-              System.out.println("yes");
+              user.applyAndSaveTransaction(trans,account_iterator.element());
+            }
+            catch (SWE_Exception e)
+            {
+              System.out.println("Couldn't insert Transaction"+e);
+            }
+          }
+        }
+      }
+      user_list.add(user);
+    }
+    return user_list;
+  }
+
+  @Override
+  public User getUsers(String ID) {
+    collection = database.getCollection("User");
+    Document query = new Document();
+    MongoCursor<Document> cursor=null;
+    query.append("_id",ID);
+    try {
+      cursor=collection.find(query).cursor();
+    }
+    catch (Exception e)
+    {
+      return null;
+    }
+
+    User user=null;
+
+    CustomList<User> UserList=new CustomList<>();
+    while (cursor.hasNext())
+    {
+      JSONObject json=new JSONObject(cursor.next().toJson());
+
+      user=new User(json.get("_id").toString(),
+          json.get("First Name").toString(),
+          json.get("Last Name").toString(),
+          json.get("Password").toString());
+      JSONArray accounts=json.getJSONArray("Accounts");
+      int[] array=new int[accounts.length()];
+      for (int i=0;i<accounts.length();i++)
+      {
+        JSONObject account=accounts.getJSONObject(i);
+        Account(user,account);
+        array[i]=account.getInt("id");
+      }
+
+      JSONArray PayoutCategories=json.getJSONArray("Payout Categories");
+      JSONArray DepositCategories=json.getJSONArray("Deposit Categories");
+
+      for(int i=0;i<PayoutCategories.length();i++)
+      {
+        user.getCategoryStore().addTransactionCategory(new PayoutCategory(PayoutCategories.getJSONObject(i).getString("_id")));
+      }
+
+      for(int i=0;i<DepositCategories.length();i++)
+      {
+        user.getCategoryStore().addTransactionCategory(new DepositCategory(DepositCategories.getJSONObject(i).getString("_id")));
+      }
+
+      collection = database.getCollection("Transactions");
+      query = new Document();
+      query.append("User_ID",user.getUserID());
+      cursor=collection.find(query).cursor();
+      while (cursor.hasNext())
+      {
+        json=new JSONObject(cursor.next().toJson());
+        ZonedDateTime date = ZonedDateTime.parse(json.getString("Date"));
+        Transaction trans = TransactionCreator.transactionFromDatabaseData(date,json.getString("category"),json.getFloat("amount"),
+            json.getString("Description"),user.getCategoryStore(),json.getInt("_id"));
+        CustomIterator<Account> account_iterator=user.getAccounts().getIterator();
+
+        for(int i=0;i<array.length;i++)
+        {
+
+          if(array[i]==json.getInt("Account_Number"))
+          {
+            try
+            {
               user.applyAndSaveTransaction(trans,account_iterator.element());
             }
             catch (SWE_Exception e)
@@ -142,16 +221,7 @@ public class ReadOperation implements Read_Operation
       }
     }
     return user;
-  }
 
-  @Override
-  public CustomList<User> getUsers(String ID) {
-    collection = database.getCollection("User");
-
-    Document query = new Document();
-    query.append("_id",ID);
-    //Document user =collection.f;
-    return null;
   }
 
   @Override
