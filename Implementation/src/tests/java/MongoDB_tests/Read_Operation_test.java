@@ -46,7 +46,7 @@ public class Read_Operation_test {
 
     write.clearDatabase();
 
-    write.insertUser(user2);
+    //write.insertUser(user2);
     User user=null;
     user=read.getUsers("12");
 
@@ -77,11 +77,11 @@ public class Read_Operation_test {
 
     write.insertUser(user3);
 
-    User test=read.getUsers("12");
+    //User test=read.getUsers("12");
 
-    System.out.println(test.getCategoryStore().categorySupported("agsbs"));
+    //System.out.println(test.getCategoryStore().categorySupported("agsbs"));
 
-    System.out.println(read.getTransactions("12").size());
+
 
     //CustomList<User> user_list=read.getUsers();
     //System.out.println(user_list.getIterator().element().getFirstname());
