@@ -8,6 +8,7 @@ import accounts.DebitCard;
 import iteration.CustomIterator;
 import transactions.Transaction;
 import transactions.TransactionCreator;
+import transactions.categories.PayoutCategory;
 import user.User;
 
 public class Read_Operation_test {
@@ -47,7 +48,7 @@ public class Read_Operation_test {
 
     write.insertUser(user2);
     User user=null;
-    user=read.getUsers("a");
+    user=read.getUsers("12");
 
     write.clearDatabase();
 
@@ -62,6 +63,8 @@ public class Read_Operation_test {
     user2.addAccount(new DebitCard("Giro Account", "Bank Austria", Integer.MIN_VALUE,
         "AT121200001203250544"));
 
+    user2.getCategoryStore().addTransactionCategory(new PayoutCategory("agsbs"));
+
     write.insertUser(user2);
 
     user3 = new User("1234", "firstname2", "lastname", "password");
@@ -73,6 +76,12 @@ public class Read_Operation_test {
         "AT121200001203250544"));
 
     write.insertUser(user3);
+
+    User test=read.getUsers("12");
+
+    System.out.println(test.getCategoryStore().categorySupported("agsbs"));
+
+    System.out.println(read.getTransactions("12").size());
 
     //CustomList<User> user_list=read.getUsers();
     //System.out.println(user_list.getIterator().element().getFirstname());

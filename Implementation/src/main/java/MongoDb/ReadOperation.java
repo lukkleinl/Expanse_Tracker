@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import transactions.Transaction;
 import transactions.TransactionCreator;
+import transactions.categories.CategoryStore;
 import transactions.categories.DepositCategory;
 import transactions.categories.PayoutCategory;
 import user.User;
@@ -199,7 +200,7 @@ public class ReadOperation implements Read_Operation
       {
         json=new JSONObject(cursor.next().toJson());
         ZonedDateTime date = ZonedDateTime.parse(json.getString("Date"));
-        Transaction trans = TransactionCreator.transactionFromDatabaseData(date,json.getString("category"),json.getFloat("amount"),
+        Transaction trans = TransactionCreator.transactionFromDatabaseData(date,json.getString("category_name"),json.getFloat("amount"),
             json.getString("Description"),user.getCategoryStore(),json.getInt("_id"));
         CustomIterator<Account> account_iterator=user.getAccounts().getIterator();
 
@@ -225,12 +226,35 @@ public class ReadOperation implements Read_Operation
   }
 
   @Override
-  public CustomList<Transaction> getTransactions() {
-    return null;
+  public CustomList<Transaction> getTransactions(String ID) {
+    collection = database.getCollection("Transactions");
+    Document query = new Document();
+    query.append("User_ID", ID);
+    MongoCursor<Document> cursor = collection.find(query).cursor();
+    CategoryStore category_store=new CategoryStore();
+    category_store.withDefaultCategories();
+
+    CustomList<Transaction> trans_list=new CustomList<>();
+    while (cursor.hasNext()) {
+
+      JSONObject json = new JSONObject(cursor.next().toJson());
+      ZonedDateTime date = ZonedDateTime.parse(json.getString("Date"));
+
+      Transaction trans = TransactionCreator.transactionFromDatabaseData(date, json.getString("category_name"), json.getFloat("amount"),
+          json.getString("Description"), category_store, json.getInt("_id"));
+      trans_list.add(trans);
+      /*if(category_store.categorySupported(json.getString("category_name")))
+      {
+        Transaction trans = TransactionCreator.transactionFromDatabaseData(date, json.getString("category_name"), json.getFloat("amount"),
+            json.getString("Description"), category_store, json.getInt("_id"));
+      }
+      else
+      {
+
+        //category_store.addTransactionCategory(new );
+      }*/
+    }
+    return trans_list;
   }
 
-  @Override
-  public CustomList<Account> getAccounts() {
-    return null;
-  }
 }

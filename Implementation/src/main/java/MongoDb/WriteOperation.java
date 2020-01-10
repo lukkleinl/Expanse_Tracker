@@ -63,7 +63,8 @@ public class WriteOperation implements Write_Operation {
             doc = new Document("_id", payout.getID())
                 .append("Date", payout.getCreationDate().toString())
                 .append("amount", payout.getAmount())
-                .append("category", payout.getPayoutCategory())
+                .append("category_name", payout.getPayoutCategory())
+                .append("category", "PAYOUT")
                 .append("Account_Number", key)
                 .append("Description", payout.getDescription())
                 .append("User_ID",user_ID);
@@ -78,7 +79,8 @@ public class WriteOperation implements Write_Operation {
             doc = new Document("_id", deposit.getID())
                 .append("Date", deposit.getCreationDate().toString())
                 .append("amount", deposit.getAmount())
-                .append("category", deposit.getCategory())
+                .append("category_name", deposit.getCategory())
+                .append("category", "DEPOSIT")
                 .append("Account_Number", key)
                 .append("Description", deposit.getDescription())
                 .append("User_ID",user_ID);
