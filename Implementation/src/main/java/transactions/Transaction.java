@@ -37,7 +37,8 @@ public abstract class Transaction {
    *
    * @return The String description.
    */
-  public String getDescription() {
+  public String getDescription()
+  {
     return this.description;
   }
 

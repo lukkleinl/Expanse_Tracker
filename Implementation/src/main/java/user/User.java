@@ -23,7 +23,7 @@ import transactions.strategy.SimplePayout;
 public class User extends SWE_Observable {
   private final String firstname;
   private final String lastname;
-  private final String userID;
+  private  String userID;
   private final String password;
   private final CustomContainer<Account> accounts;
   private final TransactionStore transactions;

@@ -136,7 +136,8 @@ public class ReadOperation implements Read_Operation
   }
 
   @Override
-  public User getUsers(String ID) {
+  public User getUsers(String ID)
+  {
     collection = database.getCollection("User");
     Document query = new Document();
     MongoCursor<Document> cursor=null;

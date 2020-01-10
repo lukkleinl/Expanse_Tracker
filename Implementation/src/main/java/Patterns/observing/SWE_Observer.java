@@ -1,4 +1,7 @@
 package Patterns.observing;
+
+import user.User;
+
 /**
  * DIY Observer Pattern - defines the Observer.
  * @author Paul Kraft
@@ -7,5 +10,6 @@ package Patterns.observing;
      /** Method to implement, what to do with the new given Object.
       * @param obj Object that changed, which interests the observer.
       */
-     void update(Object obj);
+     void update(User obj);
+     //void update(Transaction obj,User user);
 }

@@ -1,15 +1,17 @@
 package Patterns.observing;
 
+import exceptions.SWE_Exception;
 import java.util.ArrayList;
 import java.util.List;
-import exceptions.SWE_Exception;
+import user.User;
 
 
 /**
  * DIY Observer Pattern - defines the Observable.
  * @author Paul Kraft
  */
-public class SWE_Observable{
+public class SWE_Observable
+{
 
   //TODO: maybe logging?
 
@@ -42,10 +44,11 @@ public class SWE_Observable{
   }
 
   /** Updates all Observers, to use if smthg. observable has changed.
-   * @param obj Object that changed, which interests the observer.
+   * @param obj User that changed, which interests the observer.
    */
-  public void updateObservers(final Object obj){
-    for(SWE_Observer obs : observerList ){
+  public void updateObservers(final User obj){
+    for(SWE_Observer obs : observerList )
+    {
       obs.update(obj);
     }
   }

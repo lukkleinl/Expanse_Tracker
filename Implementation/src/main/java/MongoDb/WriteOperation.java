@@ -70,6 +70,7 @@ public class WriteOperation implements Write_Operation {
                 .append("User_ID",user_ID);
 
             collection = database.getCollection("Transactions");
+            System.out.println("test");
             collection.insertOne(doc);
         }
         else if(trans.toString().contains("DEPOSIT"))
@@ -86,6 +87,7 @@ public class WriteOperation implements Write_Operation {
                 .append("User_ID",user_ID);
 
             collection = database.getCollection("Transactions");
+            System.out.println("test");
             collection.insertOne(doc);
         }
         else
@@ -154,7 +156,6 @@ public class WriteOperation implements Write_Operation {
     @Override
     public void insertUser(final User user)
     {
-
         CustomContainer<Account>  accounts =user.getAccounts();
         List<Document> accounts_array = new ArrayList<>();
         CustomIterator<Account> iter=accounts.getIterator();
@@ -163,7 +164,6 @@ public class WriteOperation implements Write_Operation {
         Iterator<String> deposit = user.getCategoryStore().getCategories(new DepositCategory()).iterator();
         List<Document> deposit_array = new ArrayList<>();
         List<Document> payout_array = new ArrayList<>();
-
 
         while (deposit.hasNext())
         {
@@ -188,7 +188,8 @@ public class WriteOperation implements Write_Operation {
             CustomContainer<Object> list = (CustomList<Object>) e.getValue();
             CustomIterator<Object> iterator = list.getIterator();
             Integer account_number = (Integer) e.getKey();
-            while (iterator.hasNext()) {
+            while (iterator.hasNext())
+            {
                 this.getTrans((Transaction) iterator.next(),account_number,user.getUserID());
             }
         }
@@ -271,12 +272,12 @@ public class WriteOperation implements Write_Operation {
         Document query = new Document();
         query.append("_id",user.getUserID());
         Document setData = new Document();
-        setData.append("Date", user.getFirstname())
-            .append("amount", user.getLastname())
-            .append("category", user.getPassword())
+        setData.append("First Name",user.getFirstname())
+            .append("Last Name", user.getLastname())
+            .append("Password",user.getPassword())
             .append("Accounts", accounts_array)
             .append("Payout Categories",payout_array)
-            .append("Deposit Category",deposit_array);
+            .append("Deposit Categories",deposit_array);
 
         Document update = new Document();
         update.append("$set", setData);
