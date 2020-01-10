@@ -53,7 +53,7 @@ public class WriteOperation implements Write_Operation {
      * @throws SWE_RuntimeException if the object type is neither a deposit nor a payout
      */
 
-    private void getTrans(final Object trans,final int key,final String user_ID)
+    private void getTrans(final Transaction trans,final int key,final String user_ID)
     {
         Document doc=null;
 
@@ -97,41 +97,39 @@ public class WriteOperation implements Write_Operation {
      *
      * @throws SWE_RuntimeException throe when the object type is not an account
      */
-    private Document Account(final Object account)
+    private Document Account(final Account account)
     {
         Document doc;
 
+        doc=new Document("id",account.getAccount_number())
+                         .append("Limit",account.getLimit())
+                         .append("Balance",account.getBalance())
+                         .append("Name",account.getName());
         switch(account.toString()) {
             case "STOCKS":
                 Stocks stock= (Stocks) account;
-                doc = new Document("id", stock.getAccount_number())
-                    .append("Balance",stock.getBalance())
-                    .append("Name",stock.getName())
+                doc .append("Accounttype",account.toString())
                     .append("Buy Date",stock.getBuyDate());
                 return doc;
 
             case "DEBITCARD":
                 DebitCard debit= (DebitCard) account;
-                doc = new Document("id", debit.getAccount_number())
-                    .append("Balance",debit.getBalance())
-                    .append("IBAN",debit.getIBAN())
-                    .append("Name",debit.getName());
+                doc .append("IBAN",debit.getIBAN())
+                    .append("Bankname",debit.getBankName())
+                    .append("Accounttype",account.toString());
                 return doc;
 
             case "CREDITCARD":
                 CreditCard credit= (CreditCard) account;
-                doc = new Document("id", credit.getAccount_number())
-                    .append("Balance",credit.getBalance())
-                    .append("Expiry Date",credit.getExpiryDate())
-                    .append("Name",credit.getName());
+                doc .append("Expiry Date",credit.getExpiryDate())
+                    .append("Bankname",credit.getBankName())
+                    .append("Accounttype",account.toString());
                 return doc;
 
             case "CASH":
                 Cash cash= (Cash) account;
-                doc = new Document("id", cash.getAccount_number())
-                    .append("Balance",cash.getBalance())
-                    .append("Currency",cash.getCurrency())
-                    .append("Name",cash.getName());
+                doc .append("Currency",cash.getCurrency())
+                    .append("Accounttype",account.toString());
                 return doc;
         }
         throw new SWE_RuntimeException("Unknown account type");
@@ -189,16 +187,17 @@ public class WriteOperation implements Write_Operation {
             CustomIterator<Object> iterator = list.getIterator();
             Integer account_number = (Integer) e.getKey();
             while (iterator.hasNext()) {
-                this.getTrans(iterator.next(),account_number,user.getUserID());
+                this.getTrans((Transaction) iterator.next(),account_number,user.getUserID());
             }
         }
 
         Document dep = new Document("_id", user.getUserID())
             .append("First Name",user.getFirstname())
             .append("Last Name", user.getLastname())
+            .append("Password",user.getPassword())
             .append("Accounts", accounts_array)
             .append("Payout Categories",payout_array)
-            .append("Deposit Category",deposit_array);
+            .append("Deposit Categories",deposit_array);
 
         collection = database.getCollection("User");
         collection.insertOne(dep);

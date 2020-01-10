@@ -13,7 +13,7 @@ public class Database implements SWE_Observer {
     CustomList<User> listOfUsers;
 
     public Database() throws Exception {
-        listOfUsers = readOperations.getUsers();
+        //listOfUsers = readOperations.getUsers();
 
         CustomIterator<User> it = listOfUsers.getIterator();
 
