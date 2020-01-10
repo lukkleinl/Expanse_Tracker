@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import transactions.Transaction;
 import transactions.TransactionCreator;
+import transactions.categories.DepositCategory;
 import transactions.categories.PayoutCategory;
 import user.User;
 
@@ -111,6 +112,19 @@ public class Read_Operation_test {
 
     write.clearDatabase();
 
+    user5.getCategoryStore().addTransactionCategory(new DepositCategory("ad"));
+    CustomIterator<Account> acc3=user5.getAccounts().getIterator();
+
+    try {
+
+      for (int i = 0; i < transactions; i++) {
+        Transaction payout =
+            TransactionCreator.newTransaction("AD",2000,"avf",user5.getCategoryStore());
+        user5.applyAndSaveTransaction(payout, acc3.element());
+      }
+    } catch (Exception e) {
+      System.out.println("Fehler beim Hinzufügen der Transaktionen");
+    }
     write.insertUser(user5);
 
   }

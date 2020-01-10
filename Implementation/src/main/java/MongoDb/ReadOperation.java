@@ -20,6 +20,8 @@ import java.util.Map.Entry;
 import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import transactions.Deposit;
+import transactions.Payout;
 import transactions.Transaction;
 import transactions.TransactionCreator;
 import transactions.categories.CategoryStore;
@@ -126,7 +128,20 @@ public class ReadOperation implements Read_Operation
         Integer account_number = (Integer) e.getKey();
         while (iterator.hasNext())
         {
-          user.getTransactionStore().addTransactionUnderKey(account_number,(Transaction)iterator.next());
+          Transaction trans=(Transaction) iterator.next();
+          if(user.categorySupported(trans.getCategory()))
+          {
+            user.getTransactionStore().addTransactionUnderKey(account_number,trans);
+          }
+          else
+          {
+            if(trans instanceof Payout)
+                user.getCategoryStore().addTransactionCategory(new PayoutCategory(trans.getCategory()));
+            else if(trans instanceof Deposit)
+                user.getCategoryStore().addTransactionCategory(new DepositCategory(trans.getCategory()));
+            else
+              assert true : "Shouldnt reach this argument";
+          }
         }
       }
       user_list.add(user);
