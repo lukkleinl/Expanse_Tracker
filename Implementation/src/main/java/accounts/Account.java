@@ -25,6 +25,21 @@ public abstract class Account {
   }
 
   /**
+   * Creates a new Account with a random generated account number and a balance of 0.
+   *
+   * @param name The name of the account
+   * @param limit Limit of the account
+   */
+  public Account(final String name, final float limit, final Integer ID) {
+    account_number = ID;
+    nextId.set(ID);
+    this.name = name;
+    this.limit = limit;
+    balance = 0;
+  }
+
+
+  /**
    * Returns the account number.
    *
    * @return the account number

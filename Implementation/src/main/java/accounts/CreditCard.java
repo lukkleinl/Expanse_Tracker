@@ -21,6 +21,11 @@ public class CreditCard extends BankAccount {
     this.expiryDate = expiryDate;
   }
 
+  public CreditCard(String accountName, String bankName, float limit, Date expiryDate,final Integer ID) {
+    super(accountName, bankName, limit,ID);
+    this.expiryDate = expiryDate;
+  }
+
   /**
    * Returns the expiry date of the credit card.
    *

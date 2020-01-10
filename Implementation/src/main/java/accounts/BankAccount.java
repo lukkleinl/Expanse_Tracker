@@ -17,6 +17,12 @@ public class BankAccount extends Account {
     //this.limit = limit;
   }
 
+  public BankAccount(String accountName, String bankName, float limit,final Integer ID) {
+    super(accountName,limit,ID);
+    this.bankName = bankName;
+    //this.limit = limit;
+  }
+
   /**
    * Returns the name of the bank.
    *

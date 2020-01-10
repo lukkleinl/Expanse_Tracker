@@ -18,6 +18,12 @@ public class DebitCard extends BankAccount {
     this.IBAN=IBAN;
   }
 
+  public DebitCard(String accountName, String bankName, float limit,String IBAN,final Integer ID) {
+    super(accountName, bankName, limit,ID);
+    this.IBAN=IBAN;
+  }
+
+
   /**
    * Returns the IBAN of the DebitCard.
    *

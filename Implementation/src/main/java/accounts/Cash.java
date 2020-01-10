@@ -18,6 +18,17 @@ public class Cash extends Account {
   }
 
   /**
+   * Creates a new Cash account with a random generated account number and 0 balance.
+   *  @param accountName The name of the account
+   * @param limit
+   * @param currency The currency of the cash
+   */
+  public Cash(String accountName, float limit,String currency,final Integer ID) {
+    super(accountName,limit,ID);
+    this.currency = currency;
+  }
+
+  /**
    * Return the currency of the cash.
    *
    * @return the currency

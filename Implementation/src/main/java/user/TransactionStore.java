@@ -14,7 +14,7 @@ public class TransactionStore {
     transactions = new HashMap<>();
   }
 
-  void addTransactionUnderKey(final Integer key, final Transaction transaction) {
+  public void addTransactionUnderKey(final Integer key, final Transaction transaction) {
     if (this.alreadyStored(transaction)) return;
     transactions.putIfAbsent(key,new CustomList<>());
     transactions.get(key).add(transaction);

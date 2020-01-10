@@ -9,11 +9,14 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import exceptions.SWE_Exception;
+import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,7 +25,6 @@ import transactions.TransactionCreator;
 import transactions.categories.CategoryStore;
 import transactions.categories.DepositCategory;
 import transactions.categories.PayoutCategory;
-import user.TransactionStore;
 import user.User;
 
 public class ReadOperation implements Read_Operation
@@ -51,23 +53,23 @@ public class ReadOperation implements Read_Operation
     if(account.get("Accounttype").equals("CASH"))
     {
 
-      user.addAccount(new Cash(account.get("Name").toString(),account.getFloat("Limit"),account.get("Currency").toString()));
+      user.addAccount(new Cash(account.getString("Name"),account.getFloat("Limit"),account.getString("Currency"),account.getInt("id")));
     }
     else if(account.get("Accounttype").equals("STOCKS"))
     {
       Date date=new Date(account.get("Buy Date").toString());
-      user.addAccount(new Stocks(account.get("Name").toString(),date,account.getFloat("Limit")));
+      user.addAccount(new Stocks(account.get("Name").toString(),date,account.getFloat("Limit"),account.getInt("id")));
     }
     else if(account.get("Accounttype").equals("DEBITCARD"))
     {
       user.addAccount(new DebitCard(account.get("Name").toString(),account.get("Bankname").toString(),
-          account.getFloat("Limit"),account.get("IBAN").toString()));
+          account.getFloat("Limit"),account.get("IBAN").toString(),account.getInt("id")));
     }
     else if(account.get("Accounttype").equals("CREDITCARD"))
     {
       Date date=new Date(account.get("Buy Date").toString());
       user.addAccount(new CreditCard(account.get("Name").toString(),account.get("Bankname").toString(),
-          account.getFloat("Limit"),date));
+          account.getFloat("Limit"),date,account.getInt("id")));
     }
     else
     {
@@ -79,7 +81,8 @@ public class ReadOperation implements Read_Operation
   public CustomList<User> getUsers()
   {
     collection = database.getCollection("User");
-    MongoCursor<Document> cursor=collection.find().cursor();
+    MongoCursor cursor_acc=null;
+    MongoCursor<Document> cursor=collection.find().iterator();
     CustomList<User> user_list=new CustomList<>();
     User user=null;
 
@@ -113,32 +116,17 @@ public class ReadOperation implements Read_Operation
         user.getCategoryStore().addTransactionCategory(new DepositCategory(DepositCategories.getJSONObject(i).getString("_id")));
       }
 
-      collection = database.getCollection("Transactions");
-      Document query = new Document();
-      query.append("User_ID",user.getUserID());
-      cursor=collection.find(query).cursor();
-      while (cursor.hasNext())
+
+      Map<Integer,CustomContainer<Transaction>> list_trans=getTransactions(user);
+
+      for (Entry e : list_trans.entrySet())
       {
-        json=new JSONObject(cursor.next().toJson());
-        ZonedDateTime date = ZonedDateTime.parse(json.getString("Date"));
-        Transaction trans = TransactionCreator.transactionFromDatabaseData(date,json.getString("category_name"),json.getFloat("amount"),
-                                                              json.getString("Description"),user.getCategoryStore(),json.getInt("_id"));
-        CustomIterator<Account> account_iterator=user.getAccounts().getIterator();
-
-        for(int i=0;i<array.length;i++)
+        CustomContainer<Object> list = (CustomList<Object>) e.getValue();
+        CustomIterator<Object> iterator = list.getIterator();
+        Integer account_number = (Integer) e.getKey();
+        while (iterator.hasNext())
         {
-
-          if(array[i]==json.getInt("Account_Number"))
-          {
-            try
-            {
-              user.applyAndSaveTransaction(trans,account_iterator.element());
-            }
-            catch (SWE_Exception e)
-            {
-              System.out.println("Couldn't insert Transaction"+e);
-            }
-          }
+          user.getTransactionStore().addTransactionUnderKey(account_number,(Transaction)iterator.next());
         }
       }
       user_list.add(user);
@@ -152,7 +140,8 @@ public class ReadOperation implements Read_Operation
     Document query = new Document();
     MongoCursor<Document> cursor=null;
     query.append("_id",ID);
-    try {
+    try
+    {
       cursor=collection.find(query).cursor();
     }
     catch (Exception e)
@@ -193,32 +182,16 @@ public class ReadOperation implements Read_Operation
         user.getCategoryStore().addTransactionCategory(new DepositCategory(DepositCategories.getJSONObject(i).getString("_id")));
       }
 
-      collection = database.getCollection("Transactions");
-      query = new Document();
-      query.append("User_ID",user.getUserID());
-      cursor=collection.find(query).cursor();
-      while (cursor.hasNext())
+      Map<Integer,CustomContainer<Transaction>> list_trans=getTransactions(user);
+
+      for (Entry e : list_trans.entrySet())
       {
-        json=new JSONObject(cursor.next().toJson());
-        ZonedDateTime date = ZonedDateTime.parse(json.getString("Date"));
-        Transaction trans = TransactionCreator.transactionFromDatabaseData(date,json.getString("category_name"),json.getFloat("amount"),
-            json.getString("Description"),user.getCategoryStore(),json.getInt("_id"));
-        CustomIterator<Account> account_iterator=user.getAccounts().getIterator();
-
-        for(int i=0;i<array.length;i++)
+        CustomContainer<Object> list = (CustomList<Object>) e.getValue();
+        CustomIterator<Object> iterator = list.getIterator();
+        Integer account_number = (Integer) e.getKey();
+        while (iterator.hasNext())
         {
-
-          if(array[i]==json.getInt("Account_Number"))
-          {
-            try
-            {
-              user.applyAndSaveTransaction(trans,account_iterator.element());
-            }
-            catch (SWE_Exception e)
-            {
-              System.out.println("Couldn't insert Transaction"+e);
-            }
-          }
+          user.getTransactionStore().addTransactionUnderKey(account_number,(Transaction)iterator.next());
         }
       }
     }
@@ -227,18 +200,19 @@ public class ReadOperation implements Read_Operation
   }
 
   @Override
-  public void getTransactions(User user)
+  public Map<Integer, CustomContainer<Transaction>> getTransactions(User user)
   {
     collection = database.getCollection("Transactions");
     Document query = new Document();
     query.append("User_ID", user.getUserID());
-    MongoCursor<Document> cursor = collection.find(query).cursor();
+    MongoCursor<Document> cursor = collection.find(query).iterator();
     CategoryStore category_store=new CategoryStore();
     category_store.withDefaultCategories();
+    Map<Integer, CustomContainer<Transaction>> Transactions_map=new HashMap<>();
 
     CustomList<Transaction> trans_list=new CustomList<>();
-    while (cursor.hasNext()) {
-
+    while (cursor.hasNext())
+    {
       JSONObject json = new JSONObject(cursor.next().toJson());
       ZonedDateTime date = ZonedDateTime.parse(json.getString("Date"));
 
@@ -250,18 +224,11 @@ public class ReadOperation implements Read_Operation
       {
         if(account_iterator.next().getAccount_number()==json.getInt("Account_Number"))
         {
-          try
-          {
-            user.applyAndSaveTransaction(trans,account_iterator.element());
-          }
-          catch (SWE_Exception e)
-          {
-            System.out.println("Couldn't insert Transaction"+e);
-          }
+          Transactions_map.putIfAbsent(json.getInt("Account_Number"),new CustomList<>());
+          Transactions_map.get(json.getInt("Account_Number")).add(trans);
         }
       }
-
     }
+    return Transactions_map;
   }
-
 }

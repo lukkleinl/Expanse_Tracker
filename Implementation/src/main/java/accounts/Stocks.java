@@ -19,6 +19,11 @@ public class Stocks extends Account {
     this.buyDate = buyDate;
   }
 
+  public Stocks(String accountName, Date buyDate,float limit,final Integer ID) {
+    super(accountName,limit);
+    this.buyDate = buyDate;
+  }
+
   /**
    * Returns the buy date of the stocks.
    *

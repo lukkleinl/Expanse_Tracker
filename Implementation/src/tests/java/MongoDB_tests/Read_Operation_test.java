@@ -5,7 +5,11 @@ import MongoDb.WriteOperation;
 import accounts.Account;
 import accounts.Cash;
 import accounts.DebitCard;
+import iteration.CustomContainer;
 import iteration.CustomIterator;
+import iteration.CustomList;
+import java.util.HashMap;
+import java.util.Map;
 import transactions.Transaction;
 import transactions.TransactionCreator;
 import transactions.categories.PayoutCategory;
@@ -44,9 +48,10 @@ public class Read_Operation_test {
       System.out.println("Fehler beim Hinzufügen der Transaktionen");
     }
 
+
     write.clearDatabase();
 
-    //write.insertUser(user2);
+    write.insertUser(user2);
     User user=null;
     user=read.getUsers("12");
 
@@ -75,17 +80,38 @@ public class Read_Operation_test {
     user3.addAccount(new DebitCard("Giro Account", "Bank Austria", Integer.MIN_VALUE,
         "AT121200001203250544"));
 
+    CustomIterator<Account> acc2=user3.getAccounts().getIterator();
+    try {
+
+      for (int i = 0; i < transactions; i++) {
+        Transaction payout =
+            TransactionCreator.newTransaction("EDUCATION",2000,"avf",user3.getCategoryStore());
+        user3.applyAndSaveTransaction(payout, acc2.element());
+      }
+    } catch (Exception e) {
+      System.out.println("Fehler beim Hinzufügen der Transaktionen");
+    }
+
     write.insertUser(user3);
 
-    //User test=read.getUsers("12");
+    CustomList<User> list=read.getUsers();
+    Map<Integer, CustomContainer<Transaction>> map=new HashMap<>();
+    map=read.getTransactions(user3);
 
-    //System.out.println(test.getCategoryStore().categorySupported("agsbs"));
 
+    write.clearDatabase();
 
+    CustomIterator iter=list.getIterator();
+    while (iter.hasNext())
+    {
+      User user9=(User) iter.next();
+      write.insertUser(user9);
+    }
+    User user5=read.getUsers("12");
 
-    //CustomList<User> user_list=read.getUsers();
-    //System.out.println(user_list.getIterator().element().getFirstname());
-    //write.insertUser(user);
+    write.clearDatabase();
+
+    write.insertUser(user5);
 
   }
 }
