@@ -3,13 +3,14 @@ package MongoDB_tests;
 import MongoDb.WriteOperation;
 import accounts.Account;
 import accounts.Cash;
+import accounts.CreditCard;
 import accounts.DebitCard;
-import exceptions.SWE_Exception;
 import iteration.CustomIterator;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import transactions.Transaction;
 import transactions.TransactionCreator;
 import user.User;
@@ -37,6 +38,7 @@ public class Write_operation_test {
 
     WriteOperation mongo = new WriteOperation();
 
+    mongo.clearDatabase();
 
       user2 = new User("12", "firstname", "lastname", "password");
       user2.getCategoryStore().withDefaultCategories();
@@ -47,14 +49,11 @@ public class Write_operation_test {
         "AT121200001203250544"));
 
 
-  System.out.println(user2.getAccounts().size());
-
-
-    user3= new User("1", "firstname", "lastname", "password");
+    Date date = new Date();
+    user3= new User("1111", "firstname", "lastname", "password");
     user3.getCategoryStore().withDefaultCategories();
     user3.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
-    user3.addAccount(new DebitCard("Giro Account", "Bank Austria", Integer.MIN_VALUE,
-        "AT121200001203250544"));
+    user3.addAccount(new CreditCard("Giro Account", "bank",Integer.MIN_VALUE,date));
 
     user= new User("3", "firstname", "lastname", "password");
     user.getCategoryStore().withDefaultCategories();
@@ -76,8 +75,8 @@ public class Write_operation_test {
       System.out.println("Fehler beim Hinzufügen der Transaktionen");
     }
 
-    try {
-
+    try
+    {
       for (int i = 0; i < transactions; i++) {
         Transaction payout =
             TransactionCreator.newTransaction("FOOD",2000,"avf",user3.getCategoryStore());
@@ -87,58 +86,31 @@ public class Write_operation_test {
       System.out.println("Fehler beim Hinzufügen der Transaktionen");
     }
 
-    Transaction payout =
-        TransactionCreator.newTransaction("FOOD",2000,"avf",user3.getCategoryStore());
-    try {
-      user3.applyAndSaveTransaction(payout, acc2.element());
-    } catch (SWE_Exception e) {
-      e.printStackTrace();
-    }
+
+
+    mongo.insertUser(user);
+
+    mongo.insertUser(user2);
+    mongo.deleteUser(user2);
+    mongo.deleteUser(user);
 
     try
     {
-      mongo.insertUser(user3);
-      System.out.println("erfolgreich");
-    }
-    catch (Exception e)
-    {
-      System.out.println("fehler beim einfügen");
-    }
-
-    try
-    {
-      mongo.insertUser(user2);
-      System.out.println("erfolgreich");
-    }
-    catch (Exception e)
-    {
-      System.out.println("fehler beim einfügen");
+      for (int i = 0; i < transactions; i++) {
+        Transaction payout =
+            TransactionCreator.newTransaction("FOOD",2000,"avf",user2.getCategoryStore());
+        user2.applyAndSaveTransaction(payout, acc.element());
+      }
+    } catch (Exception e) {
+      System.out.println("Fehler beim Hinzufügen der Transaktionen");
     }
 
-    payout.updateTransaction(zonedDateTime,2,"AD");
-    mongo.updateTransaction(payout);
-
-    try
-    {
-      mongo.insertUser(user);
-      System.out.println("erfolgreich");
-    }
-    catch (Exception e)
-    {
-      System.out.println("fehler beim einfügen");
-    }
+    mongo.insertUser(user2);
 
 
-    user.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
+    mongo.insertUser(user3);
 
-    mongo.updateUser(user);
-    //mongo.clearDatabase();
-    //mongo.deleteUser(user);
-    //mongo.deleteTransaction(user2,19);
-    //mongo.clearDatabase();
-    //mongo.insertUser(user2);
 
-    //mongo.deleteUser(user);
   }
 
 }

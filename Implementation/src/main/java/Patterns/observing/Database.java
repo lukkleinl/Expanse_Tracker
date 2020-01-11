@@ -59,10 +59,10 @@ public class Database implements SWE_Observer {
         writeOperation.deleteTransaction(user,Transaction_ID);
     }
 
-    public void deleteUser(User user)
+    /* public void deleteUser(User user)
     {
         writeOperation.deleteUser(user);
-    }
+    }*/
 
     @Override
     public void update(User obj)

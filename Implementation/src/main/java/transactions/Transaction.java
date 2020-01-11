@@ -26,6 +26,8 @@ public abstract class Transaction {
   Transaction(final ZonedDateTime date, final float amount, final String description,
       final Integer ID) {
     this.creationDate = (date != null ? date : ZonedDateTime.now(ZoneId.of("UTC")));
+    if(ID!=null)
+      nextId.set(ID);
     this.ID = (ID != null ? ID : nextId.incrementAndGet());
 
     this.description = description;

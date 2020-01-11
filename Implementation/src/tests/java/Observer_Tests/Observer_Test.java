@@ -4,6 +4,7 @@ import MongoDb.WriteOperation;
 import Patterns.observing.Database;
 import accounts.Account;
 import accounts.Cash;
+import accounts.CreditCard;
 import accounts.DebitCard;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
@@ -30,7 +31,7 @@ public class Observer_Test {
     WriteOperation write=new WriteOperation();
     //write.clearDatabase();
     Database base=new Database();
-    /*user2 = new User("129", "firstname", "lastname", "password",base);
+    user2 = new User("1294", "firstname", "lastname", "password",base);
     user2.getCategoryStore().withDefaultCategories();
     user2.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
     user2.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
@@ -50,7 +51,7 @@ public class Observer_Test {
     } catch (Exception e)
     {
       System.out.println("Fehler beim Hinzufügen der Transaktionen");
-    }*/
+    }
 
 
     user3 = new User("123456", "firstname", "lastname", "password",base);
@@ -85,9 +86,9 @@ public class Observer_Test {
 
     //user3.deleteTransaction(5,payout);
 
-   // base.deleteUser(user2);
+    //base.deleteUser(user2);
 
-    User user=base.getUser("12345");
+    User user=base.getUser("1234567");
 
     System.out.println(user.getAccounts().size());
     System.out.println(user.getTransactionStore().accountsWithTransactions());

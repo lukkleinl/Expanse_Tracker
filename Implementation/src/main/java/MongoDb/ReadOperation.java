@@ -116,18 +116,20 @@ public class ReadOperation implements Read_Operation
         Date date=null;
 
         if(acc.getString("Accounttype").equals("CASH"))
-          user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency")));
+          user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id")));
         else if(acc.getString("Accounttype").equals("DEBITCARD"))
-          user.addAccount((new DebitCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),acc.getString("IBAN"))));
+          user.addAccount((new DebitCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),acc.getString("IBAN"),acc.getInt("id"))));
         else if(acc.getString("Accounttype").equals("CREDITCARD"))
         {
-          date= new Date(acc.getString("Expiry Date"));
-          user.addAccount(new CreditCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),date));
+          JSONObject date_object=acc.getJSONObject("Expiry Date");
+          date=new Date(date_object.getLong("$numberLong"));
+          user.addAccount(new CreditCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),date,acc.getInt("id")));
         }
         else if(acc.getString("Accounttype").equals("STOCKS"))
         {
-          date= new Date(acc.getString("Buy Date"));
-          user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"))));
+          JSONObject date_object=acc.getJSONObject("Buy Date");
+          date=new Date(date_object.getLong("$numberLong"));
+          user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"))));
         }
         else
           assert true : "Shouldnt reach this statement";
@@ -254,8 +256,6 @@ public class ReadOperation implements Read_Operation
       JSONObject json = new JSONObject(cursor.next().toJson());
       ZonedDateTime date = ZonedDateTime.parse(json.getString("Date"));
 
-
-
       if(!(user.categorySupported(json.getString("category_name"))))
       {
 
@@ -284,7 +284,6 @@ public class ReadOperation implements Read_Operation
 
     while (account_iterator.hasNext())
     {
-      System.out.println(acc_id +"   "+account_iterator.element().getAccount_number());
       if(account_iterator.element().getAccount_number()==acc_id)
       {
         map.putIfAbsent(acc_id,new CustomList<>());

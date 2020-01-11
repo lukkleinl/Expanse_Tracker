@@ -8,12 +8,10 @@ import accounts.DebitCard;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import transactions.Transaction;
 import transactions.TransactionCreator;
-import transactions.categories.DepositCategory;
-import transactions.categories.PayoutCategory;
 import user.User;
 
 public class Read_Operation_test {
@@ -27,8 +25,56 @@ public class Read_Operation_test {
     WriteOperation write=new WriteOperation();
     ReadOperation read=new ReadOperation();
 
+    CustomList<User> users=read.getUsers();
+
+    CustomIterator<User> iter=users.getIterator();
+    while(iter.hasNext())
+    {
+      Map<Integer, CustomContainer<Transaction>> trans_map =iter.element().getTransactionStore().getTransactions();
+      for (Entry e : trans_map.entrySet())
+      {
+        CustomContainer<Object> list = (CustomList<Object>) e.getValue();
+        CustomIterator<Object> iterator = list.getIterator();
+        Integer account_number = (Integer) e.getKey();
+
+        while (iterator.hasNext())
+        {
+          System.out.println("Transaction" + account_number + " "+ iterator.element());
+          iterator.next();
+        }
+      }
+
+      iter.next();
+    }
+    WriteOperation writeOperation=new WriteOperation();
 
     user2 = new User("12", "firstname", "lastname", "password");
+    user2.getCategoryStore().withDefaultCategories();
+    user2.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
+    user2.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
+    user2.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
+    user2.addAccount(new DebitCard("Giro Account", "Bank Austria", Integer.MIN_VALUE,
+        "AT121200001203250544"));
+
+    CustomIterator<Account> acc=user2.getAccounts().getIterator();
+    //CustomIterator<Account> acc2=user3.getAccounts().getIterator();
+
+
+    try {
+
+      for (int i = 0; i < transactions; i++) {
+        Transaction payout =
+            TransactionCreator.newTransaction("FOOD",2000,"avf",user2.getCategoryStore());
+        user2.applyAndSaveTransaction(payout, acc.element());
+      }
+    } catch (Exception e) {
+      System.out.println("Fehler beim Hinzufügen der Transaktionen");
+    }
+
+
+    System.out.println(users.size());
+
+    /*user2 = new User("12", "firstname", "lastname", "password");
     user2.getCategoryStore().withDefaultCategories();
     user2.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
     user2.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
@@ -127,7 +173,7 @@ public class Read_Operation_test {
     }
     write.insertUser(user5);
 
-    User a=read.getUsers(user.getUserID());
+    User a=read.getUsers(user.getUserID());*/
 
   }
 }

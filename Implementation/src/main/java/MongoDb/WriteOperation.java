@@ -70,7 +70,6 @@ public class WriteOperation implements Write_Operation {
                 .append("User_ID",user_ID);
 
             collection = database.getCollection("Transactions");
-            System.out.println("test");
             collection.insertOne(doc);
         }
         else if(trans.toString().contains("DEPOSIT"))
@@ -87,7 +86,6 @@ public class WriteOperation implements Write_Operation {
                 .append("User_ID",user_ID);
 
             collection = database.getCollection("Transactions");
-            System.out.println("test");
             collection.insertOne(doc);
         }
         else
@@ -105,6 +103,7 @@ public class WriteOperation implements Write_Operation {
     {
         Document doc;
 
+        System.out.println(account.getAccount_number() +" account number");
 
         switch(account.toString()) {
             case "STOCKS":
@@ -114,7 +113,7 @@ public class WriteOperation implements Write_Operation {
                     .append("Balance",account.getBalance())
                     .append("Name",account.getName())
                     .append("Accounttype",account.toString())
-                    .append("Buy Date",stock.getBuyDate());
+                    .append("Buy Date",stock.getBuyDate().getTime());
                 return doc;
 
             case "DEBITCARD":
@@ -130,11 +129,12 @@ public class WriteOperation implements Write_Operation {
 
             case "CREDITCARD":
                 CreditCard credit= (CreditCard) account;
+                long l=credit.getExpiryDate().getTime();
                 doc=new Document("id",account.getAccount_number())
                     .append("Limit",account.getLimit())
                     .append("Balance",account.getBalance())
                     .append("Name",account.getName())
-                    .append("Expiry Date",credit.getExpiryDate())
+                    .append("Expiry Date",l)
                     .append("Bankname",credit.getBankName())
                     .append("Accounttype",account.toString());
                 return doc;
@@ -172,7 +172,7 @@ public class WriteOperation implements Write_Operation {
         CustomContainer<Account>  accounts =user.getAccounts();
         List<Document> accounts_array = new ArrayList<>();
         CustomIterator<Account> iter=accounts.getIterator();
-        Map<Integer, CustomContainer<Transaction>> Transactions =user.getTransactionStore().getTransactions();
+        Map<Integer, CustomContainer<Transaction>> trans_map =user.getTransactionStore().getTransactions();
         Iterator<String> payout = user.getCategoryStore().getCategories(new PayoutCategory()).iterator();
         Iterator<String> deposit = user.getCategoryStore().getCategories(new DepositCategory()).iterator();
         List<Document> deposit_array = new ArrayList<>();
@@ -196,14 +196,16 @@ public class WriteOperation implements Write_Operation {
             accounts_array.add(doc);
         }
 
-        for (Entry e : Transactions.entrySet())
+        for (Entry e : trans_map.entrySet())
         {
             CustomContainer<Object> list = (CustomList<Object>) e.getValue();
             CustomIterator<Object> iterator = list.getIterator();
             Integer account_number = (Integer) e.getKey();
+            System.out.println("Transaction" + account_number);
             while (iterator.hasNext())
             {
-                this.getTrans((Transaction) iterator.next(),account_number,user.getUserID());
+                this.getTrans((Transaction) iterator.element(),account_number,user.getUserID());
+                iterator.next();
             }
         }
 
@@ -268,16 +270,13 @@ public class WriteOperation implements Write_Operation {
     public void updateUser(User user)
     {
         collection = database.getCollection("User");
-
         CustomContainer<Account>  accounts =user.getAccounts();
         List<Document> accounts_array = new ArrayList<>();
         CustomIterator<Account> iter=accounts.getIterator();
-        Map<Integer, CustomContainer<Transaction>> Transactions =user.getTransactionStore().getTransactions();
         Iterator<String> payout = user.getCategoryStore().getCategories(new PayoutCategory()).iterator();
         Iterator<String> deposit = user.getCategoryStore().getCategories(new DepositCategory()).iterator();
         List<Document> deposit_array = new ArrayList<>();
         List<Document> payout_array = new ArrayList<>();
-
 
         while (deposit.hasNext())
         {
@@ -309,6 +308,7 @@ public class WriteOperation implements Write_Operation {
         update.append("$set", setData);
         collection.updateOne(query, update);
     }
+
 
     @Override
     public void deleteUser(User user)
