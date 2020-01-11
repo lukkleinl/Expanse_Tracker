@@ -132,6 +132,7 @@ public class User extends SWE_Observable {
     {
       if(acc_iterator.element().getAccount_number()==accountID)
       {
+        acc_iterator.element().updateAccountNumberAndBalance(accountID,acc_iterator.element().getBalance()-transaction.getAmount());
         updateObservers(this,acc_iterator.next(),transaction);
       }
     }
