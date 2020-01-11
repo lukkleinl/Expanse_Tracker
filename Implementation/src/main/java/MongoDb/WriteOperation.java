@@ -210,11 +210,20 @@ public class WriteOperation implements Write_Operation {
     @Override
     public void insertTransaction(User user, Account acc,Transaction trans)
     {
+        String category=null;
+        if(trans instanceof Payout)
+            category="PAYOUT";
+        else if(trans instanceof Deposit)
+            category="DEPOSIT";
+        else
+            assert true : "Shouldnt reach this argument";
+
         Document doc=null;
         doc = new Document("_id", trans.getID())
             .append("Date", trans.getCreationDate().toString())
             .append("amount", trans.getAmount())
-            .append("category", trans.getCategory())
+            .append("category_name", trans.getCategory())
+            .append("category", category)
             .append("Account_Number", acc.getAccount_number())
             .append("Description", trans.getDescription())
             .append("User_ID",user.getUserID());

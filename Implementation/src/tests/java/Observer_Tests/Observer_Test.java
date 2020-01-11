@@ -20,9 +20,9 @@ public class Observer_Test {
   {
 
     WriteOperation write=new WriteOperation();
-    write.clearDatabase();
+    //write.clearDatabase();
     Database base=new Database();
-    user2 = new User("128", "firstname", "lastname", "password",base);
+    user2 = new User("129", "firstname", "lastname", "password",base);
     user2.getCategoryStore().withDefaultCategories();
     user2.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
     user2.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
@@ -43,7 +43,7 @@ public class Observer_Test {
       System.out.println("Fehler beim Hinzufügen der Transaktionen");
     }
 
-    user3 = new User("134", "firstname", "lastname", "password",base);
+    user3 = new User("135", "firstname", "lastname", "password",base);
     user3.getCategoryStore().withDefaultCategories();
     user3.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
     user3.addAccount(new Cash("Wallet", Integer.MIN_VALUE, "Euro"));
@@ -78,6 +78,9 @@ public class Observer_Test {
     user3.deleteTransaction(5,payout);
 
     base.deleteUser(user2);
+
+    User user=base.getUser("134");
+    System.out.println(user.getTransactionStore().accountsWithTransactions());
   }
 
 }
