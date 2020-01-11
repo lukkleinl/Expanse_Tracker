@@ -1,13 +1,14 @@
 /** */
 package user;
 
-import java.util.Set;
+import Patterns.observing.Database;
+import Patterns.observing.SWE_Observable;
 import accounts.Account;
 import exceptions.SWE_Exception;
 import iteration.CustomContainer;
+import iteration.CustomIterator;
 import iteration.CustomList;
-import Patterns.observing.Database;
-import Patterns.observing.SWE_Observable;
+import java.util.Set;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
@@ -132,7 +133,14 @@ public class User extends SWE_Observable {
 
   public void deleteTransaction(final int accountID, final Transaction transaction)
   {
-
+    CustomIterator<Account> iterator=accounts.getIterator();
+    while (iterator.hasNext())
+    {
+      if(accountID==iterator.element().getAccount_number())
+      {
+        iterator.element().updateAccountNumberAndBalance(accountID,iterator.element().getBalance()-transaction.getAmount());
+      }
+    }
     transactions.deleteTransaction(accountID,transaction);
     updateObservers(this);
   }
