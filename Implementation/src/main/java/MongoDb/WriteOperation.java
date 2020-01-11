@@ -238,6 +238,7 @@ public class WriteOperation implements Write_Operation {
         update.append("$set", setData);
         collection.updateOne(query, update);
     }
+
     @Override
     public void updateUser(User user)
     {

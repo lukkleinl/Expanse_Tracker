@@ -130,7 +130,9 @@ public class User extends SWE_Observable {
   }
 
 
-  public void deleteTransaction(final int accountID, final Transaction transaction) {
+  public void deleteTransaction(final int accountID, final Transaction transaction)
+  {
+
     transactions.deleteTransaction(accountID,transaction);
     updateObservers(this);
   }

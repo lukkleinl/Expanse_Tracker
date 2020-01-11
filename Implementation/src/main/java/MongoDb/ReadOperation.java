@@ -94,14 +94,6 @@ public class ReadOperation implements Read_Operation
                     json.get("First Name").toString(),
                     json.get("Last Name").toString(),
                     json.get("Password").toString());
-      JSONArray accounts=json.getJSONArray("Accounts");
-      int[] array=new int[accounts.length()];
-      for (int i=0;i<accounts.length();i++)
-      {
-        JSONObject account=accounts.getJSONObject(i);
-        Account(user,account);
-        array[i]=account.getInt("id");
-      }
 
       JSONArray PayoutCategories=json.getJSONArray("Payout Categories");
       JSONArray DepositCategories=json.getJSONArray("Deposit Categories");
@@ -115,7 +107,6 @@ public class ReadOperation implements Read_Operation
       {
         user.getCategoryStore().addTransactionCategory(new DepositCategory(DepositCategories.getJSONObject(i).getString("_id")));
       }
-
 
       Map<Integer,CustomContainer<Transaction>> list_trans=getTransactions(user);
 
@@ -140,7 +131,7 @@ public class ReadOperation implements Read_Operation
   {
     collection = database.getCollection("User");
     Document query = new Document();
-    MongoCursor<Document> cursor=null;
+    MongoCursor<Document> cursor;
     query.append("_id",ID);
     try
     {
@@ -153,7 +144,6 @@ public class ReadOperation implements Read_Operation
 
     User user=null;
 
-    CustomList<User> UserList=new CustomList<>();
     while (cursor.hasNext())
     {
       JSONObject json=new JSONObject(cursor.next().toJson());
@@ -162,14 +152,6 @@ public class ReadOperation implements Read_Operation
           json.get("First Name").toString(),
           json.get("Last Name").toString(),
           json.get("Password").toString());
-      JSONArray accounts=json.getJSONArray("Accounts");
-      int[] array=new int[accounts.length()];
-      for (int i=0;i<accounts.length();i++)
-      {
-        JSONObject account=accounts.getJSONObject(i);
-        Account(user,account);
-        array[i]=account.getInt("id");
-      }
 
       JSONArray PayoutCategories=json.getJSONArray("Payout Categories");
       JSONArray DepositCategories=json.getJSONArray("Deposit Categories");
@@ -212,7 +194,6 @@ public class ReadOperation implements Read_Operation
     category_store.withDefaultCategories();
     Map<Integer, CustomContainer<Transaction>> Transactions_map=new HashMap<>();
 
-    CustomList<Transaction> trans_list=new CustomList<>();
     while (cursor.hasNext())
     {
       JSONObject json = new JSONObject(cursor.next().toJson());
