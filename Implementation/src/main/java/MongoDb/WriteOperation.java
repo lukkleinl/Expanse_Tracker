@@ -219,6 +219,9 @@ public class WriteOperation implements Write_Operation {
             .append("Description", trans.getDescription())
             .append("User_ID",user.getUserID());
 
+        collection = database.getCollection("Transactions");
+        collection.insertOne(doc);
+
     }
 
 
@@ -297,7 +300,7 @@ public class WriteOperation implements Write_Operation {
         BasicDBObject filter = new BasicDBObject();
         filter.put("User_ID", user.getUserID());
         DeleteResult deleteResult = collection.deleteMany(filter);
-        System.out.println(deleteResult.getDeletedCount());
+        //System.out.println(deleteResult.getDeletedCount());
     }
 
     @Override
@@ -322,6 +325,6 @@ public class WriteOperation implements Write_Operation {
         document.put("User_ID", user.getUserID());
 
         DeleteResult deleteResult = collection.deleteMany(document);
-        System.out.println(deleteResult.getDeletedCount());
+        //System.out.println(deleteResult.getDeletedCount());
     }
 }

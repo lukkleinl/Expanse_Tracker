@@ -1,8 +1,10 @@
 package Patterns.observing;
 
+import accounts.Account;
 import exceptions.SWE_Exception;
 import java.util.ArrayList;
 import java.util.List;
+import transactions.Transaction;
 import user.User;
 
 
@@ -52,5 +54,20 @@ public class SWE_Observable
       obs.update(obj);
     }
   }
+
+  public void updateObservers(final User obj,final int trans_id){
+    for(SWE_Observer obs : observerList )
+    {
+      obs.update(obj,trans_id);
+    }
+  }
+
+  public void updateObservers(final User user,final Account acc,final Transaction trans){
+    for(SWE_Observer obs : observerList )
+    {
+      obs.update(user,acc,trans);
+    }
+  }
+
 }
 

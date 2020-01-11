@@ -122,12 +122,19 @@ public class User extends SWE_Observable {
 
     strategy.applyBalanceChange();
     transactions.addTransactionUnderKey(account.getAccount_number(), transaction);
-    updateObservers(this); // VON PAUL fürs observer
+    updateObservers(this,account,transaction); // VON PAUL fürs observer
   }
 
   public void updateTransaction(final int accountID, final Transaction transaction)  {
     transactions.updateTransaction(accountID,transaction);
-    updateObservers(this);
+    CustomIterator<Account> acc_iterator=accounts.getIterator();
+    while (acc_iterator.hasNext())
+    {
+      if(acc_iterator.element().getAccount_number()==accountID)
+      {
+        updateObservers(this,acc_iterator.next(),transaction);
+      }
+    }
   }
 
 
@@ -139,10 +146,13 @@ public class User extends SWE_Observable {
       if(accountID==iterator.element().getAccount_number())
       {
         iterator.element().updateAccountNumberAndBalance(accountID,iterator.element().getBalance()-transaction.getAmount());
+        updateObservers(this);
       }
+      iterator.next();
     }
     transactions.deleteTransaction(accountID,transaction);
-    updateObservers(this);
+    updateObservers(this,transaction.getID());
+
   }
 
   /**

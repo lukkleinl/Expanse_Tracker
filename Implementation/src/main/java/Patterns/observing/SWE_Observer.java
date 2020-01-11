@@ -1,5 +1,7 @@
 package Patterns.observing;
 
+import accounts.Account;
+import transactions.Transaction;
 import user.User;
 
 /**
@@ -11,5 +13,6 @@ import user.User;
       * @param obj Object that changed, which interests the observer.
       */
      void update(User obj);
-     //void update(Transaction obj,User user);
+     void update(User user, Account acc,Transaction trans);
+     void update(User user,int Transaction_ID);
 }

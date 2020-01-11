@@ -51,11 +51,12 @@ public class Observer_Test {
     user3.addAccount(new DebitCard("Giro Account", "Bank Austria", Integer.MIN_VALUE,
         "AT121200001203250544"));
 
+    Transaction payout=null;
     CustomIterator<Account> acc3=user3.getAccounts().getIterator();
     try {
 
       for (int i = 0; i < transactions; i++) {
-        Transaction payout =
+        payout =
             TransactionCreator.newTransaction("FOOD",2000,"avf",user3.getCategoryStore());
         user3.applyAndSaveTransaction(payout, acc3.element());
       }
@@ -74,6 +75,9 @@ public class Observer_Test {
     user3.removeTransactionCategory("DIVIDEND");
 
 
+    user3.deleteTransaction(5,payout);
+
+    base.deleteUser(user2);
   }
 
 }
