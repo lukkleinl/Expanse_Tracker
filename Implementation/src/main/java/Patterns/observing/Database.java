@@ -18,6 +18,7 @@ public class Database implements SWE_Observer {
     {
         listOfUsers = readOperations.getUsers();
 
+
         CustomIterator<User> it = listOfUsers.getIterator();
 
         while (it.hasNext())

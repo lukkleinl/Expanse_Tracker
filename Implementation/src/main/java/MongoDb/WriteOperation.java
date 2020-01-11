@@ -105,34 +105,47 @@ public class WriteOperation implements Write_Operation {
     {
         Document doc;
 
-        doc=new Document("id",account.getAccount_number())
-                         .append("Limit",account.getLimit())
-                         .append("Balance",account.getBalance())
-                         .append("Name",account.getName());
+
         switch(account.toString()) {
             case "STOCKS":
                 Stocks stock= (Stocks) account;
-                doc .append("Accounttype",account.toString())
+                doc=new Document("id",account.getAccount_number())
+                    .append("Limit",account.getLimit())
+                    .append("Balance",account.getBalance())
+                    .append("Name",account.getName())
+                    .append("Accounttype",account.toString())
                     .append("Buy Date",stock.getBuyDate());
                 return doc;
 
             case "DEBITCARD":
                 DebitCard debit= (DebitCard) account;
-                doc .append("IBAN",debit.getIBAN())
+                doc=new Document("id",account.getAccount_number())
+                    .append("Limit",account.getLimit())
+                    .append("Balance",account.getBalance())
+                    .append("Name",account.getName())
+                    .append("IBAN",debit.getIBAN())
                     .append("Bankname",debit.getBankName())
                     .append("Accounttype",account.toString());
                 return doc;
 
             case "CREDITCARD":
                 CreditCard credit= (CreditCard) account;
-                doc .append("Expiry Date",credit.getExpiryDate())
+                doc=new Document("id",account.getAccount_number())
+                    .append("Limit",account.getLimit())
+                    .append("Balance",account.getBalance())
+                    .append("Name",account.getName())
+                    .append("Expiry Date",credit.getExpiryDate())
                     .append("Bankname",credit.getBankName())
                     .append("Accounttype",account.toString());
                 return doc;
 
             case "CASH":
                 Cash cash= (Cash) account;
-                doc .append("Currency",cash.getCurrency())
+                doc=new Document("id",account.getAccount_number())
+                    .append("Limit",account.getLimit())
+                    .append("Balance",account.getBalance())
+                    .append("Name",account.getName())
+                    .append("Currency",cash.getCurrency())
                     .append("Accounttype",account.toString());
                 return doc;
         }
