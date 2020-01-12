@@ -4,7 +4,7 @@ import accounts.Account;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import javax.swing.JFrame;
-import ui.listPages.AccountListPage;
+import GUI.ListPages.AccountListPage;
 import ui_tests.TestUser;
 import user.User;
 

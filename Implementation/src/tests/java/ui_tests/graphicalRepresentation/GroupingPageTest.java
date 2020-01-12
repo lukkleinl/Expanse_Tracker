@@ -4,9 +4,9 @@ import iteration.CustomContainer;
 import iteration.CustomIterator;
 import transactions.Transaction;
 import transactions.grouping.GroupingBuilder;
-import ui.TestUser;
-import ui.graphicalRepresentation.GraphicalRepresentation_Bar;
-import ui.graphicalRepresentation.GraphicalRepresentation_Pie;
+import GUI.Main.TestUser;
+import GUI.GraphicalPages.GraphicalRepresentation_Bar;
+import GUI.GraphicalPages.GraphicalRepresentation_Pie;
 import user.User;
 
 import java.time.ZoneId;

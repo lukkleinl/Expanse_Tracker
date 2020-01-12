@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.swing.JFrame;
 import transactions.Transaction;
 import transactions.TransactionCreator;
-import ui.listPages.TransactionListPage;
+import GUI.ListPages.TransactionListPage;
 import user.User;
 
 public class TransactionListPageVIEW {

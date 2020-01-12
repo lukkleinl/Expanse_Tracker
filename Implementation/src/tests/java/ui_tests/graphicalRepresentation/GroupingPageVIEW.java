@@ -1,7 +1,7 @@
 package ui_tests.graphicalRepresentation;
 
-import ui.TestUser;
-import ui.graphicalRepresentation.GroupingPage;
+import GUI.Main.TestUser;
+import GUI.GraphicalPages.GroupingPage;
 import user.User;
 
 import javax.swing.*;

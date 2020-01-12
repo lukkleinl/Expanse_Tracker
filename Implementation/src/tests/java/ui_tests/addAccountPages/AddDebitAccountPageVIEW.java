@@ -1,7 +1,7 @@
 package ui_tests.addAccountPages;
 
 import javax.swing.JFrame;
-import ui.addAccountPages.AddDebitAccountPage;
+import GUI.AddAccountPages.AddDebitAccountPage;
 import ui_tests.TestUser;
 
 public class AddDebitAccountPageVIEW {
