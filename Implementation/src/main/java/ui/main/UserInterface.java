@@ -4,7 +4,9 @@ import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
-import javax.swing.JFrame;
+
+import javax.swing.*;
+
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
@@ -240,7 +242,6 @@ public class UserInterface {
             if (addPayoutPage
                 .isSubmitted()) { // if submit button got pressed, add new payout to account of
               // the user
-              try {
                 Transaction payout =
                     TransactionCreator.newTransaction(
                         addPayoutPage.getCategory(),
@@ -249,9 +250,11 @@ public class UserInterface {
                         user.getCategoryStore());
                 user.applyAndSaveTransaction(payout, accountListPage.getSelectedAccount());
                 // user.handleTransaction(payout, accountListPage.getSelectedAccount());
-              } catch (Exception e) {
-                System.out.println("ERR:" + e.getMessage()); // TODO BETTER
-              }
+
+                if(accountListPage.getSelectedAccount().limitExceeded()) {
+                  JOptionPane.showMessageDialog(null, "Balance is lower as the limit, after this transaction!", "Limit Warning",JOptionPane.WARNING_MESSAGE);
+                }
+
             } else if (addPayoutPage.isBackWanted()) {
               transactionListPage.configureFrame(
                   frame); // open transaction list page of the account again
@@ -273,7 +276,6 @@ public class UserInterface {
             if (addDepositPage
                 .isSubmitted()) { // if submit button got pressed, add new deposit page to account
               // of the user
-              try {
                 Transaction deposit =
                     TransactionCreator.newTransaction(
                         addDepositPage.getCategory(),
@@ -281,9 +283,11 @@ public class UserInterface {
                         addDepositPage.getDescription(),
                         user.getCategoryStore());
                 user.applyAndSaveTransaction(deposit, accountListPage.getSelectedAccount());
-              } catch (Exception e) {
-                System.out.println("ERR:" + e.getMessage()); // TODO BETTER
-              }
+
+                if(accountListPage.getSelectedAccount().limitExceeded()) {
+                  JOptionPane.showMessageDialog(null, "Balance is lower as the limit, after this transaction!", "Limit Warning",JOptionPane.WARNING_MESSAGE);
+                }
+
             } else if (addDepositPage.isBackWanted()) {
               transactionListPage.configureFrame(
                   frame); // open transaction list page of the account again
@@ -318,6 +322,11 @@ public class UserInterface {
                     addPayoutPage.getDescription());
                 user.updateTransaction(
                     accountListPage.getSelectedAccount().getAccount_number(), transaction);
+
+                if(accountListPage.getSelectedAccount().limitExceeded()) {
+                  JOptionPane.showMessageDialog(null, "Balance is lower as the limit, after this transaction!", "Limit Warning",JOptionPane.WARNING_MESSAGE);
+                }
+
               } else if (addPayoutPage.isBackWanted()) {
                 transactionListPage.configureFrame(
                     frame); // open transaction list page of the account again
@@ -347,7 +356,11 @@ public class UserInterface {
                     addDepositPage.getDescription());
                 user.updateTransaction(
                     accountListPage.getSelectedAccount().getAccount_number(), transaction);
-                System.out.println("HERE");
+
+                if(accountListPage.getSelectedAccount().limitExceeded()) {
+                  JOptionPane.showMessageDialog(null, "Balance is lower as the limit, after this transaction!", "Limit Warning",JOptionPane.WARNING_MESSAGE);
+                }
+
               } else if (addDepositPage.isBackWanted()) {
                 transactionListPage.configureFrame(
                     frame); // open transaction list page of the account again

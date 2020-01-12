@@ -31,9 +31,6 @@ public class RegistrationPage extends AbstractPage {
   private JTextField firstnameTextField;
   private JTextField lastnameTextField;
 
-  private static final int FRAME_WIDTH = 410;
-  private static final int FRAME_HEIGHT = 530;
-
   private String user;
   private String password;
   private String firstname;

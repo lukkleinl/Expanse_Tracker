@@ -154,8 +154,15 @@ public class LoginPage extends AbstractPage {
     components.add(message);
   }
 
+  /**
+   * This method resets the title of the JFrame to "Login".
+   *
+   * @param frame The JFrame, which to update the title from.
+   */
   @Override
   protected void resetTitle(JFrame frame) {
     frame.setTitle("Login");
   }
 }
+
+

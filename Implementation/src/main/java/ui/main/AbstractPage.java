@@ -45,3 +45,4 @@ public abstract class AbstractPage {
 
   protected abstract void createComponents();
 }
+
