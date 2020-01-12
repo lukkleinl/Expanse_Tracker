@@ -27,6 +27,7 @@ import ui.listPages.TransactionListPage;
 import ui.login.LoginPage;
 import ui.login.RegistrationPage;
 import user.User;
+import user.User_Facade;
 
 import static ui.listPages.AccountTypes.CASH;
 
@@ -39,9 +40,14 @@ public class UserInterface {
 
   private User user;
   Database database;
+  User_Facade user_facade;
 
-  public UserInterface(Database db){
-    database = db;
+  public UserInterface(){
+    try {
+      user_facade = new User_Facade();
+    }catch (Exception e){
+      System.out.println(e.getMessage() +"while creating user Facade in UserInterface Constructor!");
+    }
   }
 
   /** This method starts the GUI and starts the whole procedure. */
@@ -90,7 +96,9 @@ public class UserInterface {
           } catch (InterruptedException e) {
             e.printStackTrace();
           }
-          database.newUser(registrationPage.getUser(),registrationPage.getFirstname(),registrationPage.getLastname(),registrationPage.getPassword());
+          try {
+            user_facade.addUser(registrationPage.getUser(), registrationPage.getFirstname(), registrationPage.getLastname(), registrationPage.getPassword());
+          }catch (Exception e){ System.out.println(e +"while adding user with user Facade in UserInterface 101"); }
           // TODO: save userdata here
         }
         // OPEN LOGIN PAGE COMPONENTS AGAIN
