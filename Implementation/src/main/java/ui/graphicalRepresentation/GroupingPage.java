@@ -23,6 +23,11 @@ import user.User;
 
 import static javax.swing.JOptionPane.DEFAULT_OPTION;
 
+
+/** This Page groups the Transactions by a user given Time slot, its
+ * also capable of opening Graphical Representations in the form of either, Bar or Pie Charts.
+ * @author Paul Kraft
+ */
 public class GroupingPage extends AbstractPage {
 
   // ONLY FOR TESTING
@@ -30,9 +35,9 @@ public class GroupingPage extends AbstractPage {
   private final boolean TESTING_boolean = false;
   //
 
-  private ZonedDateTime begin = ZonedDateTime.now(ZoneId.of("UTC")).minusHours(1);
-  private ZonedDateTime end = ZonedDateTime.now(ZoneId.of("UTC"));
-  private GroupingTypes groupingType = GroupingTypes.MONTHLY;
+  private ZonedDateTime begin = ZonedDateTime.now(ZoneId.of("UTC")).minusHours(1);   //begin date for the grouping algorithm
+  private ZonedDateTime end = ZonedDateTime.now(ZoneId.of("UTC"));                      //end  date for the grouping algorithm
+  private GroupingTypes groupingType = GroupingTypes.MONTHLY;          //Types of grouping that are supported
   private User user;
   private JLabel groupedByHeader;
   private JLabel groupedByLabel;
@@ -43,18 +48,21 @@ public class GroupingPage extends AbstractPage {
   private JButton selectDateButton;
   private JTable transactionTable;
   private JScrollPane scrollPane;
-
   private volatile boolean refreshWanted = false;
   private volatile boolean backWanted = false;
-
-
-    String[] options = getNames(GroupingTypes.class);
+  String[] options = getNames(GroupingTypes.class);
   int selectedGrouping = 0;
   private String selectedDate = "";
   private String selectedDateEnd = "";
   private String groupedByMessage = "";
   // private volatile boolean graphicalWanted;
 
+
+    /**
+     * User needed for displaying, user releveant information
+     * also the Transactions and the Sorting Objects are aquired from this.
+     * @param user
+     */
   public GroupingPage(final User user) {
     this.user = user;
   }
@@ -108,11 +116,21 @@ public class GroupingPage extends AbstractPage {
     }
 
 
+    /**
+     * function to set the Frame Title(only called from within the UserInterface)
+     * takes in a frame and sets its title to 'Grouping- Page'
+     * @param frame
+     */
     @Override
   protected void resetTitle(final JFrame frame) {
     frame.setTitle("Grouping - Page");
   }
 
+  /**
+   * creates all the Components that the JFrame should display(incl. Position,actionlisteners for Buttons, text etc)
+   * also resets the booleans for backwanted, refreshwanted
+   * is called from within the configureFrame in abstract Page.
+   */
   @Override
   protected void createComponents() {
 
@@ -121,19 +139,20 @@ public class GroupingPage extends AbstractPage {
     // graphicalWanted = false;
 
     this.components = new ArrayList<>();
+
+    // gets the Data from the User to Display the Transactions by time
     GroupingBuilder orga = new GroupingBuilder().allAccs(this.user).category();
-    switch (this.groupingType) {
+    switch (this.groupingType) { //checks which kind of grouping is wanted
       case DAILY:
-        orga = orga.daily().userdefined(begin, begin.plusDays(1));
+        orga = orga.daily().userdefined(begin, begin.plusDays(1)); // this day until 1 day later
         break;
       case MONTHLY:
-        orga = orga.monthly().userdefined(begin, begin.plusMonths(1));
+        orga = orga.monthly().userdefined(begin, begin.plusMonths(1)); // this month until 1 month later
         break;
       case YEARLY:
-        orga = orga.yearly().userdefined(begin, begin.plusYears(1));
+        orga = orga.yearly().userdefined(begin, begin.plusYears(1)); // this year until 1 year later
         break;
-      case USER_DEFINED:
-        // this.introText += "User Defined:" + this.begin.toString() + " - " + this.end.toString();
+      case USER_DEFINED:                                             // user defined from - to
         orga = orga.userdefined(this.begin, this.end);
         break;
     }
@@ -141,7 +160,7 @@ public class GroupingPage extends AbstractPage {
     Map<String, CustomContainer<Transaction>> organized = orga.organize();
 
     String[] transactionDescriptions = {
-      "Type", "Descriptions", "Amount", "Creation-Date", "Category"
+      "Type", "Descriptions", "Amount", "Creation-Date", "Category"    
     };
 
     int rows = 0;
@@ -448,6 +467,10 @@ public class GroupingPage extends AbstractPage {
         });
   }
 
+    /**
+     * Main for testing the PAge
+     * @param args
+     */
   public static void main(final String args[]) {
     JFrame frame = new JFrame();
     frame.setLayout(null);
@@ -460,6 +483,11 @@ public class GroupingPage extends AbstractPage {
   }
 
   // https://stackoverflow.com/questions/13783295/getting-all-names-in-an-enum-as-a-string
+    /**
+     * Taken from  // https://stackoverflow.com/questions/13783295/getting-all-names-in-an-enum-as-a-string
+     * Helper functon to convert Enum class to string array.
+     * @param e Enum
+     */
   public static String[] getNames(Class<? extends Enum<?>> e) {
     return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
   }
