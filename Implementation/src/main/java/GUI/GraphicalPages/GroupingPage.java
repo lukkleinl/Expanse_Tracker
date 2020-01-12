@@ -28,12 +28,6 @@ import static javax.swing.JOptionPane.DEFAULT_OPTION;
  * @author Patrick Gmasz
  */
 public class GroupingPage extends AbstractPage {
-
-  // ONLY FOR TESTING
-  private JFrame TESTING_frame;
-  private final boolean TESTING_boolean = false;
-  //
-
   private ZonedDateTime begin = ZonedDateTime.now(ZoneId.of("UTC")).minusHours(1);   //begin date for the grouping algorithm
   private ZonedDateTime end = ZonedDateTime.now(ZoneId.of("UTC"));                      //end  date for the grouping algorithm
   private GroupingTypes groupingType = GroupingTypes.MONTHLY;          //Types of grouping that are supported
@@ -65,21 +59,7 @@ public class GroupingPage extends AbstractPage {
   public GroupingPage(final User user) {
     this.user = user;
   }
-
-    /**
-     *DO NOT USE!!! Testing Consctructor that besides the User also takes a JFrame,
-     * the code will auto refresh on that Jframe  if the testing boolean is true
-     * @param user The User whose Data should be Displayed
-     * @param frame The Frame on which the Page is running.
-     */
-  public GroupingPage(User user, JFrame frame) {
-  if(!TESTING_boolean)
-      throw new RuntimeException("DO NOT USE THE TEST CONSCTRUCTOR! in GroupingPage");
-
-    this.user = user;
-    this.TESTING_frame = frame;
-  }
-  //
+  
 
     /**
      * The page has a button, which the user can press if he wants to Go 1 Page back. Pressing the
