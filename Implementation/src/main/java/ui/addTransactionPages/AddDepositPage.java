@@ -72,6 +72,10 @@ public class AddDepositPage extends AbstractPage {
     this.createComponents();
   }
 
+  /** creates all the Components that the JFrame should display(incl. Position,actionlisteners for Buttons, text etc)
+   * also resets the booleans for backwanted, refreshwanted etc.
+   * is called from within the configureFrame in abstract Page.
+   */
   @Override
   protected void createComponents() {
 
@@ -170,11 +174,21 @@ public class AddDepositPage extends AbstractPage {
     backButton.addActionListener(e -> backWanted = true);
   }
 
+  /**
+   * function to set the Frame Title(only called from within the UserInterface)
+   * takes in a frame and sets its title to 'Add Deposit - Page'
+   * @param frame
+   */
   @Override
   protected void resetTitle(final JFrame frame) {
     frame.setTitle("Add Deposit - Page");
   }
 
+  /**
+   * field to update the input JTextfields
+   * needed in case the deposit is updated, so it can display the old values.
+   * @param  transaction
+   */
   public void updateFields(Deposit transaction) {
     amountInputField.setText(Float.toString(transaction.getAmount()));
     descriptionInputField.setText(transaction.getDescription());
