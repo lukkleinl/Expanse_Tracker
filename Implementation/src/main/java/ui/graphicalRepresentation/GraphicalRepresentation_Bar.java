@@ -78,7 +78,7 @@ public class GraphicalRepresentation_Bar {
   }
 
   /**
-   * private helpfer functions
+   * private helper function to draw the Chart
    * @param listOfTransactions
    * @param dateOfInterest
    */
@@ -138,10 +138,11 @@ public class GraphicalRepresentation_Bar {
     frame.setVisible(true);
   }
 
-  // needs Month as '01' .. '02' ..
+
 
   /**
    * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
+   *   needs Month as '01' .. '02' .. year as'2016'
    * @param year
    * @param month
    * @return
@@ -165,6 +166,7 @@ public class GraphicalRepresentation_Bar {
   }
   /**
    * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
+   * needs year as '2016'
    * @param year
    * @return
    * @throws Exception
@@ -184,6 +186,7 @@ public class GraphicalRepresentation_Bar {
   }
   /**
    * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
+   * needs year as '2015' day as '01' month as'01'
    * @param year
    * @param month
    * @param day

@@ -79,6 +79,11 @@ public class GraphicalRepresentation_Pie {
     draw(getCustom(begin, end), begin.toString() + " - " + end.toString());
   }
 
+  /**
+   * private helper function to draw the Chart
+   * @param listOfTransactions
+   * @param dateOfInterest
+   */
   private void draw(CustomContainer<Transaction> listOfTransactions, String dateOfInterest) {
 
     this.listOfTransactions = listOfTransactions;
@@ -92,6 +97,7 @@ public class GraphicalRepresentation_Pie {
 
     for (CustomIterator it = listOfTransactions.getIterator(); it.hasNext(); it.next()) {
 
+      //combines all Payouts
       if (it.element() instanceof Payout) {
 
         String category = ((Payout) it.element()).getCategory();
@@ -104,7 +110,7 @@ public class GraphicalRepresentation_Pie {
         } else
           combinedTransactionValuesOfCategorys.put(category, ((Payout) it.element()).getAmount());
 
-      } else {
+      } else { // Combines all deposits
 
         String category = ((Deposit) it.element()).getCategory();
 
@@ -125,8 +131,6 @@ public class GraphicalRepresentation_Pie {
       else dataset_Deposit.setValue(category, combinedTransactionValuesOfCategorys.get(category));
     }
 
-    JPanel panel_deposit = new JPanel();
-    JPanel panel_payout = new JPanel();
 
     JFreeChart chart_deposit =
         ChartFactory.createPieChart("Deposits - " + dateOfInterest, dataset_Deposit);
@@ -136,19 +140,20 @@ public class GraphicalRepresentation_Pie {
     ChartFrame chartFrame_deposit = new ChartFrame("Pie Chart Deposit", chart_deposit);
     ChartFrame chartFrame_payout = new ChartFrame("Pie Chart Payout", chart_payout);
 
-    // panel_deposit.add(chartFrame_deposit);
-    // panel_deposit.add(chartFrame_payout);
-
-    // panel_deposit.setSize(500,500);
-    // panel_deposit.setVisible(true);
-
     chartFrame_payout.setSize(450, 500);
     chartFrame_payout.setVisible(true);
 
     chartFrame_deposit.setSize(450, 500);
     chartFrame_deposit.setVisible(true);
   }
-  // needs Month as '01' .. '02' ..
+  /**
+   * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
+   *   needs Month as '01' .. '02' .. year as'2016'
+   * @param year
+   * @param month
+   * @return
+   * @throws Exception
+   */
   public CustomContainer<Transaction> getMonthly(String year, String month) throws Exception {
 
     if (Integer.valueOf(year) <= 0) throw new IndexOutOfBoundsException("No Banks before Jesus!");
@@ -166,6 +171,13 @@ public class GraphicalRepresentation_Pie {
     throw new NoSuchFieldException("Given Date not present");
   }
 
+  /**
+   * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
+   * needs year as '2015'
+   * @param year
+   * @return
+   * @throws Exception
+   */
   public CustomContainer<Transaction> getYearly(String year) throws Exception {
 
     if (Integer.valueOf(year) <= 0) throw new IndexOutOfBoundsException("No Banks before Jesus!");
@@ -179,6 +191,16 @@ public class GraphicalRepresentation_Pie {
 
     throw new NoSuchFieldException("Given Date not present");
   }
+
+  /**
+   * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
+   * needs year as '2015' day as '01' month as'01'
+   * @param year
+   * @param month
+   * @param day
+   * @return
+   * @throws Exception
+   */
 
   public CustomContainer<Transaction> getDaily(String year, String month, String day)
       throws Exception {
@@ -198,6 +220,13 @@ public class GraphicalRepresentation_Pie {
     throw new NoSuchFieldException("Given Date not present");
   }
 
+  /**
+   * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
+   * @param begin
+   * @param end
+   * @return
+   * @throws Exception
+   */
   public CustomContainer<Transaction> getCustom(ZonedDateTime begin, ZonedDateTime end)
       throws Exception {
     Map<String, CustomContainer<Transaction>> orga =
