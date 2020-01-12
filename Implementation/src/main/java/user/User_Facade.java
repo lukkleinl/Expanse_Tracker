@@ -4,6 +4,8 @@ import Patterns.observing.Database;
 import accounts.Account;
 import exceptions.SWE_Exception;
 import transactions.Transaction;
+import transactions.categories.DepositCategory;
+import transactions.categories.PayoutCategory;
 
 public class User_Facade implements User_Interface{
 
@@ -54,6 +56,20 @@ public class User_Facade implements User_Interface{
       user.deleteTransaction(accountID,transaction);
   }
 
+  @Override
+  public void removeTransactionCategory(User user,String categoryname) {
+      user.removeTransactionCategory(categoryname);
+  }
+
+  @Override
+  public void newTransactionCategory(User user,String categorytype,String categoryname) {
+    if(categorytype.toUpperCase().equals("PAYOUT"))
+        user.newTransactionCategory(new PayoutCategory(categoryname));
+    else if(categorytype.toUpperCase().equals("DEPOSIT"))
+        user.newTransactionCategory(new DepositCategory(categoryname));
+    else
+      assert true : "Should not reach this argument";
+  }
 
   @Override
   public User getUser(String ID)
