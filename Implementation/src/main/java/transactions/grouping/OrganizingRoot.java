@@ -1,12 +1,9 @@
 package transactions.grouping;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import iteration.CustomContainer;
-import iteration.CustomIterator;
 import transactions.Transaction;
 
 /**
@@ -18,12 +15,10 @@ public abstract class OrganizingRoot implements TransactionOrganizing {
 
   protected final TransactionOrganizing root;
   protected final Map<String, CustomContainer<Transaction>> grouped;
-  protected final List<CustomIterator<Transaction>> iterators;
 
   public OrganizingRoot(final TransactionOrganizing wrappee) {
     this.root = wrappee;
     this.grouped = new TreeMap<>();
-    this.iterators = new ArrayList<>();
   }
 
   /** Groupers implement this method for their grouping algorithm. */
