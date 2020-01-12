@@ -4,10 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import ui.main.AbstractPage;
@@ -23,7 +20,7 @@ public class LoginPage extends AbstractPage {
   private JLabel userLabel;
   private JLabel passwordLabel;
   private JTextField userTextField;
-  private JTextField passwordTextField;
+  private JPasswordField passwordTextField;
   private JButton submitButton;
   private JButton registerButton;
 
@@ -112,7 +109,7 @@ public class LoginPage extends AbstractPage {
     passwordLabel.setBounds(300, 400, 300, 50);
 
     // PASSWORD_TEXTFIELD
-    passwordTextField = new JTextField();
+    passwordTextField = new JPasswordField();
     passwordTextField.setFont(TEXTFIELD_FONT);
     passwordTextField.setBounds(600, 400, 300, 50);
 

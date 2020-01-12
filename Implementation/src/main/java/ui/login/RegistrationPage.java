@@ -24,8 +24,8 @@ public class RegistrationPage extends AbstractPage {
   private JLabel lastnameLabel;
   private JLabel infoLabel;
   private JTextField userTextField;
-  private JTextField passwordTextField;
-  private JTextField password2TextField;
+  private JPasswordField passwordTextField;
+  private JPasswordField password2TextField;
   private JButton registerButton;
   private JButton backButton;
   private JTextField firstnameTextField;
@@ -169,7 +169,7 @@ public class RegistrationPage extends AbstractPage {
     passwordLabel.setBounds(300, 200, 300, 50);
 
     // PASSWORD_TEXTFIELD
-    passwordTextField = new JTextField();
+    passwordTextField = new JPasswordField();
     passwordTextField.setFont(TEXTFIELD_FONT);
     passwordTextField.setBounds(600, 200, 300, 50);
 
@@ -180,7 +180,7 @@ public class RegistrationPage extends AbstractPage {
     password2Label.setBounds(300, 300, 300, 50);
 
     // PASSWORD2_TEXTFIELD
-    password2TextField = new JTextField();
+    password2TextField = new JPasswordField();
     password2TextField.setFont(TEXTFIELD_FONT);
     password2TextField.setBounds(600, 300, 300, 50);
 
