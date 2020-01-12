@@ -3,8 +3,11 @@ package Patterns.observing;
 import MongoDb.ReadOperation;
 import MongoDb.WriteOperation;
 import accounts.Account;
+import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
+import java.util.Map;
+import java.util.Map.Entry;
 import transactions.Transaction;
 import user.User;
 
@@ -37,18 +40,30 @@ public class Database implements SWE_Observer {
         {
             if(it.element().getUserID().equals(user.getUserID()))
             {
+                Map<Integer, CustomContainer<Transaction>> map=user.getTransactionStore ().getTransactions();
 
-                if(user.getTransactionStore().getTransactions().containsValue(trans))
+                for(Entry entry : map.entrySet())
                 {
-                    writeOperation.updateTransaction(trans);
-                    return;
+                     CustomContainer<Object> list = (CustomList<Object>) entry.getValue();
+                     CustomIterator<Object> iterator = list.getIterator();
+                     Integer account_number = (Integer) entry.getKey();
+
+                     while (iterator.hasNext())
+                     {
+                         Transaction transaction= (Transaction) iterator.element();
+                         if(transaction.getID()==trans.getID())
+                         {
+                             writeOperation.updateTransaction(trans);
+                             return;
+                         }
+                         iterator.next();
+                     }
                 }
+
 
                 writeOperation.insertTransaction(user,acc,trans);
                 return;
-
             }
-
             it.next();
         }
     }

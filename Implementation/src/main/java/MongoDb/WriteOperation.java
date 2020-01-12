@@ -45,7 +45,6 @@ public class WriteOperation implements Write_Operation {
    * Returns the document of a transaction to insert into MongoDB
    *
    *
-   * @throws SWE_RuntimeException if the object type is neither a deposit nor a payout
    */
 
   private void getTrans(final Transaction trans, final int key, final String user_ID) {
@@ -80,7 +79,6 @@ public class WriteOperation implements Write_Operation {
    *
    * @return a account document
    *
-   * @throws SWE_RuntimeException throe when the object type is not an account
    */
   private Document Account(final Account account) {
     Document doc;
@@ -169,7 +167,6 @@ public class WriteOperation implements Write_Operation {
       CustomContainer<Object> list = (CustomList<Object>) e.getValue();
       CustomIterator<Object> iterator = list.getIterator();
       Integer account_number = (Integer) e.getKey();
-      System.out.println("Transaction" + account_number);
       while (iterator.hasNext()) {
         this.getTrans((Transaction) iterator.element(), account_number, user.getUserID());
         iterator.next();
