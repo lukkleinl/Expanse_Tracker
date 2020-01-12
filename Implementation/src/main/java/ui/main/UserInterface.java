@@ -1,6 +1,5 @@
 package ui.main;
 
-import Patterns.observing.Database;
 import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
@@ -10,7 +9,6 @@ import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
 import transactions.TransactionCreator;
-import ui.TestUser;
 import ui.addAccountPages.AddCashAccountPage;
 import ui.addAccountPages.AddCreditAccountPage;
 import ui.addAccountPages.AddDebitAccountPage;
@@ -35,7 +33,6 @@ import user.User_Facade;
 public class UserInterface {
 
   private User user;
-  Database database;
   User_Facade user_facade;
 
   public UserInterface(){
@@ -63,11 +60,13 @@ public class UserInterface {
     while (!foundUser) { // lets the login page opened until someone logged in successfully
       // TODO: check if user exists and if password is correct
       if (loginPage
-          .isLoginWanted()) { // checks if login button got pressed, if yes, check if user id and
-                              // password
-        if (loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
+          .isLoginWanted()) { // checks if login button got pressed, if yes, check if user id and password
+
+        user=user_facade.getUser(loginPage.getUser());
+        if(user!=null && user.getPassword().equals(loginPage.getPassword())){
+        //if (loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
           // TODO: user = db.getUser(userid)
-          user = TestUser.getTestUser();
+          //user = TestUser.getTestUser();
           foundUser = true;
         } else {
           loginPage.configureFrame(frame);
@@ -93,7 +92,6 @@ public class UserInterface {
             e.printStackTrace();
           }
           try {
-            System.out.println("avfb");
             user_facade.addUser(registrationPage.getUser(), registrationPage.getFirstname(), registrationPage.getLastname(), registrationPage.getPassword());
           }catch (Exception e){ System.out.println(e +"while adding user with user Facade in UserInterface 101"); }
           // TODO: save userdata here
