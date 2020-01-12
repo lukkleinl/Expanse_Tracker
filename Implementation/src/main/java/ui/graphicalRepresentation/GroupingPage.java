@@ -159,10 +159,12 @@ public class GroupingPage extends AbstractPage {
 
     Map<String, CustomContainer<Transaction>> organized = orga.organize();
 
-    String[] transactionDescriptions = {
-      "Type", "Descriptions", "Amount", "Creation-Date", "Category"    
+    String[] transactionDescriptions = { // the Header bar the JTable, so its clear what is what in loaded Page.(the very first row))
+            "Type", "Descriptions", "Amount", "Creation-Date", "Category"
     };
 
+
+    //iterates over the transactions and saves it in a String[][] array in a easy to Visualize format
     int rows = 0;
     for (String key : organized.keySet()) {
       rows += organized.get(key).size();
@@ -188,12 +190,12 @@ public class GroupingPage extends AbstractPage {
         }
       }
 
-      this.transactionTable = new JTable(transactionList_VISU, transactionDescriptions);
+      this.transactionTable = new JTable(transactionList_VISU, transactionDescriptions);  // sets the actual JTable
     } else {
       transactionTable = new JTable(new String[0][0], transactionDescriptions);
     }
 
-    DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+    DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();       // optic
     tableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
     transactionTable.setRowHeight(70);
     transactionTable.setFont(TEXTFIELD_FONT);
@@ -203,6 +205,7 @@ public class GroupingPage extends AbstractPage {
 
     this.transactionTable.setDefaultEditor(Object.class, null);
 
+    // components that are needed:
     this.scrollPane = new JScrollPane(this.transactionTable);
     scrollPane.setBounds(150, 150, 900, 450);
     this.components.add(this.scrollPane);
@@ -250,7 +253,7 @@ public class GroupingPage extends AbstractPage {
     selectDateButton.setBorder(new LineBorder(Color.BLACK, 2));
     this.components.add(selectDateButton);
 
-    this.showBarGraphicalButton.addActionListener(
+    this.showBarGraphicalButton.addActionListener(        // actionlistener to display Bar chart, depending on grouping will produce different chart
         new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent ev) {
@@ -294,7 +297,7 @@ public class GroupingPage extends AbstractPage {
           }
         });
 
-    this.showPieGraphicalButton.addActionListener(
+    this.showPieGraphicalButton.addActionListener(  // actionlistener to display Pie chart, depending on grouping will produce different chart
         new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent ev) {
@@ -338,7 +341,7 @@ public class GroupingPage extends AbstractPage {
           }
         });
 
-    this.selectDateButton.addActionListener(
+    this.selectDateButton.addActionListener(    // actionlistener to select Groupingtype and date
         new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
@@ -356,7 +359,7 @@ public class GroupingPage extends AbstractPage {
 
 
     try {
-      switch (selectedGrouping) {
+      switch (selectedGrouping) {    // int that represents the type of Grouping, 0 day, 1 to Month, 2 to Year, 3 user defined.
         case 0:
           selectedDate =
                   JOptionPane.showInputDialog(
@@ -372,7 +375,6 @@ public class GroupingPage extends AbstractPage {
                           0,
                           ZoneId.of("UTC")));
           groupingType = GroupingTypes.DAILY;
-          // TODO CHECK TIME PROPERLY
           // ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC"));
           groupedByMessage = groupingType.toString() + "- " + selectedDate;
           break;
@@ -380,7 +382,6 @@ public class GroupingPage extends AbstractPage {
           selectedDate =
                   JOptionPane.showInputDialog("Specify Year and Month for Summary", "YYYY/MM");
           groupingType = GroupingTypes.MONTHLY;
-          // TODO CHECK TIME PROPERLY
           setBegin(
                   ZonedDateTime.of(
                           Integer.valueOf(selectedDate.substring(0, 4)),
@@ -395,7 +396,6 @@ public class GroupingPage extends AbstractPage {
           break;
         case 2:
           selectedDate = JOptionPane.showInputDialog("Specify Year for Summary", "YYYY");
-          // TODO CHECK TIME PROPERLY
           setBegin(
                   ZonedDateTime.of(
                           Integer.valueOf(selectedDate.substring(0, 4)),
@@ -413,7 +413,6 @@ public class GroupingPage extends AbstractPage {
           selectedDate =
                   JOptionPane.showInputDialog(
                           "Specify Year, Month and Day Start for Summary", "YYYY/MM/DD");
-          // TODO CHECK TIME PROPERLY
           setBegin(
                   ZonedDateTime.of(
                           Integer.valueOf(selectedDate.substring(0, 4)),
