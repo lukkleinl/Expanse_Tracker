@@ -128,27 +128,41 @@ public class User extends SWE_Observable {
 
   public void updateTransaction(final int accountID, final Transaction transaction) {
     this.transactions.updateTransaction(accountID, transaction);
-    CustomIterator<Account> acc_iterator = this.accounts.getIterator();
-    while (acc_iterator.hasNext()) {
-      if (acc_iterator.element().getAccount_number() == accountID) {
-        acc_iterator.element().updateAccountNumberAndBalance(accountID,
-            acc_iterator.element().getBalance() - transaction.getAmount());
-        updateObservers(this, acc_iterator.next(), transaction);
+
+    for (CustomIterator<Account> it = this.accounts.getIterator(); it.hasNext(); it.next()) {
+      if (it.element().getAccount_number() == accountID) {
+        it.element().updateAccountNumberAndBalance(accountID,
+            it.element().getBalance() - transaction.getAmount());
+        updateObservers(this, it.element(), transaction);
       }
     }
+    // while (acc_iterator.hasNext()) {
+    // if (acc_iterator.element().getAccount_number() == accountID) {
+    // acc_iterator.element().updateAccountNumberAndBalance(accountID,
+    // acc_iterator.element().getBalance() - transaction.getAmount());
+    // updateObservers(this, acc_iterator.next(), transaction);
+    // }
+    // }
   }
 
 
   public void deleteTransaction(final int accountID, final Transaction transaction) {
-    CustomIterator<Account> iterator = this.accounts.getIterator();
-    while (iterator.hasNext()) {
-      if (accountID == iterator.element().getAccount_number()) {
-        iterator.element().updateAccountNumberAndBalance(accountID,
-            iterator.element().getBalance() - transaction.getAmount());
+
+    for (CustomIterator<Account> it = this.accounts.getIterator(); it.hasNext(); it.element()) {
+      if (it.element().getAccount_number() == accountID) {
+        it.element().updateAccountNumberAndBalance(accountID,
+            it.element().getBalance() - transaction.getAmount());
         updateObservers(this);
       }
-      iterator.next();
     }
+    // while (iterator.hasNext()) {
+    // if (accountID == iterator.element().getAccount_number()) {
+    // iterator.element().updateAccountNumberAndBalance(accountID,
+    // iterator.element().getBalance() - transaction.getAmount());
+    // updateObservers(this);
+    // }
+    // iterator.next();
+    // }
     this.transactions.deleteTransaction(accountID, transaction);
     updateObservers(this, transaction.getID());
 
