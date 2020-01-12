@@ -2,7 +2,6 @@ package iteration;
 
 import java.util.ArrayList;
 import java.util.List;
-import exceptions.SWE_RuntimeException;
 
 /**
  * Used to store the Accounts and Transactions of a User with safe access.
@@ -37,8 +36,8 @@ public class CustomList<T> implements CustomContainer<T> {
 
   @Override
   public void update(final T element) {
-    for(int i = 0; i < this.list.size(); ++i) {
-      if(this.list.get(i).equals(element)) {
+    for (int i = 0; i < this.list.size(); ++i) {
+      if (this.list.get(i).equals(element)) {
         this.list.set(i, element);
       }
     }
@@ -88,18 +87,18 @@ public class CustomList<T> implements CustomContainer<T> {
     }
 
     @Override
-    public T next() throws SWE_RuntimeException {
+    public T next() {
       if (!this.hasNext())
-        throw new SWE_RuntimeException("This iterator has already processed all elements !");
+        throw new RuntimeException("This iterator has already processed all elements !");
       T elem = (T) CustomList.this.list.get(this.position);
       this.position++;
       return elem;
     }
 
     @Override
-    public T element() throws SWE_RuntimeException {
+    public T element() {
       if (!this.hasNext())
-        throw new SWE_RuntimeException("This iterator has already processed all elements !");
+        throw new RuntimeException("This iterator has already processed all elements !");
       T elem = (T) CustomList.this.list.get(this.position);
       return elem;
     }
