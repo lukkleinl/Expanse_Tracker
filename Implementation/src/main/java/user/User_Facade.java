@@ -2,6 +2,7 @@ package user;
 
 import Patterns.observing.Database;
 import accounts.Account;
+import exceptions.SWE_Exception;
 import transactions.Transaction;
 
 public class User_Facade implements User_Interface{
@@ -21,22 +22,36 @@ public class User_Facade implements User_Interface{
   }
 
   @Override
-  public void updateUser(User user)
-  {
-      database.update(user);
+  public void addAccount(Account acc) {
+
   }
 
   @Override
-  public void deleteTransaction(User user,int transaction_id)
-  {
-      database.update(user,transaction_id);
+  public void updateAccount(Account oldAcc, Account newAcc) {
+
   }
 
   @Override
-  public void add_or_updateTransaction(User user, Account acc, Transaction trans)
-  {
-      database.update(user,acc,trans);
+  public void deleteAccount(Account acc) {
+
   }
+
+  @Override
+  public void applyAndSaveTransaction(Transaction transaction, Account account)
+      throws SWE_Exception {
+
+  }
+
+  @Override
+  public void updateTransaction(int accountID, Transaction transaction) {
+
+  }
+
+  @Override
+  public void deleteTransaction(int accountID, Transaction transaction) {
+
+  }
+
 
   @Override
   public User getUser(String ID)

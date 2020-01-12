@@ -1,13 +1,11 @@
 package ui.main;
 
-import javax.swing.JFrame;
-import javax.xml.crypto.Data;
-
 import Patterns.observing.Database;
 import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
 import accounts.Stocks;
+import javax.swing.JFrame;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
@@ -28,8 +26,6 @@ import ui.login.LoginPage;
 import ui.login.RegistrationPage;
 import user.User;
 import user.User_Facade;
-
-import static ui.listPages.AccountTypes.CASH;
 
 /**
  * This class is contains the whole procedure of the GUI.
@@ -97,6 +93,7 @@ public class UserInterface {
             e.printStackTrace();
           }
           try {
+            System.out.println("avfb");
             user_facade.addUser(registrationPage.getUser(), registrationPage.getFirstname(), registrationPage.getLastname(), registrationPage.getPassword());
           }catch (Exception e){ System.out.println(e +"while adding user with user Facade in UserInterface 101"); }
           // TODO: save userdata here

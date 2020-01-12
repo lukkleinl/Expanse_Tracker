@@ -13,6 +13,10 @@ public class Backend_test
 
     System.out.println(user2.getUserID());
     User user=user_facade.getUser("12945");
+    if(user==null)
+    {
+      System.out.println("asmlmb");
+    }
 
   }
 }
