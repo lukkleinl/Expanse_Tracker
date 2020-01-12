@@ -1,7 +1,7 @@
 package Patterns.observing;
 
 import accounts.Account;
-import exceptions.SWE_Exception;
+import exceptions.CustomException;
 import java.util.ArrayList;
 import java.util.List;
 import transactions.Transaction;
@@ -25,9 +25,9 @@ public class SWE_Observable
    * @param obs the Observer that should be added.
    * @throws Exception if Observer already subscribed.
    */
-  public void subscribe(final SWE_Observer obs) throws SWE_Exception{
+  public void subscribe(final SWE_Observer obs) throws CustomException {
     if(observerList.contains(obs))
-      throw new SWE_Exception("Observable ALREADY SUBSCRIBED to this Observer - can not subscribe!");
+      throw new CustomException("Observable ALREADY SUBSCRIBED to this Observer - can not subscribe!");
     else {
       observerList.add(obs);
     }
@@ -37,9 +37,9 @@ public class SWE_Observable
    * @param obs the Observer that should be removed.
    * @throws Exception if Observer not subscribed at this time.
    */
-  public void unSubscribe(final SWE_Observer obs) throws SWE_Exception{
+  public void unSubscribe(final SWE_Observer obs) throws CustomException {
     if(!observerList.contains(obs))
-      throw new SWE_Exception("Observable was NOT SUBSCRIBED to this Observer - can not unsubscribe!");
+      throw new CustomException("Observable was NOT SUBSCRIBED to this Observer - can not unsubscribe!");
     else {
       observerList.remove(obs);
     }

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import accounts.Account;
 import accounts.Cash;
-import exceptions.SWE_Exception;
+import exceptions.CustomException;
 import transactions.Transaction;
 import transactions.TransactionCreator;
 import transactions.categories.CategoryStore;
@@ -44,7 +44,7 @@ class StrategyTests {
   void tearDown() throws Exception {}
 
   @Test
-  void depositOfHundred_shouldChangeBalanceToHundred() throws RuntimeException, SWE_Exception {
+  void depositOfHundred_shouldChangeBalanceToHundred() throws RuntimeException, CustomException {
     this.change = new SimpleDeposit(this.deposit, this.acc);
     this.change.applyBalanceChange();
     assertEquals(this.amountdepo, this.acc.getBalance());
@@ -52,7 +52,7 @@ class StrategyTests {
 
   @Test
   void payoutOfHundred_shouldChangeBalanceToNegativeHundred()
-      throws RuntimeException, SWE_Exception {
+      throws RuntimeException, CustomException {
     this.change = new SimplePayout(this.payout, this.acc);
     this.change.applyBalanceChange();
     assertEquals(-this.amountpay, this.acc.getBalance());

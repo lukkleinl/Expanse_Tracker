@@ -2,7 +2,7 @@ package user;
 
 import Patterns.observing.Database;
 import accounts.Account;
-import exceptions.SWE_Exception;
+import exceptions.CustomException;
 import transactions.Transaction;
 import transactions.categories.DepositCategory;
 import transactions.categories.PayoutCategory;
@@ -42,7 +42,7 @@ public class User_Facade implements User_Interface{
 
   @Override
   public void applyAndSaveTransaction(User user,Transaction transaction, Account account)
-      throws SWE_Exception {
+      throws CustomException {
       user.applyAndSaveTransaction(transaction,account);
   }
 

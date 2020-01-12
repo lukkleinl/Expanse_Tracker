@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import accounts.Account;
 import accounts.Cash;
-import exceptions.SWE_Exception;
+import exceptions.CustomException;
 import transactions.TransactionCreator;
 
 /**
@@ -55,7 +55,7 @@ class UserTests {
   }
 
   @Test
-  void applyAndSaveTransaction_shouldChangeBalanceAndStoreTransaction() throws SWE_Exception {
+  void applyAndSaveTransaction_shouldChangeBalanceAndStoreTransaction() throws CustomException {
     this.user.addAccount(this.acc);
     assertEquals(0, this.user.getTransactionStore().accountsWithTransactions());
     this.user.applyAndSaveTransaction(

@@ -1,7 +1,6 @@
 package ui_tests.listPages;
 
 import accounts.Account;
-import exceptions.SWE_Exception;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import javax.swing.JFrame;

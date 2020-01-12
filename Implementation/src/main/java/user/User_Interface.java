@@ -1,7 +1,7 @@
 package user;
 
 import accounts.Account;
-import exceptions.SWE_Exception;
+import exceptions.CustomException;
 import transactions.Transaction;
 
 public interface User_Interface
@@ -14,7 +14,7 @@ public interface User_Interface
 
   public void deleteAccount(User user,final Account acc);
 
-  public void applyAndSaveTransaction(User user,final Transaction transaction, final Account account) throws SWE_Exception;
+  public void applyAndSaveTransaction(User user,final Transaction transaction, final Account account) throws CustomException;
 
   public void updateTransaction(User user,final int accountID, final Transaction transaction,final float old_amount);
 
