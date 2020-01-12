@@ -29,7 +29,17 @@ public interface CustomContainer<T> {
    */
   boolean contains(T obj);
 
+  /**
+   * Updates the element in this {@code CustomContainer} that is equal to the passed element.
+   * 
+   * @param element the updated element
+   */
   void update(T element);
 
+  /**
+   * Removes the element in this {@code CustomContainer} that is equal to the passed element.
+   * 
+   * @param element the to-be removed element
+   */
   void delete(T element);
 }
