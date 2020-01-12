@@ -34,6 +34,7 @@ public class AddPayoutPage extends AbstractPage {
   private float amountInputValue;
   private User user;
   private JButton newCategoryOptionPaneButton;
+  private JButton deleteCategoryButton;
 
   private JButton submitButton;
   private JButton backButton;
@@ -92,7 +93,6 @@ public class AddPayoutPage extends AbstractPage {
   // In Final Version might take a User object to display additional User information.
   public AddPayoutPage(User user) {
     this.user = user;
-    payoutCategorys = user.getCategories(new PayoutCategory()).toArray();
     this.createComponents();
   }
 
@@ -102,7 +102,7 @@ public class AddPayoutPage extends AbstractPage {
    */
   @Override
   protected void createComponents() {
-
+    payoutCategorys = user.getCategories(new PayoutCategory()).toArray();
     components = new ArrayList<>();
     submitted = false;
     backWanted = false;
@@ -130,6 +130,23 @@ public class AddPayoutPage extends AbstractPage {
     newCategoryOptionPaneButton.setFont(BUTTON_FONT);
     newCategoryOptionPaneButton.setBorder(new LineBorder(Color.BLACK, 2));
     components.add(newCategoryOptionPaneButton);
+
+    deleteCategoryButton = new JButton("Delete a category");
+    deleteCategoryButton.setBounds(300,250,250,50);
+    deleteCategoryButton.setFont(BUTTON_FONT);
+    deleteCategoryButton.setBorder(new LineBorder(Color.BLACK, 2));
+    deleteCategoryButton.addActionListener(
+            actionEvent -> {
+              JComboBox box = new JComboBox(payoutCategorys);
+              int delete =
+                      JOptionPane.showConfirmDialog(
+                              null, box, "Select category you want to delete.", JOptionPane.CANCEL_OPTION);
+              if (delete == JOptionPane.YES_OPTION) {
+                user.removeTransactionCategory(box.getSelectedItem().toString());
+                refreshWanted = true;
+              }
+            });
+    components.add(deleteCategoryButton);
 
     amountInputText = new JLabel("Amount:");
     amountInputText.setBounds(300, 350, 300, 50);
@@ -186,6 +203,12 @@ public class AddPayoutPage extends AbstractPage {
                 "You must insert a description",
                 "Description Error",
                 JOptionPane.WARNING_MESSAGE);
+          } else if (categoryInputValue == null) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "You must insert a category",
+                    "Category Error",
+                    JOptionPane.WARNING_MESSAGE);
           } else {
             submitted = true;
           }

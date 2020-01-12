@@ -28,12 +28,13 @@ public class AddDepositPage extends AbstractPage {
   private JTextField descriptionInputField;
   private JLabel categoryInputText;
   private JComboBox categoryInputBox;
-  private Object[] depositCategorys; /* = {"SALARY","DIVIDEND"}; */
+  private Object[] depositCategorys;
   private String categoryInputValue;
   private String descriptionInputValue = "";
   private float amountInputValue = 1.0f;
   private User user;
   private JButton newCategoryOptionPaneButton;
+  private JButton deleteCategoryButton;
 
   private JButton submitButton;
   private JButton backButton;
@@ -86,7 +87,6 @@ public class AddDepositPage extends AbstractPage {
   // In Final Version might take a User object to display additional User information.
   public AddDepositPage(User user) {
     this.user = user;
-    depositCategorys = this.user.getCategories(new DepositCategory()).toArray();
     this.createComponents();
   }
 
@@ -101,6 +101,8 @@ public class AddDepositPage extends AbstractPage {
     submitted = false;
     backWanted = false;
     refreshWanted = false;
+    depositCategorys = this.user.getCategories(new DepositCategory()).toArray();
+
 
     introTextLabel =
         new JLabel(
@@ -125,6 +127,23 @@ public class AddDepositPage extends AbstractPage {
     newCategoryOptionPaneButton.setBorder(new LineBorder(Color.BLACK, 2));
     components.add(newCategoryOptionPaneButton);
 
+    deleteCategoryButton = new JButton("Delete a category");
+    deleteCategoryButton.setBounds(300,250,250,50);
+    deleteCategoryButton.setFont(BUTTON_FONT);
+    deleteCategoryButton.setBorder(new LineBorder(Color.BLACK, 2));
+    deleteCategoryButton.addActionListener(
+        actionEvent -> {
+          JComboBox box = new JComboBox(depositCategorys);
+          int delete =
+              JOptionPane.showConfirmDialog(
+                  null, box, "Select category you want to delete.", JOptionPane.CANCEL_OPTION);
+          if (delete == JOptionPane.YES_OPTION) {
+            user.removeTransactionCategory(box.getSelectedItem().toString());
+            refreshWanted = true;
+          }
+        });
+
+    components.add(deleteCategoryButton);
 
     amountInputText = new JLabel("Amount:");
     amountInputText.setBounds(300, 350, 300, 50);
@@ -182,6 +201,12 @@ public class AddDepositPage extends AbstractPage {
                 "You must insert a description",
                 "Description Error",
                 JOptionPane.WARNING_MESSAGE);
+          } else if (categoryInputValue == null) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "You must insert a category",
+                    "Category Error",
+                    JOptionPane.WARNING_MESSAGE);
           } else {
             submitted = true;
           }

@@ -37,7 +37,7 @@ public class Backend_test
     ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.of("UTC"));
     payout.updateTransaction(zonedDateTime,200,"avafb");
 
-    user_facade.updateTransaction(user2,cash.getAccount_number(),payout);
+    //user_facade.updateTransaction(user2,cash.getAccount_number(),payout);
 
   }
 }

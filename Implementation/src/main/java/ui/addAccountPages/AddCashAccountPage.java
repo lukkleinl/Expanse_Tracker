@@ -1,14 +1,5 @@
 package ui.addAccountPages;
 
-/**
- * This Page collects all necessary data needed to create a new 'Cash'-Account. Implements the
- * Interface 'InterfacePage' By Pressing Submit(JButton) the Page saves the Values entered into the
- * JTextField's, who then can be aquired through getters.
- *
- * @author Paul Kraft
- * @author Patrick Gmasz
- */
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -16,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import accounts.Account;
 import accounts.Cash;
 import ui.main.AbstractPage;
 import user.User;
