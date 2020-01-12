@@ -15,10 +15,10 @@ public class Client {
     try {
     Database localStorage = new Database();
     }catch (Exception e){
-      System.out.println(e.getMessage());
+      System.out.println(e.getMessage() +"Client");
     }
 
-      UserInterface userInterface = new UserInterface(null); // localStorage throws Exception atm.
+      UserInterface userInterface = new UserInterface();
       userInterface.start();
   }
 }
