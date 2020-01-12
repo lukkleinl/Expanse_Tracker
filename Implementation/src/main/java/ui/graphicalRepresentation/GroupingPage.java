@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import iteration.CustomContainer;
 import iteration.CustomIterator;
+import org.junit.jupiter.api.TestInstance;
 import transactions.Transaction;
 import transactions.grouping.GroupingBuilder;
 import ui.TestUser;
@@ -28,14 +29,6 @@ public class GroupingPage extends AbstractPage {
   private JFrame TESTING_frame;
   private final boolean TESTING_boolean = false;
   //
-
-  public void setBegin(ZonedDateTime begin) {
-    this.begin = begin;
-  }
-
-  public void setEnd(ZonedDateTime end) {
-    this.end = end;
-  }
 
   private ZonedDateTime begin = ZonedDateTime.now(ZoneId.of("UTC")).minusHours(1);
   private ZonedDateTime end = ZonedDateTime.now(ZoneId.of("UTC"));
@@ -52,36 +45,70 @@ public class GroupingPage extends AbstractPage {
   private JScrollPane scrollPane;
 
   private volatile boolean refreshWanted = false;
+  private volatile boolean backWanted = false;
 
-  String[] options = getNames(GroupingTypes.class);
+
+    String[] options = getNames(GroupingTypes.class);
   int selectedGrouping = 0;
   private String selectedDate = "";
   private String selectedDateEnd = "";
   private String groupedByMessage = "";
-
-  private volatile boolean backWanted;
   // private volatile boolean graphicalWanted;
 
   public GroupingPage(final User user) {
     this.user = user;
   }
 
-  // ONLY FOR TESTING
+    /**
+     *DO NOT USE!!! Testing Consctructor that besides the User also takes a JFrame,
+     * the code will auto refresh on that Jframe  if the testing boolean is true
+     * @param user
+     * @param frame
+     */
   public GroupingPage(User user, JFrame frame) {
+  if(!TESTING_boolean)
+      throw new RuntimeException("DO NOT USE THE TEST CONSCTRUCTOR! in GroupingPage");
+
     this.user = user;
     this.TESTING_frame = frame;
   }
   //
 
+    /**
+     * Getter for the boolean if Back is wanted(Signals to User interface if back button was pressed!)
+     * @return boolean
+     */
   public boolean isBackWanted() {
     return this.backWanted;
   }
 
+    /**
+     * Getter for the boolean if refresh is wanted(Signals to the User Interface if Refresh is needed! e.g change of data)
+     * @return boolean
+     */
   public boolean isRefreshWanted() {
     return this.refreshWanted;
   }
 
-  @Override
+
+    /**
+     * setter for the beginDate that is used for grouping(the FROM in grouping )
+     * @param begin the ZonedDateTime
+     */
+    public void setBegin(ZonedDateTime begin) {
+        this.begin = begin;
+    }
+
+    /**
+     *   setter for the endDate that is used for grouping (the TO in grouping)
+     * @param end the ZonedDateTime
+     */
+    public void setEnd(ZonedDateTime end) {
+        this.end = end;
+    }
+
+
+    @Override
   protected void resetTitle(final JFrame frame) {
     frame.setTitle("Grouping - Page");
   }
