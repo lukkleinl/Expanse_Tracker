@@ -76,6 +76,10 @@ public class AddStockAccountPage extends AbstractPage {
     return backWanted;
   }
 
+  /** creates all the Components that the JFrame should display(incl. Position,actionlisteners for Buttons, text etc)
+   * also resets the booleans for backwanted, refreshwanted etc.
+   * is called from within the configureFrame in abstract Page.
+   */
   @Override
   protected void createComponents() {
     components = new ArrayList<>();
@@ -169,11 +173,21 @@ public class AddStockAccountPage extends AbstractPage {
         });
   }
 
+  /**
+   * function to set the Frame Title(only called from within the UserInterface)
+   * takes in a frame and sets its title to 'Add Stock Account - Page'
+   * @param frame
+   */
   @Override
   protected void resetTitle(JFrame frame) {
-    frame.setTitle("Add Stock Account");
+    frame.setTitle("Add Stock Account - Page");
   }
 
+  /**
+   * field to update the input JTextfields
+   * needed in case the account is updated, so it can display the old values.
+   * @param account
+   */
   public void updateFields(Stocks account) {
     accountNameInputField.setText(account.getName());
     buyDateInputField.setText(
