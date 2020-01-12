@@ -38,7 +38,7 @@ public class GroupingPage extends AbstractPage {
   }
 
   private ZonedDateTime begin = ZonedDateTime.now(ZoneId.of("UTC")).minusHours(1);
-  private ZonedDateTime end;
+  private ZonedDateTime end = ZonedDateTime.now(ZoneId.of("UTC"));
   private GroupingTypes groupingType = GroupingTypes.MONTHLY;
   private User user;
   private JLabel groupedByHeader;
@@ -308,97 +308,110 @@ public class GroupingPage extends AbstractPage {
                     options,
                     options[0]);
 
-            switch (selectedGrouping) {
-              case 0:
-                selectedDate =
-                    JOptionPane.showInputDialog(
-                        "Specify Year, Month and Day for Summary", "YYYY/MM/DD");
-                setBegin(
-                    ZonedDateTime.of(
-                        Integer.valueOf(selectedDate.substring(0, 4)),
-                        Integer.valueOf(selectedDate.substring(5, 7)),
-                        Integer.valueOf(selectedDate.substring(8, 10)),
-                        0,
-                        0,
-                        0,
-                        0,
-                        ZoneId.of("UTC")));
-                groupingType = GroupingTypes.DAILY;
-                // TODO CHECK TIME PROPERLY
-                // ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC"));
-                groupedByMessage = groupingType.toString() + "- " + selectedDate;
-                break;
-              case 1:
-                selectedDate =
-                    JOptionPane.showInputDialog("Specify Year and Month for Summary", "YYYY/MM");
-                groupingType = GroupingTypes.MONTHLY;
-                // TODO CHECK TIME PROPERLY
-                setBegin(
-                    ZonedDateTime.of(
-                        Integer.valueOf(selectedDate.substring(0, 4)),
-                        Integer.valueOf(selectedDate.substring(5, 7)),
-                        01,
-                        0,
-                        0,
-                        0,
-                        0,
-                        ZoneId.of("UTC")));
-                groupedByMessage = groupingType.toString() + "- " + selectedDate;
-                break;
-              case 2:
-                selectedDate = JOptionPane.showInputDialog("Specify Year for Summary", "YYYY");
-                // TODO CHECK TIME PROPERLY
-                setBegin(
-                    ZonedDateTime.of(
-                        Integer.valueOf(selectedDate.substring(0, 4)),
-                        01,
-                        01,
-                        0,
-                        0,
-                        0,
-                        0,
-                        ZoneId.of("UTC")));
-                groupingType = GroupingTypes.YEARLY;
-                groupedByMessage = groupingType.toString() + "- " + selectedDate;
-                break;
-              case 3:
-                selectedDate =
-                    JOptionPane.showInputDialog(
-                        "Specify Year, Month and Day Start for Summary", "YYYY/MM/DD");
-                // TODO CHECK TIME PROPERLY
-                setBegin(
-                    ZonedDateTime.of(
-                        Integer.valueOf(selectedDate.substring(0, 4)),
-                        Integer.valueOf(selectedDate.substring(5, 7)),
-                        Integer.valueOf(selectedDate.substring(8, 10)),
-                        0,
-                        0,
-                        0,
-                        0,
-                        ZoneId.of("UTC")));
-                selectedDateEnd =
-                    JOptionPane.showInputDialog(
-                        "Specify Year, Month and Day End for Summary", "YYYY/MM/DD");
-                setEnd(
-                    ZonedDateTime.of(
-                        Integer.valueOf(selectedDateEnd.substring(0, 4)),
-                        Integer.valueOf(selectedDateEnd.substring(5, 7)),
-                        Integer.valueOf(selectedDateEnd.substring(8, 10)),
-                        0,
-                        0,
-                        0,
-                        0,
-                        ZoneId.of("UTC")));
-                groupingType = GroupingTypes.USER_DEFINED;
-                groupedByMessage =
-                    groupingType.toString()
-                        + "- Start: "
-                        + selectedDate
-                        + " End: "
-                        + selectedDateEnd;
-                break;
-            }
 
+    try {
+      switch (selectedGrouping) {
+        case 0:
+          selectedDate =
+                  JOptionPane.showInputDialog(
+                          "Specify Year, Month and Day for Summary", "YYYY/MM/DD");
+          setBegin(
+                  ZonedDateTime.of(
+                          Integer.valueOf(selectedDate.substring(0, 4)),
+                          Integer.valueOf(selectedDate.substring(5, 7)),
+                          Integer.valueOf(selectedDate.substring(8, 10)),
+                          0,
+                          0,
+                          0,
+                          0,
+                          ZoneId.of("UTC")));
+          groupingType = GroupingTypes.DAILY;
+          // TODO CHECK TIME PROPERLY
+          // ZonedDateTime.of(Integer.valueOf(selectedDate.substring(0,4)),Integer.valueOf(selectedDate.substring(5,7)),Integer.valueOf(selectedDate.substring(8,10)),0, 0, 0, 0, ZoneId.of("UTC"));
+          groupedByMessage = groupingType.toString() + "- " + selectedDate;
+          break;
+        case 1:
+          selectedDate =
+                  JOptionPane.showInputDialog("Specify Year and Month for Summary", "YYYY/MM");
+          groupingType = GroupingTypes.MONTHLY;
+          // TODO CHECK TIME PROPERLY
+          setBegin(
+                  ZonedDateTime.of(
+                          Integer.valueOf(selectedDate.substring(0, 4)),
+                          Integer.valueOf(selectedDate.substring(5, 7)),
+                          01,
+                          0,
+                          0,
+                          0,
+                          0,
+                          ZoneId.of("UTC")));
+          groupedByMessage = groupingType.toString() + "- " + selectedDate;
+          break;
+        case 2:
+          selectedDate = JOptionPane.showInputDialog("Specify Year for Summary", "YYYY");
+          // TODO CHECK TIME PROPERLY
+          setBegin(
+                  ZonedDateTime.of(
+                          Integer.valueOf(selectedDate.substring(0, 4)),
+                          01,
+                          01,
+                          0,
+                          0,
+                          0,
+                          0,
+                          ZoneId.of("UTC")));
+          groupingType = GroupingTypes.YEARLY;
+          groupedByMessage = groupingType.toString() + "- " + selectedDate;
+          break;
+        case 3:
+          selectedDate =
+                  JOptionPane.showInputDialog(
+                          "Specify Year, Month and Day Start for Summary", "YYYY/MM/DD");
+          // TODO CHECK TIME PROPERLY
+          setBegin(
+                  ZonedDateTime.of(
+                          Integer.valueOf(selectedDate.substring(0, 4)),
+                          Integer.valueOf(selectedDate.substring(5, 7)),
+                          Integer.valueOf(selectedDate.substring(8, 10)),
+                          0,
+                          0,
+                          0,
+                          0,
+                          ZoneId.of("UTC")));
+          selectedDateEnd =
+                  JOptionPane.showInputDialog(
+                          "Specify Year, Month and Day End for Summary", "YYYY/MM/DD");
+          setEnd(
+                  ZonedDateTime.of(
+                          Integer.valueOf(selectedDateEnd.substring(0, 4)),
+                          Integer.valueOf(selectedDateEnd.substring(5, 7)),
+                          Integer.valueOf(selectedDateEnd.substring(8, 10)),
+                          0,
+                          0,
+                          0,
+                          0,
+                          ZoneId.of("UTC")));
+          groupingType = GroupingTypes.USER_DEFINED;
+          groupedByMessage =
+                  groupingType.toString()
+                          + "- Start: "
+                          + selectedDate
+                          + " End: "
+                          + selectedDateEnd;
+          break;
+      }
+    }catch (Exception exc){
+
+      JOptionPane.showMessageDialog(
+              null,
+              "Not able to select a date",
+              "Description Error",
+              JOptionPane.WARNING_MESSAGE);
+
+              setBegin(ZonedDateTime.now(ZoneId.of("UTC")).minusHours(1));
+              setEnd(ZonedDateTime.now(ZoneId.of("UTC")));
+
+    }
             refreshWanted = true;
             if (TESTING_boolean && refreshWanted) {
               configureFrame(TESTING_frame);
