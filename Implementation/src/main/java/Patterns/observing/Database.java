@@ -46,7 +46,6 @@ public class Database implements SWE_Observer {
                 {
                      CustomContainer<Object> list = (CustomList<Object>) entry.getValue();
                      CustomIterator<Object> iterator = list.getIterator();
-                     Integer account_number = (Integer) entry.getKey();
 
                      while (iterator.hasNext())
                      {

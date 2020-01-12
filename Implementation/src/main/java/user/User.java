@@ -71,7 +71,7 @@ public class User extends SWE_Observable {
     this.accounts = new CustomList<>();
     this.transactions = new TransactionStore();
     this.password = password;
-    this.categories = new CategoryStore();
+    this.categories = new CategoryStore().withDefaultCategories();
 
     this.subscribe(database);
     updateObservers(this);

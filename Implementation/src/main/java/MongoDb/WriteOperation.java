@@ -48,7 +48,7 @@ public class WriteOperation implements Write_Operation {
    */
 
   private void getTrans(final Transaction trans, final int key, final String user_ID) {
-    Document doc = null;
+    Document doc ;
 
     if (trans.toString().contains("PAYOUT")) {
       Payout payout = (Payout) trans;
@@ -123,7 +123,7 @@ public class WriteOperation implements Write_Operation {
 
 
   private Document Categories(final String category) {
-    Document doc = null;
+    Document doc ;
     doc = new Document("_id", category);
 
     return doc;
@@ -193,7 +193,7 @@ public class WriteOperation implements Write_Operation {
     else
       assert true : "Shouldnt reach this argument";
 
-    Document doc = null;
+    Document doc ;
     doc = new Document("_id", trans.getID()).append("Date", trans.getCreationDate().toString())
         .append("amount", trans.getAmount()).append("category_name", trans.getCategory())
         .append("category", category).append("Account_Number", acc.getAccount_number())
@@ -201,7 +201,6 @@ public class WriteOperation implements Write_Operation {
 
     this.collection = this.database.getCollection("Transactions");
     this.collection.insertOne(doc);
-
   }
 
 
