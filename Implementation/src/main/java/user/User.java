@@ -148,12 +148,13 @@ public class User extends SWE_Observable {
 
   public void deleteTransaction(final int accountID, final Transaction transaction) {
 
-    for (CustomIterator<Account> it = this.accounts.getIterator(); it.hasNext(); it.element()) {
+    for (CustomIterator<Account> it = this.accounts.getIterator(); it.hasNext(); it.next()) {
       if (it.element().getAccount_number() == accountID) {
         it.element().updateAccountNumberAndBalance(accountID,
             it.element().getBalance() - transaction.getAmount());
         updateObservers(this);
       }
+
     }
     // while (iterator.hasNext()) {
     // if (accountID == iterator.element().getAccount_number()) {
