@@ -101,4 +101,18 @@ public class Database implements SWE_Observer {
         return listOfUsers;
     }
 
+    public User newUser(String id, String firstname, String lastname, String pw){
+        User user =new User(id,firstname,lastname,pw);
+        try {
+            user.subscribe(this);
+            this.update(user);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        return user;
+    }
+
+
 }
+

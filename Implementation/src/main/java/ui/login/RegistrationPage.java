@@ -93,7 +93,7 @@ public class RegistrationPage extends AbstractPage {
    *
    * @return The string, which the user wrote in the last name textfield.
    */
-  private String getLastname() {
+  public String getLastname() {
     try {
       Thread.sleep(1);
     } catch (Exception e) {

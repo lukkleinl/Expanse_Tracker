@@ -1,6 +1,9 @@
 package ui.main;
 
 import javax.swing.JFrame;
+import javax.xml.crypto.Data;
+
+import Patterns.observing.Database;
 import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
@@ -35,11 +38,14 @@ import static ui.listPages.AccountTypes.CASH;
 public class UserInterface {
 
   private User user;
-  // MongoDB db = new MongoDB();
+  Database database;
+
+  public UserInterface(Database db){
+    database = db;
+  }
 
   /** This method starts the GUI and starts the whole procedure. */
   public void start() {
-
     JFrame frame = new JFrame(); // Main frame, which components will be updated.
     frame.setLayout(null);
     frame.setResizable(false);
@@ -84,6 +90,7 @@ public class UserInterface {
           } catch (InterruptedException e) {
             e.printStackTrace();
           }
+          database.newUser(registrationPage.getUser(),registrationPage.getFirstname(),registrationPage.getLastname(),registrationPage.getPassword());
           // TODO: save userdata here
         }
         // OPEN LOGIN PAGE COMPONENTS AGAIN
