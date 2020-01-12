@@ -61,7 +61,7 @@ public class GroupingPage extends AbstractPage {
     /**
      * User needed for displaying, user releveant information
      * also the Transactions and the Sorting Objects are aquired from this.
-     * @param user
+     * @param user The User whose Data should be displayed.
      */
   public GroupingPage(final User user) {
     this.user = user;
@@ -70,8 +70,8 @@ public class GroupingPage extends AbstractPage {
     /**
      *DO NOT USE!!! Testing Consctructor that besides the User also takes a JFrame,
      * the code will auto refresh on that Jframe  if the testing boolean is true
-     * @param user
-     * @param frame
+     * @param user The User whose Data should be Displayed
+     * @param frame The Frame on which the Page is running.
      */
   public GroupingPage(User user, JFrame frame) {
   if(!TESTING_boolean)
@@ -83,16 +83,21 @@ public class GroupingPage extends AbstractPage {
   //
 
     /**
-     * Getter for the boolean if Back is wanted(Signals to User interface if back button was pressed!)
-     * @return boolean
+     * The page has a button, which the user can press if he wants to Go 1 Page back. Pressing the
+     * button will set a boolean flag, that the button was pressed. This method returns the boolean,
+     * it will be true, if the user wants to go back.
+     *
+     * @return The boolean flag, it will be true, if the user pressed the 'Back' button.
      */
   public boolean isBackWanted() {
     return this.backWanted;
   }
 
     /**
-     * Getter for the boolean if refresh is wanted(Signals to the User Interface if Refresh is needed! e.g change of data)
-     * @return boolean
+     *  This Page can have the need to Refresh to Signal this to the User Interface there is a booleag Flag.
+     *  The User Interface will regularly check if the Page wants to refresh.
+     *
+     * @return The boolean flag, it will be true, if the The Page needs to Refresh
      */
   public boolean isRefreshWanted() {
     return this.refreshWanted;
@@ -101,7 +106,7 @@ public class GroupingPage extends AbstractPage {
 
     /**
      * setter for the beginDate that is used for grouping(the FROM in grouping )
-     * @param begin the ZonedDateTime
+     * @param begin the ZonedDateTime from which the time period starts
      */
     public void setBegin(ZonedDateTime begin) {
         this.begin = begin;
@@ -109,7 +114,7 @@ public class GroupingPage extends AbstractPage {
 
     /**
      *   setter for the endDate that is used for grouping (the TO in grouping)
-     * @param end the ZonedDateTime
+     * @param end the ZonedDateTime until the time period goes
      */
     public void setEnd(ZonedDateTime end) {
         this.end = end;
@@ -119,7 +124,7 @@ public class GroupingPage extends AbstractPage {
     /**
      * function to set the Frame Title(only called from within the UserInterface)
      * takes in a frame and sets its title to 'Grouping- Page'
-     * @param frame
+     * @param frame The Frame whose Title should be reset
      */
     @Override
   protected void resetTitle(final JFrame frame) {
@@ -485,7 +490,7 @@ public class GroupingPage extends AbstractPage {
     /**
      * Taken from  // https://stackoverflow.com/questions/13783295/getting-all-names-in-an-enum-as-a-string
      * Helper functon to convert Enum class to string array.
-     * @param e Enum
+     * @param e Enum The EnumClass which should be converted.
      */
   public static String[] getNames(Class<? extends Enum<?>> e) {
     return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
