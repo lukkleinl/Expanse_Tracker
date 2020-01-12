@@ -1,11 +1,5 @@
 package ui.addAccountPages;
-/**
- * This Page collects all necessary data needed to create a new 'CreditCard'-Account. By Pressing
- * Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired
- * through getters.
- *
- * @author Paul Kraft
- */
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -23,6 +17,13 @@ import accounts.CreditCard;
 import ui.main.AbstractPage;
 import user.User;
 
+/**
+ * This Page collects all necessary data needed to create a new 'CreditCard'-Account. By Pressing
+ * Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired
+ * through getters.
+ *
+ * @author Paul Kraft
+ */
 public class AddCreditAccountPage extends AbstractPage {
 
   private static final int SHIFT_LEFT = 300;
@@ -88,6 +89,10 @@ public class AddCreditAccountPage extends AbstractPage {
     return backWanted;
   }
 
+    /** creates all the Components that the JFrame should display(incl. Position,actionlisteners for Buttons, text etc)
+     *  also resets the booleans for backwanted, refreshwanted etc.
+     * is called from within the configureFrame in abstract Page.
+     */
   @Override
   protected void createComponents() {
     components = new ArrayList<>();
@@ -207,11 +212,21 @@ public class AddCreditAccountPage extends AbstractPage {
         });
   }
 
+    /**
+     * function to set the Frame Title(only called from within the UserInterface)
+     * takes in a frame and sets its title to 'Add credit Card Account- Page'
+     * @param frame
+     */
   @Override
   protected void resetTitle(JFrame frame) {
-    frame.setTitle("Add Credit Card Account");
+    frame.setTitle("Add Credit Card Account - Page");
   }
 
+    /**
+     * field to update the input JTextfields
+     * needed in case the account is updated, so it can display the old values.
+     * @param account
+     */
   public void updateFields(CreditCard account) {
     accountNameInputField.setText(account.getName());
     limitInputField.setText(Double.toString(account.getLimit()));
