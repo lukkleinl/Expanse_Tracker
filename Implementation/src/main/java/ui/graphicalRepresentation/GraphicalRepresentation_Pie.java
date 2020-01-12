@@ -31,7 +31,7 @@ public class GraphicalRepresentation_Pie {
 
   /**
    * Constructor that takes in a user and saves it
-   * @param user
+   * @param user User whose Data are of Interest
    */
 
   public GraphicalRepresentation_Pie(User user) {
@@ -40,19 +40,20 @@ public class GraphicalRepresentation_Pie {
 
 
   /**
-   * draws The Requested Bar Chart for that year and Month sorted Monthly
-   * @param year
-   * @throws Exception
+   * draws The Requested Bar Chart for that year sorted yearly
+   * @param year The Year whose Data is of interrest for the Grouping algorithm.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   public void draw(String year) throws Exception {
     draw(getYearly(year), year);
   }
 
+
   /**
    * draws The Requested Bar Chart for that year and Month sorted Monthly
-   * @param year
-   * @param month
-   * @throws Exception
+   * @param year The Year, the 'When' for the Grouping algorithm.
+   * @param month The Month, the 'When' for the Grouping algorithm.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   public void draw(String year, String month) throws Exception {
     draw(getMonthly(year, month), year + "/" + month);
@@ -60,29 +61,28 @@ public class GraphicalRepresentation_Pie {
 
   /**
    * draws The Requested Bar Chart for that year and Month and day sorted Daily
-   * @param year
-   * @param month
-   * @param day
-   * @throws Exception
+   * @param year The Year, the 'When' for the Grouping algorithm.
+   * @param month The Month, the 'When' for the Grouping algorithm
+   * @param day The Day, the 'When' for the Grouping algorithm.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   public void draw(String year, String month, String day) throws Exception {
     draw(getDaily(year, month, day), year + "/" + month + "/" + day);
   }
 
   /**
-   * draws The Requested Bar Chart for that year and Month and day sorted Custom
-   * @param begin
-   * @param end
-   * @throws Exception
-   */
+   * draws The Requested Bar Chart for the 2 user given ZonedDate's
+   * @param begin the Begin Date for the Grouping algorithm.
+   * @param end the End Date for the Grouping algorithm.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.*/
   public void draw(ZonedDateTime begin, ZonedDateTime end) throws Exception {
     draw(getCustom(begin, end), begin.toString() + " - " + end.toString());
   }
 
   /**
    * private helper function to draw the Chart
-   * @param listOfTransactions
-   * @param dateOfInterest
+   * @param listOfTransactions list of Transactions that should be displayed in the Chart.
+   * @param dateOfInterest String that is also Displayed so the End User knows, for which period the Chart is
    */
   private void draw(CustomContainer<Transaction> listOfTransactions, String dateOfInterest) {
 
@@ -149,10 +149,10 @@ public class GraphicalRepresentation_Pie {
   /**
    * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
    *   needs Month as '01' .. '02' .. year as'2016'
-   * @param year
-   * @param month
-   * @return
-   * @throws Exception
+   * @param year The Year, the 'When' for the Grouping algorithm.
+   * @param month The Month, the 'When' for the Grouping algorithm
+   * @return CustomContainer of type Transaction that contains the Requested Transactions in the given Time period.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   public CustomContainer<Transaction> getMonthly(String year, String month) throws Exception {
 
@@ -173,10 +173,10 @@ public class GraphicalRepresentation_Pie {
 
   /**
    * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
-   * needs year as '2015'
-   * @param year
-   * @return
-   * @throws Exception
+   * needs year as '2016'
+   * @param year The Year, the 'When' for the Grouping algorithm.
+   * @return CustomContainer of type Transaction that contains the Requested Transactions in the given Time period.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   public CustomContainer<Transaction> getYearly(String year) throws Exception {
 
@@ -195,11 +195,11 @@ public class GraphicalRepresentation_Pie {
   /**
    * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
    * needs year as '2015' day as '01' month as'01'
-   * @param year
-   * @param month
-   * @param day
-   * @return
-   * @throws Exception
+   * @param year The Year, the 'When' for the Grouping algorithm.
+   * @param month The Month, the 'When' for the Grouping algorithm
+   * @param day The Day, the 'When' for the Grouping algorithm.
+   * @return CustomContainer of type Transaction that contains the Requested Transactions in the given Time period.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
 
   public CustomContainer<Transaction> getDaily(String year, String month, String day)
@@ -222,10 +222,10 @@ public class GraphicalRepresentation_Pie {
 
   /**
    * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
-   * @param begin
-   * @param end
-   * @return
-   * @throws Exception
+   * @param begin ZonedDateTime begin, begin of the Time period which should be grouped.
+   * @param end ZonedDateTime end, end of the Time period which should be grouped.
+   * @return CustomContainer of type Transaction that contains the Requested Transactions in the given Time period.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   public CustomContainer<Transaction> getCustom(ZonedDateTime begin, ZonedDateTime end)
       throws Exception {

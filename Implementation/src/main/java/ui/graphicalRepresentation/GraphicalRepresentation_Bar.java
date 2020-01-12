@@ -24,6 +24,7 @@ import java.util.Set;
 
 /** Class to genereate a Bar Chart
  * @author Paul Kraft
+ * @author Patrick Gmasz
  */
 
 public class GraphicalRepresentation_Bar {
@@ -144,10 +145,10 @@ public class GraphicalRepresentation_Bar {
   /**
    * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
    *   needs Month as '01' .. '02' .. year as'2016'
-   * @param year
-   * @param month
-   * @return
-   * @throws Exception
+   * @param year The Year, the 'When' for the Grouping algorithm.
+   * @param month The Month, the 'When' for the Grouping algorithm
+   * @return CustomContainer of type Transaction that contains the Requested Transactions in the given Time period.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   private CustomContainer<Transaction> getMonthly(String year, String month) throws Exception {
 
@@ -168,9 +169,9 @@ public class GraphicalRepresentation_Bar {
   /**
    * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
    * needs year as '2016'
-   * @param year
-   * @return
-   * @throws Exception
+   * @param year The Year, the 'When' for the Grouping algorithm.
+   * @return CustomContainer of type Transaction that contains the Requested Transactions in the given Time period.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   public CustomContainer<Transaction> getYearly(String year) throws Exception {
 
@@ -188,11 +189,11 @@ public class GraphicalRepresentation_Bar {
   /**
    * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
    * needs year as '2015' day as '01' month as'01'
-   * @param year
-   * @param month
-   * @param day
-   * @return
-   * @throws Exception
+   * @param year The Year, the 'When' for the Grouping algorithm.
+   * @param month The Month, the 'When' for the Grouping algorithm
+   * @param day The Day, the 'When' for the Grouping algorithm.
+   * @return CustomContainer of type Transaction that contains the Requested Transactions in the given Time period.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
 
   public CustomContainer<Transaction> getDaily(String year, String month, String day)
@@ -215,10 +216,10 @@ public class GraphicalRepresentation_Bar {
 
   /**
    * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
-   * @param begin
-   * @param end
-   * @return
-   * @throws Exception
+   * @param begin ZonedDateTime begin, begin of the Time period which should be grouped.
+   * @param end ZonedDateTime end, end of the Time period which should be grouped.
+   * @return CustomContainer of type Transaction that contains the Requested Transactions in the given Time period.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   public CustomContainer<Transaction> getCustom(ZonedDateTime begin, ZonedDateTime end)
       throws Exception {
