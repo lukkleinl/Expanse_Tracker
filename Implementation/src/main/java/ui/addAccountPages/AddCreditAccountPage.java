@@ -23,12 +23,9 @@ import user.User;
  * through getters.
  *
  * @author Paul Kraft
+ * @author Patrick Gmasz
  */
 public class AddCreditAccountPage extends AbstractPage {
-
-  private static final int SHIFT_LEFT = 300;
-  private static final int OFFSET_Y =
-      50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
   private JLabel introTextLabel;
   private JLabel accountNameTextLabel;
@@ -56,43 +53,73 @@ public class AddCreditAccountPage extends AbstractPage {
   /**
    * Creates a new AddCreditAccountPage, which will load all needed components to a list. By
    * Pressing Submit(JButton) the Page saves the Values entered into the JTextField's, who then can
-   * be aquired through getters.
+   * be acquired through getters.
+   *
+   * @author Paul Kraft
+   * @author Patrick Gmasz
    */
-  // In Final Version might take a User object to display additional User information.
   public AddCreditAccountPage(User user) {
     this.user = user;
     createComponents();
   }
 
-  /** @return accName input from the User or default val. */
+  /**
+   * Returns the input from the account name field.
+   *
+   * @return The input from the user for account name.
+   */
   public String getAccountName() {
     return accountNameInputValue;
   }
-  /** @return Expiy Date input from the User or default val. */
+
+  /**
+   * Returns the input from the expiry date field.
+   *
+   * @return Expiry date input from the user.
+   */
   public Date getExpiryDate() {
     return expiryDateInputValue;
   }
-  /** @return Limit input from the User or default val. */
+
+  /**
+   * Returns the input from the limit field.
+   * @return Limit input from the user.
+   */
   public float getLimit() {
     return limitInputValue;
   }
-  /** @return BankName input from the User or default val. */
+
+  /**
+   * Returns the input from the bank name field.
+   *
+   * @return Bank Name input from the User or default val.
+   */
   public String getBankName() {
     return bankNameInputValue;
   }
-  /** @return current boolean value of submitted(whether the User submitted or not! ) */
+
+  /**
+   * Returns a boolean, if the submit button got pressed.
+   *
+   * @return Returns true, if the submit button got pressed, else false.
+   */
   public boolean isSubmitted() {
     return submitted;
   }
-  /** @return current boolean value of backWanted( whether the User wants to go back or not! ) */
+
+  /**
+   * Returns a boolean, if the back button got pressed.
+   *
+   * @return Returns true, if the back button got pressed, else false.
+   */
   public boolean isBackWanted() {
     return backWanted;
   }
 
-    /** creates all the Components that the JFrame should display(incl. Position,actionlisteners for Buttons, text etc)
-     *  also resets the booleans for backwanted, refreshwanted etc.
-     * is called from within the configureFrame in abstract Page.
-     */
+  /**
+   * This method creates all components, such as buttons and text fields, and adds it to a list. It
+   * also sets every indicator variables to default and updates the account list of the user.
+   */
   @Override
   protected void createComponents() {
     components = new ArrayList<>();
@@ -212,21 +239,18 @@ public class AddCreditAccountPage extends AbstractPage {
         });
   }
 
-    /**
-     * function to set the Frame Title(only called from within the UserInterface)
-     * takes in a frame and sets its title to 'Add credit Card Account- Page'
-     * @param frame
-     */
+
   @Override
   protected void resetTitle(JFrame frame) {
     frame.setTitle("Add Credit Card Account - Page");
   }
 
-    /**
-     * field to update the input JTextfields
-     * needed in case the account is updated, so it can display the old values.
-     * @param account
-     */
+
+  /**
+   * Updates the text fields with actual values from an account.
+   *
+   * @param account The account, of which the values shall be displayed.
+   */
   public void updateFields(CreditCard account) {
     accountNameInputField.setText(account.getName());
     limitInputField.setText(Double.toString(account.getLimit()));

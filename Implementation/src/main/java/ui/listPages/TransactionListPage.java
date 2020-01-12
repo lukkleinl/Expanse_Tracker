@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -271,9 +272,10 @@ public class TransactionListPage extends AbstractPage {
       customDescriptionLabel_2.setText("Cash");
     } else if (account instanceof CreditCard) {
       customDescriptionHeader_1.setText("Expiry date:");
+
+      SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
       Date expireDate = ((CreditCard) account).getExpiryDate();
-      customDescriptionLabel_1.setText(
-          expireDate.getDay() - 1 + "." + expireDate.getMonth() + "." + expireDate.getYear());
+      customDescriptionLabel_1.setText(dateFormat.format(expireDate));
       customDescriptionLabel_2.setText("Credit Card");
     } else if (account instanceof DebitCard) {
       customDescriptionHeader_1.setText("IBAN:");

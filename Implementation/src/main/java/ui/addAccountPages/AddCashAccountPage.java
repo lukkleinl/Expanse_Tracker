@@ -6,6 +6,7 @@ package ui.addAccountPages;
  * JTextField's, who then can be aquired through getters.
  *
  * @author Paul Kraft
+ * @author Patrick Gmasz
  */
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -184,9 +185,9 @@ public class AddCashAccountPage extends AbstractPage {
   }
 
   /**
-   * function to set the Frame Title(only called from within the UserInterface)
-   * takes in a frame and sets its title to 'Add Cash Account- Page'
-   * @param frame
+   * This method resets the title of the JFrame to "Login".
+   *
+   * @param frame The JFrame, which to update the title from.
    */
   @Override
   protected void resetTitle(JFrame frame) {
