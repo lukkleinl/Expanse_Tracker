@@ -20,6 +20,10 @@ public interface User_Interface
 
   public void deleteTransaction(User user,final int accountID, final Transaction transaction);
 
+  public void removeTransactionCategory(User user,final String categoryname);
+
+  public void newTransactionCategory(User user,String transactiontype,String transactionname);
+
   User getUser(String ID);
 
 }
