@@ -262,9 +262,10 @@ public class TransactionListPage extends AbstractPage {
 
     if (account instanceof Stocks) {
       customDescriptionHeader_1.setText("Buy date:");
+      SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
       Date buyDate = ((Stocks) account).getBuyDate();
       customDescriptionLabel_1.setText(
-          buyDate.getDay() - 1 + "." + buyDate.getMonth() + "." + buyDate.getYear());
+          dateFormat.format(buyDate));
       customDescriptionLabel_2.setText("Stocks");
     } else if (account instanceof Cash) {
       customDescriptionHeader_1.setText("Currency:");

@@ -26,7 +26,6 @@ import java.util.Set;
  * @author Paul Kraft
  * @author Patrick Gmasz
  */
-
 public class GraphicalRepresentation_Bar {
 
   User user;

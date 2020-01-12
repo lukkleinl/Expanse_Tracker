@@ -23,6 +23,7 @@ import java.util.Set;
 /**
  * Class to Generate a Pie Chart
  * @author Paul Kraft
+ * @author Patrick Gmasz
  */
 public class GraphicalRepresentation_Pie {
 
