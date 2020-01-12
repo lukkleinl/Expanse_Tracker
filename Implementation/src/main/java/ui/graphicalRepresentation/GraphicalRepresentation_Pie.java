@@ -20,27 +20,61 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Class to Generate a Pie Chart
+ * @author Paul Kraft
+ */
 public class GraphicalRepresentation_Pie {
 
   User user;
   CustomContainer<Transaction> listOfTransactions;
 
+  /**
+   * Constructor that takes in a user and saves it
+   * @param user
+   */
+
   public GraphicalRepresentation_Pie(User user) {
     this.user = user;
   }
 
+
+  /**
+   * draws The Requested Bar Chart for that year and Month sorted Monthly
+   * @param year
+   * @throws Exception
+   */
   public void draw(String year) throws Exception {
     draw(getYearly(year), year);
   }
 
+  /**
+   * draws The Requested Bar Chart for that year and Month sorted Monthly
+   * @param year
+   * @param month
+   * @throws Exception
+   */
   public void draw(String year, String month) throws Exception {
     draw(getMonthly(year, month), year + "/" + month);
   }
 
+  /**
+   * draws The Requested Bar Chart for that year and Month and day sorted Daily
+   * @param year
+   * @param month
+   * @param day
+   * @throws Exception
+   */
   public void draw(String year, String month, String day) throws Exception {
     draw(getDaily(year, month, day), year + "/" + month + "/" + day);
   }
 
+  /**
+   * draws The Requested Bar Chart for that year and Month and day sorted Custom
+   * @param begin
+   * @param end
+   * @throws Exception
+   */
   public void draw(ZonedDateTime begin, ZonedDateTime end) throws Exception {
     draw(getCustom(begin, end), begin.toString() + " - " + end.toString());
   }

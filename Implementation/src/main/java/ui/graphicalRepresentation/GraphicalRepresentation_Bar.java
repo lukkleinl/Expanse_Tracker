@@ -22,32 +22,66 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/** Class to genereate a Bar Chart
+ * @author Paul Kraft
+ */
+
 public class GraphicalRepresentation_Bar {
 
   User user;
   CustomContainer<Transaction> listOfTransactions;
 
+  /**
+   * Constructor that takes in a user and saves it
+   * @param user
+   */
   public GraphicalRepresentation_Bar(User user) {
     this.user = user;
-    this.listOfTransactions = listOfTransactions;
   }
 
+  /**
+   * draws The Requested Bar Chart for that year sorted yearly
+   * @param year
+   * @throws Exception
+   */
   public void draw(String year) throws Exception {
     draw(getYearly(year), year);
   }
 
+  /**
+   * draws The Requested Bar Chart for that year and Month sorted Monthly
+   * @param year
+   * @param month
+   * @throws Exception
+   */
   public void draw(String year, String month) throws Exception {
     draw(getMonthly(year, month), year + "/" + month);
   }
 
+  /**
+   * draws The Requested Bar Chart for that year and Month and day sorted Daily
+   * @param year
+   * @throws Exception
+   */
   public void draw(String year, String month, String day) throws Exception {
     draw(getDaily(year, month, day), year + "/" + month + "/" + day);
   }
 
+  /**
+   * draws The Requested Bar Chart for the 2 user given ZonedDate's
+   * @param begin
+   * @param end
+   * @throws Exception
+   */
   public void draw(ZonedDateTime begin, ZonedDateTime end) throws Exception {
     draw(getCustom(begin, end), begin.toString() + " - " + end.toString());
   }
 
+  /**
+   * private helpfer functions
+   * @param listOfTransactions
+   * @param dateOfInterest
+   */
   private void draw(CustomContainer<Transaction> listOfTransactions, String dateOfInterest) {
 
     this.listOfTransactions = listOfTransactions;
@@ -58,6 +92,7 @@ public class GraphicalRepresentation_Bar {
 
     Map<String, Float> combinedTransactionValuesOfCategorys = new HashMap<>();
 
+    //combines all Payouts
     for (CustomIterator it = listOfTransactions.getIterator(); it.hasNext(); it.next()) {
 
       if (it.element() instanceof Payout) {
@@ -72,7 +107,7 @@ public class GraphicalRepresentation_Bar {
         } else
           combinedTransactionValuesOfCategorys.put(category, ((Payout) it.element()).getAmount());
 
-      } else {
+      } else { // Combines all deposits
 
         String category = ((Deposit) it.element()).getCategory();
 
@@ -85,6 +120,7 @@ public class GraphicalRepresentation_Bar {
           combinedTransactionValuesOfCategorys.put(category, ((Deposit) it.element()).getAmount());
       }
 
+      //adds it to the dataset
       for (String category : combinedTransactionValuesOfCategorys.keySet()) {
         dataset.addValue(
             combinedTransactionValuesOfCategorys.get(category),
@@ -103,6 +139,14 @@ public class GraphicalRepresentation_Bar {
   }
 
   // needs Month as '01' .. '02' ..
+
+  /**
+   * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
+   * @param year
+   * @param month
+   * @return
+   * @throws Exception
+   */
   public CustomContainer<Transaction> getMonthly(String year, String month) throws Exception {
 
     if (Integer.valueOf(year) <= 0) throw new IndexOutOfBoundsException("No Banks before Jesus!");
@@ -119,7 +163,12 @@ public class GraphicalRepresentation_Bar {
 
     throw new NoSuchFieldException("Given Date not present");
   }
-
+  /**
+   * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
+   * @param year
+   * @return
+   * @throws Exception
+   */
   public CustomContainer<Transaction> getYearly(String year) throws Exception {
 
     if (Integer.valueOf(year) <= 0) throw new IndexOutOfBoundsException("No Banks before Jesus!");
@@ -133,6 +182,14 @@ public class GraphicalRepresentation_Bar {
 
     throw new NoSuchFieldException("Given Date not present");
   }
+  /**
+   * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
+   * @param year
+   * @param month
+   * @param day
+   * @return
+   * @throws Exception
+   */
 
   public CustomContainer<Transaction> getDaily(String year, String month, String day)
       throws Exception {
@@ -152,6 +209,13 @@ public class GraphicalRepresentation_Bar {
     throw new NoSuchFieldException("Given Date not present");
   }
 
+  /**
+   * extracts the needed Tranactions for the Chart, takes it from the user that is given in Constructor
+   * @param begin
+   * @param end
+   * @return
+   * @throws Exception
+   */
   public CustomContainer<Transaction> getCustom(ZonedDateTime begin, ZonedDateTime end)
       throws Exception {
     Map<String, CustomContainer<Transaction>> orga =
