@@ -53,23 +53,24 @@ public class ReadOperation implements Read_Operation
     if(account.get("Accounttype").equals("CASH"))
     {
 
-      user.addAccount(new Cash(account.getString("Name"),account.getFloat("Limit"),account.getString("Currency"),account.getInt("id")));
+      user.addAccount(new Cash(account.getString("Name"),account.getFloat("Limit"),
+                account.getString("Currency"),account.getInt("id"),account.getFloat("Balance")));
     }
     else if(account.get("Accounttype").equals("STOCKS"))
     {
       Date date=new Date(account.get("Buy Date").toString());
-      user.addAccount(new Stocks(account.get("Name").toString(),date,account.getFloat("Limit"),account.getInt("id")));
+      user.addAccount(new Stocks(account.get("Name").toString(),date,account.getFloat("Limit"),account.getInt("id"),account.getFloat("Balance")));
     }
     else if(account.get("Accounttype").equals("DEBITCARD"))
     {
       user.addAccount(new DebitCard(account.get("Name").toString(),account.get("Bankname").toString(),
-          account.getFloat("Limit"),account.get("IBAN").toString(),account.getInt("id")));
+          account.getFloat("Limit"),account.get("IBAN").toString(),account.getInt("id"),account.getFloat("Balance")));
     }
     else if(account.get("Accounttype").equals("CREDITCARD"))
     {
       Date date=new Date(account.get("Buy Date").toString());
       user.addAccount(new CreditCard(account.get("Name").toString(),account.get("Bankname").toString(),
-          account.getFloat("Limit"),date,account.getInt("id")));
+          account.getFloat("Limit"),date,account.getInt("id"),account.getFloat("Balance")));
     }
     else
     {
@@ -116,20 +117,21 @@ public class ReadOperation implements Read_Operation
         Date date=null;
 
         if(acc.getString("Accounttype").equals("CASH"))
-          user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id")));
+          user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id"),acc.getFloat("Balance")));
         else if(acc.getString("Accounttype").equals("DEBITCARD"))
-          user.addAccount((new DebitCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),acc.getString("IBAN"),acc.getInt("id"))));
+          user.addAccount((new DebitCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),
+              acc.getString("IBAN"),acc.getInt("id"),acc.getFloat("Balance"))));
         else if(acc.getString("Accounttype").equals("CREDITCARD"))
         {
           JSONObject date_object=acc.getJSONObject("Expiry Date");
           date=new Date(date_object.getLong("$numberLong"));
-          user.addAccount(new CreditCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),date,acc.getInt("id")));
+          user.addAccount(new CreditCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),date,acc.getInt("id"),acc.getFloat("Balance")));
         }
         else if(acc.getString("Accounttype").equals("STOCKS"))
         {
           JSONObject date_object=acc.getJSONObject("Buy Date");
           date=new Date(date_object.getLong("$numberLong"));
-          user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"))));
+          user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"),acc.getFloat("Balance"))));
         }
         else
           assert true : "Shouldnt reach this statement";
@@ -204,18 +206,18 @@ public class ReadOperation implements Read_Operation
         Date date=null;
 
         if(acc.getString("Accounttype").equals("CASH"))
-          user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id")));
+          user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id"),acc.getFloat("Balance")));
         else if(acc.getString("Accounttype").equals("DEBITCARD"))
-          user.addAccount((new DebitCard(acc.getString("Name"),"afv"/*acc.getString("Bankname")*/,acc.getFloat("Limit"),acc.getString("IBAN"),acc.getInt("id"))));
+          user.addAccount((new DebitCard(acc.getString("Name"),"afv"/*acc.getString("Bankname")*/,acc.getFloat("Limit"),acc.getString("IBAN"),acc.getInt("id"),acc.getFloat("Balance"))));
         else if(acc.getString("Accounttype").equals("CREDITCARD"))
         {
           date= new Date(acc.getString("Expiry Date"));
-          user.addAccount(new CreditCard(acc.getString("Name"),"afv"/*acc.getString("Bankname")*/,acc.getFloat("Limit"),date,acc.getInt("id")));
+          user.addAccount(new CreditCard(acc.getString("Name"),"afv"/*acc.getString("Bankname")*/,acc.getFloat("Limit"),date,acc.getInt("id"),acc.getFloat("Balance")));
         }
         else if(acc.getString("Accounttype").equals("STOCKS"))
         {
           date= new Date(acc.getString("Buy Date"));
-          user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"))));
+          user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"),acc.getFloat("Balance"))));
         }
         else
           assert true : "Shouldnt reach this statement";

@@ -23,8 +23,8 @@ public class Cash extends Account {
    * @param limit
    * @param currency The currency of the cash
    */
-  public Cash(String accountName, float limit,String currency,final Integer ID) {
-    super(accountName,limit,ID);
+  public Cash(String accountName, float limit,String currency,final Integer ID,final float balance) {
+    super(accountName,limit,ID,balance);
     this.currency = currency;
   }
 

@@ -19,8 +19,8 @@ public class Stocks extends Account {
     this.buyDate = buyDate;
   }
 
-  public Stocks(String accountName, Date buyDate,float limit,final Integer ID) {
-    super(accountName,limit);
+  public Stocks(String accountName, Date buyDate,float limit,final Integer ID,final float balance) {
+    super(accountName,limit,ID,balance);
     this.buyDate = buyDate;
   }
 

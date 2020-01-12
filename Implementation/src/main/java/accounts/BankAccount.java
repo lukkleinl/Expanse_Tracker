@@ -17,8 +17,8 @@ public class BankAccount extends Account {
     //this.limit = limit;
   }
 
-  public BankAccount(String accountName, String bankName, float limit,final Integer ID) {
-    super(accountName,limit,ID);
+  public BankAccount(String accountName, String bankName, float limit,final Integer ID,final float balance) {
+    super(accountName,limit,ID,balance);
     this.bankName = bankName;
     //this.limit = limit;
   }

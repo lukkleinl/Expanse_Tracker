@@ -18,8 +18,8 @@ public class DebitCard extends BankAccount {
     this.IBAN=IBAN;
   }
 
-  public DebitCard(String accountName, String bankName, float limit,String IBAN,final Integer ID) {
-    super(accountName, bankName, limit,ID);
+  public DebitCard(String accountName, String bankName, float limit,String IBAN,final Integer ID,final float balance) {
+    super(accountName, bankName, limit,ID,balance);
     this.IBAN=IBAN;
   }
 

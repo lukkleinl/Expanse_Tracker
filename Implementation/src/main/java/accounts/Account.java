@@ -30,12 +30,12 @@ public abstract class Account {
    * @param name The name of the account
    * @param limit Limit of the account
    */
-  public Account(final String name, final float limit, final Integer ID) {
+  public Account(final String name, final float limit, final Integer ID,final float balance) {
     account_number = ID;
     nextId.set(ID);
     this.name = name;
     this.limit = limit;
-    balance = 0;
+    this.balance = balance;
   }
 
 

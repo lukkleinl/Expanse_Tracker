@@ -21,8 +21,8 @@ public class CreditCard extends BankAccount {
     this.expiryDate = expiryDate;
   }
 
-  public CreditCard(String accountName, String bankName, float limit, Date expiryDate,final Integer ID) {
-    super(accountName, bankName, limit,ID);
+  public CreditCard(String accountName, String bankName, float limit, Date expiryDate,final Integer ID,final float balance) {
+    super(accountName, bankName, limit,ID,balance);
     this.expiryDate = expiryDate;
   }
 
