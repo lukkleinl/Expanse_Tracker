@@ -6,6 +6,11 @@ import java.util.Map;
 import transactions.Transaction;
 import user.User;
 
+/**
+ * Defines the methods to get Users and Transactions from the database
+ *
+ * @author Lukas Kleinl
+ */
 public interface Read_Operation {
 
   CustomList<User> getUsers();

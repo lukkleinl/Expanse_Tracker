@@ -83,8 +83,6 @@ public class WriteOperation implements Write_Operation {
   private Document Account(final Account account) {
     Document doc;
 
-    System.out.println(account.getAccount_number() + " account number");
-
     switch (account.toString()) {
       case "STOCKS":
         Stocks stock = (Stocks) account;

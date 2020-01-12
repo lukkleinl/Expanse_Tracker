@@ -27,6 +27,7 @@ import transactions.categories.DepositCategory;
 import transactions.categories.PayoutCategory;
 import user.User;
 
+
 public class ReadOperation implements Read_Operation
 {
 
@@ -82,14 +83,13 @@ public class ReadOperation implements Read_Operation
   public CustomList<User> getUsers()
   {
     collection = database.getCollection("User");
-    MongoCursor cursor_acc=null;
     MongoCursor<Document> cursor=collection.find().iterator();
     CustomList<User> user_list=new CustomList<>();
-    User user=null;
+    User user;
 
     while (cursor.hasNext())
     {
-      JSONObject json=new JSONObject(cursor.next().toJson());
+      /*JSONObject json=new JSONObject(cursor.next().toJson());
 
       user=new User(json.get("_id").toString(),
                     json.get("First Name").toString(),
@@ -125,6 +125,7 @@ public class ReadOperation implements Read_Operation
         {
           JSONObject date_object=acc.getJSONObject("Expiry Date");
           date=new Date(date_object.getLong("$numberLong"));
+          System.out.println(date);
           user.addAccount(new CreditCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),date,acc.getInt("id"),acc.getFloat("Balance")));
         }
         else if(acc.getString("Accounttype").equals("STOCKS"))
@@ -152,8 +153,8 @@ public class ReadOperation implements Read_Operation
           user.getTransactionStore().addTransactionUnderKey(account_number,trans);
         }
       }
-      user_list.add(user);
-      //user_list.add(getUsers(cursor.next().getString("_id")));
+      user_list.add(user);*/
+      user_list.add(getUsers(cursor.next().getString("_id")));
     }
     return user_list;
   }
@@ -208,15 +209,17 @@ public class ReadOperation implements Read_Operation
         if(acc.getString("Accounttype").equals("CASH"))
           user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id"),acc.getFloat("Balance")));
         else if(acc.getString("Accounttype").equals("DEBITCARD"))
-          user.addAccount((new DebitCard(acc.getString("Name"),"afv"/*acc.getString("Bankname")*/,acc.getFloat("Limit"),acc.getString("IBAN"),acc.getInt("id"),acc.getFloat("Balance"))));
+          user.addAccount((new DebitCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),acc.getString("IBAN"),acc.getInt("id"),acc.getFloat("Balance"))));
         else if(acc.getString("Accounttype").equals("CREDITCARD"))
         {
-          date= new Date(acc.getString("Expiry Date"));
-          user.addAccount(new CreditCard(acc.getString("Name"),"afv"/*acc.getString("Bankname")*/,acc.getFloat("Limit"),date,acc.getInt("id"),acc.getFloat("Balance")));
+          JSONObject date_object=acc.getJSONObject("Expiry Date");
+          date=new Date(date_object.getLong("$numberLong"));
+          user.addAccount(new CreditCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),date,acc.getInt("id"),acc.getFloat("Balance")));
         }
         else if(acc.getString("Accounttype").equals("STOCKS"))
         {
-          date= new Date(acc.getString("Buy Date"));
+          JSONObject date_object=acc.getJSONObject("Buy Date");
+          date=new Date(date_object.getLong("$numberLong"));
           user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"),acc.getFloat("Balance"))));
         }
         else
