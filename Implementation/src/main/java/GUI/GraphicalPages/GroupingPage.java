@@ -59,7 +59,7 @@ public class GroupingPage extends AbstractPage {
   public GroupingPage(final User user) {
     this.user = user;
   }
-  
+
 
     /**
      * The page has a button, which the user can press if he wants to Go 1 Page back. Pressing the
@@ -442,10 +442,6 @@ public class GroupingPage extends AbstractPage {
 
     }
             refreshWanted = true;
-            if (TESTING_boolean && refreshWanted) {
-              configureFrame(TESTING_frame);
-              System.out.println("is testing");
-            }
           }
         });
   }
