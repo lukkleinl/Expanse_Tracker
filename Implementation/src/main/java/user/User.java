@@ -126,13 +126,22 @@ public class User extends SWE_Observable {
     updateObservers(this, account, transaction); // VON PAUL fürs observer
   }
 
-  public void updateTransaction(final int accountID, final Transaction transaction) {
+  public void updateTransaction(final int accountID, final Transaction transaction,final float old_amount) {
     this.transactions.updateTransaction(accountID, transaction);
 
     for (CustomIterator<Account> it = this.accounts.getIterator(); it.hasNext(); it.next()) {
       if (it.element().getAccount_number() == accountID) {
-        it.element().updateAccountNumberAndBalance(accountID,
-            it.element().getBalance() - transaction.getAmount());
+
+        float new_amount=transaction.getAmount()-old_amount;
+
+
+        if(transaction instanceof Payout)
+          it.element().updateAccountNumberAndBalance(accountID, it.element().getBalance() - new_amount);
+        else if(transaction instanceof Deposit)
+          it.element().updateAccountNumberAndBalance(accountID, it.element().getBalance() + new_amount);
+        else
+          assert true : "Should not reach this argument";
+
         updateObservers(this,transaction);
       }
     }
@@ -150,8 +159,13 @@ public class User extends SWE_Observable {
 
     for (CustomIterator<Account> it = this.accounts.getIterator(); it.hasNext(); it.next()) {
       if (it.element().getAccount_number() == accountID) {
-        it.element().updateAccountNumberAndBalance(accountID,
-            it.element().getBalance() - transaction.getAmount());
+        if(transaction instanceof Payout)
+            it.element().updateAccountNumberAndBalance(accountID, it.element().getBalance() + transaction.getAmount());
+        else if(transaction instanceof Deposit)
+            it.element().updateAccountNumberAndBalance(accountID, it.element().getBalance() - transaction.getAmount());
+        else
+          assert true : "Should not reach this argument";
+
         updateObservers(this);
       }
 

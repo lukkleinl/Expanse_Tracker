@@ -47,8 +47,8 @@ public class User_Facade implements User_Interface{
   }
 
   @Override
-  public void updateTransaction(User user,int accountID, Transaction transaction) {
-      user.updateTransaction(accountID,transaction);
+  public void updateTransaction(User user,int accountID, Transaction transaction,float old_amount) {
+      user.updateTransaction(accountID,transaction,old_amount);
   }
 
   @Override

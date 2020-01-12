@@ -315,13 +315,14 @@ public class UserInterface {
                   .isSubmitted()) { // if submit button got pressed, add new payout to account of
                 Payout transaction =
                     (Payout) transactionListPage.getSelectedTransactionToDeleteOrUpdate();
+                float old_amount=transaction.getAmount();
                 transaction.updatePayout(
                     transaction.getCreationDate(),
                     addPayoutPage.getAmount(),
                     addPayoutPage.getCategory(),
                     addPayoutPage.getDescription());
                 user.updateTransaction(
-                    accountListPage.getSelectedAccount().getAccount_number(), transaction);
+                    accountListPage.getSelectedAccount().getAccount_number(),transaction, old_amount);
 
                 if(accountListPage.getSelectedAccount().limitExceeded()) {
                   JOptionPane.showMessageDialog(null, "Balance is lower as the limit, after this transaction!", "Limit Warning",JOptionPane.WARNING_MESSAGE);
@@ -349,13 +350,14 @@ public class UserInterface {
                   .isSubmitted()) { // if submit button got pressed, add new deposit page to account
                 Deposit transaction =
                     (Deposit) transactionListPage.getSelectedTransactionToDeleteOrUpdate();
+                float old_amount=transaction.getAmount();
                 transaction.updateDeposit(
                     transaction.getCreationDate(),
                     addDepositPage.getAmount(),
                     addDepositPage.getCategory(),
                     addDepositPage.getDescription());
                 user.updateTransaction(
-                    accountListPage.getSelectedAccount().getAccount_number(), transaction);
+                    accountListPage.getSelectedAccount().getAccount_number(), transaction,old_amount);
 
                 if(accountListPage.getSelectedAccount().limitExceeded()) {
                   JOptionPane.showMessageDialog(null, "Balance is lower as the limit, after this transaction!", "Limit Warning",JOptionPane.WARNING_MESSAGE);

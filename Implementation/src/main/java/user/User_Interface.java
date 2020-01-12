@@ -16,7 +16,7 @@ public interface User_Interface
 
   public void applyAndSaveTransaction(User user,final Transaction transaction, final Account account) throws SWE_Exception;
 
-  public void updateTransaction(User user,final int accountID, final Transaction transaction);
+  public void updateTransaction(User user,final int accountID, final Transaction transaction,final float old_amount);
 
   public void deleteTransaction(User user,final int accountID, final Transaction transaction);
 
