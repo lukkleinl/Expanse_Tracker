@@ -40,25 +40,6 @@ public class Database implements SWE_Observer {
         {
             if(it.element().getUserID().equals(user.getUserID()))
             {
-                Map<Integer, CustomContainer<Transaction>> map=user.getTransactionStore ().getTransactions();
-
-                for(Entry entry : map.entrySet())
-                {
-                     CustomContainer<Object> list = (CustomList<Object>) entry.getValue();
-                     CustomIterator<Object> iterator = list.getIterator();
-
-                     while (iterator.hasNext())
-                     {
-                         Transaction transaction= (Transaction) iterator.element();
-                         if(trans.equals(transaction))
-                         {
-                             writeOperation.updateTransaction(trans);
-                             return;
-                         }
-                         iterator.next();
-                     }
-                }
-
 
                 writeOperation.insertTransaction(user,acc,trans);
                 return;
@@ -93,6 +74,29 @@ public class Database implements SWE_Observer {
 
         listOfUsers.add(obj);
         writeOperation.insertUser(obj);
+    }
+
+    @Override
+    public void update(User obj, Transaction trans)
+    {
+        Map<Integer, CustomContainer<Transaction>> map=obj.getTransactionStore ().getTransactions();
+
+        for(Entry entry : map.entrySet())
+        {
+            CustomContainer<Object> list = (CustomList<Object>) entry.getValue();
+            CustomIterator<Object> iterator = list.getIterator();
+
+            while (iterator.hasNext())
+            {
+                Transaction transaction= (Transaction) iterator.element();
+                if(trans.equals(transaction))
+                {
+                    writeOperation.updateTransaction(trans);
+                    return;
+                }
+                iterator.next();
+            }
+        }
     }
 
 

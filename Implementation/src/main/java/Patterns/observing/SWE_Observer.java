@@ -13,6 +13,7 @@ import user.User;
       * @param obj Object that changed, which interests the observer.
       */
      void update(User obj);
+     void update(User obj,Transaction transaction);
      void update(User user, Account acc,Transaction trans);
      void update(User user,int Transaction_ID);
 }

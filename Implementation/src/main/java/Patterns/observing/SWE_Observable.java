@@ -62,6 +62,13 @@ public class SWE_Observable
     }
   }
 
+  public void updateObservers(final User user,final Transaction trans){
+    for(SWE_Observer obs : observerList )
+    {
+      obs.update(user,trans);
+    }
+  }
+
   public void updateObservers(final User user,final Account acc,final Transaction trans){
     for(SWE_Observer obs : observerList )
     {
