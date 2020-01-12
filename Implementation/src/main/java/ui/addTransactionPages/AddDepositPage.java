@@ -137,10 +137,13 @@ public class AddDepositPage extends AbstractPage {
     newCategoryOptionPaneButton.addActionListener(
         actionEvent -> {
           String categoryName = JOptionPane.showInputDialog("Enter name of new category!");
-          System.out.println(categoryName);
-          user.newTransactionCategory(new DepositCategory(categoryName));
-          depositCategorys = user.getCategories(new DepositCategory()).toArray();
-          refreshWanted = true;
+          if(categoryName!=null) {
+            System.out.println(categoryName);
+            user.newTransactionCategory(new DepositCategory(categoryName));
+            depositCategorys = user.getCategories(new DepositCategory()).toArray();
+            refreshWanted = true;
+          }
+
         });
 
     submitButton.addActionListener(
