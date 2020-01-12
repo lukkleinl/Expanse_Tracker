@@ -22,34 +22,36 @@ public class User_Facade implements User_Interface{
   }
 
   @Override
-  public void addAccount(Account acc) {
-
+  public void addAccount(User user,Account acc)
+  {
+      user.addAccount(acc);
   }
 
   @Override
-  public void updateAccount(Account oldAcc, Account newAcc) {
-
+  public void updateAccount(User user,Account oldAcc, Account newAcc) {
+      user.updateAccount(oldAcc,newAcc);
   }
 
   @Override
-  public void deleteAccount(Account acc) {
-
+  public void deleteAccount(User user,Account acc)
+  {
+    user.deleteAccount(acc);
   }
 
   @Override
-  public void applyAndSaveTransaction(Transaction transaction, Account account)
+  public void applyAndSaveTransaction(User user,Transaction transaction, Account account)
       throws SWE_Exception {
-
+      user.applyAndSaveTransaction(transaction,account);
   }
 
   @Override
-  public void updateTransaction(int accountID, Transaction transaction) {
-
+  public void updateTransaction(User user,int accountID, Transaction transaction) {
+      user.updateTransaction(accountID,transaction);
   }
 
   @Override
-  public void deleteTransaction(int accountID, Transaction transaction) {
-
+  public void deleteTransaction(User user,int accountID, Transaction transaction) {
+      user.deleteTransaction(accountID,transaction);
   }
 
 
