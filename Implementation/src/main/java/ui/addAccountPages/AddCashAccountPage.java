@@ -45,7 +45,6 @@ public class AddCashAccountPage extends AbstractPage {
    * Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be
    * aquired through getters.
    */
-  // In Final Version might take a User object to display additional User information.
   public AddCashAccountPage(User user) {
     this.user = user;
     createComponents();
@@ -80,6 +79,10 @@ public class AddCashAccountPage extends AbstractPage {
     return backWanted;
   }
 
+   /** creates all the Components that the JFrame should display(incl. Position,actionlisteners for Buttons, text etc)
+   * also resets the booleans for backwanted, refreshwanted etc.
+   * is called from within the configureFrame in abstract Page.
+   */
   @Override
   protected void createComponents() {
     components = new ArrayList<>();
@@ -180,11 +183,21 @@ public class AddCashAccountPage extends AbstractPage {
         });
   }
 
+  /**
+   * function to set the Frame Title(only called from within the UserInterface)
+   * takes in a frame and sets its title to 'Add Cash Account- Page'
+   * @param frame
+   */
   @Override
   protected void resetTitle(JFrame frame) {
-    frame.setTitle("Add Cash Account");
+    frame.setTitle("Add Cash Account - Page");
   }
 
+  /**
+   * field to update the input JTextfields
+   * needed in case the Cash account is updated, so it can display the old values.
+   * @param account
+   */
   public void updateFields(Cash account) {
     accountNameInputField.setText(account.getName());
     limitInputField.setText(Double.toString(account.getLimit()));
