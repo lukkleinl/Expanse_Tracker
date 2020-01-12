@@ -50,7 +50,7 @@ public class Database implements SWE_Observer {
                      while (iterator.hasNext())
                      {
                          Transaction transaction= (Transaction) iterator.element();
-                         if(transaction.getID()==trans.getID())
+                         if(trans.equals(transaction))
                          {
                              writeOperation.updateTransaction(trans);
                              return;
