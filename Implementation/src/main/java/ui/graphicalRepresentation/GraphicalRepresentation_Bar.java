@@ -33,7 +33,7 @@ public class GraphicalRepresentation_Bar {
 
   /**
    * Constructor that takes in a user and saves it
-   * @param user
+   * @param user User whose Data are of Interest
    */
   public GraphicalRepresentation_Bar(User user) {
     this.user = user;
@@ -41,8 +41,8 @@ public class GraphicalRepresentation_Bar {
 
   /**
    * draws The Requested Bar Chart for that year sorted yearly
-   * @param year
-   * @throws Exception
+   * @param year The Year whose Data is of interrest for the Grouping algorithm.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   public void draw(String year) throws Exception {
     draw(getYearly(year), year);
@@ -50,9 +50,9 @@ public class GraphicalRepresentation_Bar {
 
   /**
    * draws The Requested Bar Chart for that year and Month sorted Monthly
-   * @param year
-   * @param month
-   * @throws Exception
+   * @param year The Year, the 'When' for the Grouping algorithm.
+   * @param month The Month, the 'When' for the Grouping algorithm.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   public void draw(String year, String month) throws Exception {
     draw(getMonthly(year, month), year + "/" + month);
@@ -60,8 +60,10 @@ public class GraphicalRepresentation_Bar {
 
   /**
    * draws The Requested Bar Chart for that year and Month and day sorted Daily
-   * @param year
-   * @throws Exception
+   * @param year The Year, the 'When' for the Grouping algorithm.
+   * @param month The Month, the 'When' for the Grouping algorithm
+   * @param day The Day, the 'When' for the Grouping algorithm.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.
    */
   public void draw(String year, String month, String day) throws Exception {
     draw(getDaily(year, month, day), year + "/" + month + "/" + day);
@@ -69,18 +71,17 @@ public class GraphicalRepresentation_Bar {
 
   /**
    * draws The Requested Bar Chart for the 2 user given ZonedDate's
-   * @param begin
-   * @param end
-   * @throws Exception
-   */
+   * @param begin the Begin Date for the Grouping algorithm.
+   * @param end the End Date for the Grouping algorithm.
+   * @throws Exception Exception thrown If the Year is not valid, or there is not enough data to create a Chart.*/
   public void draw(ZonedDateTime begin, ZonedDateTime end) throws Exception {
     draw(getCustom(begin, end), begin.toString() + " - " + end.toString());
   }
 
   /**
    * private helper function to draw the Chart
-   * @param listOfTransactions
-   * @param dateOfInterest
+   * @param listOfTransactions list of Transactions that should be displayed in the Chart.
+   * @param dateOfInterest String that is also Displayed so the End User knows, for which period the Chart is
    */
   private void draw(CustomContainer<Transaction> listOfTransactions, String dateOfInterest) {
 
@@ -148,7 +149,7 @@ public class GraphicalRepresentation_Bar {
    * @return
    * @throws Exception
    */
-  public CustomContainer<Transaction> getMonthly(String year, String month) throws Exception {
+  private CustomContainer<Transaction> getMonthly(String year, String month) throws Exception {
 
     if (Integer.valueOf(year) <= 0) throw new IndexOutOfBoundsException("No Banks before Jesus!");
 

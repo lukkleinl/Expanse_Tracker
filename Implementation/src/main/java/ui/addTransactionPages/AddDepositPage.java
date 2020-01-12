@@ -17,6 +17,7 @@ import user.User;
  * the JTextField's, who then can be aquired through getters.
  *
  * @author Paul Kraft
+ * @author Patrick Gmasz
  */
 public class AddDepositPage extends AbstractPage {
 
@@ -53,15 +54,32 @@ public class AddDepositPage extends AbstractPage {
   public float getAmount() {
     return amountInputValue;
   }
-  /** @return current boolean value of submitted(whether the User submitted or not! ) */
+  /**
+   *  The page has a button, which the user can press if he wants to Submit his Data Pressing the
+   * button will set a boolean flag, that the button was pressed. This method returns the boolean,
+   * it will be true, if the user Submited his Data.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the 'Submit' button.
+   */
   public boolean isSubmitted() {
     return submitted;
   }
-  /** @return current boolean value of backWanted( whether the User wants to go back or not! ) */
+  /**
+   * The page has a button, which the user can press if he wants to Go 1 Page back. Pressing the
+   * button will set a boolean flag, that the button was pressed. This method returns the boolean,
+   * it will be true, if the user wants to go back.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the 'Back' button.
+   */
   public boolean isBackWanted() {
     return backWanted;
   }
-  /**@return current boolean value of refreshWanted(whether UI should refresh or not! ) */
+  /**
+   *  This Page can have the need to Refresh to Signal this to the User Interface there is a booleag Flag.
+   *  The User Interface will regularly check if the Page wants to refresh.
+   *
+   * @return The boolean flag, it will be true, if the The Page needs to Refresh
+   */
   public boolean isRefreshWanted() { return refreshWanted; }
 
   /** Creates a new AddDepositPage, which will load all needed components to a list. */
@@ -178,9 +196,9 @@ public class AddDepositPage extends AbstractPage {
   }
 
   /**
-   * function to set the Frame Title(only called from within the UserInterface)
+   * Method to set the Frame Title(only called from within the UserInterface)
    * takes in a frame and sets its title to 'Add Deposit - Page'
-   * @param frame
+   * @param frame the Frame whose title should be set.
    */
   @Override
   protected void resetTitle(final JFrame frame) {
@@ -188,9 +206,9 @@ public class AddDepositPage extends AbstractPage {
   }
 
   /**
-   * field to update the input JTextfields
+   * Method to update the input JTextfields
    * needed in case the deposit is updated, so it can display the old values.
-   * @param  transaction
+   * @param  transaction the (old)Transaction whose Data should be Displayed.
    */
   public void updateFields(Deposit transaction) {
     amountInputField.setText(Float.toString(transaction.getAmount()));

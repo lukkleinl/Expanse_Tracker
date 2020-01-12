@@ -8,6 +8,7 @@ package ui.addAccountPages;
  * @author Paul Kraft
  * @author Patrick Gmasz
  */
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -20,6 +21,14 @@ import accounts.Cash;
 import ui.main.AbstractPage;
 import user.User;
 
+/**
+ * This Page collects all necessary data needed to create a new 'Cash'-Account. Implements the
+ * Interface 'InterfacePage' By Pressing Submit(JButton) the Page saves the Values entered into the
+ * JTextField's, who then can be aquired through getters.
+ *
+ * @author Paul Kraft
+ * @author Patrick Gmasz
+ */
 public class AddCashAccountPage extends AbstractPage {
 
   private JLabel introTextLabel;
@@ -45,37 +54,46 @@ public class AddCashAccountPage extends AbstractPage {
    * Creates a new AddCashAccountPage, which will load all needed components to a list. By Pressing
    * Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be
    * aquired through getters.
+   * @param user The User whose Data should be Displayed, or to whom the Account should be added.
    */
   public AddCashAccountPage(User user) {
     this.user = user;
     createComponents();
   }
 
-  /**
-   * Configures the JFrame, adds all the components(resets the values of the JTextFields to hard
-   * coded default). Names the Frame to 'Add Cash Account'. Sets the Size of the Frame. (Default is
-   * 1200 by 800). calls revalidate() and repaint() on the Frame.
-   *
-   * @param frame The JFrame, which components will be updated
-   */
 
-  /** @return AccName input from the User or default val. */
+  /** Getter for the AccountName that was inputed by the User.
+   * @return AccName input from the User or default val. */
   public String getAccountName() {
     return accountNameInputValue;
   }
-  /** @return Currency input from the User or default val. */
+  /** Getter for the Currency that was inputed by the User.
+   * @return Currency input from the User or default val. */
   public String getCurrency() {
     return currencyInputValue;
   }
-  /** @return Limit input from the User or default val. */
+  /**Getter for the Limit that was inputed by the User
+   *  @return Limit input from the User or default val. */
   public float getLimit() {
     return limitInputValue;
   }
-  /** @return current boolean value of submitted(whether the User submitted or not! ) */
+  /**
+   * The page has a button, which the user can press if he wants to Submit his Data Pressing the
+   * button will set a boolean flag, that the button was pressed. This method returns the boolean,
+   * it will be true, if the user Submited his Data.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the 'Submit' button.
+   */
   public boolean isSubmitted() {
     return submitted;
   }
-  /** @return current boolean value of backWanted( whether the User wants to go back or not! ) */
+  /**
+   * The page has a button, which the user can press if he wants to Go 1 Page back. Pressing the
+   * button will set a boolean flag, that the button was pressed. This method returns the boolean,
+   * it will be true, if the user wants to go back.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the 'Back' button.
+   */
   public boolean isBackWanted() {
     return backWanted;
   }
@@ -136,9 +154,9 @@ public class AddCashAccountPage extends AbstractPage {
     submitButton.addActionListener(
         new ActionListener() {
           @Override
-          /**
-           * @param e Action event sets Submitted to true extracts the Input Values and provides
-           *     them for getters.
+          /**sets Submitted to true extracts the Input Values and provides
+           * them for getters.
+           * @param e Action event
            */
           public void actionPerformed(ActionEvent e) {
             accountNameInputValue = accountNameInputField.getText();
@@ -188,17 +206,20 @@ public class AddCashAccountPage extends AbstractPage {
    * This method resets the title of the JFrame to "Login".
    *
    * @param frame The JFrame, which to update the title from.
+   * Method to set the Frame Title(only called from within the UserInterface)
+   * takes in a frame and sets its title to 'Add Cash Account- Page'
+   * @param frame The Frame whose title should be set.
    */
   @Override
   protected void resetTitle(JFrame frame) {
     frame.setTitle("Add Cash Account - Page");
   }
 
-  /**
-   * field to update the input JTextfields
-   * needed in case the Cash account is updated, so it can display the old values.
-   * @param account
-   */
+    /**
+     * Method to update the input - JTextfields.
+     * Needed in case the Account is updated, so it can display the old Values.
+     * @param account The (old) Transaction of which the Values should be displayed.
+     */
   public void updateFields(Cash account) {
     accountNameInputField.setText(account.getName());
     limitInputField.setText(Double.toString(account.getLimit()));

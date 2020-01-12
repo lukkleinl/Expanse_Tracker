@@ -1,11 +1,5 @@
 package ui.addAccountPages;
-/**
- * This Page collects all necessary data needed to create a new 'Stocks'-Account. By Pressing
- * Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired
- * through getters.
- *
- * @author Paul Kraft
- */
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -19,12 +13,15 @@ import java.util.Date;
 import accounts.Stocks;
 import ui.main.AbstractPage;
 import user.User;
-
+/**
+ * This Page collects all necessary data needed to create a new 'Stocks'-Account. By Pressing
+ * Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be aquired
+ * through getters.
+ *
+ * @author Paul Kraft
+ * @author Patrick Gmasz
+ */
 public class AddStockAccountPage extends AbstractPage {
-
-  private static final int SHIFT_LEFT = 300;
-  private static final int OFFSET_Y =
-      50; // THE AMT OF PIXELS THE TEXT FIELDS ARE OFFSET TO THEIR CORRESPONDING JPANELS!
 
   private JLabel introTextLabel;
   private JLabel accountNameTextLabel;
@@ -46,14 +43,19 @@ public class AddStockAccountPage extends AbstractPage {
 
   private User user;
 
-  /** Creates a new AddStockAccountPage, which will load all needed components to a list. */
-  // In Final Version might take a User object to display additional User information.
+  /**
+   *Creates a new AddCashAccountPage, which will load all needed components to a list. By Pressing
+   * Submit(JButton) the Page saves the Values entered into the JTextField's, who then can be
+   * aquired through getters.
+   *@param user The User whose Data should be Displayed, or to whom the Account should be added.
+   */
   public AddStockAccountPage(User user) {
     this.user = user;
     createComponents();
   }
 
-  /** @return accName input from the User or default val. */
+  /**Getter
+   *  @return accName input from the User or default val. */
   public String getAccName() {
     return accountNameInputValue;
   }
@@ -61,20 +63,32 @@ public class AddStockAccountPage extends AbstractPage {
   public Date getBuyDate() {
     return buyDateInputValue;
   }
-
-  /** @return Limit input from the User or default val. */
+  /**Getter
+   *  @return Limit input from the User or default val. */
   public float getLimit() {
     return limitInputValue;
   }
-  /** @return current boolean value of submitted(whether the User submitted or not! ) */
+  /**
+   *  The page has a button, which the user can press if he wants to Submit his Data Pressing the
+   * button will set a boolean flag, that the button was pressed. This method returns the boolean,
+   * it will be true, if the user Submited his Data.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the 'Submit' button.
+   */
   public boolean isSubmitted() {
     return submitted;
   }
-
-  /** @return current boolean value of backWanted( whether the User wants to go back or not! ) */
+  /**
+   * The page has a button, which the user can press if he wants to Go 1 Page back. Pressing the
+   * button will set a boolean flag, that the button was pressed. This method returns the boolean,
+   * it will be true, if the user wants to go back.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the 'Back' button.
+   */
   public boolean isBackWanted() {
     return backWanted;
   }
+
 
   /** creates all the Components that the JFrame should display(incl. Position,actionlisteners for Buttons, text etc)
    * also resets the booleans for backwanted, refreshwanted etc.
@@ -174,20 +188,20 @@ public class AddStockAccountPage extends AbstractPage {
   }
 
   /**
-   * function to set the Frame Title(only called from within the UserInterface)
+   * Method to set the Frame Title(only called from within the UserInterface)
    * takes in a frame and sets its title to 'Add Stock Account - Page'
-   * @param frame
+   * @param frame The Frame whose title should be set.
    */
   @Override
   protected void resetTitle(JFrame frame) {
     frame.setTitle("Add Stock Account - Page");
   }
 
-  /**
-   * field to update the input JTextfields
-   * needed in case the account is updated, so it can display the old values.
-   * @param account
-   */
+    /**
+     * Method to update the input - JTextfields.
+     * Needed in case the Account is updated, so it can display the old Values.
+     * @param account The (old)Account of which the Values should be displayed.
+     */
   public void updateFields(Stocks account) {
     accountNameInputField.setText(account.getName());
     buyDateInputField.setText(

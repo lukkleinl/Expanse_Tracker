@@ -57,6 +57,8 @@ public class AddCreditAccountPage extends AbstractPage {
    *
    * @author Paul Kraft
    * @author Patrick Gmasz
+   * be aquired through getters.
+   * @param user The User whose Data should be Displayed, or to whom the Account should be added.
    */
   public AddCreditAccountPage(User user) {
     this.user = user;
@@ -102,6 +104,12 @@ public class AddCreditAccountPage extends AbstractPage {
    * Returns a boolean, if the submit button got pressed.
    *
    * @return Returns true, if the submit button got pressed, else false.
+  /**
+   * The page has a button, which the user can press if he wants to Submit his Data Pressing the
+   * button will set a boolean flag, that the button was pressed. This method returns the boolean,
+   * it will be true, if the user Submitted his Data.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the 'Submit' button.
    */
   public boolean isSubmitted() {
     return submitted;
@@ -111,6 +119,12 @@ public class AddCreditAccountPage extends AbstractPage {
    * Returns a boolean, if the back button got pressed.
    *
    * @return Returns true, if the back button got pressed, else false.
+  /**
+   * The page has a button, which the user can press if he wants to Go 1 Page back. Pressing the
+   * button will set a boolean flag, that the button was pressed. This method returns the boolean,#
+   * it will be true, if the user wants to go back.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the 'Back' button.
    */
   public boolean isBackWanted() {
     return backWanted;
@@ -120,6 +134,10 @@ public class AddCreditAccountPage extends AbstractPage {
    * This method creates all components, such as buttons and text fields, and adds it to a list. It
    * also sets every indicator variables to default and updates the account list of the user.
    */
+    /** creates all the Components that the JFrame should display(incl. Position,actionlisteners for Buttons, text etc)
+     * also resets the booleans for backwanted, refreshwanted etc.
+     * is called from within the configureFrame in abstract Page.
+     */
   @Override
   protected void createComponents() {
     components = new ArrayList<>();
@@ -240,6 +258,11 @@ public class AddCreditAccountPage extends AbstractPage {
   }
 
 
+    /**
+     * Method to set the Frame Title(only called from within the UserInterface)
+     * takes in a frame and sets its title to 'Add credit Card Account- Page'
+     * @param frame The Frame whose title should be set.
+     */
   @Override
   protected void resetTitle(JFrame frame) {
     frame.setTitle("Add Credit Card Account - Page");
@@ -251,6 +274,11 @@ public class AddCreditAccountPage extends AbstractPage {
    *
    * @param account The account, of which the values shall be displayed.
    */
+    /**
+     * Method to update the input - JTextfields.
+     * Needed in case the Account is updated, so it can display the old Values.
+     * @param account The (old) Account of which the Values should be displayed.
+     */
   public void updateFields(CreditCard account) {
     accountNameInputField.setText(account.getName());
     limitInputField.setText(Double.toString(account.getLimit()));

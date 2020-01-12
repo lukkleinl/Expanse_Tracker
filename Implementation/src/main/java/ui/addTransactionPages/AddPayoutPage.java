@@ -17,6 +17,7 @@ import user.User;
  * JTextField's, who then can be aquired through getters.
  *
  * @author Paul Kraft
+ * @author Patrick Gmasz
  */
 public class AddPayoutPage extends AbstractPage {
 
@@ -42,27 +43,47 @@ public class AddPayoutPage extends AbstractPage {
 
   private volatile boolean refreshWanted;
 
-  /** @return PayoutCategory Input from User or Default value. */
+  /** Getter
+   * @return PayoutCategory Input from User or Default value. */
   public String getCategory() {
     return categoryInputValue;
   }
-  /** @return Description Input from User or Default value. */
+  /** Getter
+   * @return Description Input from User or Default value. */
   public String getDescription() {
     return descriptionInputValue;
   }
-  /** @return Amount Input from User or Default value. */
+  /** Getter
+   * @return Amount Input from User or Default value. */
   public float getAmount() {
     return amountInputValue;
   }
-  /** @return current boolean value of submitted(whether the User submitted or not! ) */
+  /**
+   *  The page has a button, which the user can press if he wants to Submit his Data Pressing the
+   * button will set a boolean flag, that the button was pressed. This method returns the boolean,
+   * it will be true, if the user Submited his Data.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the 'Submit' button.
+   */
   public boolean isSubmitted() {
     return submitted;
   }
-  /** @return current boolean value of backWanted( whether the User wants to go back or not! ) */
+  /**
+   * The page has a button, which the user can press if he wants to Go 1 Page back. Pressing the
+   * button will set a boolean flag, that the button was pressed. This method returns the boolean,
+   * it will be true, if the user wants to go back.
+   *
+   * @return The boolean flag, it will be true, if the user pressed the 'Back' button.
+   */
   public boolean isBackWanted() {
     return backWanted;
   }
-
+  /**
+   *  This Page can have the need to Refresh to Signal this to the User Interface there is a booleag Flag.
+   *  The User Interface will regularly check if the Page wants to refresh.
+   *
+   * @return The boolean flag, it will be true, if the The Page needs to Refresh
+   */
   public boolean isRefreshWanted() {
     return refreshWanted;
   }
@@ -179,9 +200,9 @@ public class AddPayoutPage extends AbstractPage {
   }
 
   /**
-   * function to set the Frame Title(only called from within the UserInterface)
+   * Method to set the Frame Title(only called from within the UserInterface)
    * takes in a frame and sets its title to 'Add Deposit - Page'
-   * @param frame
+   * @param frame The Frame whose title should be reset.
    */
   @Override
   protected void resetTitle(final JFrame frame) {
@@ -189,9 +210,9 @@ public class AddPayoutPage extends AbstractPage {
   }
 
   /**
-   * field to update the input JTextfields
+   * Method to update the input JTextfields
    * needed in case the deposit is updated, so it can display the old values.
-   * @param  transaction
+   * @param  transaction The (old)Transaction whose Data should be Displayed.
    */
   public void updateFields(Payout transaction) {
     amountInputField.setText(Float.toString(transaction.getAmount()));
