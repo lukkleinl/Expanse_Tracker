@@ -61,10 +61,8 @@ public class AddDepositPage extends AbstractPage {
   public boolean isBackWanted() {
     return backWanted;
   }
-
-  public boolean isRefreshWanted() {
-    return refreshWanted;
-  }
+  /**@return current boolean value of refreshWanted(whether UI should refresh or not! ) */
+  public boolean isRefreshWanted() { return refreshWanted; }
 
   /** Creates a new AddDepositPage, which will load all needed components to a list. */
   // In Final Version might take a User object to display additional User information.

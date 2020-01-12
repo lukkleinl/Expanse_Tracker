@@ -13,6 +13,10 @@ import java.util.Map;
 
 public class Testing_Grouping {
 
+  /**
+   * creates Bar and Pie CHarts for manually written dates
+   * @param args
+   */
   public static void main(String[] args) {
 
     String selectedDate = "2020/01/03";

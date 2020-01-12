@@ -112,6 +112,11 @@ public class TransactionListPage extends AbstractPage {
     return this.selectedTransactionToDeleteOrUpdate;
   }
 
+  /**
+   * creates all the Components that the JFrame should display(incl. Position,actionlisteners for Buttons, text etc)
+   * also resets the booleans for backwanted, refreshwanted
+   * is called from within the configureFrame in abstract Page.
+   */
   @Override
   protected void createComponents() {
     newDepositWanted = false;
@@ -357,6 +362,11 @@ public class TransactionListPage extends AbstractPage {
     components.add(updateButton);
   }
 
+  /**
+   * function to set the Frame Title(only called from within the UserInterface)
+   * takes in a frame and sets its title to 'List Transactions - Page'
+   * @param frame
+   */
   @Override
   protected void resetTitle(final JFrame frame) {
     frame.setTitle("List Transactions - Page");
