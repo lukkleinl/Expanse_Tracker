@@ -1,7 +1,6 @@
 package accounts;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import exceptions.SWE_Exception;
 
 /** @author Patrick Gmasz */
 public abstract class Account {
@@ -18,10 +17,10 @@ public abstract class Account {
    * @param limit Limit of the account
    */
   public Account(final String name, final float limit) {
-    account_number = nextId.incrementAndGet();
+    this.account_number = nextId.incrementAndGet();
     this.name = name;
     this.limit = limit;
-    balance = 0;
+    this.balance = 0;
   }
 
   /**
@@ -30,8 +29,8 @@ public abstract class Account {
    * @param name The name of the account
    * @param limit Limit of the account
    */
-  public Account(final String name, final float limit, final Integer ID,final float balance) {
-    account_number = ID;
+  public Account(final String name, final float limit, final Integer ID, final float balance) {
+    this.account_number = ID;
     nextId.set(ID);
     this.name = name;
     this.limit = limit;
@@ -45,7 +44,7 @@ public abstract class Account {
    * @return the account number
    */
   public int getAccount_number() {
-    return account_number;
+    return this.account_number;
   }
 
   /**
@@ -54,7 +53,7 @@ public abstract class Account {
    * @return the account name
    */
   public String getName() {
-    return name;
+    return this.name;
   }
 
   /**
@@ -63,7 +62,7 @@ public abstract class Account {
    * @return the balance
    */
   public float getBalance() {
-    return balance;
+    return this.balance;
   }
 
   /**
@@ -71,9 +70,8 @@ public abstract class Account {
    *
    * @param amount Amount of the payout
    */
-  public void payout(final float amount) throws SWE_Exception {
-    if (balance-amount < limit) throw new SWE_Exception("Limit exceeded !");
-    balance -= amount;
+  public void payout(final float amount) {
+    this.balance -= amount;
   }
 
   /**
@@ -82,7 +80,7 @@ public abstract class Account {
    * @param amount Amount of the deposit
    */
   public void deposit(final float amount) {
-    balance += amount;
+    this.balance += amount;
   }
 
   /**
@@ -91,17 +89,22 @@ public abstract class Account {
    * @return the limit
    */
   public float getLimit() {
-    return limit;
+    return this.limit;
+  }
+
+  /** Returns {@code true} if the balance is equal or higher than the limit, else {@code false}. */
+  public boolean limitExceeded() {
+    return this.balance < this.limit;
   }
 
   @Override
   public final boolean equals(final Object obj) {
     if (!(obj instanceof Account))
       return false;
-    return account_number == ((Account) obj).account_number;
+    return this.account_number == ((Account) obj).account_number;
   }
 
-  public void updateAccountNumberAndBalance(int account_number, float balance) {
+  public void updateAccountNumberAndBalance(final int account_number, final float balance) {
     nextId.decrementAndGet();
     this.account_number = account_number;
     this.balance = balance;

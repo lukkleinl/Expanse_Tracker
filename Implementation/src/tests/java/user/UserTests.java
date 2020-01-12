@@ -1,7 +1,6 @@
 package user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,14 +12,14 @@ import exceptions.SWE_Exception;
 import transactions.TransactionCreator;
 
 /**
- *This class combines
+ * This class combines
  */
 class UserTests {
   private User user;
   private final float limit = -100f;
-  private final float ok_amount = -limit/2;
-  private final float not_ok_amount = -2*limit;
-  private final Account acc = new Cash("Cash", limit, "Euro");
+  private final float ok_amount = -this.limit / 2;
+  private final float not_ok_amount = -2 * this.limit;
+  private final Account acc = new Cash("Cash", this.limit, "Euro");
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {}
@@ -30,8 +29,8 @@ class UserTests {
 
   @BeforeEach
   void setUp() throws Exception {
-    user = new User("1234","FirstName","Lastname","password");
-    user.getCategoryStore().withDefaultCategories();
+    this.user = new User("1234", "FirstName", "Lastname", "password");
+    this.user.getCategoryStore().withDefaultCategories();
   }
 
   @AfterEach
@@ -39,41 +38,31 @@ class UserTests {
 
   @Test
   void newUser_shouldNotHaveAccounts() {
-    assertEquals(0,user.getAccounts().size());
+    assertEquals(0, this.user.getAccounts().size());
   }
 
   @Test
   void addAccount_shouldAdd() {
-    user.addAccount(acc);
-    assertEquals(1,user.getAccounts().size());
+    this.user.addAccount(this.acc);
+    assertEquals(1, this.user.getAccounts().size());
   }
 
   @Test
   void addedAccount_shouldBeEqual() {
-    user.addAccount(acc);
-    assertEquals(acc,user.getAccounts().getIterator().element());
-    assertEquals(acc,user.getAccounts().getIterator().next());
+    this.user.addAccount(this.acc);
+    assertEquals(this.acc, this.user.getAccounts().getIterator().element());
+    assertEquals(this.acc, this.user.getAccounts().getIterator().next());
   }
 
   @Test
   void applyAndSaveTransaction_shouldChangeBalanceAndStoreTransaction() throws SWE_Exception {
-    user.addAccount(acc);
-    assertEquals(0,user.getTransactionStore().accountsWithTransactions());
-    user.applyAndSaveTransaction(TransactionCreator.newTransaction("FOOD", ok_amount, "", user.getCategoryStore()), acc);
-    assertEquals(1,user.getTransactionStore().accountsWithTransactions());
-  }
-
-  @Test
-  void applyAndSaveTransactionWithTooLargePayout_shouldThrowException() throws SWE_Exception {
-    user.addAccount(acc);
-    assertThrows(SWE_Exception.class, () -> {
-      user.applyAndSaveTransaction(TransactionCreator.newTransaction("FOOD", not_ok_amount, "", user.getCategoryStore()), acc);
-    });
+    this.user.addAccount(this.acc);
+    assertEquals(0, this.user.getTransactionStore().accountsWithTransactions());
+    this.user.applyAndSaveTransaction(
+        TransactionCreator.newTransaction("FOOD", this.ok_amount, "", this.user.getCategoryStore()),
+        this.acc);
+    assertEquals(1, this.user.getTransactionStore().accountsWithTransactions());
   }
 }
-
-
-
-
 
 

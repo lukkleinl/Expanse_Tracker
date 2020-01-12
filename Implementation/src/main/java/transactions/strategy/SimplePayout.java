@@ -1,7 +1,6 @@
 package transactions.strategy;
 
 import accounts.Account;
-import exceptions.SWE_Exception;
 import transactions.Transaction;
 
 /**
@@ -24,7 +23,7 @@ public class SimplePayout implements BalanceChange {
   }
 
   @Override
-  public void applyBalanceChange() throws SWE_Exception {
-    account.payout(trans.getAmount());
+  public void applyBalanceChange() {
+    this.account.payout(this.trans.getAmount());
   }
 }

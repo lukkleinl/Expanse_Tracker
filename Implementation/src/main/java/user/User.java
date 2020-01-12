@@ -1,14 +1,13 @@
 /** */
 package user;
 
+import java.util.Set;
 import Patterns.observing.Database;
 import Patterns.observing.SWE_Observable;
 import accounts.Account;
-import exceptions.SWE_Exception;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
-import java.util.Set;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
@@ -24,7 +23,7 @@ import transactions.strategy.SimplePayout;
 public class User extends SWE_Observable {
   private final String firstname;
   private final String lastname;
-  private  String userID;
+  private final String userID;
   private final String password;
   private final CustomContainer<Account> accounts;
   private final TransactionStore transactions;
@@ -44,40 +43,41 @@ public class User extends SWE_Observable {
     this.userID = userID;
     this.firstname = firstname;
     this.lastname = lastname;
-    accounts = new CustomList<>();
-    transactions = new TransactionStore();
+    this.accounts = new CustomList<>();
+    this.transactions = new TransactionStore();
     this.password = password;
-    this.categories = new CategoryStore().withDefaultCategories(); //withDefaultCatoegires braucht man, sonst geht nix!!!
+    this.categories = new CategoryStore().withDefaultCategories(); // withDefaultCatoegires braucht
+                                                                   // man, sonst geht nix!!!
 
   }
 
 
-  // VON PAUL  neuer Konstruktor fürs Observer Pattern,
+  // VON PAUL neuer Konstruktor fürs Observer Pattern,
   // wenn User erstellt wird erwartet er jz die Database und subscribed sich automatisch
-    /**
-     * Creates a new User without any Accounts or Transactions.
-     *
-     * @param userID The ID within the system and needed to log in
-     * @param firstname The users first name.
-     * @param lastname The users last name.
-     * @param password The password for the user.
-     * @param  database The local Database(Observer) that handles Persistency.
-     */
-    public User(final String userID, final String firstname, final String lastname,
-                final String password, Database database) throws Exception {
-        this.userID = userID;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        accounts = new CustomList<>();
-        transactions = new TransactionStore();
-        this.password = password;
-        categories = new CategoryStore();
+  /**
+   * Creates a new User without any Accounts or Transactions.
+   *
+   * @param userID The ID within the system and needed to log in
+   * @param firstname The users first name.
+   * @param lastname The users last name.
+   * @param password The password for the user.
+   * @param database The local Database(Observer) that handles Persistency.
+   */
+  public User(final String userID, final String firstname, final String lastname,
+      final String password, final Database database) throws Exception {
+    this.userID = userID;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.accounts = new CustomList<>();
+    this.transactions = new TransactionStore();
+    this.password = password;
+    this.categories = new CategoryStore();
 
-        this.subscribe(database);
-        updateObservers(this);
-    }
+    this.subscribe(database);
+    updateObservers(this);
+  }
 
-    //</Paul>
+  // </Paul>
 
   /**
    * Adds a new Account to the CustomContainer of this Users Accounts.
@@ -86,18 +86,18 @@ public class User extends SWE_Observable {
    */
   public void addAccount(final Account acc) {
 
-      accounts.add(acc);
-      updateObservers(this); // VON PAUL fürs observer
+    this.accounts.add(acc);
+    updateObservers(this); // VON PAUL fürs observer
   }
 
   public void updateAccount(final Account oldAcc, final Account newAcc) {
-    newAcc.updateAccountNumberAndBalance(oldAcc.getAccount_number(),oldAcc.getBalance());
-    accounts.update(newAcc);
+    newAcc.updateAccountNumberAndBalance(oldAcc.getAccount_number(), oldAcc.getBalance());
+    this.accounts.update(newAcc);
     updateObservers(this);
   }
 
   public void deleteAccount(final Account acc) {
-    accounts.delete(acc);
+    this.accounts.delete(acc);
     updateObservers(this);
   }
 
@@ -107,10 +107,11 @@ public class User extends SWE_Observable {
    * @param transaction Transaction which should be performed
    * @param account Account where the transaction will be performed
    *
-   * @throws SWE_Exception if the resulting account-balance would be smaller than the limit or if
+   * @throws RuntimeException if the resulting account-balance would be smaller than the limit or if
    *         the transaction is neither a Deposit nor a Payout
    */
-  public void applyAndSaveTransaction(final Transaction transaction, final Account account) throws SWE_Exception {
+  public void applyAndSaveTransaction(final Transaction transaction, final Account account)
+      throws RuntimeException {
     BalanceChange strategy;
 
     if (transaction instanceof Deposit) {
@@ -118,41 +119,38 @@ public class User extends SWE_Observable {
     } else if (transaction instanceof Payout) {
       strategy = new SimplePayout(transaction, account);
     } else
-      throw new SWE_Exception("Unknown Transaction !");
+      throw new RuntimeException("Unknown Transaction !");
 
     strategy.applyBalanceChange();
-    transactions.addTransactionUnderKey(account.getAccount_number(), transaction);
-    updateObservers(this,account,transaction); // VON PAUL fürs observer
+    this.transactions.addTransactionUnderKey(account.getAccount_number(), transaction);
+    updateObservers(this, account, transaction); // VON PAUL fürs observer
   }
 
-  public void updateTransaction(final int accountID, final Transaction transaction)  {
-    transactions.updateTransaction(accountID,transaction);
-    CustomIterator<Account> acc_iterator=accounts.getIterator();
-    while (acc_iterator.hasNext())
-    {
-      if(acc_iterator.element().getAccount_number()==accountID)
-      {
-        acc_iterator.element().updateAccountNumberAndBalance(accountID,acc_iterator.element().getBalance()-transaction.getAmount());
-        updateObservers(this,acc_iterator.next(),transaction);
+  public void updateTransaction(final int accountID, final Transaction transaction) {
+    this.transactions.updateTransaction(accountID, transaction);
+    CustomIterator<Account> acc_iterator = this.accounts.getIterator();
+    while (acc_iterator.hasNext()) {
+      if (acc_iterator.element().getAccount_number() == accountID) {
+        acc_iterator.element().updateAccountNumberAndBalance(accountID,
+            acc_iterator.element().getBalance() - transaction.getAmount());
+        updateObservers(this, acc_iterator.next(), transaction);
       }
     }
   }
 
 
-  public void deleteTransaction(final int accountID, final Transaction transaction)
-  {
-    CustomIterator<Account> iterator=accounts.getIterator();
-    while (iterator.hasNext())
-    {
-      if(accountID==iterator.element().getAccount_number())
-      {
-        iterator.element().updateAccountNumberAndBalance(accountID,iterator.element().getBalance()-transaction.getAmount());
+  public void deleteTransaction(final int accountID, final Transaction transaction) {
+    CustomIterator<Account> iterator = this.accounts.getIterator();
+    while (iterator.hasNext()) {
+      if (accountID == iterator.element().getAccount_number()) {
+        iterator.element().updateAccountNumberAndBalance(accountID,
+            iterator.element().getBalance() - transaction.getAmount());
         updateObservers(this);
       }
       iterator.next();
     }
-    transactions.deleteTransaction(accountID,transaction);
-    updateObservers(this,transaction.getID());
+    this.transactions.deleteTransaction(accountID, transaction);
+    updateObservers(this, transaction.getID());
 
   }
 
@@ -161,7 +159,7 @@ public class User extends SWE_Observable {
    * @return a {@linkplain Set} of categories
    */
   public Set<String> getCategories(final TransactionCategoryFunctionality strategy) {
-    return categories.getCategories(strategy);
+    return this.categories.getCategories(strategy);
   }
 
   /**
@@ -170,7 +168,7 @@ public class User extends SWE_Observable {
    * @param strategy the strategy which determines what kind of category is added
    */
   public void newTransactionCategory(final TransactionCategoryFunctionality strategy) {
-    categories.addTransactionCategory(strategy);
+    this.categories.addTransactionCategory(strategy);
     updateObservers(this); // VON PAUL fürs observer
 
   }
@@ -182,7 +180,7 @@ public class User extends SWE_Observable {
    *        case-insensitive)
    */
   public void removeTransactionCategory(final String categoryname) {
-    categories.removeCategory(categoryname);
+    this.categories.removeCategory(categoryname);
     updateObservers(this); // VON PAUL fürs observer
   }
 
@@ -192,7 +190,7 @@ public class User extends SWE_Observable {
    *         names is case-insensitive)
    */
   public boolean categorySupported(final String categoryname) {
-    return categories.categorySupported(categoryname);
+    return this.categories.categorySupported(categoryname);
   }
 
   /* ---------- getters ---------- */
@@ -203,7 +201,7 @@ public class User extends SWE_Observable {
    * @return the firstname
    */
   public String getFirstname() {
-    return firstname;
+    return this.firstname;
   }
 
   /**
@@ -212,7 +210,7 @@ public class User extends SWE_Observable {
    * @return the lastname
    */
   public String getLastname() {
-    return lastname;
+    return this.lastname;
   }
 
   /**
@@ -221,7 +219,7 @@ public class User extends SWE_Observable {
    * @return the userID
    */
   public String getUserID() {
-    return userID;
+    return this.userID;
   }
 
   /**
@@ -230,7 +228,7 @@ public class User extends SWE_Observable {
    * @return A CustomContainer of this Users' Accounts
    */
   public CustomContainer<Account> getAccounts() {
-    return accounts;
+    return this.accounts;
   }
 
   /**
@@ -239,7 +237,7 @@ public class User extends SWE_Observable {
    * @return a store with all transactions of the user
    */
   public TransactionStore getTransactionStore() {
-    return transactions;
+    return this.transactions;
   }
 
   /**
@@ -248,7 +246,7 @@ public class User extends SWE_Observable {
    * @return The password of the user
    */
   public String getPassword() {
-    return password;
+    return this.password;
   }
 
   /**
@@ -257,7 +255,7 @@ public class User extends SWE_Observable {
    * @return all categories of the user
    */
   public CategoryStore getCategoryStore() {
-    return categories;
+    return this.categories;
   }
 }
 
