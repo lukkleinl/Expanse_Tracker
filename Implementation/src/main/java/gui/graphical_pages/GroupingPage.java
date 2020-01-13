@@ -28,9 +28,9 @@ import static javax.swing.JOptionPane.DEFAULT_OPTION;
  * @author Patrick Gmasz
  */
 public class GroupingPage extends AbstractPage {
-  private ZonedDateTime begin = ZonedDateTime.now(ZoneId.of("UTC")).minusHours(1);   //begin date for the grouping algorithm
-  private ZonedDateTime end = ZonedDateTime.now(ZoneId.of("UTC"));                      //end  date for the grouping algorithm
-  private GroupingTypes groupingType = GroupingTypes.MONTHLY;          //Types of grouping that are supported
+  private ZonedDateTime begin = ZonedDateTime.now(ZoneId.of("UTC")).minusYears(10);   //begin date for the grouping algorithm
+  private ZonedDateTime end = ZonedDateTime.now(ZoneId.of("UTC")).plusYears(10);                   //end  date for the grouping algorithm
+  private GroupingTypes groupingType = GroupingTypes.USER_DEFINED;          //Types of grouping that are supported
   private User user;
   private JLabel groupedByHeader;
   private JLabel groupedByLabel;
@@ -45,8 +45,8 @@ public class GroupingPage extends AbstractPage {
   private volatile boolean backWanted = false;
   String[] options = getNames(GroupingTypes.class);
   int selectedGrouping = 0;
-  private String selectedDate = "";
-  private String selectedDateEnd = "";
+  private String selectedDate = begin.toString();
+  private String selectedDateEnd = end.toString();
   private String groupedByMessage = "";
   // private volatile boolean graphicalWanted;
 
