@@ -40,6 +40,7 @@ public class WriteOperation implements Write_Operation {
     try {
       this.mongo = new MongoClient();
       this.database = this.mongo.getDatabase("ExpanseTracker");
+      collection=this.database.getCollection("User");
     } catch (Exception e) {
       System.out.println("Probleme beim erstellen der Datenkbank");
     }
@@ -57,6 +58,9 @@ public class WriteOperation implements Write_Operation {
   private void insert_transaction_for_non_existing_user(final Transaction transaction, final int account_id, final String user_ID) {
     Document doc ;
 
+    this.collection = this.database.getCollection("Transactions");
+
+
     if (transaction.toString().contains("PAYOUT")) {
       Payout payout = (Payout) transaction;
       doc = new Document("_id", payout.getID()).append("Date", payout.getCreationDate().toString())
@@ -64,8 +68,9 @@ public class WriteOperation implements Write_Operation {
           .append("category", "PAYOUT").append("Account_Number", account_id)
           .append("Description", payout.getDescription()).append("User_ID", user_ID);
 
-      this.collection = this.database.getCollection("Transactions");
-      try {
+      try
+      {
+
         this.collection.insertOne(doc);
       }
       catch (Exception e)
@@ -81,7 +86,6 @@ public class WriteOperation implements Write_Operation {
               .append("category", "DEPOSIT").append("Account_Number", account_id)
               .append("Description", deposit.getDescription()).append("User_ID", user_ID);
 
-      this.collection = this.database.getCollection("Transactions");
       try {
         this.collection.insertOne(doc);
       }
