@@ -203,13 +203,17 @@ public class AddPayoutPage extends AbstractPage {
     });
 
     this.submitButton.addActionListener(actionEvent -> {
+      try {
       this.amountInputValue = (this.amountInputField.getText().isEmpty()) ? 0
           : Float.valueOf(this.amountInputField.getText());
+      } catch (NumberFormatException e) {
+        amountInputValue = 0;
+      }
       this.descriptionInputValue = this.descriptionInputField.getText();
       this.categoryInputValue = (String) this.categoryInputBox.getSelectedItem();
 
       if (this.amountInputValue <= 0) {
-        JOptionPane.showMessageDialog(null, "Amount must be higher than 0", "Amount Error",
+        JOptionPane.showMessageDialog(null, "Amount must be a number higher than 0", "Amount Error",
             JOptionPane.WARNING_MESSAGE);
       } else if (this.descriptionInputValue.isEmpty()) {
         JOptionPane.showMessageDialog(null, "You must insert a description", "Description Error",
