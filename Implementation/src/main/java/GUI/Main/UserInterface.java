@@ -1,16 +1,5 @@
 package GUI.Main;
 
-import accounts.Cash;
-import accounts.CreditCard;
-import accounts.DebitCard;
-import accounts.Stocks;
-
-import javax.swing.*;
-
-import transactions.Deposit;
-import transactions.Payout;
-import transactions.Transaction;
-import transactions.TransactionCreator;
 import GUI.AddAccountPages.AddCashAccountPage;
 import GUI.AddAccountPages.AddCreditAccountPage;
 import GUI.AddAccountPages.AddDebitAccountPage;
@@ -24,8 +13,18 @@ import GUI.ListPages.AccountTypes;
 import GUI.ListPages.TransactionListPage;
 import GUI.LoginPages.LoginPage;
 import GUI.LoginPages.RegistrationPage;
+import Patterns.observing.Database;
+import accounts.Cash;
+import accounts.CreditCard;
+import accounts.DebitCard;
+import accounts.Stocks;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import transactions.Deposit;
+import transactions.Payout;
+import transactions.Transaction;
+import transactions.TransactionCreator;
 import user.User;
-import user.User_Facade;
 
 /**
  * This class is contains the whole procedure of the GUI.
@@ -36,14 +35,14 @@ import user.User_Facade;
 public class UserInterface {
 
   private User user;
-  private User_Facade user_facade;
+  private Database data;
 
   /**
    * Returns a new UserInterface instance.
    */
   public UserInterface(){
     try {
-      user_facade = new User_Facade();
+      data=new Database();
     }catch (Exception e){
       System.out.println(e.getMessage() +"while creating user Facade in UserInterface Constructor!");
     }
@@ -67,7 +66,7 @@ public class UserInterface {
       if (loginPage
           .isLoginWanted()) { // checks if login button got pressed, if yes, check if user id and password
 
-        user=user_facade.getUser(loginPage.getUser());
+        user=data.getUser(loginPage.getUser());
         if(user!=null && user.getPassword().equals(loginPage.getPassword())){
         //if (loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
           //user = TestUser.getTestUser();
@@ -96,7 +95,7 @@ public class UserInterface {
             e.printStackTrace();
           }
           try {
-            user_facade.addUser(registrationPage.getUser(), registrationPage.getFirstname(), registrationPage.getLastname(), registrationPage.getPassword());
+            new User(registrationPage.getUser(), registrationPage.getFirstname(), registrationPage.getLastname(), registrationPage.getPassword(),data);
           }catch (Exception e){ System.out.println(e +"while adding user with user Facade in UserInterface 101"); }
         }
         // OPEN LOGIN PAGE COMPONENTS AGAIN
