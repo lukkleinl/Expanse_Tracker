@@ -2,12 +2,11 @@ package gui.list_pages;
 
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.border.LineBorder;
 import gui.main.AbstractPage;
 import user.User;
 
@@ -32,10 +31,14 @@ public class AccountTypePage extends AbstractPage {
 
   private volatile boolean backWanted;
 
-  private User user;
+  private final User user;
 
-  /** Creates a new AccountTypePage, which will load all needed components to a list. */
-  public AccountTypePage(User user) {
+  /**
+   * Creates a new AccountTypePage, which will load all needed components to a list.
+   * 
+   * @param user the user who wants to create a new account
+   */
+  public AccountTypePage(final User user) {
     this.user = user;
     createComponents();
   }
@@ -47,7 +50,7 @@ public class AccountTypePage extends AbstractPage {
    * @return The account type, which the user clicked.
    */
   public AccountTypes getPageWanted() {
-    return pageWanted;
+    return this.pageWanted;
   }
 
   /**
@@ -57,7 +60,7 @@ public class AccountTypePage extends AbstractPage {
    * @return The boolean flag, true, if user pressed back button
    */
   public boolean isBackWanted() {
-    return backWanted;
+    return this.backWanted;
   }
 
   /**
@@ -66,97 +69,68 @@ public class AccountTypePage extends AbstractPage {
    */
   @Override
   protected void createComponents() {
-    pageWanted = AccountTypes.NONE;
-    backWanted = false;
-    components = new ArrayList<>();
+    this.pageWanted = AccountTypes.NONE;
+    this.backWanted = false;
+    this.components = new ArrayList<>();
 
-    introTextLabel =
-        new JLabel(
-            "Currently logged in as: " + user.getFirstname() + " " + user.getLastname() + ".");
-    introTextLabel.setBounds(200, 10, 1000, 50);
-    introTextLabel.setFont(HEADER_FONT);
-    components.add(introTextLabel);
+    this.introTextLabel = new JLabel("Currently logged in as: " + this.user.getFirstname() + " "
+        + this.user.getLastname() + ".");
+    this.introTextLabel.setBounds(200, 10, 1000, 50);
+    this.introTextLabel.setFont(HEADER_FONT);
+    this.components.add(this.introTextLabel);
 
     // WELCOME MESSAGE
-    welcomeMessage = new JLabel();
-    welcomeMessage.setText("Select the type of account you want to add!");
-    welcomeMessage.setFont(new Font("Serif", Font.BOLD, 28));
-    welcomeMessage.setBounds(250, 100, 1000, 50);
+    this.welcomeMessage = new JLabel();
+    this.welcomeMessage.setText("Select the type of account you want to add!");
+    this.welcomeMessage.setFont(new Font("Serif", Font.BOLD, 28));
+    this.welcomeMessage.setBounds(250, 100, 1000, 50);
 
     // CREDITCARD BUTTON
-    creditCardButton = new JButton("CREDIT CARD ACCOUNTS");
-    creditCardButton.setBounds(200, 200, 350, 200);
-    creditCardButton.setFont(BUTTON_FONT);
-    creditCardButton.setBorder(new LineBorder(Color.BLACK, 3));
-    creditCardButton.setBackground(new Color(255, 184, 77));
-    creditCardButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            pageWanted = AccountTypes.CREDIT;
-          }
-        });
+    this.creditCardButton = new JButton("CREDIT CARD ACCOUNTS");
+    this.creditCardButton.setBounds(200, 200, 350, 200);
+    this.creditCardButton.setFont(BUTTON_FONT);
+    this.creditCardButton.setBorder(new LineBorder(Color.BLACK, 3));
+    this.creditCardButton.setBackground(new Color(255, 184, 77));
+    this.creditCardButton
+        .addActionListener(e -> AccountTypePage.this.pageWanted = AccountTypes.CREDIT);
 
     // DEBITCARD BUTTON
-    debitCardButton = new JButton("DEBIT CARD ACCOUNTS");
-    debitCardButton.setBounds(650, 200, 350, 200);
-    debitCardButton.setBackground(new Color(255, 184, 77));
-    debitCardButton.setBorder(new LineBorder(Color.BLACK, 3));
-    debitCardButton.setFont(BUTTON_FONT);
-    debitCardButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            pageWanted = AccountTypes.DEBIT;
-          }
-        });
+    this.debitCardButton = new JButton("DEBIT CARD ACCOUNTS");
+    this.debitCardButton.setBounds(650, 200, 350, 200);
+    this.debitCardButton.setBackground(new Color(255, 184, 77));
+    this.debitCardButton.setBorder(new LineBorder(Color.BLACK, 3));
+    this.debitCardButton.setFont(BUTTON_FONT);
+    this.debitCardButton
+        .addActionListener(e -> AccountTypePage.this.pageWanted = AccountTypes.DEBIT);
 
     // CASH BUTTON
-    cashButton = new JButton("CASH ACCOUNTS");
-    cashButton.setBounds(200, 500, 350, 200);
-    cashButton.setFont(BUTTON_FONT);
-    cashButton.setBorder(new LineBorder(Color.BLACK, 3));
-    cashButton.setBackground(new Color(255, 184, 77));
-    cashButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            pageWanted = AccountTypes.CASH;
-          }
-        });
+    this.cashButton = new JButton("CASH ACCOUNTS");
+    this.cashButton.setBounds(200, 500, 350, 200);
+    this.cashButton.setFont(BUTTON_FONT);
+    this.cashButton.setBorder(new LineBorder(Color.BLACK, 3));
+    this.cashButton.setBackground(new Color(255, 184, 77));
+    this.cashButton.addActionListener(e -> AccountTypePage.this.pageWanted = AccountTypes.CASH);
 
     // STOCK BUTTON
-    stockButton = new JButton("STOCK ACCOUNTS");
-    stockButton.setBounds(650, 500, 350, 200);
-    stockButton.setFont(BUTTON_FONT);
-    stockButton.setBorder(new LineBorder(Color.BLACK, 3));
-    stockButton.setBackground(new Color(255, 184, 77));
-    stockButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            pageWanted = AccountTypes.STOCKS;
-          }
-        });
+    this.stockButton = new JButton("STOCK ACCOUNTS");
+    this.stockButton.setBounds(650, 500, 350, 200);
+    this.stockButton.setFont(BUTTON_FONT);
+    this.stockButton.setBorder(new LineBorder(Color.BLACK, 3));
+    this.stockButton.setBackground(new Color(255, 184, 77));
+    this.stockButton.addActionListener(e -> AccountTypePage.this.pageWanted = AccountTypes.STOCKS);
 
-    backButton = new JButton("BACK");
-    backButton.setBounds(10, 10, 100, 50);
-    backButton.setFont(BUTTON_FONT);
-    backButton.setBorder(new LineBorder(Color.BLACK, 2));
-    backButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            backWanted = true;
-          }
-        });
+    this.backButton = new JButton("BACK");
+    this.backButton.setBounds(10, 10, 100, 50);
+    this.backButton.setFont(BUTTON_FONT);
+    this.backButton.setBorder(new LineBorder(Color.BLACK, 2));
+    this.backButton.addActionListener(e -> AccountTypePage.this.backWanted = true);
 
-    components.add(welcomeMessage);
-    components.add(creditCardButton);
-    components.add(debitCardButton);
-    components.add(cashButton);
-    components.add(stockButton);
-    components.add(backButton);
+    this.components.add(this.welcomeMessage);
+    this.components.add(this.creditCardButton);
+    this.components.add(this.debitCardButton);
+    this.components.add(this.cashButton);
+    this.components.add(this.stockButton);
+    this.components.add(this.backButton);
   }
 
   /**
@@ -165,7 +139,7 @@ public class AccountTypePage extends AbstractPage {
    * @param frame The JFrame, where to change the title.
    */
   @Override
-  protected void resetTitle(JFrame frame) {
+  protected void resetTitle(final JFrame frame) {
     frame.setTitle("Account Types");
   }
 }
