@@ -42,20 +42,7 @@ public class ReadOperation implements Read_Operation
   private MongoCollection collection;
   private MongoDatabase database;
 
- /* public ReadOperation()
-  {
-    try
-    {
-      mongo=new MongoClient();
-      database=mongo.getDatabase("ExpanseTracker");
-    }
-    catch(Exception e)
-    {
-      System.out.println("Could not connect to the database");
-    }
-  }*/
-
-  private void connect_to_database()
+  public ReadOperation()
   {
     try
     {
@@ -72,7 +59,7 @@ public class ReadOperation implements Read_Operation
   @Override
   public CustomList<User> getUsers()
   {
-    connect_to_database();
+
     collection = database.getCollection("User");
     MongoCursor<Document> cursor=collection.find().iterator();
     CustomList<User> user_list=new CustomList<>();
@@ -82,14 +69,13 @@ public class ReadOperation implements Read_Operation
     {
       user_list.add(getUsers(cursor.next().getString("_id")));
     }
-    mongo.close();
     return user_list;
   }
 
   @Override
   public User getUsers(String ID)
   {
-    connect_to_database();
+
     collection = database.getCollection("User");
     Document query = new Document();
     MongoCursor<Document> cursor;
@@ -211,14 +197,12 @@ public class ReadOperation implements Read_Operation
       }
     }
 
-    mongo.close();
     return user;
   }
 
   @Override
   public Map<Integer, CustomContainer<Transaction>> getTransactions(User user)
   {
-    connect_to_database();
     collection = database.getCollection("Transactions");
     Document query = new Document();
     query.append("User_ID", user.getUserID());
@@ -263,7 +247,6 @@ public class ReadOperation implements Read_Operation
 
     }
 
-    mongo.close();
     return Transactions_map;
   }
 }
