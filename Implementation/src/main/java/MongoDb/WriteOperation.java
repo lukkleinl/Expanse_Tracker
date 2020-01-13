@@ -11,7 +11,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
-import iteration.CustomList;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -41,30 +40,33 @@ public class WriteOperation implements Write_Operation {
   }
 
   /**
-   * Returns the document of a transaction to insert into MongoDB
+   * Inserts a document of a transaction into the collection
    *
+   * @param transaction transaction which shall be
+   * @param account_id account in which the transaction shall be inserted
+   * @param user_ID id of the user
    *
    */
 
-  private void getTrans(final Transaction trans, final int key, final String user_ID) {
+  private void insert_transaction_for_non_existing_user(final Transaction transaction, final int account_id, final String user_ID) {
     Document doc ;
 
-    if (trans.toString().contains("PAYOUT")) {
-      Payout payout = (Payout) trans;
+    if (transaction.toString().contains("PAYOUT")) {
+      Payout payout = (Payout) transaction;
       doc = new Document("_id", payout.getID()).append("Date", payout.getCreationDate().toString())
           .append("amount", payout.getAmount()).append("category_name", payout.getPayoutCategory())
-          .append("category", "PAYOUT").append("Account_Number", key)
+          .append("category", "PAYOUT").append("Account_Number", account_id)
           .append("Description", payout.getDescription()).append("User_ID", user_ID);
 
       this.collection = this.database.getCollection("Transactions");
       this.collection.insertOne(doc);
-    } else if (trans.toString().contains("DEPOSIT")) {
+    } else if (transaction.toString().contains("DEPOSIT")) {
 
-      Deposit deposit = (Deposit) trans;
+      Deposit deposit = (Deposit) transaction;
       doc =
           new Document("_id", deposit.getID()).append("Date", deposit.getCreationDate().toString())
               .append("amount", deposit.getAmount()).append("category_name", deposit.getCategory())
-              .append("category", "DEPOSIT").append("Account_Number", key)
+              .append("category", "DEPOSIT").append("Account_Number", account_id)
               .append("Description", deposit.getDescription()).append("User_ID", user_ID);
 
       this.collection = this.database.getCollection("Transactions");
@@ -74,12 +76,13 @@ public class WriteOperation implements Write_Operation {
   }
 
   /**
-   * Returns a Document of an account
+   * Creates a document of accounts to insert into database
    *
+   * @param account Account which shall be inserted into database
    * @return a account document
    *
    */
-  private Document Account(final Account account) {
+  private Document create_account_doc(final Account account) {
     Document doc;
 
     switch (account.toString()) {
@@ -118,11 +121,18 @@ public class WriteOperation implements Write_Operation {
     throw new RuntimeException("Unknown account type");
   }
 
+  /**
+   * Creates a document of accounts to insert into database
+   *
+   * @param category name of the category which shall be inserted
+   * @return a document with the category
+   *
+   */
 
-  private Document Categories(final String category) {
+  private Document create_categories_doc(final String category)
+  {
     Document doc ;
     doc = new Document("_id", category);
-
     return doc;
   }
 
@@ -146,26 +156,26 @@ public class WriteOperation implements Write_Operation {
     List<Document> payout_array = new ArrayList<>();
 
     while (deposit.hasNext()) {
-      Document doc = Categories(deposit.next());
+      Document doc = create_categories_doc(deposit.next());
       deposit_array.add(doc);
     }
 
     while (payout.hasNext()) {
-      Document doc = Categories(payout.next());
+      Document doc = create_categories_doc(payout.next());
       payout_array.add(doc);
     }
 
     while (iter.hasNext()) {
-      Document doc = this.Account(iter.next());
+      Document doc = this.create_account_doc(iter.next());
       accounts_array.add(doc);
     }
 
     for (Entry e : trans_map.entrySet()) {
-      CustomContainer<Object> list = (CustomList<Object>) e.getValue();
-      CustomIterator<Object> iterator = list.getIterator();
+      CustomContainer<Transaction> list = (CustomContainer<Transaction>) e.getValue();
+      CustomIterator<Transaction> iterator = list.getIterator();
       Integer account_number = (Integer) e.getKey();
       while (iterator.hasNext()) {
-        this.getTrans((Transaction) iterator.element(), account_number, user.getUserID());
+        this.insert_transaction_for_non_existing_user((Transaction) iterator.element(), account_number, user.getUserID());
         iterator.next();
       }
     }
@@ -180,41 +190,63 @@ public class WriteOperation implements Write_Operation {
 
   }
 
+  /**
+   * inserts the transaction into the DB
+   *
+   * @param user User in which the transaction shall be inserted
+   * @param account  Account in which the transaction shall be inserted
+   * @param transaction transaction which shall be inserted
+   *
+   */
   @Override
-  public void insertTransaction(final User user, final Account acc, final Transaction trans) {
+  public void insertTransaction(final User user, final Account account, final Transaction transaction)
+  {
+
     String category = null;
-    if (trans instanceof Payout)
+    if (transaction instanceof Payout)
       category = "PAYOUT";
-    else if (trans instanceof Deposit)
+    else if (transaction instanceof Deposit)
       category = "DEPOSIT";
     else
       assert true : "Shouldnt reach this argument";
 
     Document doc ;
-    doc = new Document("_id", trans.getID()).append("Date", trans.getCreationDate().toString())
-        .append("amount", trans.getAmount()).append("category_name", trans.getCategory())
-        .append("category", category).append("Account_Number", acc.getAccount_number())
-        .append("Description", trans.getDescription()).append("User_ID", user.getUserID());
+    doc = new Document("_id", transaction.getID()).append("Date", transaction.getCreationDate().toString())
+        .append("amount", transaction.getAmount()).append("category_name", transaction.getCategory())
+        .append("category", category).append("Account_Number", account.getAccount_number())
+        .append("Description", transaction.getDescription()).append("User_ID", user.getUserID());
 
     this.collection = this.database.getCollection("Transactions");
     this.collection.insertOne(doc);
   }
 
 
+  /**
+   * updates the transaction within the database
+   *
+   * @param transaction transaction which shall be inserted
+   *
+   */
   @Override
-  public void updateTransaction(final Transaction trans) {
+  public void updateTransaction(final Transaction transaction) {
     this.collection = this.database.getCollection("Transactions");
 
     Document query = new Document();
-    query.append("_id", trans.getID());
+    query.append("_id", transaction.getID());
     Document setData = new Document();
-    setData.append("Date", trans.getCreationDate().toString()).append("amount", trans.getAmount())
-        .append("category", trans.getCategory()).append("Description", trans.getDescription());
+    setData.append("Date", transaction.getCreationDate().toString()).append("amount", transaction.getAmount())
+        .append("category", transaction.getCategory()).append("Description", transaction.getDescription());
     Document update = new Document();
     update.append("$set", setData);
     this.collection.updateOne(query, update);
   }
 
+  /**
+   * updates the user within the database
+   *
+   * @param user user which shall be inserted
+   *
+   */
   @Override
   public void updateUser(final User user) {
     this.collection = this.database.getCollection("User");
@@ -229,15 +261,15 @@ public class WriteOperation implements Write_Operation {
     List<Document> payout_array = new ArrayList<>();
 
     while (deposit.hasNext()) {
-      Document doc = Categories(deposit.next());
+      Document doc = create_categories_doc(deposit.next());
       deposit_array.add(doc);
     }
     while (payout.hasNext()) {
-      Document doc = Categories(payout.next());
+      Document doc = create_categories_doc(payout.next());
       payout_array.add(doc);
     }
     while (iter.hasNext()) {
-      Document doc = this.Account(iter.next());
+      Document doc = this.create_account_doc(iter.next());
       accounts_array.add(doc);
     }
 
@@ -253,7 +285,12 @@ public class WriteOperation implements Write_Operation {
     this.collection.updateOne(query, update);
   }
 
-
+  /**
+   * deletes the user within the database
+   *
+   * @param user user which shall be inserted
+   *
+   */
   @Override
   public void deleteUser(final User user) {
     BasicDBObject document = new BasicDBObject();
@@ -268,6 +305,12 @@ public class WriteOperation implements Write_Operation {
     // System.out.println(deleteResult.getDeletedCount());
   }
 
+  /**
+   * deletes all data from database
+   * only used for testing
+   *
+   *
+   */
   @Override
   public void clearDatabase() {
     this.collection = this.database.getCollection("User");
@@ -278,7 +321,12 @@ public class WriteOperation implements Write_Operation {
   }
 
 
-
+  /**
+   * deletes the transaction within the database
+   *
+   * @param trans_id transaction which shall be inserted
+   *
+   */
   @Override
   public void deleteTransaction(final User user, final int trans_id) {
     this.collection = this.database.getCollection("Transactions");
