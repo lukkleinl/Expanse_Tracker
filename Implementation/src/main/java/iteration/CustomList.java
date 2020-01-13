@@ -75,7 +75,7 @@ public class CustomList<T> implements CustomContainer<T> {
    * first element of the CustomList. Implemented as a private nested class inside the CustomList
    * since this Iterator directly belongs to the CustomList.
    */
-  @SuppressWarnings({"unchecked", "hiding"})
+  //@SuppressWarnings({"unchecked", "hiding"})
   private class CustomListIterator<T> implements CustomIterator<T> {
     private int position = 0;
 

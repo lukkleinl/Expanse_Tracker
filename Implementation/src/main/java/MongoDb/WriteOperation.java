@@ -65,7 +65,13 @@ public class WriteOperation implements Write_Operation {
           .append("Description", payout.getDescription()).append("User_ID", user_ID);
 
       this.collection = this.database.getCollection("Transactions");
-      this.collection.insertOne(doc);
+      try {
+        this.collection.insertOne(doc);
+      }
+      catch (Exception e)
+      {
+        System.out.println("Couldnt insert into database"+ e);
+      }
     } else if (transaction.toString().contains("DEPOSIT")) {
 
       Deposit deposit = (Deposit) transaction;
@@ -76,9 +82,15 @@ public class WriteOperation implements Write_Operation {
               .append("Description", deposit.getDescription()).append("User_ID", user_ID);
 
       this.collection = this.database.getCollection("Transactions");
-      this.collection.insertOne(doc);
+      try {
+        this.collection.insertOne(doc);
+      }
+      catch (Exception e)
+      {
+        System.out.println("Couldnt insert into database"+ e);
+      }
     } else
-      throw new RuntimeException("Unknown transaction");
+      assert true : "Should not reach this argument";
   }
 
   /**
@@ -181,18 +193,24 @@ public class WriteOperation implements Write_Operation {
       CustomIterator<Transaction> iterator = list.getIterator();
       Integer account_number = (Integer) e.getKey();
       while (iterator.hasNext()) {
-        this.insert_transaction_for_non_existing_user((Transaction) iterator.element(), account_number, user.getUserID());
+        this.insert_transaction_for_non_existing_user(iterator.element(), account_number, user.getUserID());
         iterator.next();
       }
     }
 
-    Document dep = new Document("_id", user.getUserID()).append("First Name", user.getFirstname())
+    Document doc = new Document("_id", user.getUserID()).append("First Name", user.getFirstname())
         .append("Last Name", user.getLastname()).append("Password", user.getPassword())
         .append("Accounts", accounts_array).append("Payout Categories", payout_array)
         .append("Deposit Categories", deposit_array);
 
     this.collection = this.database.getCollection("User");
-    this.collection.insertOne(dep);
+    try {
+      this.collection.insertOne(doc);
+    }
+    catch (Exception e)
+    {
+      System.out.println("Couldnt insert into database"+ e);
+    }
 
   }
 
@@ -223,7 +241,16 @@ public class WriteOperation implements Write_Operation {
         .append("Description", transaction.getDescription()).append("User_ID", user.getUserID());
 
     this.collection = this.database.getCollection("Transactions");
-    this.collection.insertOne(doc);
+
+    try {
+      this.collection.insertOne(doc);
+    }
+    catch (Exception e)
+    {
+      System.out.println("Couldnt insert into database"+ e);
+    }
+
+
   }
 
 
@@ -244,7 +271,16 @@ public class WriteOperation implements Write_Operation {
         .append("category", transaction.getCategory()).append("Description", transaction.getDescription());
     Document update = new Document();
     update.append("$set", setData);
-    this.collection.updateOne(query, update);
+
+    try {
+      this.collection.updateOne(query, update);
+    }
+    catch (Exception e)
+    {
+      System.out.println("Couldnt update transaction"+ e);
+    }
+
+
   }
 
   /**
@@ -288,7 +324,14 @@ public class WriteOperation implements Write_Operation {
 
     Document update = new Document();
     update.append("$set", setData);
-    this.collection.updateOne(query, update);
+    try {
+      this.collection.updateOne(query, update);
+    }
+    catch (Exception e)
+    {
+      System.out.println("Couldnt update user"+ e);
+    }
+
   }
 
   /**
@@ -307,7 +350,14 @@ public class WriteOperation implements Write_Operation {
     this.collection = this.database.getCollection("Transactions");
     BasicDBObject filter = new BasicDBObject();
     filter.put("User_ID", user.getUserID());
-    this.collection.deleteMany(filter);
+    try {
+      this.collection.deleteMany(filter);
+    }
+    catch (Exception e)
+    {
+      System.out.println("Couldnt delete user"+ e);
+    }
+
     // System.out.println(deleteResult.getDeletedCount());
   }
 
@@ -341,7 +391,14 @@ public class WriteOperation implements Write_Operation {
     document.put("_id", trans_id);
     document.put("User_ID", user.getUserID());
 
-    this.collection.deleteMany(document);
+    try {
+      this.collection.deleteMany(document);
+    }
+    catch (Exception e)
+    {
+      System.out.println("Couldnt delete transaction"+ e);
+    }
+
     // System.out.println(deleteResult.getDeletedCount());
   }
 }
