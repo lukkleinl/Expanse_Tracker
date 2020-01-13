@@ -226,7 +226,7 @@ public class RegistrationPage extends AbstractPage {
                 password = passwordTextField.getText();
                 firstname = firstnameTextField.getText();
                 lastname = lastnameTextField.getText();
-                infoLabel.setText("User added successfully!");
+                //infoLabel.setText("User added successfully!");
                 registrationComplete = true;
               } else {
                 JOptionPane.showMessageDialog(

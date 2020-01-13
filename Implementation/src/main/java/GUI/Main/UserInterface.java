@@ -94,8 +94,16 @@ public class UserInterface {
           } catch (InterruptedException e) {
             e.printStackTrace();
           }
-          try {
-            new User(registrationPage.getUser(), registrationPage.getFirstname(), registrationPage.getLastname(), registrationPage.getPassword(),data);
+          try
+          {
+            if(data.getUser(registrationPage.getUser())==null)
+            {
+              new User(registrationPage.getUser(), registrationPage.getFirstname(), registrationPage.getLastname(), registrationPage.getPassword(),data);
+              JOptionPane.showMessageDialog(null, "User successfully added", "Info",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+              JOptionPane.showMessageDialog(null, "User already exists", "Error",JOptionPane.ERROR_MESSAGE);
+
           }catch (Exception e){ System.out.println(e +"while adding user with user Facade in UserInterface 101"); }
         }
         // OPEN LOGIN PAGE COMPONENTS AGAIN
