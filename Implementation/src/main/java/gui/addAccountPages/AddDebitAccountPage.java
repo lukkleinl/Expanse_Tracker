@@ -136,6 +136,7 @@ public class AddDebitAccountPage extends AbstractPage {
 
     ibanInputField = new JTextField();
     ibanInputField.setBounds(600, 350, 300, 50);
+    ibanInputField.setFont(TEXTFIELD_FONT);
     components.add(ibanInputField);
 
     bankNameTextLabel = new JLabel("Bank Name:");
