@@ -203,7 +203,7 @@ public class AddCashAccountPage extends AbstractPage {
    */
   @Override
   protected void resetTitle(JFrame frame) {
-    frame.setTitle("Add Cash Account - Page");
+    frame.setTitle("Add/Change Cash Account - Page");
   }
 
     /**

@@ -218,7 +218,7 @@ public class AddDebitAccountPage extends AbstractPage {
    */
   @Override
   protected void resetTitle(JFrame frame) {
-    frame.setTitle("Add Debit Card Account - Page");
+    frame.setTitle("Add/Change Debit Card Account - Page");
   }
 
   /**

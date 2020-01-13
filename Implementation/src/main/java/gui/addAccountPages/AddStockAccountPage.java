@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import accounts.CreditCard;
 import accounts.Stocks;
 import gui.main.AbstractPage;
 import user.User;
@@ -207,7 +208,7 @@ public class AddStockAccountPage extends AbstractPage {
    */
   @Override
   protected void resetTitle(JFrame frame) {
-    frame.setTitle("Add Stock Account - Page");
+    frame.setTitle("Add/Change Stock Account - Page");
   }
 
     /**
@@ -217,12 +218,10 @@ public class AddStockAccountPage extends AbstractPage {
      */
   public void updateFields(Stocks account) {
     accountNameInputField.setText(account.getName());
-    buyDateInputField.setText(
-        account.getBuyDate().getDay()
-            + "/"
-            + account.getBuyDate().getMonth()
-            + "/"
-            + account.getBuyDate().getYear());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    Date expireDate = account.getBuyDate();
+    buyDateInputField.setText(dateFormat.format(expireDate));
+
     limitInputField.setText(Float.toString(account.getLimit()));
   }
 }

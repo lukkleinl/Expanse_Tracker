@@ -263,7 +263,7 @@ public class AddCreditAccountPage extends AbstractPage {
      */
   @Override
   protected void resetTitle(JFrame frame) {
-    frame.setTitle("Add Credit Card Account - Page");
+    frame.setTitle("Add/Change Credit Card Account - Page");
   }
 
 
@@ -281,11 +281,8 @@ public class AddCreditAccountPage extends AbstractPage {
     accountNameInputField.setText(account.getName());
     limitInputField.setText(Double.toString(account.getLimit()));
     bankNameInputField.setText(account.getBankName());
-    expiryDateInputField.setText(
-        account.getExpiryDate().getDay()
-            + "/"
-            + account.getExpiryDate().getMonth()
-            + "/"
-            + account.getExpiryDate().getYear());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    Date expireDate = account.getExpiryDate();
+    expiryDateInputField.setText(dateFormat.format(expireDate));
   }
 }
