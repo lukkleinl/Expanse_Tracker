@@ -8,6 +8,7 @@ import iteration.CustomIterator;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Map;
+import mongoDB.WriteOperation;
 import patterns.observing.Database;
 import transactions.Transaction;
 import transactions.grouping.GroupingBuilder;
@@ -77,5 +78,8 @@ public class GroupingPageTest {
                 System.out.println(it.element());
             }
         }
+
+        WriteOperation write_operation=new WriteOperation();
+        write_operation.clearDatabase();
     }
 }
