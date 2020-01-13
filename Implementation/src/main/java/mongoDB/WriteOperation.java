@@ -141,8 +141,11 @@ public class WriteOperation implements Write_Operation {
             .append("Balance", account.getBalance()).append("Name", account.getName())
             .append("Currency", cash.getCurrency()).append("Accounttype", account.toString());
         return doc;
+
+      default:
+        assert true : "Shoould not reach this argument";
     }
-    throw new RuntimeException("Unknown account type");
+    return null;
   }
 
   /**
@@ -213,13 +216,9 @@ public class WriteOperation implements Write_Operation {
         .append("Deposit Categories", deposit_array);
 
 
-    try {
-      this.collection.insertOne(doc);
-    }
-    catch (Exception e)
-    {
-      System.out.println("Couldnt insert into database"+ e);
-    }
+
+    this.collection.insertOne(doc);
+
 
 
   }
@@ -253,13 +252,7 @@ public class WriteOperation implements Write_Operation {
 
 
 
-    try {
-      this.collection.insertOne(doc);
-    }
-    catch (Exception e)
-    {
-      System.out.println("Couldnt insert into database"+ e);
-    }
+    this.collection.insertOne(doc);
 
 
   }
@@ -284,13 +277,9 @@ public class WriteOperation implements Write_Operation {
     Document update = new Document();
     update.append("$set", setData);
 
-    try {
-      this.collection.updateOne(query, update);
-    }
-    catch (Exception e)
-    {
-      System.out.println("Couldnt update transaction"+ e);
-    }
+
+    this.collection.updateOne(query, update);
+
 
   }
 
@@ -335,13 +324,9 @@ public class WriteOperation implements Write_Operation {
 
     Document update = new Document();
     update.append("$set", setData);
-    try {
-      this.collection.updateOne(query, update);
-    }
-    catch (Exception e)
-    {
-      System.out.println("Couldnt update user"+ e);
-    }
+
+    this.collection.updateOne(query, update);
+
   }
 
   /**
@@ -361,12 +346,9 @@ public class WriteOperation implements Write_Operation {
     this.collection = this.database.getCollection("Transactions");
     BasicDBObject filter = new BasicDBObject();
     filter.put("User_ID", user.getUserID());
-    try {
-      this.collection.deleteMany(filter);
-    }
-    catch (Exception e) {
-      System.out.println("Couldnt delete user" + e);
-    }
+
+    this.collection.deleteMany(filter);
+
 
     // System.out.println(deleteResult.getDeletedCount());
   }
@@ -401,13 +383,9 @@ public class WriteOperation implements Write_Operation {
     document.put("_id", trans_id);
     document.put("User_ID", user.getUserID());
 
-    try {
-      this.collection.deleteMany(document);
-    }
-    catch (Exception e)
-    {
-      System.out.println("Couldnt delete transaction"+ e);
-    }
+
+    this.collection.deleteMany(document);
+
     // System.out.println(deleteResult.getDeletedCount());
   }
 }
