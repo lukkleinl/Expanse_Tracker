@@ -6,6 +6,7 @@ import accounts.DebitCard;
 import accounts.Stocks;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import patterns.observing.Database;
@@ -65,9 +66,14 @@ public class TestUser {
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
+    ArrayList<String> categories = new ArrayList<>();
+    categories.add("FOOD");
+    categories.add("EDUCATION");
+    categories.add("TRANSPORTATION");
     for(int i=9;i<40;i++)
     {
-      Transaction transaction= TransactionCreator.transactionFromDatabaseData(times.nextTime(),"FOOD", 10.00f, "food4", user.getCategoryStore(),i);
+      String cat = categories.get(i%3);
+      Transaction transaction= TransactionCreator.transactionFromDatabaseData(times.nextTime(),cat, 10.00f, "food4", user.getCategoryStore(),i);
       user.applyAndSaveTransaction(transaction,cash);
     }
     return user;
