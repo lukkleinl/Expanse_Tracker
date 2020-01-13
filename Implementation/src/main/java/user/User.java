@@ -2,8 +2,8 @@
 package user;
 
 import java.util.Set;
-import Patterns.observing.Database;
-import Patterns.observing.SWE_Observable;
+import patterns.observing.Database;
+import patterns.observing.SWE_Observable;
 import accounts.Account;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
