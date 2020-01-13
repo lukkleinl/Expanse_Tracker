@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -224,7 +225,7 @@ public class TransactionListPage extends AbstractPage {
     balanceHeader.setFont(new Font("Serif", Font.BOLD, 19));
     components.add(balanceHeader);
 
-    balance_VisualizationLabel = new JLabel(Double.toString(account.getBalance()));
+    balance_VisualizationLabel = new JLabel(new DecimalFormat("0.00").format(account.getBalance()));
     balance_VisualizationLabel.setBounds(10, 230, 300, 50);
     balance_VisualizationLabel.setFont(new Font("Serif", Font.PLAIN, 18));
     components.add(balance_VisualizationLabel);
@@ -234,7 +235,7 @@ public class TransactionListPage extends AbstractPage {
     limitHeader.setFont((new Font("Serif", Font.BOLD, 19)));
     components.add(limitHeader);
 
-    limit_VisualizationLabel = new JLabel(Float.toString(account.getLimit()));
+    limit_VisualizationLabel = new JLabel(new DecimalFormat("0.00").format(account.getLimit()));
     limit_VisualizationLabel.setBounds(10, 330, 300, 50);
     limit_VisualizationLabel.setFont(new Font("Serif", Font.PLAIN, 18));
     components.add(limit_VisualizationLabel);
@@ -291,12 +292,14 @@ public class TransactionListPage extends AbstractPage {
     backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
     backButton.setBorder(new LineBorder(Color.BLACK, 2));
+    backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     components.add(backButton);
     backButton.addActionListener(e -> backWanted = true);
 
     newPayoutButton = new JButton("NEW PAYOUT");
     newPayoutButton.setBounds(400, 650, 200, 70);
     newPayoutButton.setFont(BUTTON_FONT);
+    newPayoutButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     newPayoutButton.setBorder(new LineBorder(Color.BLACK, 2));
     newPayoutButton.addActionListener(e -> newPayoutWanted = true);
     components.add(newPayoutButton);
@@ -304,6 +307,7 @@ public class TransactionListPage extends AbstractPage {
     newDepositButton = new JButton("NEW DEPOST");
     newDepositButton.setBounds(700, 650, 200, 70);
     newDepositButton.setFont(BUTTON_FONT);
+    newDepositButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     newDepositButton.setBorder(new LineBorder(Color.BLACK, 2));
     newDepositButton.addActionListener(e -> newDepositWanted = true);
     components.add(newDepositButton);
@@ -311,6 +315,7 @@ public class TransactionListPage extends AbstractPage {
     deleteButton = new JButton("DELETE");
     deleteButton.setBounds(975, 50, 150, 50);
     deleteButton.setFont(BUTTON_FONT);
+    deleteButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     deleteButton.setBorder(new LineBorder(Color.BLACK, 2));
     deleteButton.addActionListener(
         new ActionListener() {
@@ -343,6 +348,7 @@ public class TransactionListPage extends AbstractPage {
     updateButton = new JButton("UPDATE");
     updateButton.setBounds(750, 50, 150, 50);
     updateButton.setFont(BUTTON_FONT);
+    updateButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     updateButton.setBorder(new LineBorder(Color.BLACK, 2));
     updateButton.addActionListener(
         new ActionListener() {

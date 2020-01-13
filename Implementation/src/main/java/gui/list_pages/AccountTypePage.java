@@ -1,7 +1,6 @@
 package gui.list_pages;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -90,6 +89,7 @@ public class AccountTypePage extends AbstractPage {
     this.creditCardButton.setBounds(200, 200, 350, 200);
     this.creditCardButton.setFont(BUTTON_FONT);
     this.creditCardButton.setBorder(new LineBorder(Color.BLACK, 3));
+    this.creditCardButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.creditCardButton.setBackground(new Color(255, 184, 77));
     this.creditCardButton
         .addActionListener(e -> AccountTypePage.this.pageWanted = AccountTypes.CREDIT);
@@ -100,6 +100,7 @@ public class AccountTypePage extends AbstractPage {
     this.debitCardButton.setBackground(new Color(255, 184, 77));
     this.debitCardButton.setBorder(new LineBorder(Color.BLACK, 3));
     this.debitCardButton.setFont(BUTTON_FONT);
+    this.debitCardButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.debitCardButton
         .addActionListener(e -> AccountTypePage.this.pageWanted = AccountTypes.DEBIT);
 
@@ -109,6 +110,7 @@ public class AccountTypePage extends AbstractPage {
     this.cashButton.setFont(BUTTON_FONT);
     this.cashButton.setBorder(new LineBorder(Color.BLACK, 3));
     this.cashButton.setBackground(new Color(255, 184, 77));
+    this.cashButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.cashButton.addActionListener(e -> AccountTypePage.this.pageWanted = AccountTypes.CASH);
 
     // STOCK BUTTON
@@ -117,12 +119,14 @@ public class AccountTypePage extends AbstractPage {
     this.stockButton.setFont(BUTTON_FONT);
     this.stockButton.setBorder(new LineBorder(Color.BLACK, 3));
     this.stockButton.setBackground(new Color(255, 184, 77));
+    this.stockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.stockButton.addActionListener(e -> AccountTypePage.this.pageWanted = AccountTypes.STOCKS);
 
     this.backButton = new JButton("BACK");
     this.backButton.setBounds(10, 10, 100, 50);
     this.backButton.setFont(BUTTON_FONT);
     this.backButton.setBorder(new LineBorder(Color.BLACK, 2));
+    this.backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.backButton.addActionListener(e -> AccountTypePage.this.backWanted = true);
 
     this.components.add(this.welcomeMessage);

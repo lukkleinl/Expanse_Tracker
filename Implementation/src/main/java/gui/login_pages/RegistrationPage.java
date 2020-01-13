@@ -1,6 +1,6 @@
 package gui.login_pages;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -214,6 +214,7 @@ public class RegistrationPage extends AbstractPage {
     this.registerButton.setBounds(450, 600, 300, 50);
     this.registerButton.setFont(BUTTON_FONT);
     this.registerButton.setBorder(new LineBorder(Color.BLACK, 2));
+    this.registerButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.registerButton.addActionListener(e -> {
       if (!RegistrationPage.this.userTextField.getText().equals("")
           && !RegistrationPage.this.passwordTextField.getText().equals("")
@@ -243,6 +244,7 @@ public class RegistrationPage extends AbstractPage {
     this.backButton.setBounds(10, 10, 100, 50);
     this.backButton.setFont(BUTTON_FONT);
     this.backButton.setBorder(new LineBorder(Color.BLACK, 2));
+    this.backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.backButton.addActionListener(e -> RegistrationPage.this.backWanted = true);
 
     this.components.add(this.userLabel);

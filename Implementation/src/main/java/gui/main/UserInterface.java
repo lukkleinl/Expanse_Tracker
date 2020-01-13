@@ -76,7 +76,6 @@ public class UserInterface {
           foundUser = true;
         } else {
           loginPage.configureFrame(frame);
-          // TODO: display error message
         }
       } else if (loginPage
           .isRegistrationWanted()) { // check if registration button got pressed, if yes, open
@@ -90,13 +89,6 @@ public class UserInterface {
         }
         if (registrationPage
             .isRegistrationComplete()) { // if registration button got pressed, save userdata
-          try {
-            Thread.sleep(
-                1000); // wait one second, before login page gets opened, so successful message can
-                       // be read
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
           try
           {
             if(data.getUser(registrationPage.getUser())==null)

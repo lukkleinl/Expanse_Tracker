@@ -1,6 +1,6 @@
 package gui.addTransactionPages;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -149,12 +149,14 @@ public class AddPayoutPage extends AbstractPage {
     this.newCategoryOptionPaneButton = new JButton("Create category");
     this.newCategoryOptionPaneButton.setBounds(600, 250, 300, 50);
     this.newCategoryOptionPaneButton.setFont(BUTTON_FONT);
+    this.newCategoryOptionPaneButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.newCategoryOptionPaneButton.setBorder(new LineBorder(Color.BLACK, 2));
     this.components.add(this.newCategoryOptionPaneButton);
 
     this.deleteCategoryButton = new JButton("Delete a category");
     this.deleteCategoryButton.setBounds(300, 250, 250, 50);
     this.deleteCategoryButton.setFont(BUTTON_FONT);
+    this.deleteCategoryButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.deleteCategoryButton.setBorder(new LineBorder(Color.BLACK, 2));
     this.deleteCategoryButton.addActionListener(
         actionEvent -> {
@@ -201,6 +203,7 @@ public class AddPayoutPage extends AbstractPage {
 
     this.submitButton = new JButton("SUBMIT");
     this.submitButton.setBounds(450, 600, 300, 50);
+    this.submitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.submitButton.setBorder(new LineBorder(Color.BLACK, 2));
     this.submitButton.setFont(BUTTON_FONT);
     this.components.add(this.submitButton);
@@ -242,6 +245,7 @@ public class AddPayoutPage extends AbstractPage {
     this.backButton.setBounds(10, 10, 100, 50);
     this.backButton.setFont(BUTTON_FONT);
     this.backButton.setBorder(new LineBorder(Color.BLACK, 2));
+    this.backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.components.add(this.backButton);
     this.backButton.addActionListener(e -> this.backWanted = true);
   }

@@ -188,15 +188,16 @@ public class AccountListPage extends AbstractPage {
 
     // WELCOME MESSAGE
     welcomeMessage = new JLabel();
-    welcomeMessage.setText("Welcome, " + user.getFirstname() + " " + user.getLastname() + "!");
+    welcomeMessage.setText("Welcome, " + user.getFirstname() + " " + user.getLastname() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     welcomeMessage.setFont(new Font("Serif", Font.BOLD, 28));
-    welcomeMessage.setBounds(100, 50, 1000, 50);
+    welcomeMessage.setBounds(100, 50, 550, 50);
 
     // NEW ACCOUNT BUTTON
     newAccountButton = new JButton("CREATE NEW ACCOUNT");
     newAccountButton.setBounds(100, 600, 400, 50);
     newAccountButton.setBorder(new LineBorder(Color.BLACK, 2));
     newAccountButton.setFont(BUTTON_FONT);
+    newAccountButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     newAccountButton.addActionListener(
         new ActionListener() {
           @Override
@@ -210,6 +211,7 @@ public class AccountListPage extends AbstractPage {
     deleteButton.setBounds(925, 50, 150, 50);
     deleteButton.setFont(BUTTON_FONT);
     deleteButton.setBorder(new LineBorder(Color.BLACK, 2));
+    deleteButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     deleteButton.addActionListener(
         new ActionListener() {
           @Override
@@ -241,6 +243,7 @@ public class AccountListPage extends AbstractPage {
     updateButton.setBounds(700, 50, 150, 50);
     updateButton.setFont(BUTTON_FONT);
     updateButton.setBorder(new LineBorder(Color.BLACK, 2));
+    updateButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     updateButton.addActionListener(
         new ActionListener() {
           @Override
@@ -261,6 +264,7 @@ public class AccountListPage extends AbstractPage {
     summaryButton = new JButton("SUMMARY OF ALL ACCOUNTS");
     summaryButton.setBounds(675, 600, 400, 50);
     summaryButton.setFont(BUTTON_FONT);
+    summaryButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     summaryButton.setBorder(new LineBorder(Color.BLACK, 2));
     summaryButton.addActionListener(
         new ActionListener() {

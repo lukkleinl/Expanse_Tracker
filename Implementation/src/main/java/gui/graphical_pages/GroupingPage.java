@@ -213,6 +213,7 @@ public class GroupingPage extends AbstractPage {
     this.backButton = new JButton("BACK");
     this.backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
+    backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     backButton.setBorder(new LineBorder(Color.BLACK, 2));
     this.components.add(this.backButton);
 
@@ -221,6 +222,7 @@ public class GroupingPage extends AbstractPage {
     this.showBarGraphicalButton = new JButton("SHOW BAR CHART");
     showBarGraphicalButton.setFont(BUTTON_FONT);
     showBarGraphicalButton.setBorder(new LineBorder(Color.BLACK, 2));
+    showBarGraphicalButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.showBarGraphicalButton.setBounds(150, 650, 300, 50);
 
     this.components.add(this.showBarGraphicalButton);
@@ -228,12 +230,14 @@ public class GroupingPage extends AbstractPage {
     this.showPieGraphicalButton = new JButton("SHOW PIE CHART");
     showPieGraphicalButton.setFont(BUTTON_FONT);
     showPieGraphicalButton.setBorder(new LineBorder(Color.BLACK, 2));
+    showPieGraphicalButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     this.showPieGraphicalButton.setBounds(750, 650, 300, 50);
     this.components.add(showPieGraphicalButton);
 
     this.selectDateButton = new JButton("SELECT DATE");
     this.selectDateButton.setBounds(850, 50, 200, 50);
     selectDateButton.setFont(BUTTON_FONT);
+    selectDateButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     selectDateButton.setBorder(new LineBorder(Color.BLACK, 2));
     this.components.add(selectDateButton);
 

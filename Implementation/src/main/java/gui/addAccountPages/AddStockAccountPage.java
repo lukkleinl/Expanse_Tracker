@@ -144,6 +144,7 @@ public class AddStockAccountPage extends AbstractPage {
     submitButton.setBounds(450, 600, 300, 50);
     submitButton.setFont(BUTTON_FONT);
     submitButton.setBorder(new LineBorder(Color.BLACK, 2));
+    submitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     components.add(submitButton);
 
     submitButton.addActionListener(
@@ -190,6 +191,7 @@ public class AddStockAccountPage extends AbstractPage {
     backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
     backButton.setBorder(new LineBorder(Color.BLACK, 2));
+    backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     components.add(backButton);
     backButton.addActionListener(
         new ActionListener() {

@@ -151,6 +151,7 @@ public class AddDebitAccountPage extends AbstractPage {
     submitButton = new JButton("SUBMIT");
     submitButton.setBounds(450, 600, 300, 50);
     submitButton.setBorder(new LineBorder(Color.BLACK, 2));
+    submitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     submitButton.setFont(BUTTON_FONT);
     components.add(submitButton);
 
@@ -199,6 +200,7 @@ public class AddDebitAccountPage extends AbstractPage {
     backButton.setBounds(10, 10, 100, 50);
     backButton.setFont(BUTTON_FONT);
     backButton.setBorder(new LineBorder(Color.BLACK, 2));
+    backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     components.add(backButton);
     backButton.addActionListener(
         new ActionListener() {
