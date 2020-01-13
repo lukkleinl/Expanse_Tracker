@@ -1,12 +1,13 @@
 package ui_tests.listPages;
 
 import accounts.Account;
+import gui.list_pages.AccountListPage;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import javax.swing.JFrame;
-import GUI.ListPages.AccountListPage;
 import ui_tests.TestUser;
 import user.User;
+
 
 public class AccountListPageVIEW {
   public static void main(String args[]) {

@@ -1,7 +1,7 @@
 package ui_tests.addTransactionPages;
 
+import gui.addTransactionPages.AddPayoutPage;
 import javax.swing.JFrame;
-import GUI.AddTransactionPages.AddPayoutPage;
 import user.User;
 
 public class AddPayoutPageVIEW {

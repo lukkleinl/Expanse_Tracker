@@ -1,11 +1,11 @@
 package ui_tests.listPages;
 
 import accounts.Stocks;
+import gui.list_pages.TransactionListPage;
 import java.util.Date;
 import javax.swing.JFrame;
 import transactions.Transaction;
 import transactions.TransactionCreator;
-import GUI.ListPages.TransactionListPage;
 import user.User;
 
 public class TransactionListPageVIEW {

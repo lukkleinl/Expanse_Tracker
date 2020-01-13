@@ -1,7 +1,7 @@
 package ui_tests.listPages;
 
+import gui.list_pages.AccountTypePage;
 import javax.swing.JFrame;
-import GUI.ListPages.AccountTypePage;
 import ui_tests.TestUser;
 
 public class AccountTypePageVIEW {

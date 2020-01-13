@@ -1,7 +1,7 @@
 package ui_tests.addAccountPages;
 
+import gui.addAccountPages.AddCreditAccountPage;
 import javax.swing.JFrame;
-import GUI.AddAccountPages.AddCreditAccountPage;
 import ui_tests.TestUser;
 
 public class AddCreditAccountPageVIEW {

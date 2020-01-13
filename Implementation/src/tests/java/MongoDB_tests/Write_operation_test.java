@@ -1,6 +1,5 @@
 package MongoDB_tests;
 
-import MongoDb.WriteOperation;
 import accounts.Account;
 import accounts.Cash;
 import accounts.CreditCard;
@@ -11,6 +10,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import mongoDB.WriteOperation;
 import transactions.Transaction;
 import transactions.TransactionCreator;
 import user.User;

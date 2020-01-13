@@ -1,18 +1,14 @@
 package Observer_Tests;
 
-import MongoDb.WriteOperation;
-import Patterns.observing.Database;
+
 import accounts.Account;
 import accounts.Cash;
 import accounts.CreditCard;
 import accounts.DebitCard;
-import iteration.CustomContainer;
 import iteration.CustomIterator;
-import iteration.CustomList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import mongoDB.WriteOperation;
+import patterns.observing.Database;
 import transactions.Transaction;
 import transactions.TransactionCreator;
 import transactions.categories.PayoutCategory;
@@ -88,7 +84,7 @@ public class Observer_Test {
 
     //base.deleteUser(user2);
 
-    User user=base.getUser("1234567");
+   /* User user=base.getUser("1234567");
 
     System.out.println(user.getAccounts().size());
     System.out.println(user.getTransactionStore().accountsWithTransactions());
@@ -104,7 +100,7 @@ public class Observer_Test {
         System.out.println(iterator.next().toString());
       }
 
-    }
+    }*/
 
   }
 

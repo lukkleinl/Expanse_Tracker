@@ -1,7 +1,7 @@
 package ui_tests.addAccountPages;
 
+import gui.addAccountPages.AddStockAccountPage;
 import javax.swing.JFrame;
-import GUI.AddAccountPages.AddStockAccountPage;
 import ui_tests.TestUser;
 
 public class AddStockAccountPageVIEW {

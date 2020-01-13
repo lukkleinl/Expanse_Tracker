@@ -1,7 +1,7 @@
 package ui_tests.addTransactionPages;
 
+import gui.addTransactionPages.AddDepositPage;
 import javax.swing.JFrame;
-import GUI.AddTransactionPages.AddDepositPage;
 import user.User;
 
 public class AddDepositPageVIEW {

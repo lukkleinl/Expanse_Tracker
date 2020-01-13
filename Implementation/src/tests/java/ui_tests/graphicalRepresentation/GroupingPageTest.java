@@ -1,20 +1,20 @@
 package ui_tests.graphicalRepresentation;
 
+import gui.graphical_pages.GraphicalRepresentation_Bar;
+import gui.graphical_pages.GraphicalRepresentation_Pie;
+import gui.main.TestUser;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
-import transactions.Transaction;
-import transactions.grouping.GroupingBuilder;
-import GUI.Main.TestUser;
-import GUI.GraphicalPages.GraphicalRepresentation_Bar;
-import GUI.GraphicalPages.GraphicalRepresentation_Pie;
-import user.User;
-
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Map;
+import patterns.observing.Database;
+import transactions.Transaction;
+import transactions.grouping.GroupingBuilder;
+import user.User;
 
 public class GroupingPageTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         String selectedDate = "2020/01/03";
         String selectedDate_e = "2020/01/03";
@@ -24,8 +24,8 @@ public class GroupingPageTest {
             System.out.println("Substr 5,6" + s.substring(5,7));
             System.out.println("Substr 8,9" + s.substring(8,10));
     */
-
-        User user = TestUser.getTestUser();
+        Database database=new Database();
+        User user = TestUser.getTestUser("sv","dav","v","av",database);
 
         Map<String, CustomContainer<Transaction>> orga =
                 new GroupingBuilder()
