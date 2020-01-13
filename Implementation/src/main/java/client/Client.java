@@ -1,7 +1,8 @@
 package client;
 
-import Patterns.observing.Database;
-import GUI.Main.UserInterface;
+
+import gui.main.UserInterface;
+import patterns.observing.Database;
 import user.User;
 
 public class Client {
