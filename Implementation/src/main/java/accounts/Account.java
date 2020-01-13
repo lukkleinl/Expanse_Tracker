@@ -32,8 +32,8 @@ public abstract class Account {
    * @param balance the balance of the account
    */
   public Account(final String name, final float limit, final Integer ID, final float balance) {
-    this.account_number = ID;
     nextId.set(ID);
+    this.account_number=nextId.get();
     this.name = name;
     this.limit = limit;
     this.balance = balance;
