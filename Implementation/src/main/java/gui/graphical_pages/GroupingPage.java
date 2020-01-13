@@ -44,9 +44,9 @@ public class GroupingPage extends AbstractPage {
   private volatile boolean refreshWanted = false;
   private volatile boolean backWanted = false;
   String[] options = getNames(GroupingTypes.class);
-  int selectedGrouping = 0;
-  private String selectedDate = begin.toString();
-  private String selectedDateEnd = end.toString();
+  int selectedGrouping = 2;
+  private String selectedDate ="2010/01/01";
+  private String selectedDateEnd="2030/01/01";
   private String groupedByMessage = "";
   // private volatile boolean graphicalWanted;
 
