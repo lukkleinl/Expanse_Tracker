@@ -46,7 +46,7 @@ public class User extends SWE_Observable {
     this.accounts = new CustomList<>();
     this.transactions = new TransactionStore();
     this.password = password;
-    this.categories = new CategoryStore().withDefaultCategories(); // withDefaultCatoegires braucht
+    this.categories = new CategoryStore();//.withDefaultCategories(); // withDefaultCatoegires braucht
                                                                    // man, sonst geht nix!!!
 
   }
