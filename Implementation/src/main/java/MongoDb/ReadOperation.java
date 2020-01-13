@@ -48,36 +48,6 @@ public class ReadOperation implements Read_Operation
     }
   }
 
-  private void Account(User user,JSONObject account)
-  {
-
-    if(account.get("Accounttype").equals("CASH"))
-    {
-
-      user.addAccount(new Cash(account.getString("Name"),account.getFloat("Limit"),
-                account.getString("Currency"),account.getInt("id"),account.getFloat("Balance")));
-    }
-    else if(account.get("Accounttype").equals("STOCKS"))
-    {
-      Date date=new Date(account.get("Buy Date").toString());
-      user.addAccount(new Stocks(account.get("Name").toString(),date,account.getFloat("Limit"),account.getInt("id"),account.getFloat("Balance")));
-    }
-    else if(account.get("Accounttype").equals("DEBITCARD"))
-    {
-      user.addAccount(new DebitCard(account.get("Name").toString(),account.get("Bankname").toString(),
-          account.getFloat("Limit"),account.get("IBAN").toString(),account.getInt("id"),account.getFloat("Balance")));
-    }
-    else if(account.get("Accounttype").equals("CREDITCARD"))
-    {
-      Date date=new Date(account.get("Buy Date").toString());
-      user.addAccount(new CreditCard(account.get("Name").toString(),account.get("Bankname").toString(),
-          account.getFloat("Limit"),date,account.getInt("id"),account.getFloat("Balance")));
-    }
-    else
-    {
-      assert true : "shoudln't get here";
-    }
-  }
 
   @Override
   public CustomList<User> getUsers()
@@ -89,71 +59,6 @@ public class ReadOperation implements Read_Operation
 
     while (cursor.hasNext())
     {
-      /*JSONObject json=new JSONObject(cursor.next().toJson());
-
-      user=new User(json.get("_id").toString(),
-                    json.get("First Name").toString(),
-                    json.get("Last Name").toString(),
-                    json.get("Password").toString());
-
-      JSONArray PayoutCategories=json.getJSONArray("Payout Categories");
-      JSONArray DepositCategories=json.getJSONArray("Deposit Categories");
-
-      for(int i=0;i<PayoutCategories.length();i++)
-      {
-        user.getCategoryStore().addTransactionCategory(new PayoutCategory(PayoutCategories.getJSONObject(i).getString("_id")));
-      }
-
-      for(int i=0;i<DepositCategories.length();i++)
-      {
-        user.getCategoryStore().addTransactionCategory(new DepositCategory(DepositCategories.getJSONObject(i).getString("_id")));
-      }
-
-      JSONArray accounts_array=json.getJSONArray("Accounts");
-
-      for(int i=0;i<accounts_array.length();i++)
-      {
-        JSONObject acc = accounts_array.getJSONObject(i);
-        Date date=null;
-
-        if(acc.getString("Accounttype").equals("CASH"))
-          user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id"),acc.getFloat("Balance")));
-        else if(acc.getString("Accounttype").equals("DEBITCARD"))
-          user.addAccount((new DebitCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),
-              acc.getString("IBAN"),acc.getInt("id"),acc.getFloat("Balance"))));
-        else if(acc.getString("Accounttype").equals("CREDITCARD"))
-        {
-          JSONObject date_object=acc.getJSONObject("Expiry Date");
-          date=new Date(date_object.getLong("$numberLong"));
-          System.out.println(date);
-          user.addAccount(new CreditCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),date,acc.getInt("id"),acc.getFloat("Balance")));
-        }
-        else if(acc.getString("Accounttype").equals("STOCKS"))
-        {
-          JSONObject date_object=acc.getJSONObject("Buy Date");
-          date=new Date(date_object.getLong("$numberLong"));
-          user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"),acc.getFloat("Balance"))));
-        }
-        else
-          assert true : "Shouldnt reach this statement";
-
-      }
-
-      Map<Integer,CustomContainer<Transaction>> list_trans=getTransactions(user);
-
-      for (Entry e : list_trans.entrySet())
-      {
-        CustomContainer<Object> list = (CustomList<Object>) e.getValue();
-        CustomIterator<Object> iterator = list.getIterator();
-        Integer account_number = (Integer) e.getKey();
-
-        while (iterator.hasNext())
-        {
-          Transaction trans=(Transaction) iterator.next();
-          user.getTransactionStore().addTransactionUnderKey(account_number,trans);
-        }
-      }
-      user_list.add(user);*/
       user_list.add(getUsers(cursor.next().getString("_id")));
     }
     return user_list;
@@ -205,26 +110,25 @@ public class ReadOperation implements Read_Operation
       {
         JSONObject acc = accounts_array.getJSONObject(i);
         Date date=null;
+        JSONObject date_object;
 
-        if(acc.getString("Accounttype").equals("CASH"))
-          user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id"),acc.getFloat("Balance")));
-        else if(acc.getString("Accounttype").equals("DEBITCARD"))
-          user.addAccount((new DebitCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),acc.getString("IBAN"),acc.getInt("id"),acc.getFloat("Balance"))));
-        else if(acc.getString("Accounttype").equals("CREDITCARD"))
+        switch (acc.getString("Accounttype"))
         {
-          JSONObject date_object=acc.getJSONObject("Expiry Date");
-          date=new Date(date_object.getLong("$numberLong"));
-          user.addAccount(new CreditCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),date,acc.getInt("id"),acc.getFloat("Balance")));
+          case "CASH" :
+            user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id"),acc.getFloat("Balance")));
+          case "STOCKS" :
+            date_object=acc.getJSONObject("Buy Date");
+            date=new Date(date_object.getLong("$numberLong"));
+            user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"),acc.getFloat("Balance"))));
+          case "CREDITCARD":
+            date_object=acc.getJSONObject("Expiry Date");
+            date=new Date(date_object.getLong("$numberLong"));
+            user.addAccount(new CreditCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),date,acc.getInt("id"),acc.getFloat("Balance")));
+          case "DEBITCARD":
+            user.addAccount((new DebitCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),acc.getString("IBAN"),acc.getInt("id"),acc.getFloat("Balance"))));
+          default :
+            assert true : "Should not reach this argument";
         }
-        else if(acc.getString("Accounttype").equals("STOCKS"))
-        {
-          JSONObject date_object=acc.getJSONObject("Buy Date");
-          date=new Date(date_object.getLong("$numberLong"));
-          user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"),acc.getFloat("Balance"))));
-        }
-        else
-          assert true : "Shouldnt reach this statement";
-
       }
 
       Map<Integer,CustomContainer<Transaction>> list_trans=getTransactions(user);
@@ -275,27 +179,19 @@ public class ReadOperation implements Read_Operation
       Transaction trans = TransactionCreator.transactionFromDatabaseData(date, json.getString("category_name"), json.getFloat("amount"),
           json.getString("Description"), user.getCategoryStore(), json.getInt("_id"));
 
+      CustomIterator<Account> account_iterator=user.getAccounts().getIterator();
 
-      Transactions_map=insertTransIntoMap(user,json.getInt("Account_Number"),trans,Transactions_map);
+      while (account_iterator.hasNext())
+      {
+        if(account_iterator.element().getAccount_number()==json.getInt("Account_Number"))
+        {
+          Transactions_map.putIfAbsent(json.getInt("Account_Number"),new CustomList<>());
+          Transactions_map.get(json.getInt("Account_Number")).add(trans);
+        }
+        account_iterator.next();
+      }
 
     }
     return Transactions_map;
-  }
-
-  private Map<Integer, CustomContainer<Transaction>>  insertTransIntoMap(User user,int acc_id,Transaction trans, Map<Integer, CustomContainer<Transaction>> map)
-  {
-    CustomIterator<Account> account_iterator=user.getAccounts().getIterator();
-
-
-    while (account_iterator.hasNext())
-    {
-      if(account_iterator.element().getAccount_number()==acc_id)
-      {
-        map.putIfAbsent(acc_id,new CustomList<>());
-        map.get(acc_id).add(trans);
-      }
-      account_iterator.next();
-    }
-    return map;
   }
 }

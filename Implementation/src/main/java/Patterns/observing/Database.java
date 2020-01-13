@@ -46,6 +46,7 @@ public class Database implements SWE_Observer {
             if(it.element().getUserID().equals(user.getUserID()))
             {
 
+                writeOperation.updateUser(user);
                 writeOperation.insertTransaction(user,acc,trans);
                 return;
             }
@@ -96,6 +97,7 @@ public class Database implements SWE_Observer {
                 Transaction transaction= (Transaction) iterator.element();
                 if(trans.equals(transaction))
                 {
+                    writeOperation.updateUser(obj);
                     writeOperation.updateTransaction(trans);
                     return;
                 }
