@@ -7,7 +7,6 @@ import accounts.Stocks;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import patterns.observing.Database;
 import transactions.Transaction;
@@ -20,10 +19,6 @@ import user.User;
  */
 public class TestUser {
 
-  private static final ThreadLocalRandom rand = ThreadLocalRandom.current();
-  private static AtomicInteger trans_id = new AtomicInteger();
-  private static User user = null;
-  private static String[] categories;
   private static final ChronologicTimes times = new ChronologicTimes();
   /**
    * Returns a test user with pre defined accounts and transactions.
