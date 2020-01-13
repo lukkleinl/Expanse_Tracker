@@ -119,12 +119,34 @@ public class ReadOperation implements Read_Operation
         Date date=null;
         JSONObject date_object;
 
-        switch (acc.getString("Accounttype"))
+        if(acc.getString("Accounttype").equals("CASH"))
+          user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id"),acc.getFloat("Balance")));
+        else if(acc.getString("Accounttype").equals("DEBITCARD"))
+          user.addAccount((new DebitCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),acc.getString("IBAN"),acc.getInt("id"),acc.getFloat("Balance"))));
+        else if(acc.getString("Accounttype").equals("CREDITCARD"))
+        {
+          date_object=acc.getJSONObject("Expiry Date");
+          date=new Date(date_object.getLong("$numberLong"));
+          user.addAccount(new CreditCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),date,acc.getInt("id"),acc.getFloat("Balance")));
+        }
+        else if(acc.getString("Accounttype").equals("STOCKS"))
+        {
+        date_object=acc.getJSONObject("Buy Date");
+        date=new Date(date_object.getLong("$numberLong"));
+        user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"),acc.getFloat("Balance"))));
+        }
+        else
+          assert true : "Shouldnt reach this statement";
+
+//Funktioniert so nicht
+// Weiß nicht warum
+/*
+      switch (acc.getString("Accounttype"))
         {
           case "CASH" :
             user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id"),acc.getFloat("Balance")));
           case "STOCKS" :
-            date_object=acc.getJSONObject("Buy Date");
+            JSONObject date_object=acc.getJSONObject("Buy Date");
             date=new Date(date_object.getLong("$numberLong"));
             user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"),acc.getFloat("Balance"))));
           case "CREDITCARD":
@@ -135,7 +157,7 @@ public class ReadOperation implements Read_Operation
             user.addAccount((new DebitCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),acc.getString("IBAN"),acc.getInt("id"),acc.getFloat("Balance"))));
           default :
             assert true : "Should not reach this argument";
-        }
+        }*/
       }
 
       Map<Integer,CustomContainer<Transaction>> list_trans=getTransactions(user);

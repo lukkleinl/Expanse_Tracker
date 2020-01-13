@@ -2,16 +2,12 @@ package MongoDB_tests;
 
 import MongoDb.ReadOperation;
 import MongoDb.WriteOperation;
-import accounts.Account;
-import accounts.Cash;
-import accounts.DebitCard;
 import iteration.CustomContainer;
 import iteration.CustomIterator;
 import iteration.CustomList;
 import java.util.Map;
 import java.util.Map.Entry;
 import transactions.Transaction;
-import transactions.TransactionCreator;
 import user.User;
 
 public class Read_Operation_test {
@@ -24,6 +20,7 @@ public class Read_Operation_test {
   {
     WriteOperation write=new WriteOperation();
     ReadOperation read=new ReadOperation();
+
 
     CustomList<User> users=read.getUsers();
 
@@ -46,7 +43,8 @@ public class Read_Operation_test {
 
       iter.next();
     }
-    WriteOperation writeOperation=new WriteOperation();
+
+    /*WriteOperation writeOperation=new WriteOperation();
 
     user2 = new User("12", "firstname", "lastname", "password");
     user2.getCategoryStore().withDefaultCategories();
@@ -72,7 +70,7 @@ public class Read_Operation_test {
     }
 
 
-    System.out.println(users.size());
+    System.out.println(users.size());*/
 
     /*user2 = new User("12", "firstname", "lastname", "password");
     user2.getCategoryStore().withDefaultCategories();
