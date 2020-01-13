@@ -44,9 +44,11 @@ public class UserInterface {
     try
     {
       data=new Database();
-      TestUser.getTestUser("test","Max","Mustermann","test",data);
+      if (data.getUser("test") == null) {
+        TestUser.getTestUser("test", "Max", "Mustermann", "test", data);
+      }
     }catch (Exception e){
-      System.out.println(e.getMessage() +"while creating user Facade in UserInterface Constructor!");
+      System.out.println(e.getMessage() +" while creating user Facade in UserInterface Constructor!");
     }
   }
 
