@@ -17,7 +17,6 @@ import user.User;
 
 public class Write_operation_test {
 
-  private static final int accounts = 3;
   private static final int transactions = 10;
   private static User user;
   private static User user2;

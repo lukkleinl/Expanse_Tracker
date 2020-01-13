@@ -1,24 +1,23 @@
 package MongoDb;
 
+import accounts.Account;
+import accounts.Cash;
+import accounts.CreditCard;
+import accounts.DebitCard;
+import accounts.Stocks;
+import com.mongodb.BasicDBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import iteration.CustomContainer;
+import iteration.CustomIterator;
+import iteration.CustomList;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.bson.Document;
-import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.DeleteResult;
-import accounts.Account;
-import accounts.Cash;
-import accounts.CreditCard;
-import accounts.DebitCard;
-import accounts.Stocks;
-import iteration.CustomContainer;
-import iteration.CustomIterator;
-import iteration.CustomList;
 import transactions.Deposit;
 import transactions.Payout;
 import transactions.Transaction;
@@ -265,7 +264,7 @@ public class WriteOperation implements Write_Operation {
     this.collection = this.database.getCollection("Transactions");
     BasicDBObject filter = new BasicDBObject();
     filter.put("User_ID", user.getUserID());
-    DeleteResult deleteResult = this.collection.deleteMany(filter);
+    this.collection.deleteMany(filter);
     // System.out.println(deleteResult.getDeletedCount());
   }
 
@@ -288,7 +287,7 @@ public class WriteOperation implements Write_Operation {
     document.put("_id", trans_id);
     document.put("User_ID", user.getUserID());
 
-    DeleteResult deleteResult = this.collection.deleteMany(document);
+    this.collection.deleteMany(document);
     // System.out.println(deleteResult.getDeletedCount());
   }
 }

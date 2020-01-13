@@ -37,7 +37,7 @@ public class User extends SWE_Observable {
    * @param lastname The users last name.
    * @param password The password for the user
    */
-  @Deprecated
+
   public User(final String userID, final String firstname, final String lastname,
       final String password) {
     this.userID = userID;

@@ -14,12 +14,10 @@ public class User_Facade implements User_Interface{
   public User_Facade() throws Exception
   {
     database=new Database();
-
   }
 
   @Override
-  public void addUser(String userID, String firstname, String lastname, String password) throws Exception
-  {
+  public void addUser(String userID, String firstname, String lastname, String password) throws Exception {
     new User(userID, firstname, lastname, password,database);
   }
 
@@ -74,7 +72,6 @@ public class User_Facade implements User_Interface{
   @Override
   public User getUser(String ID)
   {
-    User user=database.getUser(ID);
-    return user;
+    return database.getUser(ID);
   }
 }

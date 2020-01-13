@@ -241,8 +241,8 @@ public class ReadOperation implements Read_Operation
         }
       }
     }
-    return user;
 
+    return user;
   }
 
   @Override
