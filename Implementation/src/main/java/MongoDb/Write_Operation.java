@@ -4,6 +4,13 @@ import accounts.Account;
 import transactions.Transaction;
 import user.User;
 
+
+/**
+ *
+ * Interface for all CUD operations within the database
+ *
+ */
+
 public interface Write_Operation {
 
   void insertUser(User user);

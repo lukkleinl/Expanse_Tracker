@@ -27,6 +27,13 @@ import transactions.categories.DepositCategory;
 import transactions.categories.PayoutCategory;
 import user.User;
 
+/**
+ * Is responsible for getting the data from the database
+ * With the help of this class you can get all user,
+ * one specific user or all transaction from a user
+ *
+ */
+
 
 public class ReadOperation implements Read_Operation
 {

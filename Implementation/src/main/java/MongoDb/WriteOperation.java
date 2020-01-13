@@ -24,6 +24,12 @@ import transactions.categories.DepositCategory;
 import transactions.categories.PayoutCategory;
 import user.User;
 
+
+/**
+ * Handles all CUD operations within the database
+ *
+ */
+
 public class WriteOperation implements Write_Operation {
 
   private MongoClient mongo;
