@@ -42,7 +42,7 @@ public class WriteOperation implements Write_Operation {
       this.database = this.mongo.getDatabase("ExpanseTracker");
       collection=this.database.getCollection("User");
     } catch (Exception e) {
-      System.out.println("Probleme beim erstellen der Datenkbank");
+      System.out.println("Could not connect to the database");
     }
   }
 

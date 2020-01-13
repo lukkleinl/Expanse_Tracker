@@ -51,7 +51,7 @@ public class ReadOperation implements Read_Operation
     }
     catch(Exception e)
     {
-      System.out.println("Probleme beim erstellen der Datenkbank");
+      System.out.println("Could not connect to the database");
     }
   }
 
