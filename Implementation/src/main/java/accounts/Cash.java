@@ -4,27 +4,32 @@ package accounts;
  * @author Patrick Gmasz
  */
 public class Cash extends Account {
-  private String currency;
+  private final String currency;
 
   /**
    * Creates a new Cash account with a random generated account number and 0 balance.
-   *  @param accountName The name of the account
-   * @param limit
+   * 
+   * @param accountName The name of the account
+   * @param limit the limit of the account
    * @param currency The currency of the cash
    */
-  public Cash(String accountName, float limit,String currency) {
-    super(accountName,limit);
+  public Cash(final String accountName, final float limit, final String currency) {
+    super(accountName, limit);
     this.currency = currency;
   }
 
   /**
-   * Creates a new Cash account with a random generated account number and 0 balance.
-   *  @param accountName The name of the account
-   * @param limit
+   * Creates a new Cash account (from database data).
+   * 
+   * @param accountName The name of the account
+   * @param limit the limit of the account
    * @param currency The currency of the cash
+   * @param ID the account id
+   * @param balance the balance of the account
    */
-  public Cash(String accountName, float limit,String currency,final Integer ID,final float balance) {
-    super(accountName,limit,ID,balance);
+  public Cash(final String accountName, final float limit, final String currency, final Integer ID,
+      final float balance) {
+    super(accountName, limit, ID, balance);
     this.currency = currency;
   }
 
@@ -34,12 +39,11 @@ public class Cash extends Account {
    * @return the currency
    */
   public String getCurrency() {
-    return currency;
+    return this.currency;
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return "CASH";
   }
 }

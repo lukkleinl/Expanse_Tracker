@@ -24,10 +24,12 @@ public abstract class Account {
   }
 
   /**
-   * Creates a new Account with a random generated account number and a balance of 0.
+   * Creates a new Account (from database data).
    *
    * @param name The name of the account
    * @param limit Limit of the account
+   * @param ID the account id
+   * @param balance the balance of the account
    */
   public Account(final String name, final float limit, final Integer ID, final float balance) {
     this.account_number = ID;
