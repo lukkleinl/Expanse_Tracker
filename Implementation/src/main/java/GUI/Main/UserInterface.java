@@ -226,7 +226,7 @@ public class UserInterface {
             && !transactionListPage.isBackWanted()
             && !transactionListPage.isDeleteWanted()
             && !transactionListPage.isUpdateWanted()) {
-          // wait until either back, add payout or add deposit button got pressed
+          // wait until either back, add payout, add deposit, delete wanted or update button got pressed
         }
 
         if (transactionListPage
@@ -237,7 +237,7 @@ public class UserInterface {
             while (!addPayoutPage.isSubmitted()
                 && !addPayoutPage.isBackWanted()
                 && !addPayoutPage.isRefreshWanted()) {
-              // wait until either back button or submit button got pressed
+              // wait until either back button, submit button got pressed or refresh is wanted (Needed after adding a new transaction)
             }
 
             if (addPayoutPage
@@ -250,7 +250,6 @@ public class UserInterface {
                         addPayoutPage.getDescription(),
                         user.getCategoryStore());
                 user.applyAndSaveTransaction(payout, accountListPage.getSelectedAccount());
-                // user.handleTransaction(payout, accountListPage.getSelectedAccount());
 
                 if(accountListPage.getSelectedAccount().limitExceeded()) {
                   JOptionPane.showMessageDialog(null, "Balance is lower as the limit, after this transaction!", "Limit Warning",JOptionPane.WARNING_MESSAGE);
@@ -271,7 +270,7 @@ public class UserInterface {
             while (!addDepositPage.isSubmitted()
                 && !addDepositPage.isBackWanted()
                 && !addDepositPage.isRefreshWanted()) {
-              // wait until either back button or submit button got pressed
+              // wait until either back button, submit button got pressed or refresh is wanted (Needed after adding a new transaction)
             }
 
             if (addDepositPage
@@ -296,12 +295,12 @@ public class UserInterface {
               addDepositPage.configureFrame(frame);
             }
           }
-        } else if (transactionListPage.isDeleteWanted()) {
+        } else if (transactionListPage.isDeleteWanted()) { //if delete button got pressed, delete selected transaction
           user.deleteTransaction(
               accountListPage.getSelectedAccount().getAccount_number(),
               transactionListPage.getSelectedTransactionToDeleteOrUpdate());
-        } else if (transactionListPage.isUpdateWanted()) {
-          if (transactionListPage.getSelectedTransactionToDeleteOrUpdate() instanceof Payout) {
+        } else if (transactionListPage.isUpdateWanted()) { //if update button got pressed, open addPayoutPage with selected transaction
+          if (transactionListPage.getSelectedTransactionToDeleteOrUpdate() instanceof Payout) { //Check, if wanted to update a Payout
             addPayoutPage.configureFrame(frame);
             addPayoutPage.updateFields(
                 (Payout) transactionListPage.getSelectedTransactionToDeleteOrUpdate());
@@ -309,7 +308,7 @@ public class UserInterface {
               while (!addPayoutPage.isSubmitted()
                   && !addPayoutPage.isBackWanted()
                   && !addPayoutPage.isRefreshWanted()) {
-                // wait until either back button or submit button got pressed
+                // wait until either back button, submit button got pressed or refresh is wanted (Needed after adding a new transaction)
               }
 
               if (addPayoutPage
@@ -336,7 +335,7 @@ public class UserInterface {
                 addPayoutPage.configureFrame(frame);
               }
             }
-          } else {
+          } else { //if transaction to update was no payout, it was a deposit
             addDepositPage.configureFrame(frame);
             addDepositPage.updateFields(
                 (Deposit) transactionListPage.getSelectedTransactionToDeleteOrUpdate());
@@ -344,7 +343,7 @@ public class UserInterface {
               while (!addDepositPage.isSubmitted()
                   && !addDepositPage.isBackWanted()
                   && !addDepositPage.isRefreshWanted()) {
-                // wait until either back button or submit button got pressed
+                // wait until either back button, submit button got pressed or refresh is wanted (Needed after adding a new transaction)
               }
 
               if (addDepositPage
@@ -376,7 +375,7 @@ public class UserInterface {
                  // again
           accountListPage.configureFrame(frame);
         }
-      } else if (accountListPage.isUpdateWanted()) {
+      } else if (accountListPage.isUpdateWanted()) { //if update account button got pressed, check the type of the selected account
         if (accountListPage.getSelectedAccountToDeleteOrUpdate() instanceof Cash) {
           add_cashAccountPage.configureFrame(frame);
           add_cashAccountPage.updateFields(
@@ -452,10 +451,10 @@ public class UserInterface {
             accountListPage.configureFrame(frame);
           }
         }
-      } else if (accountListPage.isDeleteWanted()) {
+      } else if (accountListPage.isDeleteWanted()) { //if delete button got pressed, delete pressed account
         user.deleteAccount(accountListPage.getSelectedAccountToDeleteOrUpdate());
         accountListPage.configureFrame(frame);
-      } else {
+      } else { //only last option was, that grouping page button got pressed.
         groupingPage.configureFrame(frame);
         while (!groupingPage.isBackWanted() && !groupingPage.isRefreshWanted()) {}
 

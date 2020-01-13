@@ -1,3 +1,3 @@
-/** These Classes are Here to Provide a Graphical Represenation of the Transactions of a User, they are sorted somewhere else,
+/**  In this package are all UI page classes responsible for the graphical representation.
  * */
 package GUI.GraphicalPages;

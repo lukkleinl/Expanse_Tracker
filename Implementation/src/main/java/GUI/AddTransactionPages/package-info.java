@@ -1,4 +1,4 @@
 /**
-* These Classes are Responsible for aquiring the Info from the User that is needed to Create Transactions.
+* In this package are all UI page classes responsible for adding Transactions.
  */
 package GUI.AddTransactionPages;

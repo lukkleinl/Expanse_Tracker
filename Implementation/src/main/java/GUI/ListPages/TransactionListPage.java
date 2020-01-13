@@ -190,7 +190,6 @@ public class TransactionListPage extends AbstractPage {
               while (iterator.hasNext()) {
                 Transaction trans = iterator.next();
                 if (trans.getID() == (Integer) transactionTable.getValueAt(row, 0)) {
-                  System.out.println(trans.getID());
                   selectedTransactionToDeleteOrUpdate = trans;
                   break;
                 }
