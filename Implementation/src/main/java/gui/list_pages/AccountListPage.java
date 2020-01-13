@@ -188,7 +188,7 @@ public class AccountListPage extends AbstractPage {
 
     // WELCOME MESSAGE
     welcomeMessage = new JLabel();
-    welcomeMessage.setText("Welcome, " + user.getFirstname() + " " + user.getLastname() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    welcomeMessage.setText("Welcome, " + user.getFirstname() + " " + user.getLastname() + "!");
     welcomeMessage.setFont(new Font("Serif", Font.BOLD, 28));
     welcomeMessage.setBounds(100, 50, 550, 50);
 
