@@ -156,12 +156,15 @@ public class AddStockAccountPage extends AbstractPage {
             accountNameInputValue = accountNameInputField.getText();
             buyDateInputValue = (Date) buyDateInputField.getValue();
 
-            limitInputValue = Float.valueOf(limitInputField.getText());
-
-            if (limitInputValue < 0) {
-              JOptionPane.showMessageDialog(
-                  null, "Limit must be higher than 0", "Limit Error", JOptionPane.WARNING_MESSAGE);
-            } else if (accountNameInputValue.isEmpty()) {
+            try {
+              limitInputValue =
+                      (limitInputField.getText().isEmpty())
+                              ? 0
+                              : Float.valueOf(limitInputField.getText());
+            } catch (NumberFormatException ex) {
+              limitInputValue = 0;
+            }
+            if (accountNameInputValue.isEmpty()) {
               JOptionPane.showMessageDialog(
                   null,
                   "You have to enter an accountname",

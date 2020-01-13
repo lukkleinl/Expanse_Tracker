@@ -214,10 +214,7 @@ public class AddDepositPage extends AbstractPage {
       this.descriptionInputValue = this.descriptionInputField.getText();
       this.categoryInputValue = (String) this.categoryInputBox.getSelectedItem();
 
-      if (this.amountInputValue <= 0) {
-        JOptionPane.showMessageDialog(null, "Amount must be an number higher than 0", "Amount Error",
-            JOptionPane.WARNING_MESSAGE);
-      } else if (this.descriptionInputValue.isEmpty()) {
+      if (this.descriptionInputValue.isEmpty()) {
         JOptionPane.showMessageDialog(null, "You must insert a description", "Description Error",
             JOptionPane.WARNING_MESSAGE);
       } else if (this.categoryInputValue == null) {

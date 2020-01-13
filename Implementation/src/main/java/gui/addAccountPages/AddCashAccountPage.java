@@ -151,15 +151,16 @@ public class AddCashAccountPage extends AbstractPage {
           public void actionPerformed(ActionEvent e) {
             accountNameInputValue = accountNameInputField.getText();
             currencyInputValue = currencyInputField.getText();
+            try {
             limitInputValue =
                 (limitInputField.getText().isEmpty())
                     ? 0
                     : Float.valueOf(limitInputField.getText());
 
-            if (limitInputValue < 0) {
-              JOptionPane.showMessageDialog(
-                  null, "Limit must be higher than 0", "Limit Error", JOptionPane.WARNING_MESSAGE);
-            } else if (accountNameInputValue.isEmpty()) {
+            } catch (NumberFormatException ex) {
+              limitInputValue = 0;
+            }
+            if (accountNameInputValue.isEmpty()) {
               JOptionPane.showMessageDialog(
                   null,
                   "You must insert an account name!",

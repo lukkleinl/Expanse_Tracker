@@ -206,16 +206,17 @@ public class AddCreditAccountPage extends AbstractPage {
           public void actionPerformed(ActionEvent e) {
             accountNameInputValue = accountNameInputField.getText();
             expiryDateInputValue = (Date) expiryDateInputField.getValue();
+            try {
             limitInputValue =
                 (limitInputField.getText().isEmpty())
                     ? 0
                     : Float.valueOf(limitInputField.getText());
+            } catch (NumberFormatException ex) {
+              limitInputValue = 0;
+            }
             bankNameInputValue = bankNameInputField.getText();
 
-            if (limitInputValue < 0) {
-              JOptionPane.showMessageDialog(
-                  null, "Limit must be higher than 0", "Limit Error", JOptionPane.WARNING_MESSAGE);
-            } else if (accountNameInputValue.isEmpty()) {
+            if (accountNameInputValue.isEmpty()) {
               JOptionPane.showMessageDialog(
                   null,
                   "You must insert an account name!",
