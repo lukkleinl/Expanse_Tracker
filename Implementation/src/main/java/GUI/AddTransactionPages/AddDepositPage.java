@@ -174,7 +174,6 @@ public class AddDepositPage extends AbstractPage {
         actionEvent -> {
           String categoryName = JOptionPane.showInputDialog("Enter name of new category!");
           if(categoryName!=null) {
-            System.out.println(categoryName);
             user.newTransactionCategory(new DepositCategory(categoryName));
             depositCategorys = user.getCategories(new DepositCategory()).toArray();
             refreshWanted = true;

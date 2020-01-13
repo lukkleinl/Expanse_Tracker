@@ -15,7 +15,6 @@ import user.User;
 public class SWE_Observable
 {
 
-  //TODO: maybe logging?
 
   /** List of all Observers that are Interested in the Data of the Observer!
    */

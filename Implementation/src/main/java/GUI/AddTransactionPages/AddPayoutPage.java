@@ -177,7 +177,6 @@ public class AddPayoutPage extends AbstractPage {
         actionEvent -> {
           String categoryName = JOptionPane.showInputDialog("Enter name of new category!");
           if(categoryName!=null) {
-            System.out.println(categoryName);
             user.newTransactionCategory(new PayoutCategory(categoryName));
             payoutCategorys = user.getCategories(new PayoutCategory()).toArray();
             refreshWanted = true;
