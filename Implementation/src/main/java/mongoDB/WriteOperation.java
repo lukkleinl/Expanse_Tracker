@@ -36,12 +36,25 @@ public class WriteOperation implements Write_Operation {
   private MongoDatabase database;
   private MongoCollection collection;
 
-  public WriteOperation() {
+  /*public WriteOperation() {
     try {
-      this.mongo = new MongoClient();
+      /*this.mongo = new MongoClient();
       this.database = this.mongo.getDatabase("ExpanseTracker");
       collection=this.database.getCollection("User");
     } catch (Exception e) {
+      System.out.println("Could not connect to the database");
+    }
+  }*/
+
+  private void connect_to_database()
+  {
+    try
+    {
+      mongo=new MongoClient();
+      database=mongo.getDatabase("ExpanseTracker");
+    }
+    catch(Exception e)
+    {
       System.out.println("Could not connect to the database");
     }
   }
@@ -57,6 +70,7 @@ public class WriteOperation implements Write_Operation {
 
   private void insert_transaction_for_non_existing_user(final Transaction transaction, final int account_id, final String user_ID) {
     Document doc ;
+
 
     this.collection = this.database.getCollection("Transactions");
 
@@ -165,6 +179,10 @@ public class WriteOperation implements Write_Operation {
    */
   @Override
   public void insertUser(final User user) {
+
+    connect_to_database();
+    this.collection = this.database.getCollection("User");
+
     CustomContainer<Account> accounts = user.getAccounts();
     List<Document> accounts_array = new ArrayList<>();
     CustomIterator<Account> iter = accounts.getIterator();
@@ -207,7 +225,7 @@ public class WriteOperation implements Write_Operation {
         .append("Accounts", accounts_array).append("Payout Categories", payout_array)
         .append("Deposit Categories", deposit_array);
 
-    this.collection = this.database.getCollection("User");
+
     try {
       this.collection.insertOne(doc);
     }
@@ -215,6 +233,8 @@ public class WriteOperation implements Write_Operation {
     {
       System.out.println("Couldnt insert into database"+ e);
     }
+
+    mongo.close();
 
   }
 
@@ -229,6 +249,8 @@ public class WriteOperation implements Write_Operation {
   @Override
   public void insertTransaction(final User user, final Account account, final Transaction transaction)
   {
+    connect_to_database();
+    this.collection = this.database.getCollection("Transactions");
 
     String category = null;
     if (transaction instanceof Payout)
@@ -244,7 +266,7 @@ public class WriteOperation implements Write_Operation {
         .append("category", category).append("Account_Number", account.getAccount_number())
         .append("Description", transaction.getDescription()).append("User_ID", user.getUserID());
 
-    this.collection = this.database.getCollection("Transactions");
+
 
     try {
       this.collection.insertOne(doc);
@@ -253,6 +275,8 @@ public class WriteOperation implements Write_Operation {
     {
       System.out.println("Couldnt insert into database"+ e);
     }
+
+    mongo.close();
 
 
   }
@@ -266,6 +290,8 @@ public class WriteOperation implements Write_Operation {
    */
   @Override
   public void updateTransaction(final Transaction transaction) {
+
+    connect_to_database();
     this.collection = this.database.getCollection("Transactions");
 
     Document query = new Document();
@@ -283,7 +309,7 @@ public class WriteOperation implements Write_Operation {
     {
       System.out.println("Couldnt update transaction"+ e);
     }
-
+    mongo.close();
 
   }
 
@@ -295,6 +321,7 @@ public class WriteOperation implements Write_Operation {
    */
   @Override
   public void updateUser(final User user) {
+    connect_to_database();
     this.collection = this.database.getCollection("User");
     CustomContainer<Account> accounts = user.getAccounts();
     List<Document> accounts_array = new ArrayList<>();
@@ -335,7 +362,7 @@ public class WriteOperation implements Write_Operation {
     {
       System.out.println("Couldnt update user"+ e);
     }
-
+    mongo.close();
   }
 
   /**
@@ -346,6 +373,8 @@ public class WriteOperation implements Write_Operation {
    */
   @Override
   public void deleteUser(final User user) {
+
+    connect_to_database();
     BasicDBObject document = new BasicDBObject();
     document.put("_id", user.getUserID());
     this.collection = this.database.getCollection("User");
@@ -361,6 +390,7 @@ public class WriteOperation implements Write_Operation {
     {
       System.out.println("Couldnt delete user"+ e);
     }
+    mongo.close();
 
     // System.out.println(deleteResult.getDeletedCount());
   }
@@ -373,11 +403,13 @@ public class WriteOperation implements Write_Operation {
    */
   @Override
   public void clearDatabase() {
+    connect_to_database();
     this.collection = this.database.getCollection("User");
     this.collection.deleteMany(new BasicDBObject());
 
     this.collection = this.database.getCollection("Transactions");
     this.collection.deleteMany(new BasicDBObject());
+    mongo.close();
   }
 
 
@@ -389,6 +421,7 @@ public class WriteOperation implements Write_Operation {
    */
   @Override
   public void deleteTransaction(final User user, final int trans_id) {
+    connect_to_database();
     this.collection = this.database.getCollection("Transactions");
 
     BasicDBObject document = new BasicDBObject();
@@ -402,7 +435,7 @@ public class WriteOperation implements Write_Operation {
     {
       System.out.println("Couldnt delete transaction"+ e);
     }
-
+    mongo.close();
     // System.out.println(deleteResult.getDeletedCount());
   }
 }
