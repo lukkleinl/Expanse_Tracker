@@ -155,6 +155,7 @@ public class AddStockAccountPage extends AbstractPage {
           public void actionPerformed(ActionEvent e) {
             accountNameInputValue = accountNameInputField.getText();
             buyDateInputValue = (Date) buyDateInputField.getValue();
+
             limitInputValue = Float.valueOf(limitInputField.getText());
 
             if (limitInputValue < 0) {
@@ -163,10 +164,19 @@ public class AddStockAccountPage extends AbstractPage {
             } else if (accountNameInputValue.isEmpty()) {
               JOptionPane.showMessageDialog(
                   null,
+                  "You have to enter an accountname",
+                  "Missing name error",
+                  JOptionPane.WARNING_MESSAGE);
+            } else if(buyDateInputValue==null)
+            {
+              JOptionPane.showMessageDialog(
+                  null,
                   "You must insert a legit date with format dd/mm/yyyy!",
                   "Date Error",
                   JOptionPane.WARNING_MESSAGE);
-            } else {
+            }
+            else
+            {
               submitted = true;
             }
           }

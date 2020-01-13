@@ -66,6 +66,7 @@ public class UserInterface {
       if (loginPage
           .isLoginWanted()) { // checks if login button got pressed, if yes, check if user id and password
 
+
         user=data.getUser(loginPage.getUser());
         if(user!=null && user.getPassword().equals(loginPage.getPassword())){
         //if (loginPage.getUser().equals("admin") && loginPage.getPassword().equals("admin")) {
