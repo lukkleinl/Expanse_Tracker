@@ -126,6 +126,14 @@ public class User extends SWE_Observable {
     updateObservers(this, account, transaction); // VON PAUL fürs observer
   }
 
+  /**
+   * Performs either a Deposit or a Payout
+   *
+   * @param transaction Transaction which should be performed
+   * @param accountID   Account where the transaction will be performed
+   * @param old_amount  The amount of the old transaction so that we know the methods knows the difference between the two values
+   */
+
   public void updateTransaction(final int accountID, final Transaction transaction,final float old_amount) {
     this.transactions.updateTransaction(accountID, transaction);
 
@@ -133,7 +141,6 @@ public class User extends SWE_Observable {
       if (it.element().getAccount_number() == accountID) {
 
         float new_amount=transaction.getAmount()-old_amount;
-
 
         if(transaction instanceof Payout)
           it.element().updateAccountNumberAndBalance(accountID, it.element().getBalance() - new_amount);
@@ -154,7 +161,10 @@ public class User extends SWE_Observable {
     // }
   }
 
-
+  /**
+   * @param accountID of the account in which the transaction shall be deleted
+   * @param transaction the Transaction which shall be deleted
+   */
   public void deleteTransaction(final int accountID, final Transaction transaction) {
 
     for (CustomIterator<Account> it = this.accounts.getIterator(); it.hasNext(); it.next()) {
@@ -165,10 +175,8 @@ public class User extends SWE_Observable {
             it.element().updateAccountNumberAndBalance(accountID, it.element().getBalance() - transaction.getAmount());
         else
           assert true : "Should not reach this argument";
-
         updateObservers(this);
       }
-
     }
     // while (iterator.hasNext()) {
     // if (accountID == iterator.element().getAccount_number()) {

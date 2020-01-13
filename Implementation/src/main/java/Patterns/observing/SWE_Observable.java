@@ -44,24 +44,37 @@ public class SWE_Observable
       observerList.remove(obs);
     }
   }
+//--------------------------------------------------------------------------------------
+
+  /** Different updateObservers because of usage
+   *  Doesnt need to update both collections users and transactions all the time
+   *
+   *
+   * Updates all Observers, to use if smthg. observable has changed.
+   * @param user User that changed, which interests the observer.
+   */
+  public void updateObservers(final User user){
+    for(SWE_Observer obs : observerList )
+    {
+      obs.update(user);
+    }
+  }
 
   /** Updates all Observers, to use if smthg. observable has changed.
-   * @param obj User that changed, which interests the observer.
+   * @param user User that changed, which interests the observer.
+   * @param trans_id the transaction  which shall get deleted
    */
-  public void updateObservers(final User obj){
+  public void updateObservers(final User user,final int trans_id){
     for(SWE_Observer obs : observerList )
     {
-      obs.update(obj);
+      obs.update(user,trans_id);
     }
   }
 
-  public void updateObservers(final User obj,final int trans_id){
-    for(SWE_Observer obs : observerList )
-    {
-      obs.update(obj,trans_id);
-    }
-  }
-
+  /** Updates all Observers, to use if smthg. observable has changed.
+   * @param user User that changed, which interests the observer.
+   * @param trans the id which shall get deleted
+   */
   public void updateObservers(final User user,final Transaction trans){
     for(SWE_Observer obs : observerList )
     {
@@ -69,6 +82,11 @@ public class SWE_Observable
     }
   }
 
+  /** Updates all Observers, to use if smthg. observable has changed.
+   * @param user User that changed, which interests the observer.
+   * @param trans the id which shall get deleted
+   * @param acc The account on which the transaction shall be inserted
+   */
   public void updateObservers(final User user,final Account acc,final Transaction trans){
     for(SWE_Observer obs : observerList )
     {

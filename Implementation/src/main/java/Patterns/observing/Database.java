@@ -13,6 +13,7 @@ import user.User;
 
 /**
  * DIY Observer Pattern - Database for the observable users
+ * Because of the two collections
  * @author Paul Kraft
  * @author Lukas Kleinl
  */
@@ -36,6 +37,21 @@ public class Database implements SWE_Observer {
 
     }
 
+    /**
+     *
+     *  update the Users and the transactions
+      */
+    /** @author Lukas Kleinl */
+    /** Different updateObservers because of usage
+     *  Doesnt need to update both collections users and transactions all the time
+     *
+     *
+     /**  Updates the values within the database
+     * @param user User that changed, which interests the observer.
+     * @param trans the id which shall get deleted
+     * @param acc The account on which the transaction shall be inserted
+     */
+
     @Override
     public void update(User user, Account acc,Transaction trans )
     {
@@ -45,7 +61,6 @@ public class Database implements SWE_Observer {
         {
             if(it.element().getUserID().equals(user.getUserID()))
             {
-
                 writeOperation.updateUser(user);
                 writeOperation.insertTransaction(user,acc,trans);
                 return;
@@ -54,59 +69,76 @@ public class Database implements SWE_Observer {
         }
     }
 
+    /** Updates the values within the database
+     * @param user User that changed, which interests the observer.
+     * @param trans_ID the transaction  which shall get deleted
+     */
     @Override
-    public void update(User user,int Transaction_ID)
+    public void update(User user,int trans_ID)
     {
-        writeOperation.deleteTransaction(user,Transaction_ID);
+        writeOperation.deleteTransaction(user,trans_ID);
     }
 
+    /**
+    *  Updates the values within the database
+   * @param user User that changed, which interests the observer.
+   */
+
     @Override
-    public void update(User obj)
+    public void update(User user)
     {
 
         CustomIterator<User> it = listOfUsers.getIterator();
 
         while (it.hasNext())
         {
-            if(it.element().getUserID().equals(obj.getUserID()))
+            if(it.element().getUserID().equals(user.getUserID()))
             {
 
-                writeOperation.updateUser(obj);
+                writeOperation.updateUser(user);
                 return;
             }
 
             it.next();
         }
 
-        listOfUsers.add(obj);
-        writeOperation.insertUser(obj);
+        listOfUsers.add(user);
+        writeOperation.insertUser(user);
     }
 
+
+    /** Updates the values within the database
+     * @param user User that changed, which interests the observer.
+     * @param trans the id which shall get deleted
+     */
     @Override
-    public void update(User obj, Transaction trans)
+    public void update(User user, Transaction trans)
     {
-        Map<Integer, CustomContainer<Transaction>> map=obj.getTransactionStore ().getTransactions();
+        Map<Integer, CustomContainer<Transaction>> transaction_map=user.getTransactionStore ().getTransactions();
 
-        for(Entry entry : map.entrySet())
+        for(Entry entry : transaction_map.entrySet())
         {
-            CustomContainer<Object> list = (CustomList<Object>) entry.getValue();
-            CustomIterator<Object> iterator = list.getIterator();
+            CustomContainer<Object> transaction_list = (CustomList<Object>) entry.getValue();
+            CustomIterator<Object> transaction_iterator = transaction_list.getIterator();
 
-            while (iterator.hasNext())
+            while (transaction_iterator.hasNext())
             {
-                Transaction transaction= (Transaction) iterator.element();
+                Transaction transaction= (Transaction) transaction_iterator.element();
                 if(trans.equals(transaction))
                 {
-                    writeOperation.updateUser(obj);
+                    writeOperation.updateUser(user);
                     writeOperation.updateTransaction(trans);
                     return;
                 }
-                iterator.next();
+                transaction_iterator.next();
             }
         }
     }
 
-
+    /**
+     * @param id  the id of the wanted user
+     * @return if a user is found the method retunrns the wanted user otherwise it returns null
+     */
     public User getUser(String id)
     {
         CustomIterator<User> it = listOfUsers.getIterator();
