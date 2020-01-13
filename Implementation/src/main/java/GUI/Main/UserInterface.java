@@ -99,7 +99,10 @@ public class UserInterface {
           {
             if(data.getUser(registrationPage.getUser())==null)
             {
-              new User(registrationPage.getUser(), registrationPage.getFirstname(), registrationPage.getLastname(), registrationPage.getPassword(),data);
+              new User(registrationPage.getUser(),
+                       registrationPage.getFirstname(),
+                       registrationPage.getLastname(),
+                       registrationPage.getPassword(),data);
               JOptionPane.showMessageDialog(null, "User successfully added", "Info",JOptionPane.INFORMATION_MESSAGE);
             }
             else

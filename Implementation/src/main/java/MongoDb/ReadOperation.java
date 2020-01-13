@@ -103,12 +103,14 @@ public class ReadOperation implements Read_Operation
 
       for(int i=0;i<PayoutCategories.length();i++)
       {
-        user.getCategoryStore().addTransactionCategory(new PayoutCategory(PayoutCategories.getJSONObject(i).getString("_id")));
+        user.getCategoryStore().addTransactionCategory(
+            new PayoutCategory(PayoutCategories.getJSONObject(i).getString("_id")));
       }
 
       for(int i=0;i<DepositCategories.length();i++)
       {
-        user.getCategoryStore().addTransactionCategory(new DepositCategory(DepositCategories.getJSONObject(i).getString("_id")));
+        user.getCategoryStore().addTransactionCategory(
+            new DepositCategory(DepositCategories.getJSONObject(i).getString("_id")));
       }
 
       JSONArray accounts_array=json.getJSONArray("Accounts");
@@ -120,20 +122,38 @@ public class ReadOperation implements Read_Operation
         JSONObject date_object;
 
         if(acc.getString("Accounttype").equals("CASH"))
-          user.addAccount(new Cash(acc.getString("Name"),acc.getFloat("Limit"),acc.getString("Currency"),acc.getInt("id"),acc.getFloat("Balance")));
+          user.addAccount(new Cash(acc.getString("Name"),
+                                   acc.getFloat("Limit"),
+                                   acc.getString("Currency"),
+                                   acc.getInt("id"),
+                                   acc.getFloat("Balance")));
         else if(acc.getString("Accounttype").equals("DEBITCARD"))
-          user.addAccount((new DebitCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),acc.getString("IBAN"),acc.getInt("id"),acc.getFloat("Balance"))));
+          user.addAccount((new DebitCard(acc.getString("Name"),
+                                         acc.getString("Bankname"),
+                                         acc.getFloat("Limit"),
+                                         acc.getString("IBAN"),
+                                         acc.getInt("id"),
+                                         acc.getFloat("Balance"))));
         else if(acc.getString("Accounttype").equals("CREDITCARD"))
         {
           date_object=acc.getJSONObject("Expiry Date");
           date=new Date(date_object.getLong("$numberLong"));
-          user.addAccount(new CreditCard(acc.getString("Name"),acc.getString("Bankname"),acc.getFloat("Limit"),date,acc.getInt("id"),acc.getFloat("Balance")));
+          user.addAccount(new CreditCard(acc.getString("Name"),
+                                         acc.getString("Bankname"),
+                                         acc.getFloat("Limit"),
+                                         date,
+                                         acc.getInt("id"),
+                                         acc.getFloat("Balance")));
         }
         else if(acc.getString("Accounttype").equals("STOCKS"))
         {
         date_object=acc.getJSONObject("Buy Date");
         date=new Date(date_object.getLong("$numberLong"));
-        user.addAccount((new Stocks(acc.getString("Name"),date,acc.getFloat("Limit"),acc.getInt("id"),acc.getFloat("Balance"))));
+        user.addAccount((new Stocks(acc.getString("Name"),
+                                    date,
+                                    acc.getFloat("Limit"),
+                                    acc.getInt("id"),
+                                    acc.getFloat("Balance"))));
         }
         else
           assert true : "Shouldnt reach this statement";
@@ -205,8 +225,11 @@ public class ReadOperation implements Read_Operation
           assert true : "Shouldnt reach this argument";
       }
 
-      Transaction trans = TransactionCreator.transactionFromDatabaseData(date, json.getString("category_name"), json.getFloat("amount"),
-          json.getString("Description"), user.getCategoryStore(), json.getInt("_id"));
+      Transaction trans = TransactionCreator.transactionFromDatabaseData(date, json.getString("category_name"),
+                                                                         json.getFloat("amount"),
+                                                                         json.getString("Description"),
+                                                                         user.getCategoryStore(),
+                                                                         json.getInt("_id"));
 
       CustomIterator<Account> account_iterator=user.getAccounts().getIterator();
 
