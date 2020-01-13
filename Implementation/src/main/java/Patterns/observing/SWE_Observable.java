@@ -11,6 +11,7 @@ import user.User;
 /**
  * DIY Observer Pattern - defines the Observable.
  * @author Paul Kraft
+ * @author Lukas Kleinl
  */
 public class SWE_Observable
 {

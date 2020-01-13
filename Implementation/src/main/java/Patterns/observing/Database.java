@@ -11,6 +11,11 @@ import java.util.Map.Entry;
 import transactions.Transaction;
 import user.User;
 
+/**
+ * DIY Observer Pattern - Database for the observable users
+ * @author Paul Kraft
+ * @author Lukas Kleinl
+ */
 public class Database implements SWE_Observer {
 
     private ReadOperation readOperations = new ReadOperation();
