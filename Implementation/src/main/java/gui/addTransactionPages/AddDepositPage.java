@@ -145,15 +145,26 @@ public class AddDepositPage extends AbstractPage {
     this.deleteCategoryButton.setBounds(300, 250, 250, 50);
     this.deleteCategoryButton.setFont(BUTTON_FONT);
     this.deleteCategoryButton.setBorder(new LineBorder(Color.BLACK, 2));
-    this.deleteCategoryButton.addActionListener(actionEvent -> {
-      JComboBox box = new JComboBox(this.depositCategorys);
-      int delete = JOptionPane.showConfirmDialog(null, box, "Select category you want to delete.",
-          JOptionPane.CANCEL_OPTION);
-      if (delete == JOptionPane.YES_OPTION) {
-        this.user.removeTransactionCategory(box.getSelectedItem().toString());
-        this.refreshWanted = true;
-      }
-    });
+    this.deleteCategoryButton.addActionListener(
+        actionEvent -> {
+          JComboBox box = new JComboBox(this.depositCategorys);
+          int delete =
+              JOptionPane.showConfirmDialog(
+                  null, box, "Select category you want to delete.", JOptionPane.CANCEL_OPTION);
+          if (delete == JOptionPane.YES_OPTION) {
+            if (box.getSelectedItem().toString().equals("DIVIDEND")
+                || box.getSelectedItem().toString().equals("SALARY")) {
+              JOptionPane.showMessageDialog(
+                  null,
+                  "Default categories can not be deleted!",
+                  "Category Error",
+                  JOptionPane.WARNING_MESSAGE);
+            } else {
+              this.user.removeTransactionCategory(box.getSelectedItem().toString());
+              this.refreshWanted = true;
+            }
+          }
+        });
 
     this.components.add(this.deleteCategoryButton);
 
